@@ -15,7 +15,7 @@ const posts = (await getCollection('blog'))
       {
         posts.map((post) => (
           <li>
-            <a href={`/NewBlog/blog/${post.id}/`} class="post-link">
+            <a href={`/blog/${post.id}/`} class="post-link">
               <span class="title">{post.data.title}</span>
               <span class="desc">{post.data.description}</span>
               <span class="date"><FormattedDate date={post.data.pubDate} /></span>

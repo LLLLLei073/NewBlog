@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://yourusername.github.io/NewBlog/sitemap-index.xml
+Sitemap: https://blog-lllllei.favorys.top/sitemap-index.xml

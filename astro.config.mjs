@@ -4,8 +4,8 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://yourusername.github.io',
-  base: '/NewBlog',
+  site: 'https://blog-lllllei.favorys.top',
+  base: '/',
   integrations: [mdx(), sitemap()],
   markdown: {
     shikiConfig: {
