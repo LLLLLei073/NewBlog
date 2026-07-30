@@ -17,9 +17,9 @@ const href = `/tags/${encodeURIComponent(tag)}/`;
     line-height: 1.4;
     color: var(--brand-700);
     background: var(--brand-100);
-    padding: 0.2rem 0.6rem;
-    border-radius: var(--radius-full);
-    transition: background-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+    padding: 0.15rem 0.55rem;
+    border-radius: var(--radius-md);
+    transition: background-color 0.15s ease, color 0.15s ease;
     display: inline-flex;
     align-items: center;
   }
@@ -27,21 +27,21 @@ const href = `/tags/${encodeURIComponent(tag)}/`;
   .tag:hover {
     color: var(--brand-700);
     background: var(--brand-200);
-    transform: translateY(-1px);
     text-decoration: none;
   }
 
   .tag.sm {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
   }
 
   .tag.md {
-    font-size: 0.85rem;
-    padding: 0.3rem 0.8rem;
+    font-size: 0.82rem;
+    padding: 0.2rem 0.65rem;
   }
 
   :global(html[data-theme='dark']) .tag {
     color: var(--brand-300);
+    background: var(--brand-100);
   }
 
   :global(html[data-theme='dark']) .tag:hover {

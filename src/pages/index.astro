@@ -12,13 +12,15 @@ const posts = (await getCollection('blog'))
 ---
 
 <BaseLayout>
-  <section class="hero container">
-    <p class="eyebrow">博客</p>
-    <h1>{SITE_TITLE}</h1>
-    <p class="lead">{SITE_DESCRIPTION}</p>
-    <div class="actions">
-      <a href="/blog" class="btn primary">浏览文章</a>
-      <a href="/about" class="btn secondary">关于我</a>
+  <section class="hero">
+    <div class="container">
+      <p class="eyebrow">博客</p>
+      <h1>{SITE_TITLE}</h1>
+      <p class="lead">{SITE_DESCRIPTION}</p>
+      <div class="actions">
+        <a href="/blog" class="btn primary">浏览文章</a>
+        <a href="/about" class="btn secondary">关于我</a>
+      </div>
     </div>
   </section>
 
@@ -27,7 +29,7 @@ const posts = (await getCollection('blog'))
       <section class="recent container">
         <div class="section-head">
           <h2>最新文章</h2>
-          <a href="/blog" class="more">查看全部</a>
+          <a href="/blog" class="more">查看全部 &rarr;</a>
         </div>
         <div class="post-grid">
           {posts.map((post) => (
@@ -54,8 +56,9 @@ const posts = (await getCollection('blog'))
 
 <style>
   .hero {
-    padding: 5rem 1.5rem 3rem;
+    padding: 4.5rem 0 3rem;
     text-align: center;
+    border-bottom: 1px solid var(--border);
   }
 
   .eyebrow {
@@ -63,29 +66,30 @@ const posts = (await getCollection('blog'))
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.1em;
     color: var(--primary);
-    margin: 0 0 1rem;
+    margin: 0 0 0.75rem;
   }
 
   .hero h1 {
-    font-size: 3.25rem;
-    line-height: 1.05;
-    margin: 0 0 1rem;
+    font-size: 2.75rem;
+    line-height: 1.1;
+    margin: 0 0 0.75rem;
+    font-weight: 700;
   }
 
   .lead {
-    font-family: var(--font-serif);
-    font-size: 1.2rem;
+    font-family: var(--font-sans);
+    font-size: 1.05rem;
     color: var(--muted-foreground);
     max-width: 480px;
-    margin: 0 auto 2rem;
+    margin: 0 auto 1.75rem;
     line-height: 1.6;
   }
 
   .actions {
     display: flex;
-    gap: 0.75rem;
+    gap: 0.6rem;
     justify-content: center;
     flex-wrap: wrap;
   }
@@ -94,30 +98,29 @@ const posts = (await getCollection('blog'))
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 44px;
+    min-height: 40px;
     padding: 0 1.25rem;
     border: 1px solid transparent;
     border-radius: var(--radius-md);
     font-family: var(--font-sans);
-    font-size: 0.9rem;
+    font-size: 0.875rem;
     font-weight: 500;
-    transition: background-color 0.15s ease, box-shadow 0.15s ease;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
   }
 
   .btn.primary {
     background: var(--primary);
     color: var(--primary-foreground);
-    box-shadow: var(--shadow-sm);
   }
 
   .btn.primary:hover {
     background: var(--brand-600);
     color: var(--primary-foreground);
-    box-shadow: var(--shadow-md);
+    text-decoration: none;
   }
 
   .btn.secondary {
-    background: var(--card);
+    background: transparent;
     color: var(--foreground);
     border-color: var(--border);
   }
@@ -125,6 +128,7 @@ const posts = (await getCollection('blog'))
   .btn.secondary:hover {
     background: var(--muted);
     color: var(--foreground);
+    text-decoration: none;
   }
 
   .recent {
@@ -135,61 +139,57 @@ const posts = (await getCollection('blog'))
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--border);
+    margin-bottom: 1.25rem;
   }
 
   .section-head h2 {
-    font-size: 1.5rem;
+    font-size: 1.35rem;
     margin: 0;
   }
 
   .more {
     font-family: var(--font-sans);
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     font-weight: 500;
     color: var(--primary);
   }
 
   .post-grid {
     display: grid;
-    gap: 1rem;
+    gap: 0.875rem;
   }
 
   .post-card {
     display: block;
-    padding: 1.5rem;
-    background: var(--popover);
+    padding: 1.25rem;
+    background: var(--card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    box-shadow: var(--shadow-xs);
-    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
   }
 
   .post-card:hover {
     text-decoration: none;
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-    border-color: var(--border-400);
+    border-color: var(--brand-300);
+    box-shadow: var(--shadow-sm);
   }
 
   .post-meta {
     font-family: var(--font-mono);
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     color: var(--muted-foreground);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
   }
 
   .post-card h3 {
-    font-size: 1.25rem;
-    margin: 0 0 0.5rem;
+    font-size: 1.15rem;
+    margin: 0 0 0.4rem;
     color: var(--card-foreground);
   }
 
   .post-card p {
-    margin: 0 0 0.75rem;
-    font-size: 0.9rem;
+    margin: 0 0 0.65rem;
+    font-size: 0.875rem;
     color: var(--muted-foreground);
     line-height: 1.5;
   }
@@ -202,13 +202,13 @@ const posts = (await getCollection('blog'))
 
   @media (max-width: 640px) {
     .hero {
-      padding: 3.5rem 1.5rem 2.5rem;
+      padding: 3rem 0 2.5rem;
     }
     .hero h1 {
-      font-size: 2.4rem;
+      font-size: 2.1rem;
     }
     .lead {
-      font-size: 1.05rem;
+      font-size: 0.95rem;
     }
   }
 </style>

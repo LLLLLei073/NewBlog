@@ -31,8 +31,9 @@ interface Props {
 
 const { post, newer, older } = Astro.props;
 const { Content, headings } = await render(post);
+const rawBody = typeof post.body === 'string' ? post.body : '';
 ---
 
-<BlogPost {...post.data} headings={headings} newer={newer} older={older}>
+<BlogPost {...post.data} headings={headings} newer={newer} older={older} rawBody={rawBody}>
   <Content />
 </BlogPost>
