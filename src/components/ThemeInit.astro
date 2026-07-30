@@ -1,0 +1,12 @@
+---
+/* 防 FOUC：在 <head> 中内联执行，确保首屏就有正确的 data-theme。
+   必须放在 global.css 之后、</head> 之前。 */
+---
+
+<script is:inline>
+  (function(){
+    var t = localStorage.getItem('theme');
+    if (!t) t = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', t);
+  })();
+</script>

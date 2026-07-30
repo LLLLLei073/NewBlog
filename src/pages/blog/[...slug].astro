@@ -2,20 +2,37 @@
 import { type CollectionEntry, getCollection, render } from 'astro:content';
 import BlogPost from '../../layouts/BlogPost.astro';
 
+type Nav = { slug: string; title: string };
+
 export async function getStaticPaths() {
-  const posts = await getCollection('blog');
-  return posts.map((post) => ({
-    params: { slug: post.id },
-    props: post,
-  }));
+  const allPosts = (await getCollection('blog'))
+    .filter((p) => !p.data.draft)
+    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+  return allPosts.map((post, i) => {
+    const newer = i > 0 ? allPosts[i - 1] : null;
+    const older = i < allPosts.length - 1 ? allPosts[i + 1] : null;
+    return {
+      params: { slug: post.id },
+      props: {
+        post,
+        newer: newer ? ({ slug: newer.id, title: newer.data.title } as Nav) : null,
+        older: older ? ({ slug: older.id, title: older.data.title } as Nav) : null,
+      },
+    };
+  });
 }
 
-type Props = CollectionEntry<'blog'>;
+interface Props {
+  post: CollectionEntry<'blog'>;
+  newer: Nav | null;
+  older: Nav | null;
+}
 
-const post = Astro.props;
-const { Content } = await render(post);
+const { post, newer, older } = Astro.props;
+const { Content, headings } = await render(post);
 ---
 
-<BlogPost {...post.data}>
+<BlogPost {...post.data} headings={headings} newer={newer} older={older}>
   <Content />
 </BlogPost>

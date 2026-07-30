@@ -1,0 +1,116 @@
+---
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  toc: Heading[];
+}
+
+const { toc } = Astro.props;
+---
+
+{toc.length > 1 && (
+  <nav class="toc" aria-label="文章目录">
+    <p class="toc-title">目录</p>
+    <ul>
+      {toc.map((h) => (
+        <li class:list={['toc-item', `depth-${h.depth}`]}>
+          <a href={`#${h.slug}`} data-toc-target={h.slug}>{h.text}</a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+)}
+
+<style>
+  .toc {
+    font-family: var(--font-sans);
+  }
+
+  .toc-title {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted-foreground);
+    margin: 0 0 0.6rem;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-left: 1px solid var(--border);
+  }
+
+  .toc-item {
+    margin: 0;
+  }
+
+  .toc-item a {
+    display: block;
+    font-size: 0.82rem;
+    line-height: 1.35;
+    color: var(--muted-foreground);
+    padding: 0.28rem 0 0.28rem 0.75rem;
+    margin-left: -1px;
+    border-left: 2px solid transparent;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .toc-item a:hover {
+    color: var(--primary);
+    text-decoration: none;
+  }
+
+  .toc-item.depth-3 a {
+    padding-left: 1.5rem;
+    font-size: 0.78rem;
+  }
+
+  .toc-item a.is-active {
+    color: var(--primary);
+    border-left-color: var(--primary);
+    font-weight: 500;
+  }
+</style>
+
+<script>
+  function initTOC() {
+    const nav = document.querySelector('.toc');
+    if (!nav) return;
+    const links = Array.from(nav.querySelectorAll<HTMLAnchorElement>('a[data-toc-target]'));
+    if (links.length === 0) return;
+
+    const targets = new Map<Element, HTMLAnchorElement>();
+    links.forEach((link) => {
+      const id = link.getAttribute('data-toc-target');
+      if (!id) return;
+      const el = document.getElementById(id);
+      if (el) targets.set(el, link);
+    });
+
+    let active: HTMLAnchorElement | null = null;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const link = targets.get(entry.target);
+          if (!link) return;
+          if (entry.isIntersecting) {
+            if (active && active !== link) active.classList.remove('is-active');
+            link.classList.add('is-active');
+            active = link;
+          }
+        });
+      },
+      { rootMargin: '0px 0px -70% 0px', threshold: 0 }
+    );
+
+    targets.forEach((_, el) => observer.observe(el));
+  }
+
+  initTOC();
+</script>

@@ -1,0 +1,51 @@
+---
+interface Props {
+  tag: string;
+  size?: 'sm' | 'md';
+}
+
+const { tag, size = 'sm' } = Astro.props;
+const href = `/tags/${encodeURIComponent(tag)}/`;
+---
+
+<a href={href} class:list={['tag', size]} aria-label={`查看标签「${tag}」的文章`}>#{tag}</a>
+
+<style>
+  .tag {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--brand-700);
+    background: var(--brand-100);
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-full);
+    transition: background-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .tag:hover {
+    color: var(--brand-700);
+    background: var(--brand-200);
+    transform: translateY(-1px);
+    text-decoration: none;
+  }
+
+  .tag.sm {
+    font-size: 0.75rem;
+  }
+
+  .tag.md {
+    font-size: 0.85rem;
+    padding: 0.3rem 0.8rem;
+  }
+
+  :global(html[data-theme='dark']) .tag {
+    color: var(--brand-300);
+  }
+
+  :global(html[data-theme='dark']) .tag:hover {
+    background: var(--brand-200);
+    color: var(--brand-300);
+  }
+</style>

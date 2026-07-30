@@ -3,38 +3,47 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import Tag from '../../components/Tag.astro';
 import { getCollection } from 'astro:content';
+import { getAllTags } from '../../utils/tags';
 
-const posts = (await getCollection('blog'))
-  .filter((post) => !post.data.draft)
+export async function getStaticPaths() {
+  const tags = await getAllTags();
+  return tags.map(({ tag }) => ({
+    params: { tag },
+    props: { tag },
+  }));
+}
+
+const { tag } = Astro.props;
+
+const allPosts = (await getCollection('blog'))
+  .filter((p) => !p.data.draft && p.data.tags.includes(tag))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
-<BaseLayout title="文章" description="所有博客文章">
+<BaseLayout title={`标签：${tag}`} description={`标签「${tag}」下的所有文章`}>
   <section class="container">
     <div class="page-head">
-      <p class="eyebrow">文章</p>
-      <h1>所有文章</h1>
-      <p class="lead">共 {posts.length} 篇文章，记录技术与生活的思考。</p>
+      <p class="eyebrow">标签</p>
+      <h1>#{tag}</h1>
+      <p class="lead">共 {allPosts.length} 篇文章</p>
+      <a href="/tags" class="back">&larr; 返回标签云</a>
     </div>
+
     <div class="post-list">
-      {
-        posts.map((post) => (
-          <a href={`/blog/${post.id}/`} class="post-card">
-            <div class="post-meta">
-              <FormattedDate date={post.data.pubDate} />
-            </div>
-            <h2>{post.data.title}</h2>
-            <p class="desc">{post.data.description}</p>
-            {post.data.tags.length > 0 && (
-              <div class="tags">
-                {post.data.tags.map((tag) => (
-                  <Tag tag={tag} />
-                ))}
-              </div>
-            )}
-          </a>
-        ))
-      }
+      {allPosts.map((post) => (
+        <a href={`/blog/${post.id}/`} class="post-card">
+          <div class="post-meta">
+            <FormattedDate date={post.data.pubDate} />
+          </div>
+          <h2>{post.data.title}</h2>
+          <p class="desc">{post.data.description}</p>
+          <div class="tags">
+            {post.data.tags.map((t) => (
+              <Tag tag={t} />
+            ))}
+          </div>
+        </a>
+      ))}
     </div>
   </section>
 </BaseLayout>
@@ -65,7 +74,21 @@ const posts = (await getCollection('blog'))
     font-family: var(--font-serif);
     font-size: 1.05rem;
     color: var(--muted-foreground);
-    margin: 0;
+    margin: 0 0 0.75rem;
+  }
+
+  .back {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--muted-foreground);
+    transition: color 0.15s ease;
+  }
+
+  .back:hover {
+    color: var(--primary);
+    text-decoration: none;
   }
 
   .post-list {

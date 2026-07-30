@@ -1,15 +1,34 @@
 ---
 import { SITE_TITLE } from '../consts.ts';
+import ThemeToggle from './ThemeToggle.astro';
+
+const pathname = Astro.url.pathname;
+const isActive = (href: string) => {
+  if (href === '/') return pathname === '/';
+  return pathname.startsWith(href);
+};
+
+const navItems = [
+  { href: '/', label: '首页' },
+  { href: '/blog', label: '文章' },
+  { href: '/tags', label: '标签' },
+  { href: '/about', label: '关于' },
+];
 ---
 
 <header>
   <nav class="container">
     <a href="/" class="brand">{SITE_TITLE}</a>
     <div class="links">
-      <a href="/">首页</a>
-      <a href="/blog">文章</a>
-      <a href="/about">关于</a>
-      <a href="/rss.xml">RSS</a>
+      {
+        navItems.map((item) => (
+          <a href={item.href} class={isActive(item.href) ? 'active' : ''}>
+            {item.label}
+          </a>
+        ))
+      }
+      <a href="/rss.xml" class="rss">RSS</a>
+      <ThemeToggle />
     </div>
   </nav>
 </header>
@@ -17,13 +36,15 @@ import { SITE_TITLE } from '../consts.ts';
 <style>
   header {
     border-bottom: 1px solid var(--border);
-    padding: 1rem 0;
+    padding: 1.25rem 0;
     position: sticky;
     top: 0;
-    background: color-mix(in srgb, var(--bg) 95%, transparent);
-    backdrop-filter: blur(8px);
+    background: color-mix(in srgb, var(--background) 88%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     z-index: 10;
   }
+
   nav {
     display: flex;
     justify-content: space-between;
@@ -31,20 +52,48 @@ import { SITE_TITLE } from '../consts.ts';
     gap: 1rem;
     flex-wrap: wrap;
   }
+
   .brand {
-    font-weight: 800;
+    font-family: var(--font-display);
+    font-weight: 500;
     font-size: 1.25rem;
-    color: var(--text);
+    letter-spacing: -0.01em;
+    color: var(--card-foreground);
   }
+
+  .brand:hover {
+    color: var(--card-foreground);
+  }
+
   .links {
     display: flex;
-    gap: 1.25rem;
-    font-size: 0.95rem;
+    gap: 0.5rem;
+    align-items: center;
   }
+
   .links a {
-    color: var(--muted);
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--muted-foreground);
+    padding: 0.4rem 0.75rem;
+    border-radius: var(--radius-sm);
+    transition: background-color 0.15s ease, color 0.15s ease;
   }
+
   .links a:hover {
-    color: var(--accent);
+    background: var(--muted);
+    color: var(--foreground);
+    text-decoration: none;
+  }
+
+  .links a.active {
+    background: var(--brand-100);
+    color: var(--brand-700);
+  }
+
+  :global(html[data-theme='dark']) .links a.active {
+    background: var(--brand-100);
+    color: var(--brand-300);
   }
 </style>

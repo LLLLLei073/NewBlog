@@ -1,0 +1,54 @@
+---
+/* 为 <pre> 代码块添加复制按钮和语言标签的客户端脚本。
+   在 BaseLayout 中引入，全局生效。 */
+---
+
+<script>
+  function enhanceCodeBlocks() {
+    document.querySelectorAll('pre').forEach((pre) => {
+      if (pre.parentElement?.classList.contains('code-block-wrapper')) return;
+
+      const code = pre.querySelector('code');
+      if (!code) return;
+
+      // 语言标签
+      const langClass = [...code.classList].find((c) => c.startsWith('language-'));
+      const lang = langClass ? langClass.replace('language-', '') : '';
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'code-block-wrapper';
+      pre.parentNode?.insertBefore(wrapper, pre);
+      wrapper.appendChild(pre);
+
+      if (lang) {
+        const label = document.createElement('span');
+        label.className = 'code-lang';
+        label.textContent = lang;
+        wrapper.appendChild(label);
+      }
+
+      const btn = document.createElement('button');
+      btn.className = 'code-copy';
+      btn.type = 'button';
+      btn.setAttribute('aria-label', '复制代码');
+      btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`;
+      wrapper.appendChild(btn);
+
+      btn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(code.textContent ?? '');
+          btn.classList.add('copied');
+          btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
+          setTimeout(() => {
+            btn.classList.remove('copied');
+            btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`;
+          }, 2000);
+        } catch {
+          /* clipboard API unavailable */
+        }
+      });
+    });
+  }
+
+  enhanceCodeBlocks();
+</script>

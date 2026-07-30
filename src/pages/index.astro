@@ -1,59 +1,214 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import Tag from '../components/Tag.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts.ts';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
 ---
 
 <BaseLayout>
-  <section class="hero">
+  <section class="hero container">
+    <p class="eyebrow">博客</p>
     <h1>{SITE_TITLE}</h1>
-    <p>{SITE_DESCRIPTION}</p>
+    <p class="lead">{SITE_DESCRIPTION}</p>
     <div class="actions">
-      <a href="/blog" class="button primary">浏览文章</a>
-      <a href="/about" class="button">关于我</a>
+      <a href="/blog" class="btn primary">浏览文章</a>
+      <a href="/about" class="btn secondary">关于我</a>
     </div>
   </section>
+
+  {
+    posts.length > 0 && (
+      <section class="recent container">
+        <div class="section-head">
+          <h2>最新文章</h2>
+          <a href="/blog" class="more">查看全部</a>
+        </div>
+        <div class="post-grid">
+          {posts.map((post) => (
+            <a href={`/blog/${post.id}/`} class="post-card">
+              <div class="post-meta">
+                <FormattedDate date={post.data.pubDate} />
+              </div>
+              <h3>{post.data.title}</h3>
+              <p>{post.data.description}</p>
+              {post.data.tags.length > 0 && (
+                <div class="tags">
+                  {post.data.tags.slice(0, 3).map((tag) => (
+                    <Tag tag={tag} />
+                  ))}
+                </div>
+              )}
+            </a>
+          ))}
+        </div>
+      </section>
+    )
+  }
 </BaseLayout>
 
 <style>
   .hero {
-    padding: 5rem 0 3rem;
+    padding: 5rem 1.5rem 3rem;
     text-align: center;
   }
+
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--primary);
+    margin: 0 0 1rem;
+  }
+
   .hero h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    line-height: 1.1;
+    font-size: 3.25rem;
+    line-height: 1.05;
+    margin: 0 0 1rem;
   }
-  .hero p {
-    font-size: 1.25rem;
-    color: var(--muted);
-    max-width: 500px;
+
+  .lead {
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    color: var(--muted-foreground);
+    max-width: 480px;
     margin: 0 auto 2rem;
+    line-height: 1.6;
   }
+
   .actions {
     display: flex;
-    gap: 1rem;
+    gap: 0.75rem;
     justify-content: center;
     flex-wrap: wrap;
   }
-  .button {
-    padding: 0.75rem 1.5rem;
-    border-radius: var(--radius);
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0 1.25rem;
+    border: 1px solid transparent;
+    border-radius: var(--radius-md);
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .btn.primary {
+    background: var(--primary);
+    color: var(--primary-foreground);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn.primary:hover {
+    background: var(--brand-600);
+    color: var(--primary-foreground);
+    box-shadow: var(--shadow-md);
+  }
+
+  .btn.secondary {
+    background: var(--card);
+    color: var(--foreground);
+    border-color: var(--border);
+  }
+
+  .btn.secondary:hover {
+    background: var(--muted);
+    color: var(--foreground);
+  }
+
+  .recent {
+    padding: 2rem 1.5rem 1rem;
+  }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-head h2 {
+    font-size: 1.5rem;
+    margin: 0;
+  }
+
+  .more {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--primary);
+  }
+
+  .post-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .post-card {
+    display: block;
+    padding: 1.5rem;
+    background: var(--popover);
     border: 1px solid var(--border);
-    color: var(--text);
-    font-weight: 600;
-    transition: all 0.2s ease;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-xs);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
   }
-  .button:hover {
+
+  .post-card:hover {
     text-decoration: none;
-    background: var(--accent-light);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--border-400);
   }
-  .button.primary {
-    background: var(--accent);
-    color: white;
-    border-color: var(--accent);
+
+  .post-meta {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--muted-foreground);
+    margin-bottom: 0.5rem;
   }
-  .button.primary:hover {
-    opacity: 0.9;
+
+  .post-card h3 {
+    font-size: 1.25rem;
+    margin: 0 0 0.5rem;
+    color: var(--card-foreground);
+  }
+
+  .post-card p {
+    margin: 0 0 0.75rem;
+    font-size: 0.9rem;
+    color: var(--muted-foreground);
+    line-height: 1.5;
+  }
+
+  .tags {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 640px) {
+    .hero {
+      padding: 3.5rem 1.5rem 2.5rem;
+    }
+    .hero h1 {
+      font-size: 2.4rem;
+    }
+    .lead {
+      font-size: 1.05rem;
+    }
   }
 </style>

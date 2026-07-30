@@ -1,49 +1,192 @@
-/* Global styles */
+/* ============================================================
+   Claude Design System — Blog Application
+   Warm, editorial, reading-first. Terra-cotta accent on paper.
+   ============================================================ */
+
+/* ---- Brand fonts: Newsreader (display) + Poppins (UI) + Lora (reading) + Geist Mono (code) ---- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Newsreader:ital,opsz,wght@0,18..72,300;0,18..72,400;0,18..72,500;1,18..72,400&family=Geist+Mono:wght@400;500&display=swap');
+
 :root {
-  --bg: #ffffff;
-  --text: #1a1a1a;
-  --muted: #666666;
-  --accent: #4f39fa;
-  --accent-light: #e8e5ff;
-  --border: #e5e5e5;
-  --radius: 12px;
+  /* ===== Primitive scales ===== */
+  /* brand — terra-cotta */
+  --brand-50: #fbf2ed;
+  --brand-100: #f4e0d5;
+  --brand-200: #ebc6b6;
+  --brand-300: #e0a892;
+  --brand-400: #d6866a;
+  --brand-500: #c96442;
+  --brand-600: #b0562f;
+  --brand-700: #934828;
+  --brand-800: #753a22;
+  --brand-900: #582e1d;
+
+  /* text */
+  --text-50: #f6f5f0;
+  --text-100: #ece9de;
+  --text-200: #dad9d4;
+  --text-300: #c2c0b6;
+  --text-400: #9b988c;
+  --text-500: #6e6d68;
+  --text-600: #535146;
+  --text-700: #46443b;
+  --text-800: #3d3929;
+  --text-900: #28261b;
+
+  /* background */
+  --bg-50: #ffffff;
+  --bg-100: #faf9f5;
+  --bg-200: #f5f4ef;
+  --bg-300: #ede9de;
+  --bg-400: #e3e0d4;
+
+  /* border */
+  --border-300: #dad9d4;
+  --border-400: #cdcabf;
+  --border-500: #b4b2a7;
+
+  /* ===== Semantic tokens ===== */
+  --background: var(--bg-100);
+  --card: var(--bg-200);
+  --popover: var(--bg-50);
+  --muted: var(--bg-300);
+  --foreground: var(--text-800);
+  --card-foreground: var(--text-900);
+  --muted-foreground: var(--text-500);
+  --primary: var(--brand-500);
+  --primary-foreground: #ffffff;
+  --secondary: #e9e6dc;
+  --secondary-foreground: var(--text-600);
+  --accent: var(--secondary);
+  --accent-foreground: var(--text-900);
+  --border: var(--border-300);
+  --ring: var(--brand-500);
+
+  /* ===== Non-color tokens ===== */
+  --font-display: Newsreader, Georgia, ui-serif, serif;
+  --font-sans: Poppins, ui-sans-serif, system-ui, sans-serif;
+  --font-serif: Lora, Georgia, ui-serif, serif;
+  --font-mono: 'Geist Mono', ui-monospace, monospace;
+
+  --spacing: 0.25rem;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+
+  --shadow-2xs: 0 1px 3px 0px rgba(0, 0, 0, 0.05);
+  --shadow-xs: 0 1px 3px 0px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px 0px rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 1px 3px 0px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 1px 3px 0px rgba(0, 0, 0, 0.1), 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 1px 3px 0px rgba(0, 0, 0, 0.1), 0 8px 10px -1px rgba(0, 0, 0, 0.1);
+
   --max-width: 720px;
 }
 
+:root[data-theme="dark"] {
+  --brand-50: #3a2a22;
+  --brand-100: #4d3528;
+  --brand-200: #6b4533;
+  --brand-300: #8a5740;
+  --brand-400: #b0683f;
+  --brand-500: #d97757;
+  --brand-600: #e08d6f;
+  --brand-700: #e8a98f;
+  --brand-800: #f0c6b3;
+  --brand-900: #f8e3d8;
+
+  --text-50: #1b1b19;
+  --text-100: #2c2c2b;
+  --text-200: #46443b;
+  --text-300: #6e6d68;
+  --text-400: #908e84;
+  --text-500: #b7b5a9;
+  --text-600: #c3c0b6;
+  --text-700: #d8d6cd;
+  --text-800: #f1f1ef;
+  --text-900: #faf9f5;
+
+  --bg-50: #1b1b19;
+  --bg-100: #262624;
+  --bg-200: #2c2c2b;
+  --bg-300: #30302e;
+  --bg-400: #3e3e38;
+
+  --border-300: #3e3e38;
+  --border-400: #4a4a43;
+  --border-500: #52514a;
+
+  --background: var(--bg-100);
+  --card: var(--bg-200);
+  --popover: var(--bg-50);
+  --muted: var(--bg-300);
+  --foreground: var(--text-800);
+  --card-foreground: var(--text-900);
+  --muted-foreground: var(--text-500);
+  --primary: var(--brand-500);
+  --primary-foreground: #141413;
+  --secondary: var(--text-900);
+  --secondary-foreground: var(--bg-300);
+  --accent: #1a1915;
+  --accent-foreground: #f5f4ee;
+  --border: var(--border-300);
+  --ring: var(--brand-500);
+}
+
+/* Fallback: when no explicit theme is set yet, follow the system preference
+   so that first paint (before the inline script runs) still looks right. */
 @media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0d1117;
-    --text: #c9d1d9;
-    --muted: #8b949e;
-    --accent: #8b80ff;
-    --accent-light: #1f1b4d;
-    --border: #30363d;
+  :root:not([data-theme="light"]):not([data-theme="dark"]) {
+    color-scheme: dark;
   }
 }
 
+/* ===== Base reset ===== */
 * {
   box-sizing: border-box;
 }
 
 html {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  background: var(--bg);
-  color: var(--text);
+  font-family: var(--font-serif);
+  background: var(--background);
+  color: var(--foreground);
   line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+/* ===== Typography ===== */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--card-foreground);
+  line-height: 1.2;
 }
 
 a {
-  color: var(--accent);
+  color: var(--primary);
   text-decoration: none;
+  transition: color 0.15s ease;
 }
 
 a:hover {
-  text-decoration: underline;
+  color: var(--brand-600);
 }
 
 img {
@@ -53,40 +196,177 @@ img {
 }
 
 code {
-  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-  background: var(--accent-light);
+  font-family: var(--font-mono);
+  background: var(--muted);
   padding: 0.15em 0.4em;
-  border-radius: 6px;
-  font-size: 0.9em;
+  border-radius: var(--radius-sm);
+  font-size: 0.875em;
+  color: var(--card-foreground);
 }
 
 pre {
-  padding: 1rem;
+  padding: 1rem 1.25rem;
   border-radius: var(--radius);
   overflow-x: auto;
-  background: #161b22 !important;
+  border: 1px solid var(--border);
+  font-size: 0.875rem;
+  line-height: 1.6;
 }
 
 pre code {
   background: transparent;
   padding: 0;
+  color: inherit;
+}
+
+/* Shiki dual theme — dark mode switch */
+:root[data-theme='dark'] .astro-code,
+:root[data-theme='dark'] .astro-code span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
 }
 
 blockquote {
-  border-left: 4px solid var(--accent);
+  border-left: 3px solid var(--primary);
   margin: 1.5rem 0;
-  padding-left: 1rem;
-  color: var(--muted);
+  padding: 0.25rem 0 0.25rem 1.25rem;
+  color: var(--muted-foreground);
+  font-style: italic;
 }
 
 hr {
   border: none;
   border-top: 1px solid var(--border);
-  margin: 2rem 0;
+  margin: 2.5rem 0;
 }
 
+/* ===== Table (Markdown rendered) ===== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.9rem;
+}
+
+th {
+  text-align: left;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted-foreground);
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+td {
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--foreground);
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+/* ===== Layout ===== */
 .container {
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 0 1.5rem;
+}
+
+/* ===== Article prose (rendered Markdown) ===== */
+.prose {
+  font-family: var(--font-serif);
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--foreground);
+}
+
+.prose h2 {
+  font-size: 1.6rem;
+  margin: 2.25rem 0 0.75rem;
+}
+
+.prose h3 {
+  font-size: 1.3rem;
+  margin: 2rem 0 0.5rem;
+}
+
+.prose p {
+  margin: 1rem 0;
+}
+
+.prose ul, .prose ol {
+  padding-left: 1.25rem;
+  margin: 1rem 0;
+}
+
+.prose li {
+  margin: 0.35rem 0;
+}
+
+.prose strong {
+  color: var(--card-foreground);
+  font-weight: 600;
+}
+
+.prose img {
+  border-radius: var(--radius);
+  margin: 1.5rem 0;
+}
+
+/* ===== Code block enhancements: language label + copy button ===== */
+.code-block-wrapper {
+  position: relative;
+}
+
+.code-block-wrapper .code-lang {
+  position: absolute;
+  top: 0.45rem;
+  left: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted-foreground);
+  opacity: 0.7;
+  pointer-events: none;
+  user-select: none;
+}
+
+.code-block-wrapper .code-copy {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--popover);
+  color: var(--muted-foreground);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+}
+
+.code-block-wrapper:hover .code-copy {
+  opacity: 1;
+}
+
+.code-block-wrapper .code-copy:hover {
+  background: var(--muted);
+  color: var(--foreground);
+}
+
+.code-block-wrapper .code-copy.copied {
+  color: #22c55e;
+  border-color: #22c55e;
 }

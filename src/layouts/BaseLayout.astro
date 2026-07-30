@@ -2,6 +2,8 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import ThemeInit from '../components/ThemeInit.astro';
+import CodeBlockEnhance from '../components/CodeBlockEnhance.astro';
 import { SITE_TITLE, SITE_DESCRIPTION, SITE_URL } from '../consts.ts';
 
 interface Props {
@@ -10,7 +12,7 @@ interface Props {
   image?: string;
 }
 
-const { title, description = SITE_DESCRIPTION, image = '/blog-placeholder-1.jpg' } = Astro.props;
+const { title, description = SITE_DESCRIPTION, image = '/favicon.svg' } = Astro.props;
 const pageTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
@@ -34,6 +36,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={new URL(image, SITE_URL)} />
+    <ThemeInit />
   </head>
   <body>
     <Header />
@@ -41,5 +44,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       <slot />
     </main>
     <Footer />
+    <CodeBlockEnhance />
   </body>
 </html>
