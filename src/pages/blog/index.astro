@@ -1,0 +1,74 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout title="文章" description="所有博客文章">
+  <section>
+    <h1>文章</h1>
+    <ul class="post-list">
+      {
+        posts.map((post) => (
+          <li>
+            <a href={`/NewBlog/blog/${post.id}/`} class="post-link">
+              <span class="title">{post.data.title}</span>
+              <span class="desc">{post.data.description}</span>
+              <span class="date"><FormattedDate date={post.data.pubDate} /></span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  section {
+    padding: 2rem 0;
+  }
+  h1 {
+    margin-bottom: 1.5rem;
+  }
+  .post-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .post-link {
+    display: block;
+    padding: 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .post-link:hover {
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    transform: translateY(-2px);
+  }
+  .title {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.35rem;
+  }
+  .desc {
+    display: block;
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+  }
+  .date {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+</style>

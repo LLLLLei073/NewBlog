@@ -1,0 +1,24 @@
+---
+import { SITE_AUTHOR, SITE_TITLE } from '../consts.ts';
+---
+
+<footer>
+  <div class="container">
+    <p>&copy; {new Date().getFullYear()} {SITE_AUTHOR}. 保留所有权利。</p>
+    <p>使用 <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> 构建 · 部署在 <a href="https://pages.github.com" target="_blank" rel="noopener">GitHub Pages</a></p>
+  </div>
+</footer>
+
+<style>
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 0;
+    margin-top: 3rem;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  footer p {
+    margin: 0.25rem 0;
+  }
+</style>

@@ -1,0 +1,50 @@
+---
+import { SITE_TITLE } from '../consts.ts';
+---
+
+<header>
+  <nav class="container">
+    <a href="/NewBlog/" class="brand">{SITE_TITLE}</a>
+    <div class="links">
+      <a href="/NewBlog/">首页</a>
+      <a href="/NewBlog/blog">文章</a>
+      <a href="/NewBlog/about">关于</a>
+      <a href="/NewBlog/rss.xml">RSS</a>
+    </div>
+  </nav>
+</header>
+
+<style>
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    background: color-mix(in srgb, var(--bg) 95%, transparent);
+    backdrop-filter: blur(8px);
+    z-index: 10;
+  }
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .brand {
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: var(--text);
+  }
+  .links {
+    display: flex;
+    gap: 1.25rem;
+    font-size: 0.95rem;
+  }
+  .links a {
+    color: var(--muted);
+  }
+  .links a:hover {
+    color: var(--accent);
+  }
+</style>

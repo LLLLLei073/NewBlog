@@ -1,0 +1,72 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from './BaseLayout.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+
+type Props = CollectionEntry<'blog'>['data'];
+
+const { title, description, pubDate, updatedDate, heroImage, tags } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} image={heroImage}>
+  <article>
+    {heroImage && <img src={heroImage} alt={title} />}
+    <div class="meta">
+      <h1>{title}</h1>
+      <div class="date">
+        <FormattedDate date={pubDate} />
+        {
+          updatedDate && (
+            <span class="updated">
+              · 更新于 <FormattedDate date={updatedDate} />
+            </span>
+          )
+        }
+      </div>
+      {
+        tags.length > 0 && (
+          <div class="tags">
+            {tags.map((tag) => (
+              <span class="tag">#{tag}</span>
+            ))}
+          </div>
+        )
+      }
+    </div>
+    <slot />
+  </article>
+</BaseLayout>
+
+<style>
+  article {
+    padding: 2rem 0;
+  }
+  h1 {
+    font-size: 2.25rem;
+    line-height: 1.2;
+    margin: 0.5rem 0 0.75rem;
+  }
+  .meta {
+    margin-bottom: 2rem;
+  }
+  .date {
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+  .updated {
+    color: var(--muted);
+  }
+  .tags {
+    margin-top: 0.75rem;
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+  .tag {
+    font-size: 0.85rem;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+  }
+</style>
