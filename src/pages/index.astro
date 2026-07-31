@@ -1,14 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import FormattedDate from '../components/FormattedDate.astro';
-import Tag from '../components/Tag.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts.ts';
-import { getCollection } from 'astro:content';
+import { CATEGORIES, groupPostsByCategory, type CategoryDef } from '../utils/categories.ts';
 
-const posts = (await getCollection('blog'))
-  .filter((post) => !post.data.draft)
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .slice(0, 3);
+const PER_COLUMN = 4;
+const groups = await groupPostsByCategory();
 ---
 
 <BaseLayout>
@@ -24,37 +21,58 @@ const posts = (await getCollection('blog'))
     </div>
   </section>
 
-  {
-    posts.length > 0 && (
-      <section class="recent container">
-        <div class="section-head">
-          <h2>最新文章</h2>
-          <a href="/blog" class="more">查看全部 &rarr;</a>
-        </div>
-        <div class="post-grid">
-          {posts.map((post) => (
-            <a href={`/blog/${post.id}/`} class="post-card">
-              <div class="post-meta">
-                <FormattedDate date={post.data.pubDate} />
-              </div>
-              <h3>{post.data.title}</h3>
-              <p>{post.data.description}</p>
-              {post.data.tags.length > 0 && (
-                <div class="tags">
-                  {post.data.tags.slice(0, 3).map((tag) => (
-                    <Tag tag={tag} />
+  <section class="columns container-wide">
+    <div class="columns-head">
+      <h2>专栏</h2>
+      <p class="columns-lead">按主题分门别类，每篇只归入一个专栏。</p>
+    </div>
+
+    <div class="columns-grid">
+      {
+        CATEGORIES.map((cat) => {
+          const posts = groups.get(cat) ?? [];
+          return (
+            <section class="column" data-category={cat.id}>
+              <header class="column-head">
+                <a href={cat.path} class="column-title">
+                  <h3>{cat.label}</h3>
+                </a>
+                <span class="column-count">{posts.length}</span>
+              </header>
+              <p class="column-desc">{cat.description}</p>
+
+              {posts.length > 0 ? (
+                <ul class="column-list">
+                  {posts.slice(0, PER_COLUMN).map((post) => (
+                    <li>
+                      <a href={`/blog/${post.id}/`} class="column-item">
+                        <span class="column-item-title">{post.data.title}</span>
+                        <span class="column-item-date">
+                          <FormattedDate date={post.data.pubDate} />
+                        </span>
+                      </a>
+                    </li>
                   ))}
-                </div>
+                </ul>
+              ) : (
+                <p class="column-empty">暂无文章</p>
               )}
-            </a>
-          ))}
-        </div>
-      </section>
-    )
-  }
+
+              {posts.length > PER_COLUMN && (
+                <a href={cat.path} class="column-more">
+                  查看全部 {posts.length} 篇 &rarr;
+                </a>
+              )}
+            </section>
+          );
+        })
+      }
+    </div>
+  </section>
 </BaseLayout>
 
 <style>
+  /* ===== Hero (unchanged) ===== */
   .hero {
     padding: 4.5rem 0 3rem;
     text-align: center;
@@ -131,84 +149,196 @@ const posts = (await getCollection('blog'))
     text-decoration: none;
   }
 
-  .recent {
-    padding: 2rem 1.5rem 1rem;
+  /* ===== Columns ===== */
+  .columns {
+    padding: 2.5rem 1.5rem 1rem;
   }
 
-  .section-head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    margin-bottom: 1.25rem;
+  .columns-head {
+    margin-bottom: 1.5rem;
   }
 
-  .section-head h2 {
+  .columns-head h2 {
     font-size: 1.35rem;
+    margin: 0 0 0.3rem;
+  }
+
+  .columns-lead {
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
     margin: 0;
   }
 
-  .more {
-    font-family: var(--font-sans);
-    font-size: 0.82rem;
-    font-weight: 500;
-    color: var(--primary);
-  }
-
-  .post-grid {
+  .columns-grid {
     display: grid;
-    gap: 0.875rem;
+    gap: 1rem;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 
-  .post-card {
-    display: block;
-    padding: 1.25rem;
+  .column {
+    display: flex;
+    flex-direction: column;
+    min-width: 0; /* allow children to ellipsis instead of stretching the grid */
+    padding: 1.1rem 1.1rem 0.9rem;
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
   }
 
-  .post-card:hover {
-    text-decoration: none;
+  .column:hover {
     border-color: var(--brand-300);
     box-shadow: var(--shadow-sm);
   }
 
-  .post-meta {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    color: var(--muted-foreground);
-    margin-bottom: 0.4rem;
+  .column-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.35rem;
   }
 
-  .post-card h3 {
-    font-size: 1.15rem;
-    margin: 0 0 0.4rem;
+  .column-title {
     color: var(--card-foreground);
   }
 
-  .post-card p {
-    margin: 0 0 0.65rem;
-    font-size: 0.875rem;
-    color: var(--muted-foreground);
-    line-height: 1.5;
+  .column-title:hover {
+    color: var(--primary);
+    text-decoration: none;
   }
 
-  .tags {
+  .column-head h3 {
+    font-size: 1.05rem;
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .column-count {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--muted-foreground);
+    background: var(--muted);
+    padding: 0.1rem 0.4rem;
+    border-radius: var(--radius-full);
+    white-space: nowrap;
+  }
+
+  .column-desc {
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    color: var(--muted-foreground);
+    line-height: 1.5;
+    margin: 0 0 0.85rem;
+  }
+
+  .column-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 0.85rem;
     display: flex;
-    gap: 0.4rem;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .column-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.5rem 0.6rem;
+    margin: 0 -0.6rem;
+    border-radius: var(--radius-sm);
+    transition: background-color 0.12s ease;
+  }
+
+  .column-item:hover {
+    background: var(--muted);
+    text-decoration: none;
+  }
+
+  .column-item-title {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--card-foreground);
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .column-item-date {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--muted-foreground);
+  }
+
+  .column-empty {
+    font-family: var(--font-sans);
+    font-size: 0.82rem;
+    color: var(--muted-foreground);
+    margin: 0 0 0.85rem;
+    font-style: italic;
+  }
+
+  .column-more {
+    margin-top: auto;
+    padding-top: 0.5rem;
+    font-family: var(--font-sans);
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--primary);
+  }
+
+  .column-more:hover {
+    color: var(--brand-600);
+    text-decoration: none;
+  }
+
+  /* ===== Responsive: 5 cols → 3 cols → 2 cols → 1 col ===== */
+  @media (max-width: 1100px) {
+    .columns-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 720px) {
+    .columns-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 560px) {
+    .columns-grid {
+      grid-template-columns: 1fr; /* 手机单列，触控舒适 */
+    }
+    .columns {
+      padding: 1.75rem 1rem 0.5rem;
+    }
   }
 
   @media (max-width: 640px) {
     .hero {
-      padding: 3rem 0 2.5rem;
+      padding: 2.75rem 0 2.25rem;
     }
     .hero h1 {
-      font-size: 2.1rem;
+      font-size: 2rem;
     }
     .lead {
       font-size: 0.95rem;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .hero h1 {
+      font-size: 1.7rem;
+    }
+    .actions .btn {
+      flex: 1;
+      min-width: 0;
     }
   }
 </style>

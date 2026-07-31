@@ -1,23 +1,48 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
+import {
+  CATEGORIES,
+  getPostCategory,
+  type CategoryDef,
+} from '../../utils/categories.ts';
 import { getCollection } from 'astro:content';
 
-const posts = (await getCollection('blog'))
-  .filter((post) => !post.data.draft)
+export async function getStaticPaths() {
+  return CATEGORIES.map((cat) => ({
+    params: { category: cat.id },
+    props: { category: cat },
+  }));
+}
+
+interface Props {
+  category: CategoryDef;
+}
+
+const { category } = Astro.props;
+
+const allPosts = (await getCollection('blog'))
+  .filter((p) => !p.data.draft)
+  .filter((p) => getPostCategory(p.data).id === category.id)
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
-<BaseLayout title="文章" description="所有博客文章">
+<BaseLayout
+  title={`专栏：${category.label}`}
+  description={category.description}
+>
   <section class="container">
     <div class="page-head">
-      <p class="eyebrow">文章</p>
-      <h1>所有文章</h1>
-      <p class="lead">共 {posts.length} 篇文章，记录技术与生活的思考。</p>
+      <p class="eyebrow">专栏</p>
+      <h1>{category.label}</h1>
+      <p class="lead">{category.description}</p>
+      <p class="count">共 {allPosts.length} 篇文章</p>
+      <a href="/" class="back">&larr; 返回首页</a>
     </div>
-    <div class="post-list">
-      {
-        posts.map((post) => (
+
+    {allPosts.length > 0 ? (
+      <div class="post-list">
+        {allPosts.map((post) => (
           <a href={`/blog/${post.id}/`} class="post-card">
             <div class="post-meta">
               <FormattedDate date={post.data.pubDate} />
@@ -25,9 +50,11 @@ const posts = (await getCollection('blog'))
             <h2>{post.data.title}</h2>
             <p class="desc">{post.data.description}</p>
           </a>
-        ))
-      }
-    </div>
+        ))}
+      </div>
+    ) : (
+      <p class="empty">这个专栏还没有文章，敬请期待。</p>
+    )}
   </section>
 </BaseLayout>
 
@@ -57,7 +84,28 @@ const posts = (await getCollection('blog'))
     font-family: var(--font-sans);
     font-size: 0.95rem;
     color: var(--muted-foreground);
-    margin: 0;
+    margin: 0 0 0.4rem;
+  }
+
+  .count {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--muted-foreground);
+    margin: 0 0 0.75rem;
+  }
+
+  .back {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--muted-foreground);
+    transition: color 0.15s ease;
+  }
+
+  .back:hover {
+    color: var(--primary);
+    text-decoration: none;
   }
 
   .post-list {
@@ -102,6 +150,15 @@ const posts = (await getCollection('blog'))
     line-height: 1.5;
   }
 
+  .empty {
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    color: var(--muted-foreground);
+    font-style: italic;
+    padding: 2rem 0 3rem;
+    text-align: center;
+  }
+
   @media (max-width: 640px) {
     .page-head {
       padding: 1.75rem 0 1.25rem;
@@ -119,6 +176,9 @@ const posts = (await getCollection('blog'))
     }
     .post-card h2 {
       font-size: 1.05rem;
+    }
+    .empty {
+      padding: 1.5rem 0 2rem;
     }
   }
 </style>

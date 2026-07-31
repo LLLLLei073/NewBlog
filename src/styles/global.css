@@ -8,17 +8,17 @@
 
 :root {
   /* ===== Primitive scales ===== */
-  /* brand — emerald */
-  --brand-50: #ecfdf5;
-  --brand-100: #d1fae5;
-  --brand-200: #a7f3d0;
-  --brand-300: #6ee7b7;
-  --brand-400: #34d399;
-  --brand-500: #10b981;
-  --brand-600: #059669;
-  --brand-700: #047857;
-  --brand-800: #065f46;
-  --brand-900: #064e3b;
+  /* brand — Claude-style warm orange (进阶米→棕橙) */
+  --brand-50:  #fdf5f0;
+  --brand-100: #fae7da;
+  --brand-200: #f4ceb1;
+  --brand-300: #ecaf85;
+  --brand-400: #e2905b;
+  --brand-500: #d97757;   /* 主色：Claude 橙 */
+  --brand-600: #c4613e;
+  --brand-700: #a44b2d;
+  --brand-800: #7d3a24;
+  --brand-900: #5a2a1b;
 
   /* text */
   --text-50: #f9fafb;
@@ -34,15 +34,15 @@
 
   /* background */
   --bg-50: #ffffff;
-  --bg-100: #ffffff;
-  --bg-200: #f9fafb;
-  --bg-300: #f3f4f6;
-  --bg-400: #e5e7eb;
+  --bg-100: #fbf8f5;     /* 微微的暖白，比纯白高级 */
+  --bg-200: #f5f1ec;
+  --bg-300: #ece6df;
+  --bg-400: #ddd4c9;
 
   /* border */
-  --border-300: #e5e7eb;
-  --border-400: #d1d5db;
-  --border-500: #9ca3af;
+  --border-300: #ece6df;
+  --border-400: #ddd4c9;
+  --border-500: #c2b6a8;
 
   /* ===== Semantic tokens ===== */
   --background: var(--bg-100);
@@ -60,6 +60,11 @@
   --accent-foreground: var(--brand-700);
   --border: var(--border-300);
   --ring: var(--brand-500);
+
+  /* 玻璃层 alpha（让星空从卡片底色透出） */
+  --card-alpha: 1;          /* 亮版：完全不透明，纯白卡 */
+  --card-border-alpha: 1;   /* 亮版：实色边框 */
+  --header-bg: color-mix(in srgb, var(--background) 92%, transparent);
 
   /* ===== Non-color tokens ===== */
   --font-sans: 'Inter', 'Noto Sans SC', ui-sans-serif, system-ui, -apple-system, sans-serif;
@@ -88,38 +93,43 @@
 }
 
 :root[data-theme="dark"] {
-  --brand-50: #022c22;
-  --brand-100: #064e3b;
-  --brand-200: #065f46;
-  --brand-300: #047857;
-  --brand-400: #059669;
-  --brand-500: #10b981;
-  --brand-600: #34d399;
-  --brand-700: #6ee7b7;
-  --brand-800: #a7f3d0;
-  --brand-900: #d1fae5;
+  /* 暖橙品牌在暗色下提亮，保持识别度 */
+  --brand-50:  #2a1810;
+  --brand-100: rgba(245, 158, 107, 0.18);  /* 玻璃：品牌色淡染 */
+  --brand-200: rgba(245, 158, 107, 0.30);
+  --brand-300: #f7b389;                      /* hover 高亮：浅橙 */
+  --brand-400: #f59e6b;                      /* active 文字：温暖橙光 */
+  --brand-500: #f59e6b;
+  --brand-600: #f7b389;
+  --brand-700: #fac7a6;
+  --brand-800: #fdd9c1;
+  --brand-900: #fdebdc;
 
-  --text-50: #0f172a;
-  --text-100: #1e293b;
-  --text-200: #334155;
-  --text-300: #475569;
-  --text-400: #64748b;
-  --text-500: #94a3b8;
-  --text-600: #cbd5e1;
-  --text-700: #e2e8f0;
-  --text-800: #f1f5f9;
-  --text-900: #f8fafc;
+  /* 文字：偏冷的米白，与暖背景形成层次 */
+  --text-50:  #0b0d1a;
+  --text-100: #131628;
+  --text-200: #1c2038;
+  --text-300: #2a2f4a;
+  --text-400: #5b6280;
+  --text-500: #8a90ad;
+  --text-600: #b3b8ce;
+  --text-700: #d4d8e8;
+  --text-800: #e8ebf5;
+  --text-900: #f5f6fb;
 
-  --bg-50: #0f172a;
-  --bg-100: #0f172a;
-  --bg-200: #1e293b;
-  --bg-300: #334155;
-  --bg-400: #475569;
+  /* 深空蓝紫底 */
+  --bg-50:  #0b0d1a;   /* 页面背景：深空蓝紫 */
+  --bg-100: #0b0d1a;
+  --bg-200: #15182b;   /* 卡片 */
+  --bg-300: #1f2340;   /* 悬浮/选中 */
+  --bg-400: #2a2f4a;
 
-  --border-300: #1e293b;
-  --border-400: #334155;
-  --border-500: #475569;
+  /* 边框：低对比度蓝紫 */
+  --border-300: #1c2038;
+  --border-400: #2a2f4a;
+  --border-500: #3d4360;
 
+  /* ===== Semantic tokens ===== */
   --background: var(--bg-100);
   --card: var(--bg-200);
   --popover: var(--bg-200);
@@ -128,13 +138,51 @@
   --card-foreground: var(--text-900);
   --muted-foreground: var(--text-500);
   --primary: var(--brand-500);
-  --primary-foreground: #0f172a;
+  --primary-foreground: #0b0d1a;
   --secondary: var(--bg-300);
   --secondary-foreground: var(--text-600);
   --accent: var(--brand-100);
-  --accent-foreground: var(--brand-300);
+  --accent-foreground: var(--brand-400);
   --border: var(--border-300);
   --ring: var(--brand-500);
+
+  /* 暗版：卡片半透明（让星空透出），border 更弱，header 玻璃感更强 */
+  --card-alpha: 0.42;
+  --card-border-alpha: 0.4;
+  --header-bg: color-mix(in srgb, #0b0d1a 60%, transparent);
+
+  /* 把 card / border 本身改成带 alpha 的值，所有使用这些 token 的容器自动变玻璃 */
+  --card: rgba(21, 24, 43, 0.42);
+  --popover: rgba(21, 24, 43, 0.72);
+  --muted: rgba(31, 35, 64, 0.5);
+  --border: rgba(61, 67, 96, 0.4);
+  --border-300: rgba(28, 32, 56, 0.4);
+  --border-400: rgba(42, 47, 74, 0.5);
+  --secondary: rgba(31, 35, 64, 0.5);
+  --accent: rgba(196, 97, 62, 0.18);
+}
+
+/* ===== Glass effect (dark mode only) =====
+   给所有卡片/输入框/搜索框真正的玻璃感：半透明 + 模糊背景。
+   用 :where() 包裹避免 cssnano 把 :root[data-theme] 优化掉。 */
+:where(:root[data-theme='dark']) .column,
+:where(:root[data-theme='dark']) .post-card,
+:where(:root[data-theme='dark']) .search-box input,
+:where(:root[data-theme='dark']) .code-block-wrapper,
+:where(:root[data-theme='dark']) #theme-toggle,
+:where(:root[data-theme='dark']) .btn.secondary,
+:where(:root[data-theme='dark']) .tag,
+:where(:root[data-theme='dark']) .empty,
+:where(:root[data-theme='dark']) .column-empty {
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+}
+
+:where(:root[data-theme='dark']) .column,
+:where(:root[data-theme='dark']) .post-card {
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.06),
+    0 8px 24px -8px rgba(0, 0, 0, 0.5);
 }
 
 /* Fallback: when no explicit theme is set yet, follow the system preference */
@@ -151,13 +199,15 @@
 
 html {
   font-family: var(--font-sans);
-  background: var(--background);
+  background: transparent;
   color: var(--foreground);
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
   font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  -webkit-text-size-adjust: 100%; /* 防止 iOS 横屏时自动放大字体 */
+  text-size-adjust: 100%;
 }
 
 body {
@@ -166,6 +216,107 @@ body {
   display: flex;
   flex-direction: column;
   background: var(--background);
+  padding-bottom: env(safe-area-inset-bottom); /* iPhone 底部安全区 */
+}
+
+/* ===== Starfield (dark mode only) =====
+   三层叠加：
+   1) body::before — box-shadow 散点（CSS 经典星空技法，绝对定位全屏）
+   2) body 背景 — 星云径向渐变（4 团紫/青/橙/紫）
+   3) body::after — 顶部高斯模糊的光晕层，强化宇宙氛围 */
+:root[data-theme='dark'] body {
+  position: relative;
+  background-color: #0b0d1a;
+  background-image:
+    /* 星云层 — 4 团 */
+    radial-gradient(ellipse 1400px 900px at 12% -8%,  rgba(167, 89, 154, 0.35), transparent 60%),
+    radial-gradient(ellipse 1200px 800px at 95% 110%, rgba(56, 130, 200, 0.30), transparent 55%),
+    radial-gradient(ellipse 1000px 600px at 50% 100%, rgba(217, 119, 87, 0.20), transparent 60%),
+    radial-gradient(ellipse 800px  600px at 80% 30%,  rgba(120, 80, 180, 0.22), transparent 55%),
+    /* 深空基底渐变 */
+    linear-gradient(180deg, #07091a 0%, #0b0d1a 40%, #0d1024 100%);
+  background-attachment: fixed, fixed, fixed, fixed, fixed;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+/* 繁星层：用 box-shadow 投射大量随机亮点，绝对定位在 body 全屏 */
+:root[data-theme='dark'] body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  /* 一个 1×1 透明点光源，靠 box-shadow 散射 */
+  width: 1px;
+  height: 1px;
+  background: transparent;
+  box-shadow:
+    /* 大星（亮） */
+    120px 80px   rgba(255,255,255,0.95),
+    340px 220px  rgba(255,255,255,0.9),
+    580px 60px   rgba(255,255,255,0.85),
+    780px 340px  rgba(255,255,255,0.95),
+    980px 180px  rgba(255,255,255,0.85),
+    1180px 420px rgba(255,255,255,0.9),
+    210px 460px  rgba(255,255,255,0.8),
+    460px 580px  rgba(255,255,255,0.85),
+    720px 540px  rgba(255,255,255,0.9),
+    1020px 660px rgba(255,255,255,0.8),
+    1300px 700px rgba(255,255,255,0.85),
+    /* 中星 */
+    80px  260px  rgba(255,255,255,0.7),
+    200px 160px  rgba(255,255,255,0.65),
+    300px 380px  rgba(255,255,255,0.7),
+    420px 240px  rgba(255,255,255,0.6),
+    540px 400px  rgba(255,255,255,0.7),
+    640px 120px  rgba(255,255,255,0.65),
+    760px 460px  rgba(255,255,255,0.7),
+    880px 280px  rgba(255,255,255,0.6),
+    940px 580px  rgba(255,255,255,0.7),
+    1080px 80px  rgba(255,255,255,0.65),
+    1180px 320px rgba(255,255,255,0.7),
+    1280px 540px rgba(255,255,255,0.6),
+    /* 小星（密） */
+    40px  100px  rgba(255,255,255,0.5),
+    100px 320px  rgba(255,255,255,0.45),
+    160px 540px  rgba(255,255,255,0.5),
+    240px 40px   rgba(255,255,255,0.45),
+    320px 280px  rgba(255,255,255,0.5),
+    400px 480px  rgba(255,255,255,0.45),
+    480px 200px  rgba(255,255,255,0.5),
+    520px 620px  rgba(255,255,255,0.45),
+    600px 80px   rgba(255,255,255,0.5),
+    680px 360px  rgba(255,255,255,0.45),
+    740px 600px  rgba(255,255,255,0.5),
+    820px 200px  rgba(255,255,255,0.45),
+    900px 440px  rgba(255,255,255,0.5),
+    960px 60px   rgba(255,255,255,0.45),
+    1040px 380px rgba(255,255,255,0.5),
+    1120px 240px rgba(255,255,255,0.45),
+    1200px 480px rgba(255,255,255,0.5),
+    1260px 120px rgba(255,255,255,0.45),
+    1320px 320px rgba(255,255,255,0.5),
+    140px 700px  rgba(255,255,255,0.45),
+    380px 720px  rgba(255,255,255,0.5),
+    620px 760px  rgba(255,255,255,0.45),
+    860px 720px  rgba(255,255,255,0.5),
+    1100px 780px rgba(255,255,255,0.45);
+  animation: twinkle 4s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+  0%   { opacity: 0.85; }
+  50%  { opacity: 1; }
+  100% { opacity: 0.7; }
+}
+
+/* 主要内容需要在星空之上 */
+:root[data-theme='dark'] main,
+:root[data-theme='dark'] header,
+:root[data-theme='dark'] footer {
+  position: relative;
+  z-index: 1;
 }
 
 main {
@@ -257,6 +408,19 @@ table {
   font-size: 0.9rem;
 }
 
+/* 移动端：表格可横向滚动，不撑破页面 */
+.prose table {
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (min-width: 769px) {
+  .prose table {
+    display: table;
+  }
+}
+
 th {
   text-align: left;
   font-family: var(--font-sans);
@@ -282,6 +446,12 @@ tr:last-child td {
 /* ===== Layout ===== */
 .container {
   max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.container-wide {
+  max-width: 1280px;
   margin: 0 auto;
   padding: 0 1.5rem;
 }

@@ -2,7 +2,6 @@
 title: '欢迎来到我的博客'
 description: '这是博客的第一篇文章，介绍如何使用 Astro 构建静态博客并部署到 GitHub Pages。'
 pubDate: '2025-08-01'
-tags: ['astro', 'github-pages', '博客']
 ---
 
 欢迎来到我的博客！这是第一篇文章。
@@ -29,7 +28,7 @@ tags: ['astro', 'github-pages', '博客']
 title: '文章标题'
 description: '文章描述'
 pubDate: '2025-08-01'
-tags: ['标签']
+category: 'algorithm'
 ---
 ```
 

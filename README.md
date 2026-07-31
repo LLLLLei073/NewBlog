@@ -30,12 +30,24 @@ npm run dev
 title: '文章标题'
 description: '文章描述'
 pubDate: '2025-08-01'
-tags: ['标签']
+category: 'algorithm'   # 可选：algorithm | math | music | game，不填归入「其他」
 ---
+```
 
 正文内容……
 ```
 
+## 专栏
+
+文章按 `category` 前置字段归入五大专栏（`/categories/<id>/`）：
+
+| category | 专栏 | 路径 |
+| --- | --- | --- |
+| `algorithm` | 算法 | `/categories/algorithm/` |
+| `math` | 数学 | `/categories/math/` |
+| `music` | 音乐 | `/categories/music/` |
+| `game` | 游戏 | `/categories/game/` |
+| （不填） | 其他 | `/categories/others/` |
 ## 部署
 
 1. 在 GitHub 创建仓库 `yourusername/NewBlog`。

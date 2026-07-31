@@ -9,7 +9,8 @@ const blog = defineCollection({
     pubDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
     heroImage: z.string().optional(),
-    tags: z.array(z.string()).default([]),
+    /** 所属专栏：algorithm | math | music | game；未填则归入「其他」。 */
+    category: z.enum(['algorithm', 'math', 'music', 'game']).optional(),
     draft: z.boolean().default(false),
   }),
 });
