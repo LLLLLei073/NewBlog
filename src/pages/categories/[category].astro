@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
+import PostSearch from '../../components/PostSearch.astro';
 import {
   CATEGORIES,
   getPostCategory,
@@ -41,17 +42,29 @@ const allPosts = (await getCollection('blog'))
     </div>
 
     {allPosts.length > 0 ? (
-      <div class="post-list">
-        {allPosts.map((post) => (
-          <a href={`/blog/${post.id}/`} class="post-card">
-            <div class="post-meta">
-              <FormattedDate date={post.data.pubDate} />
-            </div>
-            <h2>{post.data.title}</h2>
-            <p class="desc">{post.data.description}</p>
-          </a>
-        ))}
-      </div>
+      <>
+        <PostSearch
+          total={allPosts.length}
+          placeholder={`搜索${category.label}专栏的文章...`}
+        />
+        <div class="post-list">
+          {allPosts.map((post) => (
+            <a
+              href={`/blog/${post.id}/`}
+              class="post-card"
+              data-search-item
+              data-title={post.data.title}
+              data-desc={post.data.description}
+            >
+              <div class="post-meta">
+                <FormattedDate date={post.data.pubDate} />
+              </div>
+              <h2>{post.data.title}</h2>
+              <p class="desc">{post.data.description}</p>
+            </a>
+          ))}
+        </div>
+      </>
     ) : (
       <p class="empty">这个专栏还没有文章，敬请期待。</p>
     )}

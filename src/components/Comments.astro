@@ -1,0 +1,92 @@
+---
+/* GitHub Discussions 评论区（giscus）。
+   前置条件：仓库已启用 Discussions，且已安装 giscus App（https://github.com/apps/giscus）。 */
+
+const lightTheme = new URL('/giscus/light.css', Astro.site).href;
+const darkTheme = new URL('/giscus/dark.css', Astro.site).href;
+---
+
+<section class="comments" aria-label="评论区">
+  <h2 class="comments-title">评论</h2>
+
+  <script
+    is:inline
+    src="https://giscus.app/client.js"
+    data-repo="LLLLLei073/NewBlog"
+    data-repo-id="R_kgDOToND8g"
+    data-category="General"
+    data-category-id="DIC_kwDOToND8s4DCY0P"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme={lightTheme}
+    data-lang="zh-CN"
+    data-loading="lazy"
+    async
+  ></script>
+
+  <noscript>
+    <p class="comments-noscript">评论功能需要启用 JavaScript。你也可以直接在
+      <a href="https://github.com/LLLLLei073/NewBlog/discussions" target="_blank" rel="noopener">GitHub Discussions</a>
+      里参与讨论。</p>
+  </noscript>
+</section>
+
+<style>
+  .comments {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .comments-title {
+    font-size: 1.25rem;
+    margin: 0 0 1rem;
+  }
+
+  .comments-noscript {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    color: var(--muted-foreground);
+  }
+</style>
+
+<script define:vars={{ lightTheme, darkTheme }}>
+  function initCommentsThemeSync() {
+    const giscusOrigin = 'https://giscus.app';
+
+    const currentTheme = () => {
+      const theme = document.documentElement.getAttribute('data-theme');
+      return theme === 'dark' ? darkTheme : lightTheme;
+    };
+
+    // 向 giscus iframe 发送主题切换指令
+    const syncTheme = () => {
+      const iframe = document.querySelector('iframe.giscus-frame');
+      if (!iframe || !iframe.contentWindow) return;
+      iframe.contentWindow.postMessage(
+        { giscus: { setConfig: { theme: currentTheme() } } },
+        giscusOrigin,
+      );
+    };
+
+    // 1) giscus iframe 加载完成后立即同步一次（保证首次渲染就带对的主题）
+    window.addEventListener('message', (e: MessageEvent) => {
+      if (e.origin !== giscusOrigin) return;
+      const data = e.data as { giscus?: unknown };
+      if (data && data.giscus) syncTheme();
+    });
+
+    // 2) 博客主题切换时跟随（MutationObserver 比监听按钮点击更可靠）
+    const observer = new MutationObserver(() => syncTheme());
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme'],
+    });
+  }
+
+  document.addEventListener('astro:after-swap', initCommentsThemeSync);
+  initCommentsThemeSync();
+</script>

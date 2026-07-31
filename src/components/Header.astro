@@ -32,13 +32,6 @@ const navItems = [
       </div>
     </div>
     <div class="right">
-      <div class="search-box">
-        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="11" cy="11" r="8"/>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-        </svg>
-        <input type="search" id="site-search" placeholder="搜索文章..." aria-label="搜索文章" />
-      </div>
       <a href="/rss.xml" class="rss-link" title="RSS">RSS</a>
       <ThemeToggle />
       <button
@@ -159,41 +152,6 @@ const navItems = [
     gap: 0.5rem;
   }
 
-  .search-box {
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-
-  .search-icon {
-    position: absolute;
-    left: 0.6rem;
-    color: var(--muted-foreground);
-    pointer-events: none;
-  }
-
-  .search-box input {
-    font-family: var(--font-sans);
-    font-size: 0.82rem;
-    background: var(--muted);
-    border: 1px solid transparent;
-    border-radius: var(--radius-md);
-    padding: 0.4rem 0.7rem 0.4rem 2rem;
-    color: var(--foreground);
-    outline: none;
-    width: 160px;
-    transition: border-color 0.15s ease, width 0.2s ease;
-  }
-
-  .search-box input::placeholder {
-    color: var(--muted-foreground);
-  }
-
-  .search-box input:focus {
-    border-color: var(--ring);
-    width: 220px;
-  }
-
   .rss-link {
     font-family: var(--font-sans);
     font-size: 0.82rem;
@@ -265,10 +223,6 @@ const navItems = [
   @media (max-width: 768px) {
     .nav-links {
       display: none;
-    }
-
-    .search-box {
-      display: none; /* 搜索尚未实现，移动端让位给菜单 */
     }
 
     .menu-toggle {

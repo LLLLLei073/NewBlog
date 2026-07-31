@@ -2,6 +2,7 @@
 import BaseLayout from './BaseLayout.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import TableOfContents from '../components/TableOfContents.astro';
+import Comments from '../components/Comments.astro';
 import { getCollection } from 'astro:content';
 import { readingTime } from '../utils/reading';
 
@@ -120,6 +121,11 @@ const currentPath = Astro.url.pathname;
       }
     </article>
 
+    <!-- 评论区 -->
+    <div class="comments-wrap">
+      <Comments />
+    </div>
+
     <!-- 右侧边栏:文章目录 -->
     {hasToc && (
       <aside class="sidebar-right">
@@ -215,6 +221,18 @@ const currentPath = Astro.url.pathname;
   :global(html[data-theme='dark']) .nav-item a.active {
     background: var(--brand-100);
     color: var(--brand-300);
+  }
+
+  /* 评论区：默认占满单栏，宽屏时跟随正文列 */
+  .comments-wrap {
+    grid-column: 1 / -1;
+    min-width: 0;
+  }
+
+  @media (min-width: 1024px) {
+    .comments-wrap {
+      grid-column: 2;
+    }
   }
 
   /* 右侧 TOC */

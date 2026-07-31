@@ -1,0 +1,146 @@
+---
+/* 专栏内搜索：实时过滤当前页面的文章列表。
+   用法：把文章卡片挂上 data-search-item + data-title + data-desc 属性，
+   然后在列表上方放置本组件。支持空格分词（多关键词 AND 匹配）。 */
+
+interface Props {
+  total: number;
+  placeholder?: string;
+}
+
+const { total, placeholder = '搜索当前专栏的文章...' } = Astro.props;
+---
+
+<div class="post-search" data-post-search>
+  <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <circle cx="11" cy="11" r="8"/>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+  </svg>
+  <input
+    type="search"
+    data-search-input
+    placeholder={placeholder}
+    aria-label={placeholder}
+    autocomplete="off"
+  />
+  <span class="search-count" data-search-count>共 {total} 篇</span>
+  <p class="search-empty" data-search-empty hidden>没有匹配的文章，换个关键词试试。</p>
+</div>
+
+<style>
+  .post-search {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+    margin: 1rem 0 1.25rem;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 0.85rem;
+    color: var(--muted-foreground);
+    pointer-events: none;
+  }
+
+  .post-search input {
+    flex: 1;
+    min-width: 0;
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 0.65rem 0.9rem 0.65rem 2.4rem;
+    color: var(--foreground);
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .post-search input::placeholder {
+    color: var(--muted-foreground);
+  }
+
+  .post-search input:focus {
+    border-color: var(--ring);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 20%, transparent);
+  }
+
+  /* 清除按钮配色（WebKit） */
+  .post-search input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    margin-left: 0.25rem;
+    cursor: pointer;
+    background: var(--muted-foreground);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round'%3E%3Cline x1='18' y1='6' x2='6' y2='18'/%3E%3Cline x1='6' y1='6' x2='18' y2='18'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round'%3E%3Cline x1='18' y1='6' x2='6' y2='18'/%3E%3Cline x1='6' y1='6' x2='18' y2='18'/%3E%3C/svg%3E") center / contain no-repeat;
+  }
+
+  .search-count {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--muted-foreground);
+    white-space: nowrap;
+    padding-right: 0.25rem;
+  }
+
+  .search-empty {
+    flex-basis: 100%;
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    color: var(--muted-foreground);
+    font-style: italic;
+    padding: 1rem 0 0.5rem;
+    text-align: center;
+    margin: 0;
+  }
+
+  @media (max-width: 480px) {
+    .search-count {
+      display: none; /* 超窄屏让位给输入框 */
+    }
+  }
+</style>
+
+<script>
+  function initPostSearch() {
+    const root = document.querySelector('[data-post-search]');
+    if (!root) return;
+
+    const input = root.querySelector('[data-search-input]') as HTMLInputElement;
+    const count = root.querySelector('[data-search-count]') as HTMLElement;
+    const empty = root.querySelector('[data-search-empty]') as HTMLElement;
+    const items = Array.from(document.querySelectorAll('[data-search-item]')) as HTMLElement[];
+
+    const total = items.length;
+
+    const normalize = (s: string) => s.toLowerCase();
+
+    const filter = () => {
+      const terms = normalize(input.value).split(/\s+/).filter(Boolean);
+      let visible = 0;
+
+      for (const item of items) {
+        const haystack = normalize(
+          `${item.getAttribute('data-title') ?? ''} ${item.getAttribute('data-desc') ?? ''}`
+        );
+        const match = terms.every((t) => haystack.includes(t));
+        item.classList.toggle('hidden', !match);
+        if (match) visible++;
+      }
+
+      count.textContent =
+        terms.length === 0 ? `共 ${total} 篇` : `找到 ${visible} / ${total} 篇`;
+      empty.hidden = !(terms.length > 0 && visible === 0);
+    };
+
+    input.addEventListener('input', filter);
+  }
+
+  // 支持页面导航后重新绑定（Astro View Transitions）
+  document.addEventListener('astro:after-swap', initPostSearch);
+  initPostSearch();
+</script>

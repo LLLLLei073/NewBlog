@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
+import PostSearch from '../../components/PostSearch.astro';
 import { getCollection } from 'astro:content';
 
 const posts = (await getCollection('blog'))
@@ -15,10 +16,17 @@ const posts = (await getCollection('blog'))
       <h1>所有文章</h1>
       <p class="lead">共 {posts.length} 篇文章，记录技术与生活的思考。</p>
     </div>
+    <PostSearch total={posts.length} placeholder="搜索全部文章..." />
     <div class="post-list">
       {
         posts.map((post) => (
-          <a href={`/blog/${post.id}/`} class="post-card">
+          <a
+            href={`/blog/${post.id}/`}
+            class="post-card"
+            data-search-item
+            data-title={post.data.title}
+            data-desc={post.data.description}
+          >
             <div class="post-meta">
               <FormattedDate date={post.data.pubDate} />
             </div>

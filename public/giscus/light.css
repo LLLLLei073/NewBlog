@@ -1,0 +1,51 @@
+/* giscus 亮色主题 — 对齐博客 Claude 橙配色（#d97757 主色） */
+main {
+  /* 画布 */
+  --color-canvas-default: #ffffff;
+  --color-canvas-overlay: #ffffff;
+  --color-canvas-inset: #fbf8f5;
+  --color-canvas-subtle: #f5f1ec;
+
+  /* 文字 */
+  --color-fg-default: #1f2937;
+  --color-fg-muted: #6b7280;
+  --color-fg-subtle: #9ca3af;
+
+  /* 边框 */
+  --color-border-default: #ece6df;
+  --color-border-muted: #ece6df;
+  --color-neutral-muted: rgba(236, 230, 223, 0.8);
+
+  /* 品牌橙 accent */
+  --color-accent-fg: #a44b2d;
+  --color-accent-emphasis: #d97757;
+  --color-accent-muted: rgba(217, 119, 87, 0.3);
+  --color-accent-subtle: #fdf5f0;
+
+  /* 按钮 */
+  --color-btn-bg: #f5f1ec;
+  --color-btn-border: #ece6df;
+  --color-btn-hover-bg: #ece6df;
+  --color-btn-hover-border: #ddd4c9;
+  --color-btn-selected-bg: #ece6df;
+  --color-btn-primary-bg: #d97757;
+  --color-btn-primary-hover-bg: #c4613e;
+  --color-btn-primary-selected-bg: #c4613e;
+  --color-btn-primary-fg: #ffffff;
+  --color-btn-primary-disabled-bg: #f4ceb1;
+
+  /* 输入框 */
+  --color-input-bg: #ffffff;
+  --color-input-border: #ddd4c9;
+
+  /* 焦点环 / 其他状态 */
+  --color-primer-shadow-focus: 0 0 0 3px rgba(217, 119, 87, 0.3);
+  --color-danger-fg: #cf222e;
+  --color-danger-subtle: #ffebe9;
+  --color-success-fg: #1a7f37;
+  --color-attention-fg: #9a6700;
+  --color-attention-subtle: #fff8c5;
+
+  /* 选中列表项 */
+  --color-action-list-item-inline-selected-bg: rgba(217, 119, 87, 0.1);
+}

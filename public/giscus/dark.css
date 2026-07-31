@@ -1,0 +1,51 @@
+/* giscus 暗色主题 — 对齐博客深空蓝紫 + 橙色（#f59e6b） */
+main {
+  /* 画布：与博客卡片/深空底色一致 */
+  --color-canvas-default: #15182b;
+  --color-canvas-overlay: #1c2038;
+  --color-canvas-inset: #0b0d1a;
+  --color-canvas-subtle: #1f2340;
+
+  /* 文字 */
+  --color-fg-default: #e8ebf5;
+  --color-fg-muted: #b3b8ce;
+  --color-fg-subtle: #8a90ad;
+
+  /* 边框 */
+  --color-border-default: #2a2f4a;
+  --color-border-muted: #1c2038;
+  --color-neutral-muted: rgba(42, 47, 74, 0.6);
+
+  /* 品牌橙 accent */
+  --color-accent-fg: #f7b389;
+  --color-accent-emphasis: #f59e6b;
+  --color-accent-muted: rgba(245, 158, 107, 0.3);
+  --color-accent-subtle: rgba(245, 158, 107, 0.15);
+
+  /* 按钮 */
+  --color-btn-bg: #1f2340;
+  --color-btn-border: #2a2f4a;
+  --color-btn-hover-bg: #2a2f4a;
+  --color-btn-hover-border: #3d4360;
+  --color-btn-selected-bg: #2a2f4a;
+  --color-btn-primary-bg: #f59e6b;
+  --color-btn-primary-hover-bg: #f7b389;
+  --color-btn-primary-selected-bg: #f7b389;
+  --color-btn-primary-fg: #0b0d1a;
+  --color-btn-primary-disabled-bg: #5a2a1b;
+
+  /* 输入框 */
+  --color-input-bg: #15182b;
+  --color-input-border: #2a2f4a;
+
+  /* 焦点环 / 其他状态 */
+  --color-primer-shadow-focus: 0 0 0 3px rgba(245, 158, 107, 0.35);
+  --color-danger-fg: #ff7b72;
+  --color-danger-subtle: rgba(248, 81, 73, 0.15);
+  --color-success-fg: #56d364;
+  --color-attention-fg: #eac54f;
+  --color-attention-subtle: rgba(234, 197, 79, 0.15);
+
+  /* 选中列表项 */
+  --color-action-list-item-inline-selected-bg: rgba(245, 158, 107, 0.15);
+}

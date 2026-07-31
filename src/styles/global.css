@@ -167,7 +167,7 @@
    用 :where() 包裹避免 cssnano 把 :root[data-theme] 优化掉。 */
 :where(:root[data-theme='dark']) .column,
 :where(:root[data-theme='dark']) .post-card,
-:where(:root[data-theme='dark']) .search-box input,
+:where(:root[data-theme='dark']) .post-search input,
 :where(:root[data-theme='dark']) .code-block-wrapper,
 :where(:root[data-theme='dark']) #theme-toggle,
 :where(:root[data-theme='dark']) .btn.secondary,
@@ -311,9 +311,8 @@ body {
   100% { opacity: 0.7; }
 }
 
-/* 主要内容需要在星空之上 */
+/* 主要内容需要在星空之上（header 自带 z-index:40 + sticky，不能覆盖） */
 :root[data-theme='dark'] main,
-:root[data-theme='dark'] header,
 :root[data-theme='dark'] footer {
   position: relative;
   z-index: 1;
@@ -454,6 +453,11 @@ tr:last-child td {
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 1.5rem;
+}
+
+/* 专栏内搜索：过滤后隐藏文章卡片（需覆盖各页面的 scoped display） */
+[data-search-item].hidden {
+  display: none !important;
 }
 
 /* ===== Article prose (rendered Markdown) ===== */
