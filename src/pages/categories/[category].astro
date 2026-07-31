@@ -134,13 +134,14 @@ const allPosts = (await getCollection('blog'))
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.2s ease;
   }
 
   .post-card:hover {
     text-decoration: none;
     border-color: var(--brand-300);
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
   }
 
   .post-meta {

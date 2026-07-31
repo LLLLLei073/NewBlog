@@ -32,12 +32,17 @@
     background: var(--popover);
     color: var(--muted-foreground);
     cursor: pointer;
-    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
   }
 
   #theme-toggle:hover {
     background: var(--muted);
     color: var(--foreground);
+  }
+
+  #theme-toggle:active {
+    transform: scale(0.9);
   }
 
   #theme-toggle:focus-visible {
@@ -61,14 +66,29 @@
 
     const root = document.documentElement;
 
-    function apply(theme: 'light' | 'dark') {
-      root.setAttribute('data-theme', theme);
-      localStorage.setItem('theme', theme);
+    function apply(theme: 'light' | 'dark', x?: number, y?: number) {
+      const set = () => {
+        root.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+      };
+
+      // 支持 View Transitions API 的浏览器：从按钮位置圆形扩散切换主题
+      if (document.startViewTransition && x !== undefined && y !== undefined) {
+        root.style.setProperty('--vt-x', `${x}px`);
+        root.style.setProperty('--vt-y', `${y}px`);
+        document.startViewTransition(set);
+      } else {
+        set();
+      }
     }
 
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', (e) => {
       const current = root.getAttribute('data-theme');
-      apply(current === 'dark' ? 'light' : 'dark');
+      const next: 'light' | 'dark' = current === 'dark' ? 'light' : 'dark';
+      const rect = btn.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+      apply(next, x, y);
     });
   }
 

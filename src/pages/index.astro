@@ -123,7 +123,8 @@ const groups = await groupPostsByCategory();
     font-family: var(--font-sans);
     font-size: 0.875rem;
     font-weight: 500;
-    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .btn.primary {
@@ -184,12 +185,13 @@ const groups = await groupPostsByCategory();
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.2s ease;
   }
 
   .column:hover {
     border-color: var(--brand-300);
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
   }
 
   .column-head {

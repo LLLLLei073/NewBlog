@@ -133,6 +133,55 @@ const currentPath = Astro.url.pathname;
       </aside>
     )}
   </div>
+
+  <!-- 移动端悬浮导航（桌面端有侧栏，自动隐藏） -->
+  <button
+    id="fab-nav"
+    class="fab"
+    type="button"
+    aria-label="文章导航"
+    aria-expanded="false"
+    aria-controls="fab-panel"
+  >
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/>
+      <line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
+    </svg>
+  </button>
+
+  <div id="fab-panel" class="fab-panel" aria-hidden="true">
+    <div class="fab-tabs">
+      <button id="fab-tab-toc" class="fab-tab active" type="button">目录</button>
+      <button id="fab-tab-posts" class="fab-tab" type="button">文章</button>
+    </div>
+    <div id="fab-body-toc" class="fab-body">
+      {toc.length > 0 ? (
+        <ul class="fab-list">
+          {toc.map((h) => (
+            <li>
+              <a href={`#${h.slug}`} class:list={['fab-item', h.depth === 3 ? 'sub' : '']}>{h.text}</a>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p class="fab-empty">这篇文章没有目录</p>
+      )}
+    </div>
+    <div id="fab-body-posts" class="fab-body" hidden>
+      <ul class="fab-list">
+        {allPosts.map((post) => (
+          <li>
+            <a
+              href={`/blog/${post.id}/`}
+              class:list={['fab-item', { active: currentPath === `/blog/${post.id}/` }]}
+            >
+              {post.data.title}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
 </BaseLayout>
 
 <style>
@@ -314,13 +363,14 @@ const currentPath = Astro.url.pathname;
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.2s ease;
   }
 
   .pn-link:hover {
     text-decoration: none;
     border-color: var(--brand-300);
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
   }
 
   .pn-link.older {
@@ -346,6 +396,158 @@ const currentPath = Astro.url.pathname;
     line-height: 1.35;
   }
 
+  /* ===== 移动端悬浮导航（FAB） ===== */
+  .fab {
+    position: fixed;
+    right: 1rem;
+    bottom: calc(1rem + env(safe-area-inset-bottom));
+    width: 50px;
+    height: 50px;
+    display: none; /* 桌面端有侧栏，隐藏 */
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: var(--radius-full);
+    background: var(--primary);
+    color: var(--primary-foreground);
+    box-shadow: var(--shadow-lg);
+    cursor: pointer;
+    z-index: 45;
+    transition: transform 0.15s ease, background-color 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .fab:hover {
+    background: var(--brand-600);
+  }
+
+  .fab:active {
+    transform: scale(0.9);
+  }
+
+  .fab-panel {
+    position: fixed;
+    right: 1rem;
+    bottom: calc(4.75rem + env(safe-area-inset-bottom));
+    width: min(320px, calc(100vw - 2rem));
+    max-height: 55vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--popover);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xl);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    z-index: 45;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px) scale(0.98);
+    transform-origin: bottom right;
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  }
+
+  .fab-panel.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+  }
+
+  .fab-tabs {
+    display: flex;
+    gap: 0.25rem;
+    padding: 0.5rem 0.5rem 0;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .fab-tab {
+    flex: 1;
+    padding: 0.5rem 0.75rem;
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--muted-foreground);
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    cursor: pointer;
+    transition: color 0.15s ease, border-color 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .fab-tab:hover {
+    color: var(--foreground);
+  }
+
+  .fab-tab.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+  }
+
+  .fab-body {
+    padding: 0.5rem;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .fab-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
+  .fab-item {
+    display: block;
+    padding: 0.55rem 0.75rem;
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+    border-radius: var(--radius-md);
+    line-height: 1.4;
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+
+  .fab-item:hover {
+    background: var(--muted);
+    color: var(--foreground);
+    text-decoration: none;
+  }
+
+  .fab-item.active {
+    background: var(--brand-100);
+    color: var(--brand-700);
+    font-weight: 500;
+  }
+
+  :global(html[data-theme='dark']) .fab-item.active {
+    color: var(--brand-300);
+  }
+
+  .fab-item.sub {
+    padding-left: 1.5rem;
+    font-size: 0.82rem;
+  }
+
+  .fab-empty {
+    font-size: 0.85rem;
+    color: var(--muted-foreground);
+    padding: 0.75rem;
+    text-align: center;
+    margin: 0;
+  }
+
+  /* FAB：<1280px 显示（桌面三栏有悬浮 TOC；两栏/窄屏用悬浮球导航） */
+  @media (max-width: 1279px) {
+    .fab {
+      display: inline-flex;
+    }
+  }
+
   /* 三栏布局:大屏显示 */
   @media (min-width: 1280px) {
     .post-layout {
@@ -356,15 +558,28 @@ const currentPath = Astro.url.pathname;
       display: block;
     }
 
+    /* TOC 改为 fixed 悬浮：固定在视口右侧，滚动始终跟随，不停留在文章末尾 */
     .sidebar-right {
       display: block;
+      position: fixed;
+      right: 1.25rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 200px;
+      max-height: calc(100vh - var(--header-height) - 3rem);
+      z-index: 25;
     }
 
     .sidebar-right :global(.toc) {
-      position: sticky;
-      top: calc(var(--header-height) + 1.5rem);
       max-height: calc(100vh - var(--header-height) - 3rem);
       overflow-y: auto;
+      padding: 0.9rem 0.9rem 0.9rem 0.75rem;
+      background: var(--popover);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-md);
+      backdrop-filter: blur(14px) saturate(140%);
+      -webkit-backdrop-filter: blur(14px) saturate(140%);
     }
 
     .post-main {
@@ -453,5 +668,53 @@ const currentPath = Astro.url.pathname;
     update();
   }
 
+  function initFab() {
+    const fab = document.getElementById('fab-nav');
+    const panel = document.getElementById('fab-panel');
+    if (!fab || !panel) return;
+
+    const setOpen = (open: boolean) => {
+      fab.setAttribute('aria-expanded', String(open));
+      panel.classList.toggle('open', open);
+      panel.setAttribute('aria-hidden', String(!open));
+    };
+
+    fab.addEventListener('click', () => {
+      setOpen(fab.getAttribute('aria-expanded') !== 'true');
+    });
+
+    // 面板内点击链接后关闭
+    panel.addEventListener('click', (e: Event) => {
+      const target = e.target as HTMLElement;
+      if (target.closest('a')) setOpen(false);
+    });
+
+    // Tab 切换：目录 / 文章
+    const tabs = Array.from(panel.querySelectorAll('.fab-tab')) as HTMLButtonElement[];
+    const bodies = [panel.querySelector('#fab-body-toc'), panel.querySelector('#fab-body-posts')];
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => {
+        tabs.forEach((t) => t.classList.toggle('active', t === tab));
+        bodies.forEach((b, j) => {
+          if (b) b.toggleAttribute('hidden', j !== i);
+        });
+      });
+    });
+
+    // ESC 关闭
+    document.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false);
+    });
+
+    // 视口变宽（回到桌面有悬浮 TOC）时复位
+    const mq = window.matchMedia('(min-width: 1280px)');
+    mq.addEventListener('change', (e) => {
+      if (e.matches) setOpen(false);
+    });
+  }
+
+  // 支持页面导航后重新绑定（Astro View Transitions）
+  document.addEventListener('astro:after-swap', initFab);
   initProgress();
+  initFab();
 </script>

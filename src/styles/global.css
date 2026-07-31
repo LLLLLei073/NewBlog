@@ -570,6 +570,55 @@ tr:last-child td {
   border-color: var(--brand-500);
 }
 
+/* ===== 主题切换过渡动画（View Transitions API） =====
+   圆形扩散：新主题从按钮位置（--vt-x/--vt-y）向外展开。
+   不支持的浏览器（旧 Safari 等）自动回退为直接切换。 */
+::view-transition-old(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+  mix-blend-mode: normal;
+  animation: theme-reveal 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes theme-reveal {
+  from {
+    clip-path: circle(0% at var(--vt-x, 50%) var(--vt-y, 50%));
+  }
+  to {
+    clip-path: circle(150% at var(--vt-x, 50%) var(--vt-y, 50%));
+  }
+}
+
+/* ===== 交互微动效 ===== */
+/* 消除移动端点击蓝色高亮 */
+button,
+a,
+input,
+.tag,
+.post-card,
+.column,
+.pn-link {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 按压回弹：凡带 hover 反馈的交互元素，按下时轻微缩小 */
+button:active,
+.btn:active,
+.menu-toggle:active,
+.rss-link:active,
+.nav-links a:active,
+.mobile-link:active,
+.mobile-rss:active,
+.tag:active,
+.post-card:active,
+.column:active,
+.pn-link:active {
+  transform: scale(0.97);
+}
+
 /* ===== Scrollbar ===== */
 ::-webkit-scrollbar {
   width: 8px;
