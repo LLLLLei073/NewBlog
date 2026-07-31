@@ -2,8 +2,8 @@
 /* GitHub Discussions 评论区（giscus）。
    前置条件：仓库已启用 Discussions，且已安装 giscus App（https://github.com/apps/giscus）。 */
 
-const lightTheme = new URL('/giscus/light.css', Astro.site).href;
-const darkTheme = new URL('/giscus/dark.css', Astro.site).href;
+const lightTheme = new URL('/giscus/light.css', Astro.url.origin).href;
+const darkTheme = new URL('/giscus/dark.css', Astro.url.origin).href;
 ---
 
 <section class="comments" aria-label="评论区">
@@ -65,21 +65,38 @@ const darkTheme = new URL('/giscus/dark.css', Astro.site).href;
     // 向 giscus iframe 发送主题切换指令
     const syncTheme = () => {
       const iframe = document.querySelector('iframe.giscus-frame');
-      if (!iframe || !iframe.contentWindow) return;
+      if (!iframe || !iframe.contentWindow) return false;
       iframe.contentWindow.postMessage(
         { giscus: { setConfig: { theme: currentTheme() } } },
         giscusOrigin,
       );
+      return true;
     };
 
-    // 1) giscus iframe 加载完成后立即同步一次（保证首次渲染就带对的主题）
+    // 主动轮询：iframe 懒加载出现后反复下发主题，直到对齐。
+    // 解决「首次加载即深色」时初始 data-theme(light) 与页面主题不一致、
+    // 且 giscus 初始化消息早于本监听器注册导致错过同步的问题。
+    const trySync = (attempt = 0) => {
+      if (syncTheme()) {
+        // iframe 已存在但内部可能还在加载，补发几次确保收到
+        if (attempt < 6) setTimeout(() => trySync(attempt + 1), 400);
+      } else if (attempt < 20) {
+        // iframe 还没出现（懒加载），继续等
+        setTimeout(() => trySync(attempt + 1), 400);
+      }
+    };
+
+    // 1) 立即尝试（覆盖首次加载即深色的场景）
+    trySync();
+
+    // 2) giscus iframe 发来任何消息（加载完成/高度变化）时也同步一次
     window.addEventListener('message', (e: MessageEvent) => {
       if (e.origin !== giscusOrigin) return;
       const data = e.data as { giscus?: unknown };
       if (data && data.giscus) syncTheme();
     });
 
-    // 2) 博客主题切换时跟随（MutationObserver 比监听按钮点击更可靠）
+    // 3) 博客主题切换时跟随（MutationObserver 比监听按钮点击更可靠）
     const observer = new MutationObserver(() => syncTheme());
     observer.observe(document.documentElement, {
       attributes: true,
