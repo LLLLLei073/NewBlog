@@ -2,8 +2,8 @@
 /* GitHub Discussions 评论区（giscus）。
    前置条件：仓库已启用 Discussions，且已安装 giscus App（https://github.com/apps/giscus）。 */
 
-const lightTheme = new URL('/giscus/light.css', Astro.url.origin).href;
-const darkTheme = new URL('/giscus/dark.css', Astro.url.origin).href;
+const lightTheme = new URL('/giscus/light.css', Astro.site).href;
+const darkTheme = new URL('/giscus/dark.css', Astro.site).href;
 ---
 
 <section class="comments" aria-label="评论区">
@@ -73,27 +73,35 @@ const darkTheme = new URL('/giscus/dark.css', Astro.url.origin).href;
       return true;
     };
 
-    // 主动轮询：iframe 懒加载出现后反复下发主题，直到对齐。
-    // 解决「首次加载即深色」时初始 data-theme(light) 与页面主题不一致、
-    // 且 giscus 初始化消息早于本监听器注册导致错过同步的问题。
+    // widget 活跃信号：收到 giscus 消息后补发几次（widget 的 message 监听器
+    // 在 useEffect 里注册，晚于它发出首条消息，所以收到消息≠监听器已就绪）
+    let widgetActive = false;
+
+    // 主动轮询：iframe 懒加载出现后反复下发主题。
+    // setConfig 幂等，widget 监听器注册后的任意一次都会生效。
+    // 窗口 90s 兜底：widget 加载（JS bundle + GitHub API）可能很慢。
     const trySync = (attempt = 0) => {
       if (syncTheme()) {
-        // iframe 已存在但内部可能还在加载，补发几次确保收到
-        if (attempt < 6) setTimeout(() => trySync(attempt + 1), 400);
-      } else if (attempt < 20) {
+        if (attempt < 90) setTimeout(() => trySync(attempt + 1), 1000);
+      } else if (attempt < 90) {
         // iframe 还没出现（懒加载），继续等
-        setTimeout(() => trySync(attempt + 1), 400);
+        setTimeout(() => trySync(attempt + 1), 1000);
       }
     };
 
     // 1) 立即尝试（覆盖首次加载即深色的场景）
     trySync();
 
-    // 2) giscus iframe 发来任何消息（加载完成/高度变化）时也同步一次
+    // 2) giscus iframe 发来消息 = widget 活跃：补发 5 次确保监听器就绪后必达
     window.addEventListener('message', (e: MessageEvent) => {
       if (e.origin !== giscusOrigin) return;
       const data = e.data as { giscus?: unknown };
-      if (data && data.giscus) syncTheme();
+      if (data && data.giscus && !widgetActive) {
+        widgetActive = true;
+        for (let i = 0; i < 5; i++) {
+          setTimeout(syncTheme, 500 * (i + 1));
+        }
+      }
     });
 
     // 3) 博客主题切换时跟随（MutationObserver 比监听按钮点击更可靠）
