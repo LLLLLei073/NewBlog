@@ -8,19 +8,52 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <p class="eyebrow">关于</p>
       <h1>关于</h1>
     </div>
+
+    <!-- 我的设备：实时状态 -->
+    <div class="block devices">
+      <div class="block-title">
+        <h2 class="block-h">我的设备</h2>
+        <span class="live-badge"><span class="live-dot"></span>实时</span>
+      </div>
+      <p class="block-sub">电脑和手机的实时状态，由本机脚本自动上报。</p>
+
+      <div class="device-grid">
+        <div class="device-card" data-device="pc">
+          <div class="device-head">
+            <span class="device-icon">💻</span>
+            <span class="device-name">电脑</span>
+            <span class="device-status" data-status-dot></span>
+          </div>
+          <p class="device-activity" data-activity>连接中…</p>
+          <p class="device-detail" data-detail></p>
+          <p class="device-updated" data-updated></p>
+        </div>
+
+        <div class="device-card" data-device="phone">
+          <div class="device-head">
+            <span class="device-icon">📱</span>
+            <span class="device-name">手机</span>
+            <span class="device-status" data-status-dot></span>
+          </div>
+          <p class="device-activity" data-activity>连接中…</p>
+          <p class="device-detail" data-detail></p>
+          <p class="device-updated" data-updated></p>
+        </div>
+      </div>
+    </div>
   </section>
 </BaseLayout>
 
 <style>
   .about {
     padding-top: 2.5rem;
-    padding-bottom: 3rem;
+    padding-bottom: 4rem;
     max-width: 760px;
   }
 
   .page-head {
     border-bottom: 1px solid var(--border);
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
     padding-bottom: 1.25rem;
   }
 
@@ -39,10 +72,134 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     margin: 0;
   }
 
+  /* ===== 我的设备 ===== */
+  .block {
+    margin-top: 2.5rem;
+  }
+
+  .block-title {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0 0 0.25rem;
+  }
+
+  .block-h {
+    font-size: 1.2rem;
+    margin: 0;
+  }
+
+  .live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--primary);
+    background: var(--brand-100);
+    padding: 0.15rem 0.55rem;
+    border-radius: var(--radius-full);
+  }
+
+  .live-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #22c55e;
+    animation: live-pulse 1.6s ease-in-out infinite;
+  }
+
+  @keyframes live-pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5); }
+    50% { opacity: 0.7; box-shadow: 0 0 0 4px rgba(34, 197, 94, 0); }
+  }
+
+  .block-sub {
+    font-size: 0.85rem;
+    color: var(--muted-foreground);
+    margin: 0 0 1.25rem;
+  }
+
+  .device-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+
+  .device-card {
+    padding: 1.1rem 1.2rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .device-card:hover {
+    border-color: var(--brand-300);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .device-head {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .device-icon {
+    font-size: 1.4rem;
+    line-height: 1;
+  }
+
+  .device-name {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  .device-status {
+    margin-left: auto;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--muted-foreground);
+    opacity: 0.4;
+    transition: background-color 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .device-card.online .device-status {
+    background: #22c55e;
+    opacity: 1;
+    box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.18);
+  }
+
+  .device-activity {
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin: 0 0 0.2rem;
+    min-height: 1.4em;
+  }
+
+  .device-detail {
+    font-size: 0.82rem;
+    color: var(--muted-foreground);
+    margin: 0 0 0.5rem;
+    min-height: 1.2em;
+  }
+
+  .device-updated {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--muted-foreground);
+    opacity: 0.75;
+    margin: 0;
+  }
+
   @media (max-width: 640px) {
     .about {
       padding-top: 1.75rem;
-      padding-bottom: 2rem;
     }
 
     .page-head h1 {
@@ -50,3 +207,56 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     }
   }
 </style>
+
+<script>
+  /* 设备实时状态：轮询 /status.json，30 秒刷新一次 */
+  function initDevices() {
+    const cards = Array.from(document.querySelectorAll('[data-device]'));
+
+    const fmtTime = (iso: string) => {
+      if (!iso) return '';
+      const d = new Date(iso);
+      const now = Date.now();
+      const diff = Math.max(0, Math.round((now - d.getTime()) / 60000));
+      if (diff < 1) return '刚刚';
+      if (diff < 60) return `${diff} 分钟前`;
+      return d.toLocaleString('zh-CN', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+    };
+
+    const render = (data: any) => {
+      cards.forEach((card) => {
+        const key = card.getAttribute('data-device');
+        const dev = data?.[key];
+        const dot = card.querySelector('[data-status-dot]') as HTMLElement;
+        const act = card.querySelector('[data-activity]') as HTMLElement;
+        const det = card.querySelector('[data-detail]') as HTMLElement;
+        const upd = card.querySelector('[data-updated]') as HTMLElement;
+
+        const online = dev?.online === true;
+        card.classList.toggle('online', online);
+        act.textContent = online ? (dev.activity || '在线') : '离线';
+        det.textContent = dev?.detail || '';
+        upd.textContent = dev?.updatedAt ? `更新于 ${fmtTime(dev.updatedAt)}` : '';
+      });
+    };
+
+    const refresh = async () => {
+      try {
+        const res = await fetch('/status.json', { cache: 'no-store' });
+        if (!res.ok) throw new Error(res.status + '');
+        render(await res.json());
+      } catch {
+        cards.forEach((card) => {
+          card.classList.remove('online');
+          (card.querySelector('[data-activity]') as HTMLElement).textContent = '状态获取失败';
+        });
+      }
+    };
+
+    refresh();
+    setInterval(refresh, 30000);
+  }
+
+  document.addEventListener('astro:after-swap', initDevices);
+  initDevices();
+</script>
