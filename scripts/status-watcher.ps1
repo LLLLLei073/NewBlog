@@ -1,4 +1,4 @@
-# ============================================================
+﻿# ============================================================
 # 设备状态上报脚本（电脑端）
 # 作用：检测当前前台窗口，把"我在做什么"实时写入 status.json
 #       并推送到 GitHub（博客 /about 页实时展示）。
@@ -128,12 +128,19 @@ while ($true) {
         }
       }
 
-      Set-Content -Path $statusFile -Value $status -Encoding UTF8
+      # 写文件（无 BOM 的 UTF-8，否则浏览器 JSON.parse 会失败）
+      $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+      [System.IO.File]::WriteAllText($statusFile, $status, $utf8NoBom)
 
-      # 推送到 GitHub（只推 status.json）
-      git -C $repo add public/status.json 2>$null
-      git -C $repo commit -m "status: $activity" 2>$null
-      git -C $repo push origin main 2>$null
+      # 推送到 GitHub（只推 status.json；失败时明确提示，不静默）
+      git -C $repo add public/status.json
+      git -C $repo commit -m "status: $activity"
+      $pushResult = git -C $repo push origin main 2>&1
+      if ($LASTEXITCODE -ne 0) {
+        Write-Host "[push失败] $pushResult"
+      } else {
+        Write-Host "[已推送] 线上约 40 秒后生效"
+      }
 
       $lastPush = $now.ToUnixTimeSeconds()
       $lastActivity = $activity
