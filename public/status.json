@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-01T22:03:18+08:00",
+    "updatedAt":  "2026-08-01T22:03:50+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -9,23 +9,23 @@
     "daily":  {
                   "stats":  {
                                 "正在用微信":  530,
-                                "正在使用 Hermes":  1114,
                                 "正在使用 OpenCode":  218,
                                 "正在使用 Plain Craft Launcher 2":  32,
                                 "正在使用 java":  400,
                                 "正在看视频":  798,
                                 "正在浏览网页":  280,
-                                "离开电脑":  918,
                                 "正在使用 Weixin":  32,
-                                "正在使用 Typora":  124,
+                                "离开电脑":  918,
+                                "正在使用 Hermes":  1114,
+                                "正在使用 Typora":  156,
                                 "正在使用 explorer":  370
                             },
                   "date":  "2026-08-01"
               },
     "pc":  {
-               "detail":  "cf-friend-tracker.md• - Typora",
-               "activity":  "正在使用 Typora",
-               "updatedAt":  "2026-08-01T22:03:18+08:00",
+               "detail":  "游戏",
+               "activity":  "正在玩游戏",
+               "updatedAt":  "2026-08-01T22:03:50+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "1小时",
@@ -291,6 +291,11 @@
                         "detail":  "cf-friend-tracker.md• - Typora",
                         "t":  "2026-08-01T22:03:18+08:00",
                         "activity":  "正在使用 Typora"
+                    },
+                    {
+                        "detail":  "游戏",
+                        "t":  "2026-08-01T22:03:50+08:00",
+                        "activity":  "正在玩游戏"
                     }
                 ]
 }
