@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-01T23:50:23+08:00",
+    "updatedAt":  "2026-08-01T23:52:26+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,7 +8,7 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  1544,
+                                "正在浏览网页":  1666,
                                 "正在玩游戏":  62,
                                 "正在使用 Hermes":  1114,
                                 "正在使用 Typora":  156,
@@ -18,17 +18,17 @@
                                 "正在写代码":  3184,
                                 "离开电脑":  918,
                                 "正在使用 MonsterHunterWorld":  1770,
-                                "正在用微信":  624,
                                 "正在使用 explorer":  370,
                                 "正在使用 OpenCode":  218,
+                                "正在用微信":  624,
                                 "正在使用 Weixin":  32
                             },
                   "date":  "2026-08-01"
               },
     "pc":  {
-               "detail":  "Problem - D - Codeforces 和另外 5 个页面 - 个人 - Microsoft​ Edge",
+               "detail":  "Standings - Codeforces Round 1113 (Div. 2) - Codeforces 和另外 …",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-01T23:50:23+08:00",
+               "updatedAt":  "2026-08-01T23:52:26+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "1小时",
