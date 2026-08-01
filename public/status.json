@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-01T21:30:38+08:00",
+    "updatedAt":  "2026-08-01T21:32:40+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -16,14 +16,14 @@
                                 "正在浏览网页":  64,
                                 "离开电脑":  918,
                                 "正在使用 Hermes":  862,
-                                "正在使用 explorer":  184
+                                "正在使用 explorer":  306
                             },
                   "date":  "2026-08-01"
               },
     "pc":  {
-               "detail":  "Program Manager",
-               "activity":  "正在使用 explorer",
-               "updatedAt":  "2026-08-01T21:30:38+08:00",
+               "detail":  "微信",
+               "activity":  "正在用微信",
+               "updatedAt":  "2026-08-01T21:32:40+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "1小时",
@@ -149,6 +149,11 @@
                         "detail":  "Program Manager",
                         "t":  "2026-08-01T21:28:35+08:00",
                         "activity":  "正在使用 explorer"
+                    },
+                    {
+                        "detail":  "微信",
+                        "t":  "2026-08-01T21:32:40+08:00",
+                        "activity":  "正在用微信"
                     }
                 ]
 }
