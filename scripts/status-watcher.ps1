@@ -15,8 +15,8 @@
 # ============================================================
 
 param(
-  [int]$interval = 60,     # 检测间隔（秒）
-  [int]$heartbeat = 600,   # 心跳间隔（秒），0 = 关闭
+  [int]$interval = 30,     # 检测间隔（秒）—— 30 秒内可感知状态变化
+  [int]$heartbeat = 120,   # 心跳间隔（秒），0 = 关闭 —— 2 分钟必推送一次
   [string]$repo = "D:\NewBlog"
 )
 
@@ -27,7 +27,9 @@ $logFile = Join-Path $PSScriptRoot "status-watcher.log"
 try { Start-Transcript -Path $logFile -Append -ErrorAction SilentlyContinue | Out-Null } catch {}
 
 # ---- Win32 前台窗口 API ----
-Add-Type @"
+# 已加载过则跳过（同一会话重复运行脚本时 Add-Type 会报 type already exists）
+if (-not ("StatusWin" -as [type])) {
+  Add-Type @"
 using System;
 using System.Text;
 using System.Runtime.InteropServices;
@@ -37,6 +39,7 @@ public class StatusWin {
   [DllImport("user32.dll")] public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint pid);
 }
 "@
+}
 
 # ---- 窗口标题 → 活动描述 映射规则（按需修改） ----
 $rules = @(

@@ -294,7 +294,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
     const refresh = async () => {
       try {
-        const res = await fetch('/status.json', { cache: 'no-store' });
+        // 加时间戳 query 绕过 GitHub Pages 强制的 10min CDN 缓存
+        const res = await fetch('/status.json?_=' + Date.now(), { cache: 'no-store' });
         if (!res.ok) throw new Error(res.status + '');
         render(await res.json());
       } catch {
