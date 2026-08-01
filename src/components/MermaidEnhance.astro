@@ -1,0 +1,52 @@
+---
+/* Mermaid 图表渲染：文章里 ```mermaid 代码块 → 交互式图表。
+   mermaid.min.js 3.5MB，懒加载（仅页面含 mermaid 块时才注入）。 */
+---
+
+<script>
+  function enhanceMermaid() {
+    const blocks = Array.from(
+      document.querySelectorAll('pre code.language-mermaid')
+    );
+    if (!blocks.length) return;
+
+    const loadMermaid = () =>
+      new Promise((resolve, reject) => {
+        if ((window as any).mermaid) return resolve((window as any).mermaid);
+        const s = document.createElement('script');
+        s.src = '/vendor/mermaid.min.js';
+        s.onload = () => resolve((window as any).mermaid);
+        s.onerror = reject;
+        document.head.appendChild(s);
+      });
+
+    loadMermaid().then((mermaid: any) => {
+      mermaid.initialize({
+        startOnLoad: false,
+        securityLevel: 'loose',
+        theme: document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'neutral',
+        fontFamily: 'Inter, PingFang SC, Microsoft YaHei, sans-serif',
+      });
+      blocks.forEach((code, i) => {
+        const pre = code.closest('pre');
+        if (!pre || pre.dataset.mermaidDone) return;
+        pre.dataset.mermaidDone = '1';
+        const source = code.textContent ?? '';
+        const wrap = document.createElement('div');
+        wrap.className = 'mermaid-wrap';
+        pre.parentNode?.replaceChild(wrap, pre);
+        mermaid
+          .render(`mermaid-${i}`, source)
+          .then(({ svg }: { svg: string }) => {
+            wrap.innerHTML = svg;
+          })
+          .catch(() => {
+            wrap.innerHTML = `<div class="mermaid-error">图表渲染失败：请检查语法</div>`;
+          });
+      });
+    });
+  }
+
+  enhanceMermaid();
+  document.addEventListener('astro:after-swap', enhanceMermaid);
+</script>
