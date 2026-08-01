@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-01T22:48:48+08:00",
+    "updatedAt":  "2026-08-01T22:49:50+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,7 +8,7 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  648,
+                                "正在浏览网页":  710,
                                 "正在玩游戏":  62,
                                 "正在使用 Hermes":  1114,
                                 "正在使用 Typora":  156,
@@ -18,17 +18,17 @@
                                 "正在写代码":  490,
                                 "离开电脑":  918,
                                 "正在使用 MonsterHunterWorld":  1770,
-                                "正在用微信":  530,
                                 "正在使用 explorer":  370,
                                 "正在使用 OpenCode":  218,
+                                "正在用微信":  530,
                                 "正在使用 Weixin":  32
                             },
                   "date":  "2026-08-01"
               },
     "pc":  {
-               "detail":  "Problem - B - Codeforces 和另外 1 个页面 - 个人 - Microsoft​ Edge",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-01T22:48:48+08:00",
+               "detail":  "VS Code",
+               "activity":  "正在写代码",
+               "updatedAt":  "2026-08-01T22:49:50+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "1小时",
@@ -40,11 +40,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "你好，新蒸程！1.7",
-                        "t":  "2026-08-01T20:42:08+08:00",
-                        "activity":  "正在使用 java"
-                    },
                     {
                         "detail":  "你好，新蒸程！1.7",
                         "t":  "2026-08-01T20:42:43+08:00",
@@ -339,6 +334,11 @@
                         "detail":  "Problem - B - Codeforces 和另外 1 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-01T22:48:48+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "VS Code",
+                        "t":  "2026-08-01T22:49:50+08:00",
+                        "activity":  "正在写代码"
                     }
                 ]
 }
