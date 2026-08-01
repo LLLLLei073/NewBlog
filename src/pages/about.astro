@@ -27,6 +27,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <p class="device-activity" data-activity>连接中…</p>
           <p class="device-detail" data-detail></p>
           <p class="device-updated" data-updated></p>
+          <button class="manual-btn" data-manual>设为离开</button>
           <div class="device-info" data-info hidden>
             <div class="info-row"><span class="info-k">主机</span><span class="info-v" data-info-host></span></div>
             <div class="info-row"><span class="info-k">系统</span><span class="info-v" data-info-os></span></div>
@@ -47,6 +48,29 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <p class="device-detail" data-detail></p>
           <p class="device-updated" data-updated></p>
         </div>
+      </div>
+    </div>
+
+    <!-- 今日活动时间轴 -->
+    <div class="block timeline">
+      <div class="block-title">
+        <h2 class="block-h">今日时间轴</h2>
+        <span class="live-badge"><span class="live-dot"></span>实时</span>
+      </div>
+      <p class="block-sub">今天每个时间段在做什么。</p>
+      <div class="timeline-list" data-timeline>
+        <p class="timeline-empty">暂无记录</p>
+      </div>
+    </div>
+
+    <!-- 今日统计 -->
+    <div class="block stats">
+      <div class="block-title">
+        <h2 class="block-h">今日统计</h2>
+      </div>
+      <p class="block-sub">今天的活动时长分布。</p>
+      <div class="stats-list" data-stats>
+        <p class="stats-empty">暂无数据</p>
       </div>
     </div>
   </section>
@@ -235,6 +259,126 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     opacity: 0.85;
   }
 
+  .manual-btn {
+    margin-top: 0.6rem;
+    padding: 0.25rem 0.7rem;
+    font-size: 0.72rem;
+    font-family: var(--font-sans);
+    color: var(--muted-foreground);
+    background: transparent;
+    border: 1px dashed var(--border);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+  }
+
+  .manual-btn:hover {
+    color: var(--primary);
+    border-color: var(--brand-300);
+    transform: translateY(-1px);
+  }
+
+  .manual-btn:active {
+    transform: scale(0.96);
+  }
+
+  /* ===== 今日时间轴 ===== */
+  .timeline-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+  }
+
+  .timeline-item {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    padding: 0.35rem 0;
+    position: relative;
+  }
+
+  .timeline-time {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--muted-foreground);
+    flex-shrink: 0;
+    width: 3.4em;
+  }
+
+  .timeline-dot {
+    flex-shrink: 0;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--brand-400);
+    margin-top: 0.35em;
+  }
+
+  .timeline-activity {
+    font-size: 0.85rem;
+    color: var(--foreground);
+  }
+
+  .timeline-detail {
+    font-size: 0.75rem;
+    color: var(--muted-foreground);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 55%;
+  }
+
+  .timeline-empty,
+  .stats-empty {
+    font-size: 0.85rem;
+    color: var(--muted-foreground);
+    opacity: 0.7;
+    margin: 0.25rem 0;
+  }
+
+  /* ===== 今日统计 ===== */
+  .stats-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .stat-row {
+    display: grid;
+    grid-template-columns: 6.5em 1fr 5.5em;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.8rem;
+  }
+
+  .stat-name {
+    color: var(--foreground);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .stat-bar {
+    height: 7px;
+    background: var(--brand-100);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+  }
+
+  .stat-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--brand-400), var(--primary));
+    border-radius: var(--radius-full);
+    transition: width 0.6s ease;
+  }
+
+  .stat-dur {
+    font-family: var(--font-mono);
+    color: var(--muted-foreground);
+    text-align: right;
+  }
+
   @media (max-width: 640px) {
     .about {
       padding-top: 1.75rem;
@@ -250,6 +394,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   /* 设备实时状态：轮询 /status.json，30 秒刷新一次 */
   function initDevices() {
     const cards = Array.from(document.querySelectorAll('[data-device]'));
+    const timelineEl = document.querySelector('[data-timeline]');
+    const statsEl = document.querySelector('[data-stats]');
+    const manualBtn = document.querySelector('[data-manual]');
+
+    const escapeHtml = (s: string) =>
+      String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] as string));
 
     const fmtTime = (iso: string) => {
       if (!iso) return '';
@@ -261,7 +411,37 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       return d.toLocaleString('zh-CN', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
     };
 
+    const fmtHM = (iso: string) =>
+      new Date(iso).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
+
+    const fmtDur = (sec: number) => {
+      const m = Math.floor(sec / 60);
+      if (m < 60) return `${m} 分钟`;
+      return `${Math.floor(m / 60)} 小时 ${m % 60} 分`;
+    };
+
+    /* 手动状态覆盖（localStorage，30 分钟自动恢复） */
+    const getManual = () => {
+      try {
+        const raw = localStorage.getItem('manual-status');
+        if (!raw) return null;
+        const m = JSON.parse(raw);
+        if (m.until > Date.now()) return m;
+        localStorage.removeItem('manual-status');
+      } catch {}
+      return null;
+    };
+
+    manualBtn?.addEventListener('click', () => {
+      const until = Date.now() + 30 * 60 * 1000;
+      localStorage.setItem('manual-status', JSON.stringify({ activity: '离开', until }));
+      manualBtn.textContent = '已设为离开（30 分钟）';
+      refresh();
+      setTimeout(() => { manualBtn.textContent = '设为离开'; refresh(); }, 2500);
+    });
+
     const render = (data: any) => {
+      const manual = getManual();
       cards.forEach((card) => {
         const key = card.getAttribute('data-device');
         const dev = data?.[key];
@@ -272,9 +452,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
         const online = dev?.online === true;
         card.classList.toggle('online', online);
-        act.textContent = online ? (dev.activity || '在线') : '离线';
+        act.textContent = dev?.activity || (online ? '在线' : '离线');
         det.textContent = dev?.detail || '';
         upd.textContent = dev?.updatedAt ? `更新于 ${fmtTime(dev.updatedAt)}` : '';
+
+        if (key === 'pc' && manual) {
+          act.textContent = `${manual.activity}（手动）`;
+          det.textContent = '手动设置，30 分钟后自动恢复';
+          card.classList.add('online');
+        }
 
         // 电脑信息：仅在线时显示
         if (key === 'pc' && online && dev.sysinfo) {
@@ -290,6 +476,37 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           (card.querySelector('[data-info]') as HTMLElement).hidden = true;
         }
       });
+
+      // 今日时间轴
+      if (timelineEl) {
+        const history = Array.isArray(data?.history) ? data.history : [];
+        const today = new Date().toLocaleDateString('zh-CN');
+        const items = history.filter((h: any) => h.t && new Date(h.t).toLocaleDateString('zh-CN') === today).slice(-30);
+        timelineEl.innerHTML = items.length
+          ? items.map((h: any) => `
+              <div class="timeline-item">
+                <span class="timeline-time">${fmtHM(h.t)}</span>
+                <span class="timeline-dot"></span>
+                <span class="timeline-activity">${escapeHtml(h.activity)}</span>
+                ${h.detail ? `<span class="timeline-detail">${escapeHtml(h.detail)}</span>` : ''}
+              </div>`).join('')
+          : '<p class="timeline-empty">暂无记录</p>';
+      }
+
+      // 今日统计
+      if (statsEl) {
+        const stats = data?.daily?.stats;
+        const entries = stats ? Object.entries(stats).filter(([, v]) => (v as number) > 0).sort((a, b) => (b[1] as number) - (a[1] as number)) : [];
+        const total = entries.reduce((s, [, v]) => s + (v as number), 0);
+        statsEl.innerHTML = entries.length
+          ? entries.map(([k, v]) => `
+              <div class="stat-row">
+                <span class="stat-name">${escapeHtml(k)}</span>
+                <div class="stat-bar"><div class="stat-fill" style="width:${Math.round(((v as number) / total) * 100)}%"></div></div>
+                <span class="stat-dur">${fmtDur(v as number)}</span>
+              </div>`).join('')
+          : '<p class="stats-empty">暂无数据</p>';
+      }
     };
 
     const refresh = async () => {
