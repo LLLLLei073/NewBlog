@@ -29,6 +29,7 @@ const posts = (await getCollection('blog'))
           >
             <div class="post-meta">
               <FormattedDate date={post.data.pubDate} />
+              {post.data.category && <span class="post-cat">{post.data.category}</span>}
             </div>
             <h2 data-search-text="title">{post.data.title}</h2>
             <p class="desc" data-search-text="desc">{post.data.description}</p>
@@ -69,14 +70,16 @@ const posts = (await getCollection('blog'))
   }
 
   .post-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.875rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
     padding-bottom: 2rem;
   }
 
   .post-card {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     padding: 1.25rem;
     background: var(--card);
     border: 1px solid var(--border);
@@ -92,10 +95,25 @@ const posts = (await getCollection('blog'))
   }
 
   .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     font-family: var(--font-mono);
     font-size: 0.72rem;
     color: var(--muted-foreground);
     margin-bottom: 0.4rem;
+  }
+
+  .post-cat {
+    padding: 0.08rem 0.5rem;
+    font-family: var(--font-sans);
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--primary);
+    background: var(--brand-100);
+    border-radius: var(--radius-full);
   }
 
   .post-card h2 {
@@ -120,6 +138,7 @@ const posts = (await getCollection('blog'))
       font-size: 1.6rem;
     }
     .post-list {
+      grid-template-columns: 1fr;
       gap: 0.75rem;
       padding-bottom: 1.5rem;
     }
