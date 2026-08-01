@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-01T21:05:17+08:00",
+    "updatedAt":  "2026-08-01T21:05:50+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,17 +8,18 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在使用 Hermes":  32,
-                                "正在使用 java":  400,
                                 "正在使用 Plain Craft Launcher 2":  32,
+                                "正在浏览网页":  32,
+                                "正在使用 java":  400,
+                                "正在使用 Hermes":  32,
                                 "离开电脑":  886
                             },
                   "date":  "2026-08-01"
               },
     "pc":  {
-               "detail":  "关于 | 我的博客 - 个人 - Microsoft​ Edge",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-01T21:05:17+08:00",
+               "detail":  "哔哩哔哩 (゜-゜)つロ 干杯~-bilibili",
+               "activity":  "正在看视频",
+               "updatedAt":  "2026-08-01T21:05:50+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "1小时",
@@ -59,6 +60,11 @@
                         "detail":  "关于 | 我的博客 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-01T21:05:17+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "哔哩哔哩 (゜-゜)つロ 干杯~-bilibili",
+                        "t":  "2026-08-01T21:05:50+08:00",
+                        "activity":  "正在看视频"
                     }
                 ]
 }
