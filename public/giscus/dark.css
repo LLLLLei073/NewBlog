@@ -1,10 +1,11 @@
-/* giscus 暗色主题 — 对齐博客深空蓝紫 + 橙色（#f59e6b） */
+/* giscus 暗色主题 — 对齐博客深空蓝紫 + 橙色（#f59e6b）
+   画布用半透明 rgba：透出外层评论卡片的玻璃质感，与页面层次分明 */
 main {
-  /* 画布：与博客卡片/深空底色一致 */
-  --color-canvas-default: #15182b;
-  --color-canvas-overlay: #1c2038;
-  --color-canvas-inset: #0b0d1a;
-  --color-canvas-subtle: #1f2340;
+  /* 画布：半透明，透出外层 .comments-wrap 玻璃卡片 */
+  --color-canvas-default: rgba(21, 24, 43, 0.55);
+  --color-canvas-overlay: rgba(28, 32, 56, 0.65);
+  --color-canvas-inset: rgba(11, 13, 26, 0.45);
+  --color-canvas-subtle: rgba(31, 35, 64, 0.6);
 
   /* 文字 */
   --color-fg-default: #e8ebf5;
@@ -35,7 +36,7 @@ main {
   --color-btn-primary-disabled-bg: #5a2a1b;
 
   /* 输入框 */
-  --color-input-bg: #15182b;
+  --color-input-bg: rgba(21, 24, 43, 0.55);
   --color-input-border: #2a2f4a;
 
   /* 焦点环 / 其他状态 */

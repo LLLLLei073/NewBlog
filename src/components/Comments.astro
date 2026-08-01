@@ -36,9 +36,8 @@ const darkTheme = new URL('/giscus/dark.css', Astro.site).href;
 
 <style>
   .comments {
-    margin-top: 3rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--border);
+    /* 已包在 .comments-wrap 卡片内，不再需要大外边距和顶部边框 */
+    padding-top: 0.25rem;
   }
 
   .comments-title {
