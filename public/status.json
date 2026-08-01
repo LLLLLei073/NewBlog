@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-01T22:03:50+08:00",
+    "updatedAt":  "2026-08-01T22:04:52+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,24 +8,25 @@
               },
     "daily":  {
                   "stats":  {
+                                "正在使用 explorer":  370,
                                 "正在用微信":  530,
                                 "正在使用 OpenCode":  218,
                                 "正在使用 Plain Craft Launcher 2":  32,
+                                "正在玩游戏":  62,
                                 "正在使用 java":  400,
                                 "正在看视频":  798,
                                 "正在浏览网页":  280,
-                                "正在使用 Weixin":  32,
                                 "离开电脑":  918,
-                                "正在使用 Hermes":  1114,
+                                "正在使用 Weixin":  32,
                                 "正在使用 Typora":  156,
-                                "正在使用 explorer":  370
+                                "正在使用 Hermes":  1114
                             },
                   "date":  "2026-08-01"
               },
     "pc":  {
-               "detail":  "游戏",
-               "activity":  "正在玩游戏",
-               "updatedAt":  "2026-08-01T22:03:50+08:00",
+               "detail":  "MONSTER HUNTER: WORLD(421810)",
+               "activity":  "正在使用 MonsterHunterWorld",
+               "updatedAt":  "2026-08-01T22:04:52+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "1小时",
@@ -296,6 +297,11 @@
                         "detail":  "游戏",
                         "t":  "2026-08-01T22:03:50+08:00",
                         "activity":  "正在玩游戏"
+                    },
+                    {
+                        "detail":  "MONSTER HUNTER: WORLD(421810)",
+                        "t":  "2026-08-01T22:04:52+08:00",
+                        "activity":  "正在使用 MonsterHunterWorld"
                     }
                 ]
 }
