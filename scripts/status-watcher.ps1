@@ -77,6 +77,36 @@ function Resolve-Activity($info) {
   return @{ Activity = "正在使用 $($info.Process)"; Detail = $info.Title }
 }
 
+# ---- 电脑硬件信息（采集一次，缓存复用） ----
+$script:sysInfo = $null
+function Get-SystemInfo {
+  if ($script:sysInfo) { return $script:sysInfo }
+  try {
+    $cpu = (Get-CimInstance Win32_Processor -ErrorAction SilentlyContinue | Select-Object -First 1).Name
+    $gpu = (Get-CimInstance Win32_VideoController -ErrorAction SilentlyContinue | Select-Object -First 1).Name
+    $os  = (Get-CimInstance Win32_OperatingSystem -ErrorAction SilentlyContinue)
+    $ramGB = [math]::Round(($os.TotalVisibleMemorySize / 1MB), 1)
+    $osName = $os.Caption
+    $osVer  = $os.Version
+    $hostName = $env:COMPUTERNAME
+    $uptime = (Get-Date) - $os.LastBootUpTime
+    $uptimeStr = ""
+    if ($uptime.Days -gt 0) { $uptimeStr += "{0}天" -f $uptime.Days }
+    $uptimeStr += "{0}小时" -f $uptime.Hours
+    $script:sysInfo = @{
+      cpu     = $cpu
+      gpu     = $gpu
+      ram     = "$ramGB GB"
+      os      = "$osName $osVer"
+      host    = $hostName
+      uptime  = $uptimeStr
+    }
+  } catch {
+    $script:sysInfo = @{ cpu = "未知"; gpu = "未知"; ram = "未知"; os = "未知"; host = $env:COMPUTERNAME; uptime = "未知" }
+  }
+  return $script:sysInfo
+}
+
 # ---- 主循环 ----
 $lastPush = 0
 $lastActivity = $null
@@ -108,6 +138,7 @@ while ($true) {
           activity = $activity
           detail = $detail
           updatedAt = $nowStr
+          sysinfo = (Get-SystemInfo)
         }
         phone = @{
           online = $false
