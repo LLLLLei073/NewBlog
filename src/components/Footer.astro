@@ -4,6 +4,12 @@ import { SITE_AUTHOR, SITE_TITLE } from '../consts.ts';
 
 <footer>
   <div class="container">
+    <nav class="footer-nav" aria-label="页脚导航">
+      <a href="/archives">归档</a>
+      <a href="/friends">友情链接</a>
+      <a href="/about">关于</a>
+      <a href="/rss.xml">RSS</a>
+    </nav>
     <p>&copy; {new Date().getFullYear()} {SITE_AUTHOR}. 保留所有权利。</p>
     <p>使用 <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> 构建 · 部署在 <a href="https://pages.github.com" target="_blank" rel="noopener">GitHub Pages</a></p>
   </div>
@@ -18,7 +24,26 @@ import { SITE_AUTHOR, SITE_TITLE } from '../consts.ts';
     color: var(--muted);
     font-size: 0.9rem;
   }
+
   footer p {
     margin: 0.25rem 0;
+  }
+
+  .footer-nav {
+    display: flex;
+    justify-content: center;
+    gap: 1.2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .footer-nav a {
+    color: var(--muted-foreground);
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .footer-nav a:hover {
+    color: var(--primary);
   }
 </style>
