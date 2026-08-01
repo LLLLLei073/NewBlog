@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-01T21:17:03+08:00",
+    "updatedAt":  "2026-08-01T21:18:06+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,6 +8,7 @@
               },
     "daily":  {
                   "stats":  {
+                                "正在用微信":  62,
                                 "正在使用 Plain Craft Launcher 2":  32,
                                 "正在使用 java":  400,
                                 "离开电脑":  886,
@@ -18,9 +19,9 @@
                   "date":  "2026-08-01"
               },
     "pc":  {
-               "detail":  "微信",
-               "activity":  "正在用微信",
-               "updatedAt":  "2026-08-01T21:17:03+08:00",
+               "detail":  "Program Manager",
+               "activity":  "正在使用 explorer",
+               "updatedAt":  "2026-08-01T21:18:06+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "1小时",
@@ -76,6 +77,11 @@
                         "detail":  "微信",
                         "t":  "2026-08-01T21:17:03+08:00",
                         "activity":  "正在用微信"
+                    },
+                    {
+                        "detail":  "Program Manager",
+                        "t":  "2026-08-01T21:18:06+08:00",
+                        "activity":  "正在使用 explorer"
                     }
                 ]
 }
