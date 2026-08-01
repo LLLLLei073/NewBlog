@@ -27,6 +27,28 @@
         wrapper.appendChild(label);
       }
 
+      // 行号：超过 1 行才显示（伪元素不进 textContent，复制无干扰）
+      const lineCount =
+        code.querySelectorAll('.line').length ||
+        (code.textContent?.split('\n').length ?? 1);
+      if (lineCount > 1) wrapper.classList.add('has-lines');
+
+      // 长代码折叠：超过 20 行默认收起
+      if (lineCount > 20) {
+        wrapper.classList.add('collapsed');
+        const expand = document.createElement('button');
+        expand.className = 'code-expand';
+        expand.type = 'button';
+        expand.textContent = `展开全部 ${lineCount} 行`;
+        expand.addEventListener('click', () => {
+          wrapper.classList.toggle('collapsed');
+          expand.textContent = wrapper.classList.contains('collapsed')
+            ? `展开全部 ${lineCount} 行`
+            : '收起';
+        });
+        wrapper.appendChild(expand);
+      }
+
       const btn = document.createElement('button');
       btn.className = 'code-copy';
       btn.type = 'button';
