@@ -27,6 +27,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <p class="device-activity" data-activity>连接中…</p>
           <p class="device-detail" data-detail></p>
           <p class="device-updated" data-updated></p>
+          <div class="device-info" data-info hidden>
+            <div class="info-row"><span class="info-k">主机</span><span class="info-v" data-info-host></span></div>
+            <div class="info-row"><span class="info-k">系统</span><span class="info-v" data-info-os></span></div>
+            <div class="info-row"><span class="info-k">CPU</span><span class="info-v" data-info-cpu></span></div>
+            <div class="info-row"><span class="info-k">GPU</span><span class="info-v" data-info-gpu></span></div>
+            <div class="info-row"><span class="info-k">内存</span><span class="info-v" data-info-ram></span></div>
+            <div class="info-row"><span class="info-k">运行时长</span><span class="info-v" data-info-uptime></span></div>
+          </div>
         </div>
 
         <div class="device-card" data-device="phone">
@@ -197,6 +205,36 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     margin: 0;
   }
 
+  .device-info {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px dashed var(--border);
+    display: grid;
+    gap: 0.3rem;
+  }
+
+  .info-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    line-height: 1.4;
+  }
+
+  .info-k {
+    flex-shrink: 0;
+    width: 3.5em;
+    color: var(--muted-foreground);
+    font-family: var(--font-sans);
+  }
+
+  .info-v {
+    color: var(--foreground);
+    font-family: var(--font-mono);
+    word-break: break-all;
+    opacity: 0.85;
+  }
+
   @media (max-width: 640px) {
     .about {
       padding-top: 1.75rem;
@@ -237,12 +275,27 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         act.textContent = online ? (dev.activity || '在线') : '离线';
         det.textContent = dev?.detail || '';
         upd.textContent = dev?.updatedAt ? `更新于 ${fmtTime(dev.updatedAt)}` : '';
+
+        // 电脑信息：仅在线时显示
+        if (key === 'pc' && online && dev.sysinfo) {
+          const info = card.querySelector('[data-info]') as HTMLElement;
+          (card.querySelector('[data-info-host]') as HTMLElement).textContent = dev.sysinfo.host || '';
+          (card.querySelector('[data-info-os]') as HTMLElement).textContent = dev.sysinfo.os || '';
+          (card.querySelector('[data-info-cpu]') as HTMLElement).textContent = dev.sysinfo.cpu || '';
+          (card.querySelector('[data-info-gpu]') as HTMLElement).textContent = dev.sysinfo.gpu || '';
+          (card.querySelector('[data-info-ram]') as HTMLElement).textContent = dev.sysinfo.ram || '';
+          (card.querySelector('[data-info-uptime]') as HTMLElement).textContent = dev.sysinfo.uptime || '';
+          info.hidden = false;
+        } else if (key === 'pc') {
+          (card.querySelector('[data-info]') as HTMLElement).hidden = true;
+        }
       });
     };
 
     const refresh = async () => {
       try {
-        const res = await fetch('/status.json', { cache: 'no-store' });
+        // 加时间戳 query 绕过 GitHub Pages 强制的 10min CDN 缓存
+        const res = await fetch('/status.json?_=' + Date.now(), { cache: 'no-store' });
         if (!res.ok) throw new Error(res.status + '');
         render(await res.json());
       } catch {
