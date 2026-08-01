@@ -5,7 +5,7 @@
 #
 # 用法：
 #   powershell -ExecutionPolicy Bypass -File scripts\status-watcher.ps1
-#   （建议用任务计划程序开机自启，或保持窗口运行）
+#   （或运行 install-status-watcher.bat 安装开机自启，VBS 隐藏后台运行）
 #
 # 行为：
 #   - 每 $interval 秒检测一次前台窗口
@@ -21,6 +21,10 @@ param(
 )
 
 $statusFile = Join-Path $repo "public\status.json"
+
+# 后台运行时把输出写到日志（前台跑则直接显示）
+$logFile = Join-Path $PSScriptRoot "status-watcher.log"
+try { Start-Transcript -Path $logFile -Append -ErrorAction SilentlyContinue | Out-Null } catch {}
 
 # ---- Win32 前台窗口 API ----
 Add-Type @"
@@ -95,38 +99,24 @@ while ($true) {
     $heartbeatDue = ($heartbeat -gt 0 -and ($now.ToUnixTimeSeconds() - $lastPush) -ge $heartbeat)
 
     if ($changed -or $heartbeatDue) {
-      # 更新 status.json
-      $status = @{
-        updatedAt = $now.ToString("yyyy-MM-ddTHH:mm:sszzz")
+      # 生成完整状态（不读旧文件；手机暂未接入固定离线）
+      $nowStr = $now.ToString("yyyy-MM-ddTHH:mm:sszzz")
+      $statusObj = @{
+        updatedAt = $nowStr
         pc = @{
           online = $true
           activity = $activity
           detail = $detail
-          updatedAt = $now.ToString("yyyy-MM-ddTHH:mm:sszzz")
+          updatedAt = $nowStr
         }
-      } | ConvertTo-Json -Depth 4
-
-      # 保留手机字段
-      if (Test-Path $statusFile) {
-        $old = Get-Content $statusFile -Raw | ConvertFrom-Json
-        $status = @{
-          updatedAt = $status.updatedAt
-          pc = $status.pc
-          phone = @{
-            online = $false
-            activity = '离线'
-            detail = ''
-            updatedAt = ''
-          }
-        } | ConvertTo-Json -Depth 4
-        if ($old.phone) {
-          $status = @{
-            updatedAt = $status.updatedAt
-            pc = $status.pc
-            phone = $old.phone
-          } | ConvertTo-Json -Depth 4
+        phone = @{
+          online = $false
+          activity = "离线"
+          detail = ""
+          updatedAt = ""
         }
       }
+      $status = $statusObj | ConvertTo-Json -Depth 4
 
       # 写文件（无 BOM 的 UTF-8，否则浏览器 JSON.parse 会失败）
       $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
@@ -144,7 +134,7 @@ while ($true) {
 
       $lastPush = $now.ToUnixTimeSeconds()
       $lastActivity = $activity
-      Write-Host ("[{0}] {1} — {2}" -f $now.ToString("HH:mm:ss"), $activity, $detail)
+      Write-Host ("[{0}] {1} - {2}" -f $now.ToString("HH:mm:ss"), $activity, $detail)
     }
   } catch {
     Write-Host ("[error] " + $_.Exception.Message)

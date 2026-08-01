@@ -1,5 +1,15 @@
 {
-  "updatedAt": "",
-  "pc": { "online": false, "activity": "离线", "detail": "", "updatedAt": "" },
-  "phone": { "online": false, "activity": "离线", "detail": "", "updatedAt": "" }
+    "updatedAt":  "2026-08-01T18:17:53+08:00",
+    "phone":  {
+                  "detail":  "",
+                  "activity":  "离线",
+                  "updatedAt":  "",
+                  "online":  false
+              },
+    "pc":  {
+               "detail":  "Hermes",
+               "activity":  "正在使用 Hermes",
+               "updatedAt":  "2026-08-01T18:17:53+08:00",
+               "online":  true
+           }
 }
