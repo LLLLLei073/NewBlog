@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-01T22:23:14+08:00",
+    "updatedAt":  "2026-08-01T22:25:16+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -16,10 +16,10 @@
                                 "正在使用 java":  400,
                                 "正在看视频":  798,
                                 "离开电脑":  918,
-                                "正在使用 MonsterHunterWorld":  1098,
+                                "正在使用 MonsterHunterWorld":  1220,
+                                "正在用微信":  530,
                                 "正在使用 explorer":  370,
                                 "正在使用 OpenCode":  218,
-                                "正在用微信":  530,
                                 "正在使用 Weixin":  32
                             },
                   "date":  "2026-08-01"
@@ -27,7 +27,7 @@
     "pc":  {
                "detail":  "MONSTER HUNTER: WORLD(421810)",
                "activity":  "正在使用 MonsterHunterWorld",
-               "updatedAt":  "2026-08-01T22:23:14+08:00",
+               "updatedAt":  "2026-08-01T22:25:16+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "1小时",
