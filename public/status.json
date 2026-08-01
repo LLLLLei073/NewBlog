@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-02T00:06:23+08:00",
+    "updatedAt":  "2026-08-02T00:07:25+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,16 +8,16 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  306,
+                                "正在浏览网页":  368,
                                 "正在使用私密应用":  32,
                                 "正在写代码":  92
                             },
                   "date":  "2026-08-02"
               },
     "pc":  {
-               "detail":  "Bingbong的奇偶世界_牛客题霸_牛客网 和另外 2 个页面 - 个人 - Microsoft​ Edge",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-02T00:06:23+08:00",
+               "detail":  "未检测到活动窗口",
+               "activity":  "离开电脑",
+               "updatedAt":  "2026-08-02T00:07:25+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "1小时",
@@ -29,11 +29,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Hermes",
-                        "t":  "2026-08-01T21:45:09+08:00",
-                        "activity":  "正在使用 Hermes"
-                    },
                     {
                         "detail":  "Deploy to GitHub Pages · Workflow runs · LLLLLei073/NewBlog …",
                         "t":  "2026-08-01T21:45:42+08:00",
@@ -328,6 +323,11 @@
                         "detail":  "Bingbong的奇偶世界_牛客题霸_牛客网 和另外 2 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-02T00:06:23+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "未检测到活动窗口",
+                        "t":  "2026-08-02T00:07:25+08:00",
+                        "activity":  "离开电脑"
                     }
                 ]
 }
