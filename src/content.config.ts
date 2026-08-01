@@ -11,6 +11,8 @@ const blog = defineCollection({
     heroImage: z.string().optional(),
     /** 所属专栏：algorithm | math | music | game；未填则归入「其他」。 */
     category: z.enum(['algorithm', 'math', 'music', 'game']).optional(),
+    /** 文章系列名：同名的文章会在底部显示「本系列」导航。 */
+    series: z.string().optional(),
     draft: z.boolean().default(false),
   }),
 });

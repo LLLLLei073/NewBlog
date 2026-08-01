@@ -8,6 +8,13 @@ export function readingTime(text: string): number {
   return Math.max(1, minutes);
 }
 
+/** 统计文章字数（中文字符 + 英文单词，中文按字计、英文按词计）。 */
+export function wordCount(text: string): number {
+  const chineseChars = (text.match(/[\u4e00-\u9fa5]/g) ?? []).length;
+  const englishWords = (text.match(/[a-zA-Z]+/g) ?? []).length;
+  return chineseChars + englishWords;
+}
+
 export interface ArticleMeta {
   slug: string;
   title: string;

@@ -4,11 +4,12 @@ import FormattedDate from '../components/FormattedDate.astro';
 import TableOfContents from '../components/TableOfContents.astro';
 import Comments from '../components/Comments.astro';
 import { getCollection } from 'astro:content';
-import { readingTime } from '../utils/reading';
+import { readingTime, wordCount } from '../utils/reading';
 
 type Heading = { depth: number; slug: string; text: string };
 type Nav = { slug: string; title: string } | null;
 type Related = { slug: string; title: string; description: string; pubDate: Date; category: string | null };
+type SeriesPost = { slug: string; title: string };
 
 interface Props {
   title: string;
@@ -21,6 +22,8 @@ interface Props {
   older?: Nav;
   related?: Related[];
   rawBody?: string;
+  seriesPosts?: SeriesPost[];
+  seriesName?: string | null;
 }
 
 const {
@@ -34,11 +37,14 @@ const {
   older = null,
   related = [],
   rawBody = '',
+  seriesPosts = [],
+  seriesName = null,
 } = Astro.props;
 
 const toc = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
 const hasToc = toc.length > 1;
 const readMinutes = readingTime(rawBody);
+const words = wordCount(rawBody);
 
 // 构建文章列表用于左侧导航
 const allPosts = (await getCollection('blog'))
@@ -81,6 +87,8 @@ const currentPath = Astro.url.pathname;
           <span class="meta-item"><FormattedDate date={pubDate} /></span>
           <span class="meta-sep">·</span>
           <span class="meta-item">{readMinutes} 分钟阅读</span>
+          <span class="meta-sep">·</span>
+          <span class="meta-item">{words.toLocaleString('zh-CN')} 字</span>
           {
             updatedDate && (
               <>
@@ -123,6 +131,22 @@ const currentPath = Astro.url.pathname;
         )
       }
 
+      {seriesName && seriesPosts.length > 0 && (
+        <section class="series" aria-label="本系列">
+          <h2 class="series-title">📚 系列：{seriesName}</h2>
+          <ul class="series-list">
+            {seriesPosts.map((s) => (
+              <li>
+                <a href={`/blog/${s.slug}/`} class="series-link">{s.title}</a>
+              </li>
+            ))}
+            <li>
+              <span class="series-current">📄 {title}（当前）</span>
+            </li>
+          </ul>
+        </section>
+      )}
+
       {related.length > 0 && (
         <section class="related" aria-label="推荐阅读">
           <h2 class="related-title">📖 推荐阅读</h2>
@@ -142,6 +166,12 @@ const currentPath = Astro.url.pathname;
           </ul>
         </section>
       )}
+
+      <div class="share" aria-label="分享">
+        <span class="share-label">分享</span>
+        <button class="share-btn" type="button" data-share="link">🔗 复制链接</button>
+        <button class="share-btn" type="button" data-share="text">📋 复制分享文案</button>
+      </div>
     </article>
 
     <!-- 评论区 -->
@@ -422,6 +452,151 @@ const currentPath = Astro.url.pathname;
     font-weight: 500;
     color: var(--card-foreground);
     line-height: 1.35;
+  }
+
+  /* ===== 本系列 ===== */
+  .series {
+    margin-top: 3rem;
+    padding: 1.1rem 1.3rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+
+  .series-title {
+    font-size: 0.85rem;
+    margin: 0 0 0.75rem;
+    color: var(--foreground);
+  }
+
+  .series-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .series-list li {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+  }
+
+  .series-link {
+    color: var(--primary);
+    text-decoration: none;
+  }
+
+  .series-link:hover {
+    text-decoration: underline;
+  }
+
+  .series-current {
+    color: var(--muted-foreground);
+  }
+
+  /* ===== 分享 ===== */
+  .share {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+  }
+
+  .share-label {
+    font-size: 0.8rem;
+    color: var(--muted-foreground);
+    margin-right: 0.25rem;
+  }
+
+  .share-btn {
+    padding: 0.35rem 0.85rem;
+    font-size: 0.78rem;
+    font-family: var(--font-sans);
+    color: var(--foreground);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: border-color 0.15s ease, transform 0.15s ease, color 0.15s ease;
+  }
+
+  .share-btn:hover {
+    border-color: var(--brand-300);
+    color: var(--primary);
+    transform: translateY(-1px);
+  }
+
+  .share-btn:active {
+    transform: scale(0.96);
+  }
+
+  .share-btn.copied {
+    color: #22c55e;
+    border-color: #22c55e;
+  }
+
+  /* ===== 图片灯箱 ===== */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(5, 8, 20, 0.88);
+    backdrop-filter: blur(6px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.22s ease;
+  }
+
+  .lightbox.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .lightbox img {
+    max-width: 92vw;
+    max-height: 88vh;
+    border-radius: var(--radius);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    cursor: zoom-out;
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+
+  .lightbox-close:hover {
+    background: rgba(255, 255, 255, 0.22);
+  }
+
+  .prose img {
+    cursor: zoom-in;
+  }
+
+  @media (max-width: 640px) {
+    .share {
+      flex-wrap: wrap;
+    }
   }
 
   /* ===== 推荐阅读 ===== */
@@ -907,4 +1082,93 @@ const currentPath = Astro.url.pathname;
   }
   document.addEventListener('astro:after-swap', initBackToTop);
   initBackToTop();
+
+  // 图片灯箱：点击文章图片全屏预览
+  function initLightbox() {
+    const imgs = Array.from(document.querySelectorAll('.prose img'));
+    if (!imgs.length) return;
+
+    let lb = document.querySelector('.lightbox') as HTMLElement | null;
+    if (!lb) {
+      lb = document.createElement('div');
+      lb.className = 'lightbox';
+      lb.innerHTML = `<button class="lightbox-close" aria-label="关闭">×</button><img alt="" />`;
+      document.body.appendChild(lb);
+    }
+    const imgEl = lb.querySelector('img') as HTMLImageElement;
+    const close = () => lb!.classList.remove('open');
+    (lb.querySelector('.lightbox-close') as HTMLElement).addEventListener('click', close);
+    lb.addEventListener('click', (e) => {
+      if (e.target === lb || (e.target as HTMLElement).tagName === 'IMG') close();
+    });
+    document.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && lb!.classList.contains('open')) close();
+    });
+
+    imgs.forEach((img) => {
+      img.addEventListener('click', () => {
+        if (!img.src) return;
+        imgEl.src = img.src;
+        imgEl.alt = img.alt || '';
+        lb!.classList.add('open');
+      });
+    });
+  }
+  document.addEventListener('astro:after-swap', initLightbox);
+  initLightbox();
+
+  // 分享按钮：复制链接 / 复制分享文案
+  function initShare() {
+    const buttons = Array.from(document.querySelectorAll('[data-share]')) as HTMLButtonElement[];
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const title = document.title.replace(/ \| .*$/, '');
+        const url = location.href;
+        const text = btn.dataset.share === 'link' ? url : `${title} ${url}`;
+        try {
+          await navigator.clipboard.writeText(text);
+        } catch {
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          ta.remove();
+        }
+        const original = btn.textContent;
+        btn.textContent = '✅ 已复制';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = original;
+          btn.classList.remove('copied');
+        }, 1600);
+      });
+    });
+  }
+  document.addEventListener('astro:after-swap', initShare);
+  initShare();
+
+  // 键盘导航：← / → 切换上一篇 / 下一篇
+  function initKeyNav() {
+    const newerLink = document.querySelector<HTMLAnchorElement>('.pn-link.newer');
+    const olderLink = document.querySelector<HTMLAnchorElement>('.pn-link.older');
+    if (!newerLink && !olderLink) return;
+
+    document.addEventListener('keydown', (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+      const typing =
+        target.tagName === 'INPUT' ||
+        target.tagName === 'TEXTAREA' ||
+        target.isContentEditable ||
+        target.closest('[contenteditable]') !== null;
+      if (typing) return;
+      if (e.key === 'ArrowLeft' && newerLink) {
+        location.href = newerLink.href;
+      } else if (e.key === 'ArrowRight' && olderLink) {
+        location.href = olderLink.href;
+      }
+    });
+  }
+  document.addEventListener('astro:after-swap', initKeyNav);
+  initKeyNav();
 </script>

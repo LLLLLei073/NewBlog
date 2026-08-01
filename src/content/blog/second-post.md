@@ -2,6 +2,7 @@
 title: 'Markdown 写作示例'
 description: '展示博客支持的 Markdown 语法，包括代码块、列表、引用等。'
 pubDate: '2025-08-02'
+series: '博客搭建'
 ---
 
 这篇文章展示博客支持的 Markdown 语法。
