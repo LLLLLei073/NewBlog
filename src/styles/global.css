@@ -3,6 +3,9 @@
    Clean, flat, mint-green accent. Reading-first.
    ============================================================ */
 
+/* ---- KaTeX 数学公式样式（math 专栏渲染 LaTeX）---- */
+@import 'katex/dist/katex.min.css';
+
 /* ---- Fonts: 自托管（本地 woff2，零外网依赖，国内秒开）
    Inter（UI/英文数字）+ JetBrains Mono（代码）+ 系统中文（苹方/雅黑） ---- */
 @font-face {
@@ -610,6 +613,76 @@ tr:last-child td {
 .code-block-wrapper .code-copy.copied {
   color: var(--brand-500);
   border-color: var(--brand-500);
+}
+
+/* ===== 代码块行号 ===== */
+.code-block-wrapper.has-lines pre {
+  padding-left: 0.5rem;
+}
+
+.code-block-wrapper.has-lines code {
+  counter-reset: line;
+}
+
+.code-block-wrapper.has-lines .line::before {
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  width: 2.4em;
+  margin-right: 1em;
+  text-align: right;
+  color: var(--muted-foreground);
+  opacity: 0.45;
+  user-select: none;
+}
+
+/* ===== 长代码折叠 ===== */
+.code-block-wrapper.collapsed pre {
+  max-height: 21.6em;
+  overflow: hidden;
+}
+
+.code-block-wrapper .code-expand {
+  position: absolute;
+  bottom: 0.4rem;
+  right: 0.5rem;
+  padding: 0.2rem 0.7rem;
+  font-size: 0.7rem;
+  font-family: var(--font-sans);
+  color: var(--muted-foreground);
+  background: var(--popover);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  opacity: 0.9;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.code-block-wrapper .code-expand:hover {
+  color: var(--primary);
+  border-color: var(--brand-300);
+}
+
+/* ===== Mermaid 图表 ===== */
+.mermaid-wrap {
+  margin: 1.25rem 0;
+  padding: 1rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow-x: auto;
+  text-align: center;
+}
+
+.mermaid-wrap svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.mermaid-error {
+  color: var(--muted-foreground);
+  font-size: 0.85rem;
+  padding: 0.5rem;
 }
 
 /* ===== 暗色变体：极简模式（关闭星空/星云，保留纯深色背景） =====
