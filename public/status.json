@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-01T18:32:27+08:00",
+    "updatedAt":  "2026-08-01T19:46:01+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -7,12 +7,12 @@
                   "online":  false
               },
     "pc":  {
-               "detail":  "未检测到活动窗口",
-               "activity":  "离开电脑",
-               "updatedAt":  "2026-08-01T18:32:27+08:00",
+               "detail":  "Git for Windows",
+               "activity":  "正在使用 git-askpass",
+               "updatedAt":  "2026-08-01T19:46:01+08:00",
                "online":  true,
                "sysinfo":  {
-                               "uptime":  "5小时",
+                               "uptime":  "0小时",
                                "host":  "徐磊",
                                "gpu":  "GameViewer Virtual Display Adapter",
                                "os":  "Microsoft Windows 11 家庭版 10.0.26200",
