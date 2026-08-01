@@ -4,6 +4,7 @@ import BlogPost from '../../layouts/BlogPost.astro';
 
 type Nav = { slug: string; title: string };
 type Related = { slug: string; title: string; description: string; pubDate: Date; category: string | null };
+type SeriesPost = { slug: string; title: string };
 
 export async function getStaticPaths() {
   const allPosts = (await getCollection('blog'))
@@ -13,6 +14,13 @@ export async function getStaticPaths() {
   return allPosts.map((post, i) => {
     const newer = i > 0 ? allPosts[i - 1] : null;
     const older = i < allPosts.length - 1 ? allPosts[i + 1] : null;
+
+    // 同系列文章（按发布日期排序）
+    const seriesPosts = post.data.series
+      ? allPosts
+          .filter((p) => p.id !== post.id && p.data.series === post.data.series)
+          .map((p) => ({ slug: p.id, title: p.data.title } as SeriesPost))
+      : [];
 
     // 推荐阅读：先同专栏近邻 3 篇，不够用最近的其他文章补齐
     const sameCat = allPosts.filter(
@@ -39,6 +47,8 @@ export async function getStaticPaths() {
         newer: newer ? ({ slug: newer.id, title: newer.data.title } as Nav) : null,
         older: older ? ({ slug: older.id, title: older.data.title } as Nav) : null,
         related,
+        seriesPosts,
+        seriesName: post.data.series ?? null,
       },
     };
   });
@@ -49,13 +59,32 @@ interface Props {
   newer: Nav | null;
   older: Nav | null;
   related: Related[];
+  seriesPosts: SeriesPost[];
+  seriesName: string | null;
 }
 
-const { post, newer, older, related } = Astro.props;
+const { post, newer, older, related, seriesPosts, seriesName } = Astro.props;
 const { Content, headings } = await render(post);
 const rawBody = typeof post.body === 'string' ? post.body : '';
+const { title, description, pubDate, updatedDate, heroImage, category } = post.data;
+
+// Article 结构化数据（SEO）
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description,
+  datePublished: pubDate.toISOString(),
+  ...(updatedDate ? { dateModified: updatedDate.toISOString() } : {}),
+  author: { '@type': 'Person', name: 'LLLLei', url: 'https://blog-lllllei.favorys.top' },
+  publisher: { '@type': 'Person', name: 'LLLLei' },
+  ...(category ? { articleSection: category } : {}),
+  mainEntityOfPage: `https://blog-lllllei.favorys.top/blog/${post.id}/`,
+  ...(heroImage ? { image: heroImage } : {}),
+};
 ---
 
-<BlogPost {...post.data} headings={headings} newer={newer} older={older} related={related} rawBody={rawBody}>
+<BlogPost {...post.data} headings={headings} newer={newer} older={older} related={related} rawBody={rawBody} seriesPosts={seriesPosts} seriesName={seriesName}>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   <Content />
 </BlogPost>
