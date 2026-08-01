@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-01T19:27:02+08:00",
+    "updatedAt":  "2026-08-01T19:28:35+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -9,7 +9,7 @@
     "pc":  {
                "detail":  "Hermes",
                "activity":  "正在使用 Hermes",
-               "updatedAt":  "2026-08-01T19:27:02+08:00",
+               "updatedAt":  "2026-08-01T19:28:35+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
