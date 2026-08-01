@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-01T21:47:48+08:00",
+    "updatedAt":  "2026-08-01T21:48:21+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,8 +8,8 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在使用 explorer":  338,
                                 "正在用微信":  530,
+                                "正在使用 Hermes":  990,
                                 "正在使用 OpenCode":  124,
                                 "正在使用 Plain Craft Launcher 2":  32,
                                 "正在使用 java":  400,
@@ -17,14 +17,14 @@
                                 "正在浏览网页":  158,
                                 "离开电脑":  918,
                                 "正在使用 Weixin":  32,
-                                "正在使用 Hermes":  958
+                                "正在使用 explorer":  338
                             },
                   "date":  "2026-08-01"
               },
     "pc":  {
-               "detail":  "Hermes",
-               "activity":  "正在使用 Hermes",
-               "updatedAt":  "2026-08-01T21:47:48+08:00",
+               "detail":  "我当年的队友邓煜，是我近距离见过真正的天才",
+               "activity":  "正在看视频",
+               "updatedAt":  "2026-08-01T21:48:21+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "1小时",
@@ -235,6 +235,11 @@
                         "detail":  "Hermes",
                         "t":  "2026-08-01T21:47:48+08:00",
                         "activity":  "正在使用 Hermes"
+                    },
+                    {
+                        "detail":  "我当年的队友邓煜，是我近距离见过真正的天才",
+                        "t":  "2026-08-01T21:48:21+08:00",
+                        "activity":  "正在看视频"
                     }
                 ]
 }
