@@ -1,23 +1,41 @@
 {
-    "updatedAt":  "2026-08-01T19:46:01+08:00",
+    "updatedAt":  "2026-08-01T20:44:46+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
                   "updatedAt":  "",
                   "online":  false
               },
+    "daily":  {
+                  "stats":  {
+                                "正在使用 java":  123
+                            },
+                  "date":  "2026-08-01"
+              },
     "pc":  {
-               "detail":  "Git for Windows",
-               "activity":  "正在使用 git-askpass",
-               "updatedAt":  "2026-08-01T19:46:01+08:00",
+               "detail":  "你好，新蒸程！1.7",
+               "activity":  "正在使用 java",
+               "updatedAt":  "2026-08-01T20:44:46+08:00",
                "online":  true,
                "sysinfo":  {
-                               "uptime":  "0小时",
+                               "uptime":  "1小时",
                                "host":  "徐磊",
                                "gpu":  "GameViewer Virtual Display Adapter",
                                "os":  "Microsoft Windows 11 家庭版 10.0.26200",
                                "ram":  "31.4 GB",
                                "cpu":  "Intel(R) Core(TM) Ultra 9 275HX"
                            }
-           }
+           },
+    "history":  [
+                    {
+                        "detail":  "你好，新蒸程！1.7",
+                        "t":  "2026-08-01T20:42:08+08:00",
+                        "activity":  "正在使用 java"
+                    },
+                    {
+                        "detail":  "你好，新蒸程！1.7",
+                        "t":  "2026-08-01T20:42:43+08:00",
+                        "activity":  "正在使用 java"
+                    }
+                ]
 }
