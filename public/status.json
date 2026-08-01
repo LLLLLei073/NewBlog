@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-01T21:32:40+08:00",
+    "updatedAt":  "2026-08-01T21:34:42+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,7 +8,7 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在用微信":  220,
+                                "正在用微信":  342,
                                 "正在使用 OpenCode":  92,
                                 "正在使用 Plain Craft Launcher 2":  32,
                                 "正在使用 java":  400,
@@ -23,7 +23,7 @@
     "pc":  {
                "detail":  "微信",
                "activity":  "正在用微信",
-               "updatedAt":  "2026-08-01T21:32:40+08:00",
+               "updatedAt":  "2026-08-01T21:34:42+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "1小时",
