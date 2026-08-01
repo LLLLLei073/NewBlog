@@ -43,12 +43,14 @@ const darkTheme = new URL('/giscus/dark.css', Astro.site).href;
   .comments-title {
     font-size: 1.25rem;
     margin: 0 0 1rem;
+    /* 卡片固定白底，标题固定深色，亮暗模式下都可读 */
+    color: #1a1e35;
   }
 
   .comments-noscript {
     font-family: var(--font-sans);
     font-size: 0.9rem;
-    color: var(--muted-foreground);
+    color: #5b6172;
   }
 </style>
 
@@ -57,8 +59,8 @@ const darkTheme = new URL('/giscus/dark.css', Astro.site).href;
     const giscusOrigin = 'https://giscus.app';
 
     const currentTheme = () => {
-      const theme = document.documentElement.getAttribute('data-theme');
-      return theme === 'dark' ? darkTheme : lightTheme;
+      // 评论区卡片固定白色，giscus 恒用浅色主题，不随页面亮暗切换
+      return lightTheme;
     };
 
     // 向 giscus iframe 发送主题切换指令

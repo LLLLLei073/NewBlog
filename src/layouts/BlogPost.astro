@@ -295,21 +295,15 @@ const currentPath = Astro.url.pathname;
     color: var(--brand-300);
   }
 
-  /* 评论区：默认占满单栏，宽屏时跟随正文列。
-     亮色用普通卡片；暗色用更亮的不透明深蓝 + 清晰边框，从深空背景中凸显 */
+  /* 评论区：固定白色卡片，不随亮暗主题切换（暗色下也保持白底，保证可读性） */
   .comments-wrap {
     grid-column: 1 / -1;
     min-width: 0;
-    background: var(--card);
-    border: 1px solid var(--border);
+    background: #ffffff;
+    border: 1px solid #e3e6ec;
     border-radius: var(--radius);
     padding: 1.5rem 1.25rem 0.5rem;
     box-shadow: var(--shadow-sm);
-  }
-
-  :global(html[data-theme='dark']) .comments-wrap {
-    background: #1a1e35; /* 明显比深空背景(#0b0d1a)亮的深蓝，评论区一眼可见 */
-    border-color: #3a4166; /* 清晰可见的边框 */
   }
 
   @media (min-width: 1024px) {
