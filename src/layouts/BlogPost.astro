@@ -296,7 +296,7 @@ const currentPath = Astro.url.pathname;
   }
 
   /* 评论区：默认占满单栏，宽屏时跟随正文列。
-     包一层玻璃卡片，暗色下与页面背景区分开（避免"糊在一起"） */
+     亮色用普通卡片；暗色用更亮的不透明深蓝 + 清晰边框，从深空背景中凸显 */
   .comments-wrap {
     grid-column: 1 / -1;
     min-width: 0;
@@ -308,8 +308,8 @@ const currentPath = Astro.url.pathname;
   }
 
   :global(html[data-theme='dark']) .comments-wrap {
-    backdrop-filter: blur(14px) saturate(140%);
-    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    background: #1a1e35; /* 明显比深空背景(#0b0d1a)亮的深蓝，评论区一眼可见 */
+    border-color: #3a4166; /* 清晰可见的边框 */
   }
 
   @media (min-width: 1024px) {
