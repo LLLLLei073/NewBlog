@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-02T00:00:44+08:00",
+    "updatedAt":  "2026-08-02T00:02:46+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,14 +8,15 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在写代码":  92
+                                "正在写代码":  92,
+                                "正在浏览网页":  122
                             },
                   "date":  "2026-08-02"
               },
     "pc":  {
-               "detail":  "Problem - D - Codeforces 和另外 4 个页面 - 个人 - Microsoft​ Edge",
+               "detail":  "Bingbong的奇偶世界_牛客题霸_牛客网 和另外 2 个页面 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-02T00:00:44+08:00",
+               "updatedAt":  "2026-08-02T00:02:46+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "1小时",
