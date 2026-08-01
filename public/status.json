@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-01T21:51:25+08:00",
+    "updatedAt":  "2026-08-01T21:53:28+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,23 +8,23 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在使用 explorer":  338,
                                 "正在用微信":  530,
+                                "正在使用 Hermes":  990,
                                 "正在使用 OpenCode":  124,
                                 "正在使用 Plain Craft Launcher 2":  32,
                                 "正在使用 java":  400,
                                 "正在看视频":  584,
-                                "正在浏览网页":  158,
+                                "正在浏览网页":  280,
                                 "离开电脑":  918,
                                 "正在使用 Weixin":  32,
-                                "正在使用 Hermes":  990
+                                "正在使用 explorer":  338
                             },
                   "date":  "2026-08-01"
               },
     "pc":  {
-               "detail":  "Arena - 全球领先的AI模型评测平台 和另外 5 个页面 - 个人 - Microsoft​ Edge",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-01T21:51:25+08:00",
+               "detail":  "DeepSeek-V4-Flash 正式版 API 上线公测，模型权重已发布【AI 早报 2026-08-01】",
+               "activity":  "正在看视频",
+               "updatedAt":  "2026-08-01T21:53:28+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "1小时",
@@ -245,6 +245,11 @@
                         "detail":  "Arena - 全球领先的AI模型评测平台 和另外 5 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-01T21:51:25+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "DeepSeek-V4-Flash 正式版 API 上线公测，模型权重已发布【AI 早报 2026-08-01】",
+                        "t":  "2026-08-01T21:53:28+08:00",
+                        "activity":  "正在看视频"
                     }
                 ]
 }
