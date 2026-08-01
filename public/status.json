@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-01T21:23:52+08:00",
+    "updatedAt":  "2026-08-01T21:24:24+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,21 +8,21 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在使用 explorer":  62,
-                                "正在用微信":  156,
+                                "正在用微信":  188,
+                                "正在使用 Hermes":  768,
                                 "正在使用 Plain Craft Launcher 2":  32,
                                 "正在使用 java":  400,
                                 "离开电脑":  886,
                                 "正在浏览网页":  64,
                                 "正在看视频":  92,
-                                "正在使用 Hermes":  768
+                                "正在使用 explorer":  62
                             },
                   "date":  "2026-08-01"
               },
     "pc":  {
-               "detail":  "微信",
-               "activity":  "正在用微信",
-               "updatedAt":  "2026-08-01T21:23:52+08:00",
+               "detail":  "OpenCode",
+               "activity":  "正在使用 OpenCode",
+               "updatedAt":  "2026-08-01T21:24:24+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "1小时",
@@ -118,6 +118,11 @@
                         "detail":  "微信",
                         "t":  "2026-08-01T21:23:52+08:00",
                         "activity":  "正在用微信"
+                    },
+                    {
+                        "detail":  "OpenCode",
+                        "t":  "2026-08-01T21:24:24+08:00",
+                        "activity":  "正在使用 OpenCode"
                     }
                 ]
 }
