@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-01T22:04:52+08:00",
+    "updatedAt":  "2026-08-01T22:06:55+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,25 +8,26 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在使用 explorer":  370,
-                                "正在用微信":  530,
-                                "正在使用 OpenCode":  218,
-                                "正在使用 Plain Craft Launcher 2":  32,
+                                "正在浏览网页":  280,
                                 "正在玩游戏":  62,
+                                "正在使用 Hermes":  1114,
+                                "正在使用 Typora":  156,
+                                "正在使用 Plain Craft Launcher 2":  32,
                                 "正在使用 java":  400,
                                 "正在看视频":  798,
-                                "正在浏览网页":  280,
                                 "离开电脑":  918,
-                                "正在使用 Weixin":  32,
-                                "正在使用 Typora":  156,
-                                "正在使用 Hermes":  1114
+                                "正在使用 MonsterHunterWorld":  122,
+                                "正在使用 explorer":  370,
+                                "正在使用 OpenCode":  218,
+                                "正在用微信":  530,
+                                "正在使用 Weixin":  32
                             },
                   "date":  "2026-08-01"
               },
     "pc":  {
                "detail":  "MONSTER HUNTER: WORLD(421810)",
                "activity":  "正在使用 MonsterHunterWorld",
-               "updatedAt":  "2026-08-01T22:04:52+08:00",
+               "updatedAt":  "2026-08-01T22:06:55+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "1小时",
