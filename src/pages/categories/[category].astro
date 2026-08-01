@@ -59,8 +59,8 @@ const allPosts = (await getCollection('blog'))
               <div class="post-meta">
                 <FormattedDate date={post.data.pubDate} />
               </div>
-              <h2>{post.data.title}</h2>
-              <p class="desc">{post.data.description}</p>
+              <h2 data-search-text="title">{post.data.title}</h2>
+              <p class="desc" data-search-text="desc">{post.data.description}</p>
             </a>
           ))}
         </div>

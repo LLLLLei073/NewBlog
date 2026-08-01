@@ -1,7 +1,13 @@
 ---
 /* 专栏内搜索：实时过滤当前页面的文章列表。
    用法：把文章卡片挂上 data-search-item + data-title + data-desc 属性，
-   然后在列表上方放置本组件。支持空格分词（多关键词 AND 匹配）。 */
+   然后在列表上方放置本组件。支持空格分词（多关键词 AND 匹配）。
+
+   增强：
+   - `/` 快捷键聚焦（中文输入态时自动失效）
+   - 命中关键词在 title/desc 节点用 <mark> 高亮
+   - 空结果时显示推荐阅读（来自全站其他文章） */
+import { getCollection } from 'astro:content';
 
 interface Props {
   total: number;
@@ -9,6 +15,12 @@ interface Props {
 }
 
 const { total, placeholder = '搜索当前专栏的文章...' } = Astro.props;
+
+// 推荐阅读：从全站博客里取最多 3 篇最近发布的，作为空结果兜底
+const allPosts = (await getCollection('blog'))
+  .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
+  .slice(0, 3)
+  .map((p) => ({ title: p.data.title, href: `/blog/${p.id}/` }));
 ---
 
 <div class="post-search" data-post-search>
@@ -23,8 +35,20 @@ const { total, placeholder = '搜索当前专栏的文章...' } = Astro.props;
     aria-label={placeholder}
     autocomplete="off"
   />
+  <kbd class="search-hint" data-search-hint aria-hidden="true">/</kbd>
   <span class="search-count" data-search-count>共 {total} 篇</span>
-  <p class="search-empty" data-search-empty hidden>没有匹配的文章，换个关键词试试。</p>
+
+  <div class="search-empty" data-search-empty hidden>
+    <p class="search-empty-title">没有匹配的文章</p>
+    <p class="search-empty-sub">换个关键词试试，或者看看下面的推荐 👇</p>
+    <ul class="search-suggest">
+      {allPosts.map((p) => (
+        <li>
+          <a href={p.href} class="search-suggest-link">{p.title}</a>
+        </li>
+      ))}
+    </ul>
+  </div>
 </div>
 
 <style>
@@ -51,7 +75,7 @@ const { total, placeholder = '搜索当前专栏的文章...' } = Astro.props;
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
-    padding: 0.65rem 0.9rem 0.65rem 2.4rem;
+    padding: 0.65rem 5rem 0.65rem 2.4rem; /* 右侧留出快捷键/计数位置 */
     color: var(--foreground);
     outline: none;
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
@@ -79,6 +103,26 @@ const { total, placeholder = '搜索当前专栏的文章...' } = Astro.props;
     mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round'%3E%3Cline x1='18' y1='6' x2='6' y2='18'/%3E%3Cline x1='6' y1='6' x2='18' y2='18'/%3E%3C/svg%3E") center / contain no-repeat;
   }
 
+  .search-hint {
+    position: absolute;
+    right: 5.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--muted-foreground);
+    background: var(--muted);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.05rem 0.4rem;
+    line-height: 1.4;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+  }
+
+  .post-search input:focus ~ .search-hint,
+  .post-search input:not(:placeholder-shown) ~ .search-hint {
+    opacity: 0;
+  }
+
   .search-count {
     font-family: var(--font-mono);
     font-size: 0.72rem;
@@ -89,18 +133,59 @@ const { total, placeholder = '搜索当前专栏的文章...' } = Astro.props;
 
   .search-empty {
     flex-basis: 100%;
-    font-family: var(--font-sans);
-    font-size: 0.9rem;
-    color: var(--muted-foreground);
-    font-style: italic;
-    padding: 1rem 0 0.5rem;
+    padding: 0.5rem 0 0.5rem;
     text-align: center;
+  }
+
+  .search-empty-title {
+    margin: 0 0 0.25rem;
+    font-size: 0.95rem;
+    color: var(--foreground);
+  }
+
+  .search-empty-sub {
+    margin: 0 0 0.75rem;
+    font-size: 0.82rem;
+    color: var(--muted-foreground);
+  }
+
+  .search-suggest {
+    list-style: none;
+    padding: 0;
     margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    max-width: 420px;
+    margin: 0 auto;
+    text-align: left;
+  }
+
+  .search-suggest-link {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+    color: var(--muted-foreground);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+  }
+
+  .search-suggest-link:hover {
+    color: var(--primary);
+    border-color: var(--brand-300);
+    text-decoration: none;
   }
 
   @media (max-width: 480px) {
-    .search-count {
-      display: none; /* 超窄屏让位给输入框 */
+    .search-count,
+    .search-hint {
+      display: none;
+    }
+
+    .post-search input {
+      padding-right: 0.9rem;
     }
   }
 </style>
@@ -116,8 +201,45 @@ const { total, placeholder = '搜索当前专栏的文章...' } = Astro.props;
     const items = Array.from(document.querySelectorAll('[data-search-item]')) as HTMLElement[];
 
     const total = items.length;
-
     const normalize = (s: string) => s.toLowerCase();
+
+    // 储存原始文本，切换高亮时不被 <mark> 污染
+    const originals = new Map<HTMLElement, { title: string; desc: string }>();
+    items.forEach((item) => {
+      const titleEl = item.querySelector('[data-search-text="title"]');
+      const descEl = item.querySelector('[data-search-text="desc"]');
+      originals.set(item, {
+        title: titleEl?.textContent ?? '',
+        desc: descEl?.textContent ?? '',
+      });
+    });
+
+    const highlight = (el: HTMLElement | null, terms: string[]) => {
+      if (!el) return;
+      const original = originals.get(el.closest('[data-search-item]') as HTMLElement);
+      if (!original) return;
+      const text = el.getAttribute('data-search-text') === 'title' ? original.title : original.desc;
+      if (terms.length === 0) {
+        el.textContent = text;
+        return;
+      }
+      // 全部术语拼成正则，忽略大小写
+      const escaped = terms.map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+      const re = new RegExp(`(${escaped.join('|')})`, 'gi');
+      const parts = text.split(re);
+      el.innerHTML = parts
+        .map((p) =>
+          re.test(p) ? `<mark>${p}</mark>` : escapeHtml(p)
+        )
+        .join('');
+      // 上面 test() 会带 lastIndex 副作用，置零
+      re.lastIndex = 0;
+    };
+
+    const escapeHtml = (s: string) =>
+      s.replace(/[&<>"']/g, (c) =>
+        ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] as string)
+      );
 
     const filter = () => {
       const terms = normalize(input.value).split(/\s+/).filter(Boolean);
@@ -129,6 +251,14 @@ const { total, placeholder = '搜索当前专栏的文章...' } = Astro.props;
         );
         const match = terms.every((t) => haystack.includes(t));
         item.classList.toggle('hidden', !match);
+
+        // 高亮（隐藏的不渲染高亮，节省一点）
+        if (match || terms.length === 0) {
+          const titleEl = item.querySelector('[data-search-text="title"]') as HTMLElement;
+          const descEl = item.querySelector('[data-search-text="desc"]') as HTMLElement;
+          highlight(titleEl, terms);
+          highlight(descEl, terms);
+        }
         if (match) visible++;
       }
 
@@ -138,9 +268,48 @@ const { total, placeholder = '搜索当前专栏的文章...' } = Astro.props;
     };
 
     input.addEventListener('input', filter);
+
+    // `/` 快捷键聚焦（中文输入态、文本框内、含修饰键时都不触发）
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== '/') return;
+      const t = e.target as HTMLElement;
+      if (t.matches('input, textarea')) return;
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+      // IME 输入态跳过
+      if ((e as any).isComposing || (e as any).keyCode === 229) return;
+      e.preventDefault();
+      input.focus();
+      input.select();
+    };
+    document.addEventListener('keydown', onKey);
+
+    // ESC 清空已聚焦的搜索
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && input.value) {
+        input.value = '';
+        filter();
+        e.stopPropagation();
+      }
+    });
   }
 
   // 支持页面导航后重新绑定（Astro View Transitions）
   document.addEventListener('astro:after-swap', initPostSearch);
   initPostSearch();
 </script>
+
+<style is:global>
+  /* 命中关键词高亮（作用于 <mark>） */
+  [data-search-item] mark {
+    background: var(--brand-100);
+    color: var(--brand-700);
+    padding: 0 0.1em;
+    border-radius: 3px;
+    font-weight: 500;
+  }
+
+  :global(html[data-theme='dark']) [data-search-item] mark {
+    background: var(--brand-100);
+    color: var(--brand-300);
+  }
+</style>

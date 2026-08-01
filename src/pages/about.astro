@@ -1,32 +1,146 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE_AUTHOR } from '../consts.ts';
+
+const skills = [
+  { name: 'TypeScript / JavaScript', level: 4 },
+  { name: 'Vue / React', level: 4 },
+  { name: 'Astro / 静态站点', level: 3 },
+  { name: 'Node.js / NestJS', level: 3 },
+  { name: '数据可视化 (ECharts)', level: 3 },
+  { name: 'C++ / 算法竞赛', level: 2 },
+];
+
+const timeline = [
+  { year: '2024', title: '搭起这个博客', desc: '从零开始写 Astro、配置主题、接入 giscus 评论' },
+  { year: '2024', title: '数智党校项目', desc: 'Vue3 + NestJS + Prisma 全栈实践' },
+  { year: '2023', title: '开始系统刷题', desc: '算法与数据结构日常积累' },
+  { year: '2022', title: '接触前端工程化', desc: '从原生 JavaScript 走向现代化框架' },
+];
+
+const socials = [
+  { name: 'GitHub', href: 'https://github.com/LLLLLei073', handle: '@LLLLLei073' },
+  { name: '邮箱', href: 'mailto:your@email.com', handle: 'your@email.com' },
+  { name: 'RSS', href: '/rss.xml', handle: '订阅文章更新' },
+];
 ---
 
-<BaseLayout title="关于" description="关于这个博客和我的介绍">
+<BaseLayout title="关于" description="关于我和这个博客">
   <section class="container about">
     <div class="page-head">
       <p class="eyebrow">关于</p>
-      <h1>关于</h1>
+      <h1>关于我 & 这个博客</h1>
+      <p class="lead">一个喜欢写代码、做点有趣项目、并把思路记录下来的人。</p>
     </div>
-    <p>欢迎来到我的博客！这里记录我在技术、生活和思考方面的点滴。</p>
-    <p>这个博客使用 <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> 构建，部署在 <a href="https://pages.github.com" target="_blank" rel="noopener">GitHub Pages</a> 上。它完全静态、加载迅速、SEO 友好。</p>
-    <h2>联系我</h2>
-    <ul>
-      <li>GitHub: <a href="https://github.com/LLLLLei073" target="_blank" rel="noopener">@LLLLLei073</a></li>
-      <li>Email: <a href="mailto:your@email.com">your@email.com</a></li>
-    </ul>
+
+    <!-- 头像 + 简介 -->
+    <div class="hero-card">
+      <div class="avatar">
+        <svg viewBox="0 0 120 120" width="96" height="96" aria-hidden="true">
+          <defs>
+            <linearGradient id="avatar-bg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="var(--brand-300)" />
+              <stop offset="100%" stop-color="var(--brand-500)" />
+            </linearGradient>
+          </defs>
+          <circle cx="60" cy="60" r="60" fill="url(#avatar-bg)" />
+          <text
+            x="60"
+            y="78"
+            text-anchor="middle"
+            font-family="system-ui, sans-serif"
+            font-size="52"
+            font-weight="700"
+            fill="#fff"
+          >L</text>
+        </svg>
+      </div>
+      <div class="hero-text">
+        <h2>你好，我是 {SITE_AUTHOR} 👋</h2>
+        <p>
+          这里是「<strong>我的博客</strong>」，记录我在技术、生活和思考方面的点滴。
+          博客使用 <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> 构建，
+          部署在 <a href="https://pages.github.com" target="_blank" rel="noopener">GitHub Pages</a>，
+          全部内容开源。
+        </p>
+        <p>
+          目前主要在做的事情：写代码、刷算法题、折腾小项目。喜欢简洁、有质感的设计，
+          也喜欢把复杂的东西讲清楚。
+        </p>
+      </div>
+    </div>
+
+    <!-- 技能树 -->
+    <div class="block">
+      <h2 class="block-title">
+        <span class="block-icon">🛠️</span> 我在用的工具
+      </h2>
+      <ul class="skills">
+        {skills.map((s) => (
+          <li class="skill">
+            <div class="skill-head">
+              <span class="skill-name">{s.name}</span>
+              <span class="skill-dots" aria-label={`熟练度 ${s.level} / 5`}>
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <span class:list={['dot', { on: i <= s.level }]} />
+                ))}
+              </span>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <!-- 时间线 -->
+    <div class="block">
+      <h2 class="block-title">
+        <span class="block-icon">🕒</span> 我的轨迹
+      </h2>
+      <ol class="timeline">
+        {timeline.map((item) => (
+          <li class="tl-item">
+            <span class="tl-year">{item.year}</span>
+            <div class="tl-body">
+              <p class="tl-title">{item.title}</p>
+              <p class="tl-desc">{item.desc}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+
+    <!-- 联系方式 -->
+    <div class="block">
+      <h2 class="block-title">
+        <span class="block-icon">📬</span> 找到我
+      </h2>
+      <ul class="socials">
+        {socials.map((s) => (
+          <li>
+            <a href={s.href} class:list={['social', { external: s.href.startsWith('http') }]}>
+              <span class="social-name">{s.name}</span>
+              <span class="social-handle">{s.handle}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p class="hint">
+        欢迎通过以上方式交流技术、推荐好文章、或者单纯打个招呼 ☕
+      </p>
+    </div>
   </section>
 </BaseLayout>
 
 <style>
   .about {
     padding-top: 2.5rem;
-    padding-bottom: 3rem;
+    padding-bottom: 4rem;
+    max-width: 760px;
   }
 
   .page-head {
     border-bottom: 1px solid var(--border);
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
     padding-bottom: 1.25rem;
   }
 
@@ -42,26 +156,228 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   .page-head h1 {
     font-size: 2rem;
+    margin: 0 0 0.5rem;
+  }
+
+  .lead {
+    color: var(--muted-foreground);
+    font-size: 1.05rem;
     margin: 0;
   }
 
-  .about h2 {
-    font-size: 1.25rem;
-    margin: 2rem 0 0.5rem;
+  /* Hero 卡片 */
+  .hero-card {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    padding: 1.5rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 2rem;
   }
 
-  .about p,
-  .about li {
-    line-height: 1.8;
+  .avatar {
+    flex-shrink: 0;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+  }
+
+  .hero-text h2 {
+    margin: 0 0 0.6rem;
+    font-size: 1.35rem;
+  }
+
+  .hero-text p {
+    line-height: 1.75;
+    margin: 0 0 0.6rem;
+    color: var(--muted-foreground);
+  }
+
+  .hero-text p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* 通用 block */
+  .block {
+    margin-top: 2.5rem;
+  }
+
+  .block-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.15rem;
+    margin: 0 0 1rem;
+  }
+
+  .block-icon {
+    font-size: 1.1rem;
+  }
+
+  /* 技能点 */
+  .skills {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.6rem;
+  }
+
+  .skill {
+    padding: 0.65rem 0.85rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+
+  .skill-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .skill-name {
+    font-size: 0.88rem;
+    font-weight: 500;
+  }
+
+  .skill-dots {
+    display: inline-flex;
+    gap: 4px;
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--border);
+    transition: background-color 0.2s ease;
+  }
+
+  .dot.on {
+    background: var(--primary);
+  }
+
+  /* 时间线 */
+  .timeline {
+    list-style: none;
+    padding: 0 0 0 0.5rem;
+    margin: 0;
+    border-left: 2px solid var(--border);
+  }
+
+  .tl-item {
+    position: relative;
+    padding: 0 0 1.25rem 1.5rem;
+  }
+
+  .tl-item:last-child {
+    padding-bottom: 0;
+  }
+
+  .tl-item::before {
+    content: '';
+    position: absolute;
+    left: -7px;
+    top: 0.4rem;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--primary);
+    box-shadow: 0 0 0 3px var(--background);
+  }
+
+  .tl-year {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--primary);
+    background: var(--brand-100);
+    padding: 0.1rem 0.5rem;
+    border-radius: var(--radius-sm);
+    margin-bottom: 0.3rem;
+  }
+
+  .tl-title {
+    margin: 0 0 0.2rem;
+    font-weight: 500;
+    font-size: 0.95rem;
+  }
+
+  .tl-desc {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--muted-foreground);
+    line-height: 1.6;
+  }
+
+  /* 社交 */
+  .socials {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.6rem;
+  }
+
+  .social {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 0.7rem 0.9rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    text-decoration: none;
+    transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .social:hover {
+    text-decoration: none;
+    border-color: var(--brand-300);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .social-name {
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--foreground);
+  }
+
+  .social-handle {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--muted-foreground);
+  }
+
+  .hint {
+    font-size: 0.85rem;
+    color: var(--muted-foreground);
+    margin: 0;
   }
 
   @media (max-width: 640px) {
     .about {
       padding-top: 1.75rem;
-      padding-bottom: 2rem;
     }
+
     .page-head h1 {
       font-size: 1.6rem;
+    }
+
+    .hero-card {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1rem;
+      padding: 1.25rem;
     }
   }
 </style>

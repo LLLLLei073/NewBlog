@@ -3,6 +3,7 @@ import { type CollectionEntry, getCollection, render } from 'astro:content';
 import BlogPost from '../../layouts/BlogPost.astro';
 
 type Nav = { slug: string; title: string };
+type Related = { slug: string; title: string; description: string; pubDate: Date; category: string | null };
 
 export async function getStaticPaths() {
   const allPosts = (await getCollection('blog'))
@@ -12,12 +13,32 @@ export async function getStaticPaths() {
   return allPosts.map((post, i) => {
     const newer = i > 0 ? allPosts[i - 1] : null;
     const older = i < allPosts.length - 1 ? allPosts[i + 1] : null;
+
+    // 推荐阅读：先同专栏近邻 3 篇，不够用最近的其他文章补齐
+    const sameCat = allPosts.filter(
+      (p) => p.id !== post.id && (p.data.category ?? null) === (post.data.category ?? null)
+    );
+    const otherCat = allPosts.filter(
+      (p) => p.id !== post.id && (p.data.category ?? null) !== (post.data.category ?? null)
+    );
+    const related = [...sameCat, ...otherCat].slice(0, 3).map(
+      (p) =>
+        ({
+          slug: p.id,
+          title: p.data.title,
+          description: p.data.description,
+          pubDate: p.data.pubDate,
+          category: p.data.category ?? null,
+        } as Related)
+    );
+
     return {
       params: { slug: post.id },
       props: {
         post,
         newer: newer ? ({ slug: newer.id, title: newer.data.title } as Nav) : null,
         older: older ? ({ slug: older.id, title: older.data.title } as Nav) : null,
+        related,
       },
     };
   });
@@ -27,13 +48,14 @@ interface Props {
   post: CollectionEntry<'blog'>;
   newer: Nav | null;
   older: Nav | null;
+  related: Related[];
 }
 
-const { post, newer, older } = Astro.props;
+const { post, newer, older, related } = Astro.props;
 const { Content, headings } = await render(post);
 const rawBody = typeof post.body === 'string' ? post.body : '';
 ---
 
-<BlogPost {...post.data} headings={headings} newer={newer} older={older} rawBody={rawBody}>
+<BlogPost {...post.data} headings={headings} newer={newer} older={older} related={related} rawBody={rawBody}>
   <Content />
 </BlogPost>

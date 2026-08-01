@@ -8,5 +8,8 @@
     var t = localStorage.getItem('theme');
     if (!t) t = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
     document.documentElement.setAttribute('data-theme', t);
+    // 暗色变体：默认 starfield（带星空），可由用户切换为 minimal（极简单色）
+    var v = localStorage.getItem('dark-variant');
+    if (v) document.documentElement.setAttribute('data-dark-variant', v);
   })();
 </script>

@@ -570,6 +570,17 @@ tr:last-child td {
   border-color: var(--brand-500);
 }
 
+/* ===== 暗色变体：极简模式（关闭星空/星云，保留纯深色背景） =====
+   默认暗色是 starfield（星空），通过 ThemeToggle 切到 minimal */
+:where(:root[data-theme='dark'][data-dark-variant='minimal']) body {
+  background: #0b0d1a;
+  background-image: none;
+}
+
+:where(:root[data-theme='dark'][data-dark-variant='minimal']) body::before {
+  display: none;
+}
+
 /* ===== 主题切换过渡动画（View Transitions API） =====
    圆形扩散：新主题从按钮位置（--vt-x/--vt-y）向外展开。
    不支持的浏览器（旧 Safari 等）自动回退为直接切换。 */
