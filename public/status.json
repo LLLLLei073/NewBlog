@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-01T21:07:22+08:00",
+    "updatedAt":  "2026-08-01T21:09:24+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,19 +8,19 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在看视频":  92,
                                 "正在使用 Plain Craft Launcher 2":  32,
                                 "正在使用 java":  400,
                                 "离开电脑":  886,
                                 "正在浏览网页":  32,
-                                "正在使用 Hermes":  32
+                                "正在看视频":  92,
+                                "正在使用 Hermes":  154
                             },
                   "date":  "2026-08-01"
               },
     "pc":  {
                "detail":  "Hermes",
                "activity":  "正在使用 Hermes",
-               "updatedAt":  "2026-08-01T21:07:22+08:00",
+               "updatedAt":  "2026-08-01T21:09:24+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "1小时",
