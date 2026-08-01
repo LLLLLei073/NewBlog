@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-01T18:17:53+08:00",
+    "updatedAt":  "2026-08-01T18:32:27+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -7,9 +7,17 @@
                   "online":  false
               },
     "pc":  {
-               "detail":  "Hermes",
-               "activity":  "正在使用 Hermes",
-               "updatedAt":  "2026-08-01T18:17:53+08:00",
-               "online":  true
+               "detail":  "未检测到活动窗口",
+               "activity":  "离开电脑",
+               "updatedAt":  "2026-08-01T18:32:27+08:00",
+               "online":  true,
+               "sysinfo":  {
+                               "uptime":  "5小时",
+                               "host":  "徐磊",
+                               "gpu":  "GameViewer Virtual Display Adapter",
+                               "os":  "Microsoft Windows 11 家庭版 10.0.26200",
+                               "ram":  "31.4 GB",
+                               "cpu":  "Intel(R) Core(TM) Ultra 9 275HX"
+                           }
            }
 }
