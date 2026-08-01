@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-01T23:11:22+08:00",
+    "updatedAt":  "2026-08-01T23:12:54+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -15,20 +15,20 @@
                                 "正在使用 Plain Craft Launcher 2":  32,
                                 "正在使用 java":  400,
                                 "正在看视频":  798,
-                                "正在写代码":  1530,
+                                "正在写代码":  1622,
                                 "离开电脑":  918,
                                 "正在使用 MonsterHunterWorld":  1770,
+                                "正在用微信":  530,
                                 "正在使用 explorer":  370,
                                 "正在使用 OpenCode":  218,
-                                "正在用微信":  530,
                                 "正在使用 Weixin":  32
                             },
                   "date":  "2026-08-01"
               },
     "pc":  {
-               "detail":  "VS Code",
-               "activity":  "正在写代码",
-               "updatedAt":  "2026-08-01T23:11:22+08:00",
+               "detail":  "Status - Codeforces Round 1113 (Div. 2) - Codeforces 和另外 2 个…",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-01T23:12:54+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "1小时",
@@ -40,11 +40,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Program Manager",
-                        "t":  "2026-08-01T21:18:06+08:00",
-                        "activity":  "正在使用 explorer"
-                    },
                     {
                         "detail":  "Hermes",
                         "t":  "2026-08-01T21:19:08+08:00",
@@ -339,6 +334,11 @@
                         "detail":  "VS Code",
                         "t":  "2026-08-01T23:09:20+08:00",
                         "activity":  "正在写代码"
+                    },
+                    {
+                        "detail":  "Status - Codeforces Round 1113 (Div. 2) - Codeforces 和另外 2 个…",
+                        "t":  "2026-08-01T23:12:54+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
