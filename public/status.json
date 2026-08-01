@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-01T23:52:58+08:00",
+    "updatedAt":  "2026-08-01T23:53:30+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -12,23 +12,24 @@
                                 "正在玩游戏":  62,
                                 "正在使用 Hermes":  1114,
                                 "正在使用 Typora":  156,
+                                "正在使用 DeepL":  32,
                                 "正在使用 Plain Craft Launcher 2":  32,
                                 "正在使用 java":  400,
                                 "正在看视频":  798,
                                 "正在写代码":  3184,
                                 "离开电脑":  918,
                                 "正在使用 MonsterHunterWorld":  1770,
-                                "正在用微信":  624,
                                 "正在使用 explorer":  370,
                                 "正在使用 OpenCode":  218,
+                                "正在用微信":  624,
                                 "正在使用 Weixin":  32
                             },
                   "date":  "2026-08-01"
               },
     "pc":  {
-               "detail":  "DeepL",
-               "activity":  "正在使用 DeepL",
-               "updatedAt":  "2026-08-01T23:52:58+08:00",
+               "detail":  "Problem - D - Codeforces 和另外 4 个页面 - 个人 - Microsoft​ Edge",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-01T23:53:30+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "1小时",
@@ -40,11 +41,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Weixin",
-                        "t":  "2026-08-01T21:38:24+08:00",
-                        "activity":  "正在使用 Weixin"
-                    },
                     {
                         "detail":  "网吧规则怪谈之LOL",
                         "t":  "2026-08-01T21:38:56+08:00",
@@ -339,6 +335,11 @@
                         "detail":  "DeepL",
                         "t":  "2026-08-01T23:52:58+08:00",
                         "activity":  "正在使用 DeepL"
+                    },
+                    {
+                        "detail":  "Problem - D - Codeforces 和另外 4 个页面 - 个人 - Microsoft​ Edge",
+                        "t":  "2026-08-01T23:53:30+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
