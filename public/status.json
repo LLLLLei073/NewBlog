@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-01T18:48:35+08:00",
+    "updatedAt":  "2026-08-01T19:16:47+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -7,12 +7,12 @@
                   "online":  false
               },
     "pc":  {
-               "detail":  "浏览器",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-01T18:48:35+08:00",
+               "detail":  "Hermes",
+               "activity":  "正在使用 Hermes",
+               "updatedAt":  "2026-08-01T19:16:47+08:00",
                "online":  true,
                "sysinfo":  {
-                               "uptime":  "6小时",
+                               "uptime":  "0小时",
                                "host":  "徐磊",
                                "gpu":  "GameViewer Virtual Display Adapter",
                                "os":  "Microsoft Windows 11 家庭版 10.0.26200",
