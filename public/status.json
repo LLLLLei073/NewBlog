@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-01T21:38:24+08:00",
+    "updatedAt":  "2026-08-01T21:38:56+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -14,6 +14,7 @@
                                 "正在使用 java":  400,
                                 "正在看视频":  92,
                                 "正在浏览网页":  64,
+                                "正在使用 Weixin":  32,
                                 "离开电脑":  918,
                                 "正在使用 Hermes":  894,
                                 "正在使用 explorer":  338
@@ -21,9 +22,9 @@
                   "date":  "2026-08-01"
               },
     "pc":  {
-               "detail":  "Weixin",
-               "activity":  "正在使用 Weixin",
-               "updatedAt":  "2026-08-01T21:38:24+08:00",
+               "detail":  "网吧规则怪谈之LOL",
+               "activity":  "正在看视频",
+               "updatedAt":  "2026-08-01T21:38:56+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "1小时",
@@ -179,6 +180,11 @@
                         "detail":  "Weixin",
                         "t":  "2026-08-01T21:38:24+08:00",
                         "activity":  "正在使用 Weixin"
+                    },
+                    {
+                        "detail":  "网吧规则怪谈之LOL",
+                        "t":  "2026-08-01T21:38:56+08:00",
+                        "activity":  "正在看视频"
                     }
                 ]
 }
