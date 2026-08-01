@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-01T18:48:03+08:00",
+    "updatedAt":  "2026-08-01T18:48:35+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -7,9 +7,9 @@
                   "online":  false
               },
     "pc":  {
-               "detail":  "哔哩哔哩",
-               "activity":  "正在看视频",
-               "updatedAt":  "2026-08-01T18:48:03+08:00",
+               "detail":  "浏览器",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-01T18:48:35+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "6小时",
