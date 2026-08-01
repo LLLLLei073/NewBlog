@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-01T20:43:29+08:00",
+    "updatedAt":  "2026-08-01T20:43:46+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,14 +8,14 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在使用 java":  46
+                                "正在使用 java":  63
                             },
                   "date":  "2026-08-01"
               },
     "pc":  {
                "detail":  "你好，新蒸程！1.7",
                "activity":  "正在使用 java",
-               "updatedAt":  "2026-08-01T20:43:29+08:00",
+               "updatedAt":  "2026-08-01T20:43:46+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "1小时",
