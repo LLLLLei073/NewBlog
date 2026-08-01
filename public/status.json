@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-01T21:03:41+08:00",
+    "updatedAt":  "2026-08-01T21:04:13+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -9,14 +9,14 @@
     "daily":  {
                   "stats":  {
                                 "正在使用 java":  400,
-                                "离开电脑":  854
+                                "离开电脑":  886
                             },
                   "date":  "2026-08-01"
               },
     "pc":  {
-               "detail":  "未检测到活动窗口",
-               "activity":  "离开电脑",
-               "updatedAt":  "2026-08-01T21:03:41+08:00",
+               "detail":  "Plain Craft Launcher",
+               "activity":  "正在使用 Plain Craft Launcher 2",
+               "updatedAt":  "2026-08-01T21:04:13+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "1小时",
@@ -42,6 +42,11 @@
                         "detail":  "未检测到活动窗口",
                         "t":  "2026-08-01T20:49:25+08:00",
                         "activity":  "离开电脑"
+                    },
+                    {
+                        "detail":  "Plain Craft Launcher",
+                        "t":  "2026-08-01T21:04:13+08:00",
+                        "activity":  "正在使用 Plain Craft Launcher 2"
                     }
                 ]
 }
