@@ -1,0 +1,172 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+// 按「年-月」分组（降序）
+const groups = new Map<string, typeof posts>();
+for (const post of posts) {
+  const key = post.data.pubDate.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long' });
+  if (!groups.has(key)) groups.set(key, []);
+  groups.get(key)!.push(post);
+}
+const archiveGroups = Array.from(groups.entries());
+---
+
+<BaseLayout title="归档" description="全部文章按时间归档">
+  <section class="container">
+    <div class="page-head">
+      <p class="eyebrow">归档</p>
+      <h1>归档</h1>
+      <p class="lead">共 {posts.length} 篇文章，按时间倒序排列。</p>
+    </div>
+
+    <div class="archive">
+      {
+        archiveGroups.map(([month, monthPosts]) => (
+          <section class="archive-group">
+            <h2 class="archive-month">{month}
+              <span class="archive-count">{monthPosts.length} 篇</span>
+            </h2>
+            <ul class="archive-list">
+              {monthPosts.map((post) => (
+                <li>
+                  <a href={`/blog/${post.id}/`} class="archive-item">
+                    <span class="archive-date">
+                      <FormattedDate date={post.data.pubDate} />
+                    </span>
+                    <span class="archive-title">{post.data.title}</span>
+                    {post.data.category && <span class="archive-cat">{post.data.category}</span>}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-head {
+    padding: 2.5rem 0 1.75rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2rem;
+  }
+
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--primary);
+    margin: 0 0 0.65rem;
+  }
+
+  .page-head h1 {
+    font-size: 2rem;
+    margin: 0 0 0.4rem;
+  }
+
+  .lead {
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    color: var(--muted-foreground);
+    margin: 0;
+  }
+
+  .archive {
+    padding-bottom: 3rem;
+    max-width: 640px;
+  }
+
+  .archive-group {
+    margin-bottom: 2.25rem;
+  }
+
+  .archive-month {
+    font-size: 1.05rem;
+    margin: 0 0 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .archive-count {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 400;
+    color: var(--muted-foreground);
+    padding: 0.1rem 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-full);
+  }
+
+  .archive-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .archive-item {
+    display: flex;
+    align-items: baseline;
+    gap: 0.9rem;
+    padding: 0.55rem 0;
+    border-bottom: 1px dashed var(--border);
+    text-decoration: none;
+    transition: color 0.15s ease, padding-left 0.15s ease;
+  }
+
+  .archive-item:hover {
+    color: var(--primary);
+    padding-left: 0.3rem;
+  }
+
+  .archive-date {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--muted-foreground);
+    flex-shrink: 0;
+    min-width: 5.5em;
+  }
+
+  .archive-title {
+    font-size: 0.92rem;
+    color: var(--foreground);
+  }
+
+  .archive-item:hover .archive-title {
+    color: var(--primary);
+  }
+
+  .archive-cat {
+    margin-left: auto;
+    font-size: 0.65rem;
+    color: var(--primary);
+    background: var(--brand-100);
+    padding: 0.05rem 0.5rem;
+    border-radius: var(--radius-full);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 640px) {
+    .page-head {
+      padding: 1.75rem 0 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    .page-head h1 {
+      font-size: 1.6rem;
+    }
+  }
+</style>
