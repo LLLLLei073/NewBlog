@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-03T00:15:34+08:00",
+    "updatedAt":  "2026-08-03T00:16:08+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,24 +8,24 @@
               },
     "daily":  {
                   "stats":  {
+                                "正在使用 Typora":  33,
+                                "正在使用 explorer":  66,
                                 "正在使用 OpenCode":  327,
-                                "正在使用 PickerHost":  33,
                                 "正在使用 CF Friend Tracker":  46,
                                 "离开电脑":  40,
-                                "正在浏览网页":  63,
+                                "正在浏览网页":  97,
+                                "正在使用 PickerHost":  33,
                                 "正在使用 WorkBuddy":  214,
-                                "正在使用 typora-update-x64-1.14.8.tmp":  33,
-                                "正在使用 Hermes":  33,
                                 "正在使用 CF-Friend-Tracker-Setup-1.3.5":  55,
-                                "正在使用 Typora":  33,
-                                "正在使用 explorer":  66
+                                "正在使用 typora-update-x64-1.14.8.tmp":  33,
+                                "正在使用 Hermes":  33
                             },
                   "date":  "2026-08-03"
               },
     "pc":  {
-               "detail":  "ACM 算法模板库 和另外 3 个页面 - 个人 - Microsoft​ Edge",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-03T00:15:34+08:00",
+               "detail":  "OpenCode",
+               "activity":  "正在使用 OpenCode",
+               "updatedAt":  "2026-08-03T00:16:08+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -37,11 +37,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "CF Friends Tracker",
-                        "t":  "2026-08-02T23:28:53+08:00",
-                        "activity":  "正在使用 electron"
-                    },
                     {
                         "detail":  "Hermes",
                         "t":  "2026-08-02T23:30:55+08:00",
@@ -336,6 +331,11 @@
                         "detail":  "ACM 算法模板库 和另外 3 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-03T00:15:34+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "OpenCode",
+                        "t":  "2026-08-03T00:16:08+08:00",
+                        "activity":  "正在使用 OpenCode"
                     }
                 ]
 }
