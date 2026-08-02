@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-02T23:12:10+08:00",
+    "updatedAt":  "2026-08-02T23:14:12+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -11,16 +11,16 @@
                                 "正在浏览网页":  8735,
                                 "正在玩游戏":  97,
                                 "正在使用 Hermes":  5166,
-                                "正在使用 WorkBuddy":  186,
                                 "正在处理文档":  32,
                                 "正在使用 LockApp":  36,
+                                "正在使用 kanban":  8818,
                                 "正在使用 CF Friend Tracker":  122,
                                 "正在看视频":  7610,
-                                "正在用微信":  440,
                                 "正在使用 clash-verge":  32,
                                 "正在写代码":  2668,
                                 "正在使用 yuanbao":  94,
-                                "正在使用 OpenCode":  340,
+                                "正在使用 WorkBuddy":  186,
+                                "离开电脑":  43273,
                                 "正在使用 vs_setup_bootstrapper":  32,
                                 "正在使用私密应用":  584,
                                 "正在使用 agent-workbench":  32,
@@ -28,8 +28,8 @@
                                 "正在使用 OxygenNotIncluded":  2594,
                                 "正在使用 WindowsTerminal":  184,
                                 "正在使用 explorer":  2292,
-                                "正在使用 kanban":  8818,
-                                "离开电脑":  43151,
+                                "正在使用 OpenCode":  340,
+                                "正在用微信":  440,
                                 "正在使用 Weixin":  128
                             },
                   "date":  "2026-08-02"
@@ -37,7 +37,7 @@
     "pc":  {
                "detail":  "未检测到活动窗口",
                "activity":  "离开电脑",
-               "updatedAt":  "2026-08-02T23:12:10+08:00",
+               "updatedAt":  "2026-08-02T23:14:12+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
