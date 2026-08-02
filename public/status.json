@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-02T00:07:25+08:00",
+    "updatedAt":  "2026-08-02T11:05:46+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -10,6 +10,7 @@
                   "stats":  {
                                 "正在浏览网页":  368,
                                 "正在使用私密应用":  32,
+                                "离开电脑":  39501,
                                 "正在写代码":  92
                             },
                   "date":  "2026-08-02"
@@ -17,10 +18,10 @@
     "pc":  {
                "detail":  "未检测到活动窗口",
                "activity":  "离开电脑",
-               "updatedAt":  "2026-08-02T00:07:25+08:00",
+               "updatedAt":  "2026-08-02T11:05:46+08:00",
                "online":  true,
                "sysinfo":  {
-                               "uptime":  "1小时",
+                               "uptime":  "0小时",
                                "host":  "徐磊",
                                "gpu":  "GameViewer Virtual Display Adapter",
                                "os":  "Microsoft Windows 11 家庭版 10.0.26200",
