@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-02T18:12:36+08:00",
+    "updatedAt":  "2026-08-02T18:14:38+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -12,13 +12,13 @@
                                 "正在使用 agent-workbench":  32,
                                 "正在使用 Hermes":  5012,
                                 "正在处理文档":  32,
-                                "正在使用 vs_setup_bootstrapper":  32,
                                 "正在使用 LockApp":  36,
-                                "正在看视频":  4400,
+                                "正在看视频":  4522,
                                 "正在玩游戏":  97,
                                 "正在使用 clash-verge":  32,
                                 "正在写代码":  92,
                                 "正在使用 WorkBuddy":  124,
+                                "正在使用 OpenCode":  276,
                                 "离开电脑":  41195,
                                 "正在使用私密应用":  32,
                                 "正在敲命令":  62,
@@ -26,7 +26,7 @@
                                 "正在使用 WindowsTerminal":  184,
                                 "正在使用 explorer":  126,
                                 "正在使用 kanban":  8786,
-                                "正在使用 OpenCode":  276,
+                                "正在使用 vs_setup_bootstrapper":  32,
                                 "正在使用 Weixin":  64
                             },
                   "date":  "2026-08-02"
@@ -34,7 +34,7 @@
     "pc":  {
                "detail":  "缺氧新手活过100天#08 种植顶针芦苇并学会食物过渡",
                "activity":  "正在看视频",
-               "updatedAt":  "2026-08-02T18:12:36+08:00",
+               "updatedAt":  "2026-08-02T18:14:38+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
