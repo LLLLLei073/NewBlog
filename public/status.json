@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-02T20:54:41+08:00",
+    "updatedAt":  "2026-08-02T20:55:13+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -12,13 +12,13 @@
                                 "正在玩游戏":  97,
                                 "正在使用 Hermes":  5012,
                                 "正在处理文档":  32,
-                                "正在使用 vs_setup_bootstrapper":  32,
                                 "正在使用 LockApp":  36,
-                                "正在使用 kanban":  8786,
                                 "正在看视频":  4920,
+                                "正在用微信":  376,
                                 "正在使用 clash-verge":  32,
-                                "正在写代码":  2204,
+                                "正在写代码":  2236,
                                 "正在使用 WorkBuddy":  124,
+                                "正在使用 OpenCode":  276,
                                 "离开电脑":  43119,
                                 "正在使用私密应用":  32,
                                 "正在使用 agent-workbench":  32,
@@ -26,16 +26,16 @@
                                 "正在使用 OxygenNotIncluded":  2594,
                                 "正在使用 WindowsTerminal":  184,
                                 "正在使用 explorer":  126,
-                                "正在使用 OpenCode":  276,
-                                "正在用微信":  376,
+                                "正在使用 kanban":  8786,
+                                "正在使用 vs_setup_bootstrapper":  32,
                                 "正在使用 Weixin":  64
                             },
                   "date":  "2026-08-02"
               },
     "pc":  {
-               "detail":  "VS Code",
-               "activity":  "正在写代码",
-               "updatedAt":  "2026-08-02T20:54:41+08:00",
+               "detail":  "(0条未读通知) 牛客竞赛_ACM/NOI/CSP/CCPC/ICPC算法编程高难度练习赛_牛客竞赛OJ 和另外 2 个…",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-02T20:55:13+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -47,11 +47,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Hermes",
-                        "t":  "2026-08-02T15:00:02+08:00",
-                        "activity":  "正在使用 Hermes"
-                    },
                     {
                         "detail":  "本地数据看板",
                         "t":  "2026-08-02T15:00:35+08:00",
@@ -346,6 +341,11 @@
                         "detail":  "VS Code",
                         "t":  "2026-08-02T20:54:41+08:00",
                         "activity":  "正在写代码"
+                    },
+                    {
+                        "detail":  "(0条未读通知) 牛客竞赛_ACM/NOI/CSP/CCPC/ICPC算法编程高难度练习赛_牛客竞赛OJ 和另外 2 个…",
+                        "t":  "2026-08-02T20:55:13+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
