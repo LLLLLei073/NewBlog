@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-02T12:53:36+08:00",
+    "updatedAt":  "2026-08-02T12:54:09+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -10,7 +10,7 @@
                   "stats":  {
                                 "正在浏览网页":  3575,
                                 "正在玩游戏":  33,
-                                "正在使用 Hermes":  806,
+                                "正在使用 Hermes":  838,
                                 "正在使用 LockApp":  36,
                                 "正在看视频":  1866,
                                 "正在写代码":  92,
@@ -25,9 +25,9 @@
                   "date":  "2026-08-02"
               },
     "pc":  {
-               "detail":  "Hermes",
-               "activity":  "正在使用 Hermes",
-               "updatedAt":  "2026-08-02T12:53:36+08:00",
+               "detail":  "Tauri前端框架推荐 - DeepSeek 和另外 6 个页面 - 个人 - Microsoft​ Edge",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-02T12:54:09+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -39,11 +39,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Status - Codeforces Round 1113 (Div. 2) - Codeforces 和另外 2 个…",
-                        "t":  "2026-08-01T23:12:54+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "VS Code",
                         "t":  "2026-08-01T23:13:57+08:00",
@@ -338,6 +333,11 @@
                         "detail":  "Hermes",
                         "t":  "2026-08-02T12:53:36+08:00",
                         "activity":  "正在使用 Hermes"
+                    },
+                    {
+                        "detail":  "Tauri前端框架推荐 - DeepSeek 和另外 6 个页面 - 个人 - Microsoft​ Edge",
+                        "t":  "2026-08-02T12:54:09+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
