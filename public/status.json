@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-03T07:14:32+08:00",
+    "updatedAt":  "2026-08-03T07:16:35+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,7 +8,7 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  290,
+                                "正在浏览网页":  413,
                                 "正在使用 PickerHost":  33,
                                 "正在使用 Hermes":  33,
                                 "正在使用 Shark Cloud":  84,
@@ -28,7 +28,7 @@
     "pc":  {
                "detail":  "新建标签页 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-03T07:14:32+08:00",
+               "updatedAt":  "2026-08-03T07:16:35+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
