@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-02T12:04:45+08:00",
+    "updatedAt":  "2026-08-02T12:05:47+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -10,6 +10,7 @@
                   "stats":  {
                                 "正在玩游戏":  33,
                                 "正在写代码":  92,
+                                "正在看视频":  62,
                                 "正在使用私密应用":  32,
                                 "离开电脑":  39629,
                                 "正在浏览网页":  3481,
@@ -20,9 +21,9 @@
                   "date":  "2026-08-02"
               },
     "pc":  {
-               "detail":  "哔哩哔哩 (゜-゜)つロ 干杯~-bilibili",
-               "activity":  "正在看视频",
-               "updatedAt":  "2026-08-02T12:04:45+08:00",
+               "detail":  "Dashboard - Codeforces Round 1113 (Div. 2) - Codeforces 和另外 …",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-02T12:05:47+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -34,11 +35,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "cf-friend-tracker.md• - Typora",
-                        "t":  "2026-08-01T22:03:18+08:00",
-                        "activity":  "正在使用 Typora"
-                    },
                     {
                         "detail":  "游戏",
                         "t":  "2026-08-01T22:03:50+08:00",
@@ -333,6 +329,11 @@
                         "detail":  "哔哩哔哩 (゜-゜)つロ 干杯~-bilibili",
                         "t":  "2026-08-02T12:04:45+08:00",
                         "activity":  "正在看视频"
+                    },
+                    {
+                        "detail":  "Dashboard - Codeforces Round 1113 (Div. 2) - Codeforces 和另外 …",
+                        "t":  "2026-08-02T12:05:47+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
