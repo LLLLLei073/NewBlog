@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-02T13:25:53+08:00",
+    "updatedAt":  "2026-08-02T13:27:26+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -10,7 +10,7 @@
                   "stats":  {
                                 "正在浏览网页":  4219,
                                 "正在玩游戏":  33,
-                                "正在使用 Hermes":  1602,
+                                "正在使用 Hermes":  1694,
                                 "正在使用 LockApp":  36,
                                 "正在看视频":  1866,
                                 "正在使用 clash-verge":  32,
@@ -26,9 +26,9 @@
                   "date":  "2026-08-02"
               },
     "pc":  {
-               "detail":  "Hermes",
-               "activity":  "正在使用 Hermes",
-               "updatedAt":  "2026-08-02T13:25:53+08:00",
+               "detail":  "未检测到活动窗口",
+               "activity":  "离开电脑",
+               "updatedAt":  "2026-08-02T13:27:26+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -40,11 +40,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Problem - C - Codeforces 和另外 1 个页面 - 个人 - Microsoft​ Edge",
-                        "t":  "2026-08-01T23:38:01+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "VS Code",
                         "t":  "2026-08-01T23:39:33+08:00",
@@ -339,6 +334,11 @@
                         "detail":  "Hermes",
                         "t":  "2026-08-02T13:15:42+08:00",
                         "activity":  "正在使用 Hermes"
+                    },
+                    {
+                        "detail":  "未检测到活动窗口",
+                        "t":  "2026-08-02T13:27:26+08:00",
+                        "activity":  "离开电脑"
                     }
                 ]
 }
