@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-02T16:18:45+08:00",
+    "updatedAt":  "2026-08-02T16:20:47+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -11,6 +11,7 @@
                                 "正在浏览网页":  4345,
                                 "正在使用 agent-workbench":  32,
                                 "正在使用 Hermes":  4980,
+                                "正在使用 vs_setup_bootstrapper":  32,
                                 "正在使用 LockApp":  36,
                                 "正在看视频":  1930,
                                 "正在玩游戏":  33,
@@ -19,11 +20,10 @@
                                 "离开电脑":  41099,
                                 "正在使用私密应用":  32,
                                 "正在敲命令":  62,
-                                "正在用微信":  344,
                                 "正在使用 WindowsTerminal":  184,
                                 "正在使用 explorer":  94,
-                                "正在使用 kanban":  5318,
-                                "正在使用 vs_setup_bootstrapper":  32,
+                                "正在使用 kanban":  5440,
+                                "正在用微信":  344,
                                 "正在使用 Weixin":  64
                             },
                   "date":  "2026-08-02"
@@ -31,7 +31,7 @@
     "pc":  {
                "detail":  "本地数据看板",
                "activity":  "正在使用 kanban",
-               "updatedAt":  "2026-08-02T16:18:45+08:00",
+               "updatedAt":  "2026-08-02T16:20:47+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
