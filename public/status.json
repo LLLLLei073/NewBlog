@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-02T13:03:57+08:00",
+    "updatedAt":  "2026-08-02T13:06:00+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -15,7 +15,7 @@
                                 "正在看视频":  1866,
                                 "正在使用 clash-verge":  32,
                                 "正在写代码":  92,
-                                "离开电脑":  39873,
+                                "离开电脑":  39995,
                                 "正在敲命令":  62,
                                 "正在使用私密应用":  32,
                                 "正在使用 WindowsTerminal":  184,
@@ -26,9 +26,9 @@
                   "date":  "2026-08-02"
               },
     "pc":  {
-               "detail":  "未检测到活动窗口",
-               "activity":  "离开电脑",
-               "updatedAt":  "2026-08-02T13:03:57+08:00",
+               "detail":  "火山方舟 - Coding Plan 和另外 6 个页面 - 个人 - Microsoft​ Edge",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-02T13:06:00+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -40,11 +40,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Problem - C - Codeforces 和另外 1 个页面 - 个人 - Microsoft​ Edge",
-                        "t":  "2026-08-01T23:31:52+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "VS Code",
                         "t":  "2026-08-01T23:32:24+08:00",
@@ -339,6 +334,11 @@
                         "detail":  "未检测到活动窗口",
                         "t":  "2026-08-02T12:59:53+08:00",
                         "activity":  "离开电脑"
+                    },
+                    {
+                        "detail":  "火山方舟 - Coding Plan 和另外 6 个页面 - 个人 - Microsoft​ Edge",
+                        "t":  "2026-08-02T13:06:00+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
