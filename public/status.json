@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-02T12:02:43+08:00",
+    "updatedAt":  "2026-08-02T12:04:45+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -12,7 +12,7 @@
                                 "正在写代码":  92,
                                 "正在使用私密应用":  32,
                                 "离开电脑":  39629,
-                                "正在浏览网页":  3359,
+                                "正在浏览网页":  3481,
                                 "正在使用 Hermes":  190,
                                 "正在使用 LockApp":  36,
                                 "正在用微信":  33
@@ -20,9 +20,9 @@
                   "date":  "2026-08-02"
               },
     "pc":  {
-               "detail":  "Fireworks AI 和另外 4 个页面 - 个人 - Microsoft​ Edge",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-02T12:02:43+08:00",
+               "detail":  "哔哩哔哩 (゜-゜)つロ 干杯~-bilibili",
+               "activity":  "正在看视频",
+               "updatedAt":  "2026-08-02T12:04:45+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -34,11 +34,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "OpenCode",
-                        "t":  "2026-08-01T22:02:46+08:00",
-                        "activity":  "正在使用 OpenCode"
-                    },
                     {
                         "detail":  "cf-friend-tracker.md• - Typora",
                         "t":  "2026-08-01T22:03:18+08:00",
@@ -333,6 +328,11 @@
                         "detail":  "Log In - Fireworks AI 和另外 4 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-02T12:00:40+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "哔哩哔哩 (゜-゜)つロ 干杯~-bilibili",
+                        "t":  "2026-08-02T12:04:45+08:00",
+                        "activity":  "正在看视频"
                     }
                 ]
 }
