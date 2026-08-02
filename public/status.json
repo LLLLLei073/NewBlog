@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-02T23:46:46+08:00",
+    "updatedAt":  "2026-08-02T23:47:48+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -32,15 +32,15 @@
                                 "正在使用 Hermes":  5700,
                                 "正在使用 agent-workbench":  32,
                                 "正在使用 explorer":  2324,
-                                "正在使用 OpenCode":  494,
+                                "正在使用 OpenCode":  556,
                                 "正在使用 LockApp":  36
                             },
                   "date":  "2026-08-02"
               },
     "pc":  {
-               "detail":  "选择文件",
-               "activity":  "正在使用 OpenCode",
-               "updatedAt":  "2026-08-02T23:46:46+08:00",
+               "detail":  "DeepSeek 开放平台 和另外 2 个页面 - 个人 - Microsoft​ Edge",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-02T23:47:48+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -52,11 +52,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "reany引理 - 搜索 和另外 1 个页面 - 个人 - Microsoft​ Edge",
-                        "t":  "2026-08-02T22:26:50+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "Hermes",
                         "t":  "2026-08-02T22:28:22+08:00",
@@ -351,6 +346,11 @@
                         "detail":  "选择文件",
                         "t":  "2026-08-02T23:46:46+08:00",
                         "activity":  "正在使用 OpenCode"
+                    },
+                    {
+                        "detail":  "DeepSeek 开放平台 和另外 2 个页面 - 个人 - Microsoft​ Edge",
+                        "t":  "2026-08-02T23:47:48+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
