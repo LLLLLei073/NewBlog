@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-02T13:23:51+08:00",
+    "updatedAt":  "2026-08-02T13:25:53+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -10,7 +10,7 @@
                   "stats":  {
                                 "正在浏览网页":  4219,
                                 "正在玩游戏":  33,
-                                "正在使用 Hermes":  1480,
+                                "正在使用 Hermes":  1602,
                                 "正在使用 LockApp":  36,
                                 "正在看视频":  1866,
                                 "正在使用 clash-verge":  32,
@@ -28,7 +28,7 @@
     "pc":  {
                "detail":  "Hermes",
                "activity":  "正在使用 Hermes",
-               "updatedAt":  "2026-08-02T13:23:51+08:00",
+               "updatedAt":  "2026-08-02T13:25:53+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
