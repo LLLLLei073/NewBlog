@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-03T00:04:46+08:00",
+    "updatedAt":  "2026-08-03T00:05:37+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -12,16 +12,16 @@
                                 "正在使用 CF Friend Tracker":  46,
                                 "离开电脑":  40,
                                 "正在浏览网页":  63,
-                                "正在使用 WorkBuddy":  33,
+                                "正在使用 WorkBuddy":  84,
                                 "正在使用 Hermes":  33,
                                 "正在使用 CF-Friend-Tracker-Setup-1.3.5":  55
                             },
                   "date":  "2026-08-03"
               },
     "pc":  {
-               "detail":  "WorkBuddy",
-               "activity":  "正在使用 WorkBuddy",
-               "updatedAt":  "2026-08-03T00:04:46+08:00",
+               "detail":  "OpenCode",
+               "activity":  "正在使用 OpenCode",
+               "updatedAt":  "2026-08-03T00:05:37+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -33,11 +33,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "本地数据看板",
-                        "t":  "2026-08-02T23:18:54+08:00",
-                        "activity":  "正在使用 kanban"
-                    },
                     {
                         "detail":  "Hermes",
                         "t":  "2026-08-02T23:19:26+08:00",
@@ -332,6 +327,11 @@
                         "detail":  "WorkBuddy",
                         "t":  "2026-08-03T00:04:46+08:00",
                         "activity":  "正在使用 WorkBuddy"
+                    },
+                    {
+                        "detail":  "OpenCode",
+                        "t":  "2026-08-03T00:05:37+08:00",
+                        "activity":  "正在使用 OpenCode"
                     }
                 ]
 }
