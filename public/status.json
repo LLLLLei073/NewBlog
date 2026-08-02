@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-02T12:45:50+08:00",
+    "updatedAt":  "2026-08-02T12:46:52+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -10,7 +10,7 @@
                   "stats":  {
                                 "正在浏览网页":  3513,
                                 "正在玩游戏":  33,
-                                "正在使用 Hermes":  498,
+                                "正在使用 Hermes":  560,
                                 "正在使用 LockApp":  36,
                                 "正在看视频":  1772,
                                 "正在写代码":  92,
@@ -25,9 +25,9 @@
                   "date":  "2026-08-02"
               },
     "pc":  {
-               "detail":  "Hermes",
-               "activity":  "正在使用 Hermes",
-               "updatedAt":  "2026-08-02T12:45:50+08:00",
+               "detail":  "哔哩哔哩 (゜-゜)つロ 干杯~-bilibili",
+               "activity":  "正在看视频",
+               "updatedAt":  "2026-08-02T12:46:52+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -39,11 +39,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Problem - B - Codeforces 和另外 3 个页面 - 个人 - Microsoft​ Edge",
-                        "t":  "2026-08-01T23:02:06+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "VS Code",
                         "t":  "2026-08-01T23:04:08+08:00",
@@ -338,6 +333,11 @@
                         "detail":  "Hermes",
                         "t":  "2026-08-02T12:45:50+08:00",
                         "activity":  "正在使用 Hermes"
+                    },
+                    {
+                        "detail":  "哔哩哔哩 (゜-゜)つロ 干杯~-bilibili",
+                        "t":  "2026-08-02T12:46:52+08:00",
+                        "activity":  "正在看视频"
                     }
                 ]
 }
