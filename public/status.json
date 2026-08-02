@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-02T11:56:26+08:00",
+    "updatedAt":  "2026-08-02T11:57:00+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -14,14 +14,14 @@
                                 "离开电脑":  39629,
                                 "正在浏览网页":  3115,
                                 "正在使用 LockApp":  36,
-                                "正在使用 Hermes":  93
+                                "正在使用 Hermes":  126
                             },
                   "date":  "2026-08-02"
               },
     "pc":  {
-               "detail":  "Hermes",
-               "activity":  "正在使用 Hermes",
-               "updatedAt":  "2026-08-02T11:56:26+08:00",
+               "detail":  "游戏",
+               "activity":  "正在玩游戏",
+               "updatedAt":  "2026-08-02T11:57:00+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -33,11 +33,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Data (D:) - 文件资源管理器",
-                        "t":  "2026-08-01T21:58:34+08:00",
-                        "activity":  "正在使用 explorer"
-                    },
                     {
                         "detail":  "Hermes",
                         "t":  "2026-08-01T21:59:07+08:00",
@@ -332,6 +327,11 @@
                         "detail":  "Hermes",
                         "t":  "2026-08-02T11:56:26+08:00",
                         "activity":  "正在使用 Hermes"
+                    },
+                    {
+                        "detail":  "游戏",
+                        "t":  "2026-08-02T11:57:00+08:00",
+                        "activity":  "正在玩游戏"
                     }
                 ]
 }
