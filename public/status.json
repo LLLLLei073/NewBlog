@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-02T20:52:34+08:00",
+    "updatedAt":  "2026-08-02T20:53:06+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,17 +8,17 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  6983,
+                                "正在浏览网页":  7015,
                                 "正在玩游戏":  97,
                                 "正在使用 Hermes":  5012,
                                 "正在处理文档":  32,
+                                "正在使用 vs_setup_bootstrapper":  32,
                                 "正在使用 LockApp":  36,
+                                "正在使用 kanban":  8786,
                                 "正在看视频":  4920,
-                                "正在用微信":  376,
                                 "正在使用 clash-verge":  32,
                                 "正在写代码":  2172,
                                 "正在使用 WorkBuddy":  124,
-                                "正在使用 OpenCode":  276,
                                 "离开电脑":  43119,
                                 "正在使用私密应用":  32,
                                 "正在使用 agent-workbench":  32,
@@ -26,16 +26,16 @@
                                 "正在使用 OxygenNotIncluded":  2594,
                                 "正在使用 WindowsTerminal":  184,
                                 "正在使用 explorer":  126,
-                                "正在使用 kanban":  8786,
-                                "正在使用 vs_setup_bootstrapper":  32,
+                                "正在使用 OpenCode":  276,
+                                "正在用微信":  376,
                                 "正在使用 Weixin":  64
                             },
                   "date":  "2026-08-02"
               },
     "pc":  {
-               "detail":  "D-小月的电台_牛客周赛 Round 155 和另外 2 个页面 - 个人 - Microsoft​ Edge",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-02T20:52:34+08:00",
+               "detail":  "VS Code",
+               "activity":  "正在写代码",
+               "updatedAt":  "2026-08-02T20:53:06+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -47,11 +47,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "本地数据看板",
-                        "t":  "2026-08-02T14:50:18+08:00",
-                        "activity":  "正在使用 kanban"
-                    },
                     {
                         "detail":  "Hermes",
                         "t":  "2026-08-02T14:54:23+08:00",
@@ -346,6 +341,11 @@
                         "detail":  "D-小月的电台_牛客周赛 Round 155 和另外 2 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-02T20:52:34+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "VS Code",
+                        "t":  "2026-08-02T20:53:06+08:00",
+                        "activity":  "正在写代码"
                     }
                 ]
 }
