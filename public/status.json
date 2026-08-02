@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-02T12:00:08+08:00",
+    "updatedAt":  "2026-08-02T12:00:40+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -13,16 +13,16 @@
                                 "正在使用私密应用":  32,
                                 "离开电脑":  39629,
                                 "正在浏览网页":  3237,
-                                "正在使用 Hermes":  158,
+                                "正在使用 Hermes":  190,
                                 "正在使用 LockApp":  36,
                                 "正在用微信":  33
                             },
                   "date":  "2026-08-02"
               },
     "pc":  {
-               "detail":  "Hermes",
-               "activity":  "正在使用 Hermes",
-               "updatedAt":  "2026-08-02T12:00:08+08:00",
+               "detail":  "Log In - Fireworks AI 和另外 4 个页面 - 个人 - Microsoft​ Edge",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-02T12:00:40+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -34,11 +34,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "cf-friend-tracker.md• - Typora",
-                        "t":  "2026-08-01T22:01:13+08:00",
-                        "activity":  "正在使用 Typora"
-                    },
                     {
                         "detail":  "OpenCode",
                         "t":  "2026-08-01T22:02:46+08:00",
@@ -333,6 +328,11 @@
                         "detail":  "Hermes",
                         "t":  "2026-08-02T12:00:08+08:00",
                         "activity":  "正在使用 Hermes"
+                    },
+                    {
+                        "detail":  "Log In - Fireworks AI 和另外 4 个页面 - 个人 - Microsoft​ Edge",
+                        "t":  "2026-08-02T12:00:40+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
