@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-02T18:45:45+08:00",
+    "updatedAt":  "2026-08-02T18:47:47+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -12,21 +12,21 @@
                                 "正在使用 agent-workbench":  32,
                                 "正在使用 Hermes":  5012,
                                 "正在处理文档":  32,
+                                "正在使用 vs_setup_bootstrapper":  32,
                                 "正在使用 LockApp":  36,
                                 "正在看视频":  4920,
                                 "正在玩游戏":  97,
                                 "正在使用 clash-verge":  32,
                                 "正在写代码":  92,
                                 "正在使用 WorkBuddy":  124,
-                                "正在使用 OpenCode":  276,
-                                "离开电脑":  42659,
+                                "离开电脑":  42781,
                                 "正在使用私密应用":  32,
                                 "正在敲命令":  62,
                                 "正在用微信":  344,
                                 "正在使用 WindowsTerminal":  184,
                                 "正在使用 explorer":  126,
                                 "正在使用 kanban":  8786,
-                                "正在使用 vs_setup_bootstrapper":  32,
+                                "正在使用 OpenCode":  276,
                                 "正在使用 Weixin":  64
                             },
                   "date":  "2026-08-02"
@@ -34,7 +34,7 @@
     "pc":  {
                "detail":  "未检测到活动窗口",
                "activity":  "离开电脑",
-               "updatedAt":  "2026-08-02T18:45:45+08:00",
+               "updatedAt":  "2026-08-02T18:47:47+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
