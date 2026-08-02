@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-02T22:34:34+08:00",
+    "updatedAt":  "2026-08-02T22:35:36+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -12,13 +12,13 @@
                                 "正在玩游戏":  97,
                                 "正在使用 Hermes":  5044,
                                 "正在处理文档":  32,
-                                "正在使用 vs_setup_bootstrapper":  32,
                                 "正在使用 LockApp":  36,
-                                "正在使用 kanban":  8786,
-                                "正在看视频":  6996,
+                                "正在看视频":  7058,
+                                "正在用微信":  440,
                                 "正在使用 clash-verge":  32,
                                 "正在写代码":  2668,
                                 "正在使用 WorkBuddy":  124,
+                                "正在使用 OpenCode":  308,
                                 "离开电脑":  43119,
                                 "正在使用私密应用":  186,
                                 "正在使用 agent-workbench":  32,
@@ -26,16 +26,16 @@
                                 "正在使用 OxygenNotIncluded":  2594,
                                 "正在使用 WindowsTerminal":  184,
                                 "正在使用 explorer":  2292,
-                                "正在使用 OpenCode":  308,
-                                "正在用微信":  440,
+                                "正在使用 kanban":  8786,
+                                "正在使用 vs_setup_bootstrapper":  32,
                                 "正在使用 Weixin":  128
                             },
                   "date":  "2026-08-02"
               },
     "pc":  {
-               "detail":  "哔哩哔哩 (゜-゜)つロ 干杯~-bilibili",
-               "activity":  "正在看视频",
-               "updatedAt":  "2026-08-02T22:34:34+08:00",
+               "detail":  "元宝",
+               "activity":  "正在使用 yuanbao",
+               "updatedAt":  "2026-08-02T22:35:36+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -47,11 +47,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "日语Vlog：【德岛→和歌山】搭乘即将停运的超便宜渡轮（中日双语字幕）",
-                        "t":  "2026-08-02T17:28:38+08:00",
-                        "activity":  "正在看视频"
-                    },
                     {
                         "detail":  "OpenCode",
                         "t":  "2026-08-02T17:29:10+08:00",
@@ -346,6 +341,11 @@
                         "detail":  "哔哩哔哩 (゜-゜)つロ 干杯~-bilibili",
                         "t":  "2026-08-02T22:34:34+08:00",
                         "activity":  "正在看视频"
+                    },
+                    {
+                        "detail":  "元宝",
+                        "t":  "2026-08-02T22:35:36+08:00",
+                        "activity":  "正在使用 yuanbao"
                     }
                 ]
 }
