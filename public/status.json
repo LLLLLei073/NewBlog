@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-02T22:09:59+08:00",
+    "updatedAt":  "2026-08-02T22:12:01+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -12,22 +12,22 @@
                                 "正在玩游戏":  97,
                                 "正在使用 Hermes":  5012,
                                 "正在处理文档":  32,
+                                "正在使用 vs_setup_bootstrapper":  32,
                                 "正在使用 LockApp":  36,
+                                "正在使用 kanban":  8786,
                                 "正在看视频":  6934,
-                                "正在用微信":  440,
                                 "正在使用 clash-verge":  32,
                                 "正在写代码":  2668,
                                 "正在使用 WorkBuddy":  124,
-                                "正在使用 OpenCode":  276,
                                 "离开电脑":  43119,
                                 "正在使用私密应用":  124,
                                 "正在使用 agent-workbench":  32,
                                 "正在敲命令":  62,
                                 "正在使用 OxygenNotIncluded":  2594,
                                 "正在使用 WindowsTerminal":  184,
-                                "正在使用 explorer":  1346,
-                                "正在使用 kanban":  8786,
-                                "正在使用 vs_setup_bootstrapper":  32,
+                                "正在使用 explorer":  1468,
+                                "正在使用 OpenCode":  276,
+                                "正在用微信":  440,
                                 "正在使用 Weixin":  128
                             },
                   "date":  "2026-08-02"
@@ -35,7 +35,7 @@
     "pc":  {
                "detail":  "Program Manager",
                "activity":  "正在使用 explorer",
-               "updatedAt":  "2026-08-02T22:09:59+08:00",
+               "updatedAt":  "2026-08-02T22:12:01+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
