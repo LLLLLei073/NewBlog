@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-02T22:47:58+08:00",
+    "updatedAt":  "2026-08-02T22:50:00+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,27 +8,27 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  8121,
+                                "正在浏览网页":  8243,
                                 "正在玩游戏":  97,
                                 "正在使用 Hermes":  5044,
                                 "正在处理文档":  32,
-                                "正在使用 vs_setup_bootstrapper":  32,
                                 "正在使用 LockApp":  36,
-                                "正在使用 kanban":  8786,
                                 "正在看视频":  7610,
+                                "正在用微信":  440,
                                 "正在使用 clash-verge":  32,
                                 "正在写代码":  2668,
                                 "正在使用 yuanbao":  32,
                                 "正在使用 WorkBuddy":  124,
-                                "离开电脑":  43119,
+                                "正在使用 OpenCode":  340,
+                                "正在使用 vs_setup_bootstrapper":  32,
                                 "正在使用私密应用":  186,
                                 "正在使用 agent-workbench":  32,
                                 "正在敲命令":  62,
                                 "正在使用 OxygenNotIncluded":  2594,
                                 "正在使用 WindowsTerminal":  184,
                                 "正在使用 explorer":  2292,
-                                "正在使用 OpenCode":  340,
-                                "正在用微信":  440,
+                                "正在使用 kanban":  8786,
+                                "离开电脑":  43119,
                                 "正在使用 Weixin":  128
                             },
                   "date":  "2026-08-02"
@@ -36,7 +36,7 @@
     "pc":  {
                "detail":  "A-小月的奇偶灯控_牛客周赛 Round 155 和另外 9 个页面 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-02T22:47:58+08:00",
+               "updatedAt":  "2026-08-02T22:50:00+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
