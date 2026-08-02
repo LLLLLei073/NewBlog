@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-02T23:58:30+08:00",
+    "updatedAt":  "2026-08-02T23:59:04+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -15,7 +15,7 @@
                                 "正在写代码":  2668,
                                 "正在使用私密应用":  584,
                                 "离开电脑":  43489,
-                                "正在使用 WorkBuddy":  376,
+                                "正在使用 WorkBuddy":  409,
                                 "正在使用 Shark Cloud":  32,
                                 "正在使用 ShellHost":  32,
                                 "正在看视频":  7610,
@@ -40,9 +40,9 @@
                   "date":  "2026-08-02"
               },
     "pc":  {
-               "detail":  "WorkBuddy",
-               "activity":  "正在使用 WorkBuddy",
-               "updatedAt":  "2026-08-02T23:58:30+08:00",
+               "detail":  "OpenCode",
+               "activity":  "正在使用 OpenCode",
+               "updatedAt":  "2026-08-02T23:59:04+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -54,11 +54,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Add context",
-                        "t":  "2026-08-02T23:07:00+08:00",
-                        "activity":  "正在使用 Hermes"
-                    },
                     {
                         "detail":  "本地数据看板",
                         "t":  "2026-08-02T23:09:03+08:00",
@@ -353,6 +348,11 @@
                         "detail":  "WorkBuddy",
                         "t":  "2026-08-02T23:58:30+08:00",
                         "activity":  "正在使用 WorkBuddy"
+                    },
+                    {
+                        "detail":  "OpenCode",
+                        "t":  "2026-08-02T23:59:04+08:00",
+                        "activity":  "正在使用 OpenCode"
                     }
                 ]
 }
