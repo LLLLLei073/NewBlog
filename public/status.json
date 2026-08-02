@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-02T17:28:06+08:00",
+    "updatedAt":  "2026-08-02T17:28:38+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -11,13 +11,13 @@
                                 "正在浏览网页":  4533,
                                 "正在使用 agent-workbench":  32,
                                 "正在使用 Hermes":  5012,
+                                "正在使用 vs_setup_bootstrapper":  32,
                                 "正在使用 LockApp":  36,
                                 "正在看视频":  1930,
-                                "正在玩游戏":  65,
+                                "正在玩游戏":  97,
                                 "正在使用 clash-verge":  32,
                                 "正在写代码":  92,
                                 "正在使用 WorkBuddy":  124,
-                                "正在使用 OpenCode":  244,
                                 "离开电脑":  41131,
                                 "正在使用私密应用":  32,
                                 "正在敲命令":  62,
@@ -25,15 +25,15 @@
                                 "正在使用 WindowsTerminal":  184,
                                 "正在使用 explorer":  126,
                                 "正在使用 kanban":  8786,
-                                "正在使用 vs_setup_bootstrapper":  32,
+                                "正在使用 OpenCode":  244,
                                 "正在使用 Weixin":  64
                             },
                   "date":  "2026-08-02"
               },
     "pc":  {
-               "detail":  "游戏",
-               "activity":  "正在玩游戏",
-               "updatedAt":  "2026-08-02T17:28:06+08:00",
+               "detail":  "日语Vlog：【德岛→和歌山】搭乘即将停运的超便宜渡轮（中日双语字幕）",
+               "activity":  "正在看视频",
+               "updatedAt":  "2026-08-02T17:28:38+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -45,11 +45,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Visual Studio Installer",
-                        "t":  "2026-08-02T13:53:01+08:00",
-                        "activity":  "正在使用 vs_setup_bootstrapper"
-                    },
                     {
                         "detail":  "Hermes",
                         "t":  "2026-08-02T13:53:33+08:00",
@@ -344,6 +339,11 @@
                         "detail":  "游戏",
                         "t":  "2026-08-02T17:28:06+08:00",
                         "activity":  "正在玩游戏"
+                    },
+                    {
+                        "detail":  "日语Vlog：【德岛→和歌山】搭乘即将停运的超便宜渡轮（中日双语字幕）",
+                        "t":  "2026-08-02T17:28:38+08:00",
+                        "activity":  "正在看视频"
                     }
                 ]
 }
