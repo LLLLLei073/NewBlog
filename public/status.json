@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-02T13:06:00+08:00",
+    "updatedAt":  "2026-08-02T13:08:02+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,7 +8,7 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  3639,
+                                "正在浏览网页":  3761,
                                 "正在玩游戏":  33,
                                 "正在使用 Hermes":  992,
                                 "正在使用 LockApp":  36,
@@ -28,7 +28,7 @@
     "pc":  {
                "detail":  "火山方舟 - Coding Plan 和另外 6 个页面 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-02T13:06:00+08:00",
+               "updatedAt":  "2026-08-02T13:08:02+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
