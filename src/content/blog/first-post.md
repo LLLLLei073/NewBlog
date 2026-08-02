@@ -28,7 +28,7 @@ series: '博客搭建'
 ---
 title: '文章标题'
 description: '文章描述'
-pubDate: '2025-08-01'
+pubDate: '2026-08-01'
 category: 'algorithm'
 ---
 ```
