@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-03T00:08:29+08:00",
+    "updatedAt":  "2026-08-03T00:09:33+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,7 +8,7 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在使用 OpenCode":  137,
+                                "正在使用 OpenCode":  200,
                                 "正在使用 CF Friend Tracker":  46,
                                 "离开电脑":  40,
                                 "正在浏览网页":  63,
@@ -19,9 +19,9 @@
                   "date":  "2026-08-03"
               },
     "pc":  {
-               "detail":  "OpenCode",
-               "activity":  "正在使用 OpenCode",
-               "updatedAt":  "2026-08-03T00:08:29+08:00",
+               "detail":  "Windows 安全中心",
+               "activity":  "正在使用 PickerHost",
+               "updatedAt":  "2026-08-03T00:09:33+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -33,11 +33,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Hermes",
-                        "t":  "2026-08-02T23:22:01+08:00",
-                        "activity":  "正在使用 Hermes"
-                    },
                     {
                         "detail":  "CF Friends Tracker",
                         "t":  "2026-08-02T23:22:33+08:00",
@@ -332,6 +327,11 @@
                         "detail":  "OpenCode",
                         "t":  "2026-08-03T00:08:29+08:00",
                         "activity":  "正在使用 OpenCode"
+                    },
+                    {
+                        "detail":  "Windows 安全中心",
+                        "t":  "2026-08-03T00:09:33+08:00",
+                        "activity":  "正在使用 PickerHost"
                     }
                 ]
 }
