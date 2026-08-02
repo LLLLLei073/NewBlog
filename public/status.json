@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-03T00:01:16+08:00",
+    "updatedAt":  "2026-08-03T00:01:50+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,15 +8,16 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在使用 OpenCode":  33,
-                                "正在浏览网页":  63
+                                "正在浏览网页":  63,
+                                "正在使用 WorkBuddy":  33,
+                                "正在使用 OpenCode":  33
                             },
                   "date":  "2026-08-03"
               },
     "pc":  {
-               "detail":  "WorkBuddy",
-               "activity":  "正在使用 WorkBuddy",
-               "updatedAt":  "2026-08-03T00:01:16+08:00",
+               "detail":  "Hermes",
+               "activity":  "正在使用 Hermes",
+               "updatedAt":  "2026-08-03T00:01:50+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -28,11 +29,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "未检测到活动窗口",
-                        "t":  "2026-08-02T23:12:10+08:00",
-                        "activity":  "离开电脑"
-                    },
                     {
                         "detail":  "Hermes",
                         "t":  "2026-08-02T23:16:14+08:00",
@@ -327,6 +323,11 @@
                         "detail":  "WorkBuddy",
                         "t":  "2026-08-03T00:01:16+08:00",
                         "activity":  "正在使用 WorkBuddy"
+                    },
+                    {
+                        "detail":  "Hermes",
+                        "t":  "2026-08-03T00:01:50+08:00",
+                        "activity":  "正在使用 Hermes"
                     }
                 ]
 }
