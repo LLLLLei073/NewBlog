@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-03T14:59:56+08:00",
+    "updatedAt":  "2026-08-03T15:00:37+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -13,28 +13,28 @@
                                 "正在使用 Taskmgr":  41,
                                 "正在使用 Hermes":  33,
                                 "正在使用 Shark Cloud":  84,
-                                "正在使用 LockApp":  2137,
-                                "正在使用 CF Friend Tracker":  46,
                                 "正在使用 Typora":  33,
+                                "正在使用 CF Friend Tracker":  46,
                                 "正在看视频":  737,
                                 "正在写代码":  535,
+                                "正在使用 LockApp":  2137,
                                 "正在使用 WorkBuddy":  214,
                                 "正在使用 ShellHost":  33,
-                                "离开电脑":  1177,
+                                "离开电脑":  1218,
                                 "正在使用私密应用":  41,
                                 "正在使用 NetDiag":  33,
                                 "正在使用 CF-Friend-Tracker-Setup-1.3.5":  55,
+                                "正在用微信":  236,
                                 "正在使用 explorer":  10812,
                                 "正在使用 OpenCode":  24877,
-                                "正在用微信":  236,
                                 "正在使用 typora-update-x64-1.14.8.tmp":  33
                             },
                   "date":  "2026-08-03"
               },
     "pc":  {
-               "detail":  "未检测到活动窗口",
-               "activity":  "离开电脑",
-               "updatedAt":  "2026-08-03T14:59:56+08:00",
+               "detail":  "知识点速查.md - Typora",
+               "activity":  "正在使用 Typora",
+               "updatedAt":  "2026-08-03T15:00:37+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -46,11 +46,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "CF Friends Tracker",
-                        "t":  "2026-08-03T00:02:23+08:00",
-                        "activity":  "正在使用 CF Friend Tracker"
-                    },
                     {
                         "detail":  "CF Friend Tracker 安装",
                         "t":  "2026-08-03T00:03:09+08:00",
@@ -345,6 +340,11 @@
                         "detail":  "未检测到活动窗口",
                         "t":  "2026-08-03T14:59:56+08:00",
                         "activity":  "离开电脑"
+                    },
+                    {
+                        "detail":  "知识点速查.md - Typora",
+                        "t":  "2026-08-03T15:00:37+08:00",
+                        "activity":  "正在使用 Typora"
                     }
                 ]
 }
