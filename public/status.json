@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-03T19:36:35+08:00",
+    "updatedAt":  "2026-08-03T19:37:38+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -13,30 +13,30 @@
                                 "正在使用 Taskmgr":  41,
                                 "正在使用 Hermes":  33,
                                 "正在使用 Shark Cloud":  84,
-                                "正在使用 Typora":  104,
+                                "正在使用 LockApp":  2137,
                                 "正在使用 CF Friend Tracker":  46,
+                                "正在使用 Typora":  104,
                                 "正在看视频":  737,
                                 "正在写代码":  535,
-                                "正在使用 LockApp":  2137,
                                 "正在使用 WorkBuddy":  214,
                                 "正在使用 ShellHost":  33,
                                 "离开电脑":  1325,
                                 "正在使用私密应用":  41,
                                 "正在使用 NetDiag":  33,
                                 "正在使用 CF-Friend-Tracker-Setup-1.3.5":  55,
-                                "正在用微信":  236,
+                                "正在使用 OpenCode":  25036,
                                 "正在使用 explorer":  10845,
                                 "正在使用 SnippingTool":  33,
                                 "正在使用 reasonix-desktop":  33,
-                                "正在使用 OpenCode":  24973,
+                                "正在用微信":  236,
                                 "正在使用 typora-update-x64-1.14.8.tmp":  33
                             },
                   "date":  "2026-08-03"
               },
     "pc":  {
-               "detail":  "OpenCode",
-               "activity":  "正在使用 OpenCode",
-               "updatedAt":  "2026-08-03T19:36:35+08:00",
+               "detail":  "牛客tracker 和另外 4 个页面 - 个人 - Microsoft​ Edge",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-03T19:37:38+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -48,11 +48,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "系统托盘溢出窗口。",
-                        "t":  "2026-08-03T07:07:36+08:00",
-                        "activity":  "正在使用 explorer"
-                    },
                     {
                         "detail":  "WorkBuddy - 个人中心 和另外 4 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-03T07:08:10+08:00",
@@ -347,6 +342,11 @@
                         "detail":  "OpenCode",
                         "t":  "2026-08-03T19:36:35+08:00",
                         "activity":  "正在使用 OpenCode"
+                    },
+                    {
+                        "detail":  "牛客tracker 和另外 4 个页面 - 个人 - Microsoft​ Edge",
+                        "t":  "2026-08-03T19:37:38+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
