@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-03T08:49:56+08:00",
+    "updatedAt":  "2026-08-03T08:50:39+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -19,6 +19,7 @@
                                 "离开电脑":  83,
                                 "正在使用 NetDiag":  33,
                                 "正在使用 CF-Friend-Tracker-Setup-1.3.5":  55,
+                                "正在用微信":  42,
                                 "正在使用 explorer":  5501,
                                 "正在使用 OpenCode":  24877,
                                 "正在使用 typora-update-x64-1.14.8.tmp":  33
@@ -26,9 +27,9 @@
                   "date":  "2026-08-03"
               },
     "pc":  {
-               "detail":  "微信",
-               "activity":  "正在用微信",
-               "updatedAt":  "2026-08-03T08:49:56+08:00",
+               "detail":  "Agnes - 个人 - Microsoft​ Edge",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-03T08:50:39+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -40,11 +41,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "WorkBuddy",
-                        "t":  "2026-08-02T23:41:01+08:00",
-                        "activity":  "正在使用 WorkBuddy"
-                    },
                     {
                         "detail":  "OpenCode",
                         "t":  "2026-08-02T23:41:34+08:00",
@@ -339,6 +335,11 @@
                         "detail":  "微信",
                         "t":  "2026-08-03T08:49:56+08:00",
                         "activity":  "正在用微信"
+                    },
+                    {
+                        "detail":  "Agnes - 个人 - Microsoft​ Edge",
+                        "t":  "2026-08-03T08:50:39+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
