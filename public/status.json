@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-03T14:12:09+08:00",
+    "updatedAt":  "2026-08-03T14:14:20+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,7 +8,7 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  10155,
+                                "正在浏览网页":  10286,
                                 "正在使用 PickerHost":  33,
                                 "正在使用 Hermes":  33,
                                 "正在使用 Shark Cloud":  84,
@@ -22,9 +22,9 @@
                                 "离开电脑":  1177,
                                 "正在使用 NetDiag":  33,
                                 "正在使用 CF-Friend-Tracker-Setup-1.3.5":  55,
+                                "正在用微信":  113,
                                 "正在使用 explorer":  10812,
                                 "正在使用 OpenCode":  24877,
-                                "正在用微信":  113,
                                 "正在使用 typora-update-x64-1.14.8.tmp":  33
                             },
                   "date":  "2026-08-03"
@@ -32,7 +32,7 @@
     "pc":  {
                "detail":  "Boredom_牛客题霸_牛客网 和另外 3 个页面 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-03T14:12:09+08:00",
+               "updatedAt":  "2026-08-03T14:14:20+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
