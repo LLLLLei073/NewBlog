@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-03T10:28:13+08:00",
+    "updatedAt":  "2026-08-03T10:30:24+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,7 +8,7 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  5368,
+                                "正在浏览网页":  5499,
                                 "正在使用 PickerHost":  33,
                                 "正在使用 Hermes":  33,
                                 "正在使用 Shark Cloud":  84,
@@ -21,17 +21,17 @@
                                 "离开电脑":  83,
                                 "正在使用 NetDiag":  33,
                                 "正在使用 CF-Friend-Tracker-Setup-1.3.5":  55,
-                                "正在用微信":  42,
                                 "正在使用 explorer":  5501,
                                 "正在使用 OpenCode":  24877,
+                                "正在用微信":  42,
                                 "正在使用 typora-update-x64-1.14.8.tmp":  33
                             },
                   "date":  "2026-08-03"
               },
     "pc":  {
-               "detail":  "CCR Plus - OI Wiki 和另外 7 个页面 - 个人 - Microsoft​ Edge",
+               "detail":  "ST 表 - OI Wiki 和另外 7 个页面 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-03T10:28:13+08:00",
+               "updatedAt":  "2026-08-03T10:30:24+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
