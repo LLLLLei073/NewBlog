@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-03T13:34:56+08:00",
+    "updatedAt":  "2026-08-03T13:37:08+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -22,9 +22,9 @@
                                 "离开电脑":  1177,
                                 "正在使用 NetDiag":  33,
                                 "正在使用 CF-Friend-Tracker-Setup-1.3.5":  55,
-                                "正在用微信":  113,
-                                "正在使用 explorer":  9109,
+                                "正在使用 explorer":  9240,
                                 "正在使用 OpenCode":  24877,
+                                "正在用微信":  113,
                                 "正在使用 typora-update-x64-1.14.8.tmp":  33
                             },
                   "date":  "2026-08-03"
@@ -32,7 +32,7 @@
     "pc":  {
                "detail":  "系统托盘溢出窗口。",
                "activity":  "正在使用 explorer",
-               "updatedAt":  "2026-08-03T13:34:56+08:00",
+               "updatedAt":  "2026-08-03T13:37:08+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
