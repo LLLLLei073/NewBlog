@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-03T11:29:01+08:00",
+    "updatedAt":  "2026-08-03T11:35:39+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -18,20 +18,20 @@
                                 "正在写代码":  464,
                                 "正在使用 WorkBuddy":  214,
                                 "正在使用 ShellHost":  33,
-                                "离开电脑":  83,
+                                "离开电脑":  481,
                                 "正在使用 NetDiag":  33,
                                 "正在使用 CF-Friend-Tracker-Setup-1.3.5":  55,
-                                "正在用微信":  42,
                                 "正在使用 explorer":  5501,
                                 "正在使用 OpenCode":  24877,
+                                "正在用微信":  42,
                                 "正在使用 typora-update-x64-1.14.8.tmp":  33
                             },
                   "date":  "2026-08-03"
               },
     "pc":  {
-               "detail":  "未检测到活动窗口",
-               "activity":  "离开电脑",
-               "updatedAt":  "2026-08-03T11:29:01+08:00",
+               "detail":  "Windows 默认锁屏界面",
+               "activity":  "正在使用 LockApp",
+               "updatedAt":  "2026-08-03T11:35:39+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -43,11 +43,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Clash Verge",
-                        "t":  "2026-08-02T23:48:53+08:00",
-                        "activity":  "正在使用 clash-verge"
-                    },
                     {
                         "detail":  "Hermes",
                         "t":  "2026-08-02T23:49:25+08:00",
@@ -342,6 +337,11 @@
                         "detail":  "未检测到活动窗口",
                         "t":  "2026-08-03T11:29:01+08:00",
                         "activity":  "离开电脑"
+                    },
+                    {
+                        "detail":  "Windows 默认锁屏界面",
+                        "t":  "2026-08-03T11:35:39+08:00",
+                        "activity":  "正在使用 LockApp"
                     }
                 ]
 }
