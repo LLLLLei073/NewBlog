@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-04T17:31:43+08:00",
+    "updatedAt":  "2026-08-04T17:32:55+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -15,14 +15,14 @@
                                 "正在使用 explorer":  295,
                                 "离开电脑":  39600,
                                 "正在浏览网页":  7978,
-                                "正在使用 LockApp":  3591
+                                "正在使用 LockApp":  3662
                             },
                   "date":  "2026-08-04"
               },
     "pc":  {
-               "detail":  "Windows 默认锁屏界面",
-               "activity":  "正在使用 LockApp",
-               "updatedAt":  "2026-08-04T17:31:43+08:00",
+               "detail":  "Form",
+               "activity":  "正在使用 DingTalk",
+               "updatedAt":  "2026-08-04T17:32:55+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -34,11 +34,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Office",
-                        "t":  "2026-08-04T12:34:25+08:00",
-                        "activity":  "正在处理文档"
-                    },
                     {
                         "detail":  "VS Code",
                         "t":  "2026-08-04T12:38:48+08:00",
@@ -333,6 +328,11 @@
                         "detail":  "Windows 默认锁屏界面",
                         "t":  "2026-08-04T17:09:51+08:00",
                         "activity":  "正在使用 LockApp"
+                    },
+                    {
+                        "detail":  "Form",
+                        "t":  "2026-08-04T17:32:55+08:00",
+                        "activity":  "正在使用 DingTalk"
                     }
                 ]
 }
