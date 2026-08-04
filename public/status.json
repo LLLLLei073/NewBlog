@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-04T18:55:43+08:00",
+    "updatedAt":  "2026-08-04T18:56:32+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -12,19 +12,20 @@
                                 "正在写代码":  9204,
                                 "正在使用 ShellExperienceHost":  428,
                                 "正在处理文档":  4678,
+                                "正在玩游戏":  48,
                                 "正在使用 explorer":  3086,
                                 "离开电脑":  39739,
                                 "正在浏览网页":  9059,
-                                "正在使用 OpenCode":  697,
+                                "正在使用 DingTalk":  41,
                                 "正在使用 LockApp":  3662,
-                                "正在使用 DingTalk":  41
+                                "正在使用 OpenCode":  697
                             },
                   "date":  "2026-08-04"
               },
     "pc":  {
-               "detail":  "游戏",
-               "activity":  "正在玩游戏",
-               "updatedAt":  "2026-08-04T18:55:43+08:00",
+               "detail":  "Oxygen Not Included",
+               "activity":  "正在使用 OxygenNotIncluded",
+               "updatedAt":  "2026-08-04T18:56:32+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -36,11 +37,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Office",
-                        "t":  "2026-08-04T14:02:21+08:00",
-                        "activity":  "正在处理文档"
-                    },
                     {
                         "detail":  "VS Code",
                         "t":  "2026-08-04T14:03:32+08:00",
@@ -335,6 +331,11 @@
                         "detail":  "游戏",
                         "t":  "2026-08-04T18:55:43+08:00",
                         "activity":  "正在玩游戏"
+                    },
+                    {
+                        "detail":  "Oxygen Not Included",
+                        "t":  "2026-08-04T18:56:32+08:00",
+                        "activity":  "正在使用 OxygenNotIncluded"
                     }
                 ]
 }
