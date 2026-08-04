@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-04T18:51:32+08:00",
+    "updatedAt":  "2026-08-04T18:53:36+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -15,16 +15,16 @@
                                 "正在使用 explorer":  3086,
                                 "离开电脑":  39676,
                                 "正在浏览网页":  9059,
-                                "正在使用 DingTalk":  41,
+                                "正在使用 OpenCode":  634,
                                 "正在使用 LockApp":  3662,
-                                "正在使用 OpenCode":  511
+                                "正在使用 DingTalk":  41
                             },
                   "date":  "2026-08-04"
               },
     "pc":  {
                "detail":  "OpenCode",
                "activity":  "正在使用 OpenCode",
-               "updatedAt":  "2026-08-04T18:51:32+08:00",
+               "updatedAt":  "2026-08-04T18:53:36+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
