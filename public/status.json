@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-04T11:45:42+08:00",
+    "updatedAt":  "2026-08-04T11:46:23+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -9,15 +9,16 @@
     "daily":  {
                   "stats":  {
                                 "正在浏览网页":  3390,
+                                "正在用微信":  41,
                                 "正在使用 LockApp":  2211,
                                 "离开电脑":  39559
                             },
                   "date":  "2026-08-04"
               },
     "pc":  {
-               "detail":  "微信",
-               "activity":  "正在用微信",
-               "updatedAt":  "2026-08-04T11:45:42+08:00",
+               "detail":  "agent-workbench - 文件资源管理器",
+               "activity":  "正在使用 explorer",
+               "updatedAt":  "2026-08-04T11:46:23+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -29,11 +30,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "游戏",
-                        "t":  "2026-08-03T19:54:04+08:00",
-                        "activity":  "正在玩游戏"
-                    },
                     {
                         "detail":  "【Original MV】幻界/ V.W.P #30 - YouTube 和另外 4 个页面 - 个人 - Micros…",
                         "t":  "2026-08-03T19:57:11+08:00",
@@ -328,6 +324,11 @@
                         "detail":  "微信",
                         "t":  "2026-08-04T11:45:42+08:00",
                         "activity":  "正在用微信"
+                    },
+                    {
+                        "detail":  "agent-workbench - 文件资源管理器",
+                        "t":  "2026-08-04T11:46:23+08:00",
+                        "activity":  "正在使用 explorer"
                     }
                 ]
 }
