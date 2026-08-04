@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-04T18:07:32+08:00",
+    "updatedAt":  "2026-08-04T18:09:43+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -12,19 +12,19 @@
                                 "正在写代码":  9204,
                                 "正在使用 ShellExperienceHost":  428,
                                 "正在处理文档":  4678,
-                                "正在使用 explorer":  729,
+                                "正在使用 explorer":  860,
                                 "离开电脑":  39641,
                                 "正在浏览网页":  9059,
-                                "正在使用 OpenCode":  265,
+                                "正在使用 DingTalk":  41,
                                 "正在使用 LockApp":  3662,
-                                "正在使用 DingTalk":  41
+                                "正在使用 OpenCode":  265
                             },
                   "date":  "2026-08-04"
               },
     "pc":  {
                "detail":  "Program Manager",
                "activity":  "正在使用 explorer",
-               "updatedAt":  "2026-08-04T18:07:32+08:00",
+               "updatedAt":  "2026-08-04T18:09:43+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
