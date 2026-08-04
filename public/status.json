@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-04T17:42:01+08:00",
+    "updatedAt":  "2026-08-04T17:44:12+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -14,17 +14,17 @@
                                 "正在处理文档":  4678,
                                 "正在使用 explorer":  336,
                                 "离开电脑":  39600,
-                                "正在浏览网页":  8090,
-                                "正在使用 OpenCode":  183,
+                                "正在浏览网页":  8221,
+                                "正在使用 DingTalk":  41,
                                 "正在使用 LockApp":  3662,
-                                "正在使用 DingTalk":  41
+                                "正在使用 OpenCode":  183
                             },
                   "date":  "2026-08-04"
               },
     "pc":  {
-               "detail":  "DeepSeek 开放平台 和另外 6 个页面 - 个人 - Microsoft​ Edge",
+               "detail":  "离散化 - OI Wiki 和另外 8 个页面 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-04T17:42:01+08:00",
+               "updatedAt":  "2026-08-04T17:44:12+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
