@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-04T17:53:31+08:00",
+    "updatedAt":  "2026-08-04T17:55:43+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -14,17 +14,17 @@
                                 "正在处理文档":  4678,
                                 "正在使用 explorer":  336,
                                 "离开电脑":  39641,
-                                "正在浏览网页":  8655,
-                                "正在使用 OpenCode":  224,
+                                "正在浏览网页":  8786,
+                                "正在使用 DingTalk":  41,
                                 "正在使用 LockApp":  3662,
-                                "正在使用 DingTalk":  41
+                                "正在使用 OpenCode":  224
                             },
                   "date":  "2026-08-04"
               },
     "pc":  {
-               "detail":  "P1102 A-B 数对 - 洛谷 和另外 10 个页面 - 个人 - Microsoft​ Edge",
+               "detail":  "火山方舟 - Coding Plan 和另外 9 个页面 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-04T17:53:31+08:00",
+               "updatedAt":  "2026-08-04T17:55:43+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
