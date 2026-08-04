@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-04T11:59:50+08:00",
+    "updatedAt":  "2026-08-04T12:01:01+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -11,15 +11,15 @@
                                 "正在用微信":  41,
                                 "正在使用 explorer":  41,
                                 "离开电脑":  39559,
-                                "正在浏览网页":  4083,
+                                "正在浏览网页":  4154,
                                 "正在使用 LockApp":  2282
                             },
                   "date":  "2026-08-04"
               },
     "pc":  {
-               "detail":  "Pending 和另外 1 个页面 - 个人 - Microsoft​ Edge",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-04T11:59:50+08:00",
+               "detail":  "未检测到活动窗口",
+               "activity":  "离开电脑",
+               "updatedAt":  "2026-08-04T12:01:01+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -31,11 +31,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Chill With You",
-                        "t":  "2026-08-03T20:06:34+08:00",
-                        "activity":  "正在使用 Chill With You"
-                    },
                     {
                         "detail":  "狩影·进击_牛客题霸_牛客网 和另外 1 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-03T20:07:37+08:00",
@@ -330,6 +325,11 @@
                         "detail":  "Pending 和另外 1 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-04T11:59:50+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "未检测到活动窗口",
+                        "t":  "2026-08-04T12:01:01+08:00",
+                        "activity":  "离开电脑"
                     }
                 ]
 }
