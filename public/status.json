@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-04T17:36:34+08:00",
+    "updatedAt":  "2026-08-04T17:37:46+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -15,16 +15,16 @@
                                 "正在使用 explorer":  295,
                                 "离开电脑":  39600,
                                 "正在浏览网页":  8049,
-                                "正在使用 DingTalk":  41,
+                                "正在使用 OpenCode":  142,
                                 "正在使用 LockApp":  3662,
-                                "正在使用 OpenCode":  71
+                                "正在使用 DingTalk":  41
                             },
                   "date":  "2026-08-04"
               },
     "pc":  {
-               "detail":  "OpenCode",
-               "activity":  "正在使用 OpenCode",
-               "updatedAt":  "2026-08-04T17:36:34+08:00",
+               "detail":  "Rank 和另外 4 个页面 - 个人 - Microsoft​ Edge",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-04T17:37:46+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -36,11 +36,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "VS Code",
-                        "t":  "2026-08-04T12:55:00+08:00",
-                        "activity":  "正在写代码"
-                    },
                     {
                         "detail":  "Office",
                         "t":  "2026-08-04T12:56:41+08:00",
@@ -335,6 +330,11 @@
                         "detail":  "OpenCode",
                         "t":  "2026-08-04T17:36:34+08:00",
                         "activity":  "正在使用 OpenCode"
+                    },
+                    {
+                        "detail":  "Rank 和另外 4 个页面 - 个人 - Microsoft​ Edge",
+                        "t":  "2026-08-04T17:37:46+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
