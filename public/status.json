@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-04T11:46:23+08:00",
+    "updatedAt":  "2026-08-04T11:47:05+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -10,15 +10,16 @@
                   "stats":  {
                                 "正在浏览网页":  3390,
                                 "正在用微信":  41,
+                                "正在使用 explorer":  41,
                                 "正在使用 LockApp":  2211,
                                 "离开电脑":  39559
                             },
                   "date":  "2026-08-04"
               },
     "pc":  {
-               "detail":  "agent-workbench - 文件资源管理器",
-               "activity":  "正在使用 explorer",
-               "updatedAt":  "2026-08-04T11:46:23+08:00",
+               "detail":  "Pending 和另外 1 个页面 - 个人 - Microsoft​ Edge",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-04T11:47:05+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -30,11 +31,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "【Original MV】幻界/ V.W.P #30 - YouTube 和另外 4 个页面 - 个人 - Micros…",
-                        "t":  "2026-08-03T19:57:11+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "游戏",
                         "t":  "2026-08-03T20:04:55+08:00",
@@ -329,6 +325,11 @@
                         "detail":  "agent-workbench - 文件资源管理器",
                         "t":  "2026-08-04T11:46:23+08:00",
                         "activity":  "正在使用 explorer"
+                    },
+                    {
+                        "detail":  "Pending 和另外 1 个页面 - 个人 - Microsoft​ Edge",
+                        "t":  "2026-08-04T11:47:05+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
