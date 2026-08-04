@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-04T17:46:23+08:00",
+    "updatedAt":  "2026-08-04T17:47:35+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -14,17 +14,17 @@
                                 "正在处理文档":  4678,
                                 "正在使用 explorer":  336,
                                 "离开电脑":  39600,
-                                "正在浏览网页":  8352,
-                                "正在使用 OpenCode":  183,
+                                "正在浏览网页":  8423,
+                                "正在使用 DingTalk":  41,
                                 "正在使用 LockApp":  3662,
-                                "正在使用 DingTalk":  41
+                                "正在使用 OpenCode":  183
                             },
                   "date":  "2026-08-04"
               },
     "pc":  {
-               "detail":  "P1102 A-B 数对 - 洛谷 和另外 10 个页面 - 个人 - Microsoft​ Edge",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-04T17:46:23+08:00",
+               "detail":  "OpenCode",
+               "activity":  "正在使用 OpenCode",
+               "updatedAt":  "2026-08-04T17:47:35+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -36,11 +36,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Office",
-                        "t":  "2026-08-04T13:12:53+08:00",
-                        "activity":  "正在处理文档"
-                    },
                     {
                         "detail":  "VS Code",
                         "t":  "2026-08-04T13:13:34+08:00",
@@ -335,6 +330,11 @@
                         "detail":  "DeepSeek 开放平台 和另外 6 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-04T17:42:01+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "OpenCode",
+                        "t":  "2026-08-04T17:47:35+08:00",
+                        "activity":  "正在使用 OpenCode"
                     }
                 ]
 }
