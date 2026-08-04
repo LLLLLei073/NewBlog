@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-04T23:00:09+08:00",
+    "updatedAt":  "2026-08-04T23:00:43+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -16,7 +16,7 @@
                                 "正在写代码":  9204,
                                 "离开电脑":  39739,
                                 "正在使用 DingTalk":  41,
-                                "正在使用 OxygenNotIncluded":  14546,
+                                "正在使用 OxygenNotIncluded":  14579,
                                 "正在使用 explorer":  3086,
                                 "正在使用 OpenCode":  697,
                                 "正在用微信":  295
@@ -24,9 +24,9 @@
                   "date":  "2026-08-04"
               },
     "pc":  {
-               "detail":  "Oxygen Not Included",
-               "activity":  "正在使用 OxygenNotIncluded",
-               "updatedAt":  "2026-08-04T23:00:09+08:00",
+               "detail":  "游戏",
+               "activity":  "正在玩游戏",
+               "updatedAt":  "2026-08-04T23:00:43+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -38,11 +38,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "VS Code",
-                        "t":  "2026-08-04T14:03:32+08:00",
-                        "activity":  "正在写代码"
-                    },
                     {
                         "detail":  "1001 简单多项式问题 和另外 2 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-04T14:04:13+08:00",
@@ -337,6 +332,11 @@
                         "detail":  "Oxygen Not Included",
                         "t":  "2026-08-04T18:56:32+08:00",
                         "activity":  "正在使用 OxygenNotIncluded"
+                    },
+                    {
+                        "detail":  "游戏",
+                        "t":  "2026-08-04T23:00:43+08:00",
+                        "activity":  "正在玩游戏"
                     }
                 ]
 }
