@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-04T16:52:42+08:00",
+    "updatedAt":  "2026-08-04T16:54:54+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -13,7 +13,7 @@
                                 "正在处理文档":  4441,
                                 "正在使用 explorer":  295,
                                 "离开电脑":  39600,
-                                "正在浏览网页":  7735,
+                                "正在浏览网页":  7866,
                                 "正在使用 LockApp":  2282
                             },
                   "date":  "2026-08-04"
@@ -21,7 +21,7 @@
     "pc":  {
                "detail":  "Clarifications 和另外 4 个页面 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-04T16:52:42+08:00",
+               "updatedAt":  "2026-08-04T16:54:54+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
