@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-04T18:58:36+08:00",
+    "updatedAt":  "2026-08-04T19:00:39+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,17 +8,17 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在玩游戏":  48,
-                                "正在写代码":  9204,
-                                "正在使用 ShellExperienceHost":  428,
-                                "正在处理文档":  4678,
-                                "正在使用 OxygenNotIncluded":  123,
-                                "正在使用 explorer":  3086,
-                                "离开电脑":  39739,
                                 "正在浏览网页":  9059,
-                                "正在使用 OpenCode":  697,
+                                "正在玩游戏":  48,
+                                "正在处理文档":  4678,
                                 "正在使用 LockApp":  3662,
+                                "正在使用 ShellExperienceHost":  428,
+                                "正在写代码":  9204,
+                                "离开电脑":  39739,
                                 "正在使用 DingTalk":  41,
+                                "正在使用 OxygenNotIncluded":  246,
+                                "正在使用 explorer":  3086,
+                                "正在使用 OpenCode":  697,
                                 "正在用微信":  295
                             },
                   "date":  "2026-08-04"
@@ -26,7 +26,7 @@
     "pc":  {
                "detail":  "Oxygen Not Included",
                "activity":  "正在使用 OxygenNotIncluded",
-               "updatedAt":  "2026-08-04T18:58:36+08:00",
+               "updatedAt":  "2026-08-04T19:00:39+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
