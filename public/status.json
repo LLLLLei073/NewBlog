@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-04T17:57:05+08:00",
+    "updatedAt":  "2026-08-04T17:59:17+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -14,17 +14,17 @@
                                 "正在处理文档":  4678,
                                 "正在使用 explorer":  336,
                                 "离开电脑":  39641,
-                                "正在浏览网页":  8827,
-                                "正在使用 DingTalk":  41,
+                                "正在浏览网页":  8958,
+                                "正在使用 OpenCode":  265,
                                 "正在使用 LockApp":  3662,
-                                "正在使用 OpenCode":  265
+                                "正在使用 DingTalk":  41
                             },
                   "date":  "2026-08-04"
               },
     "pc":  {
-               "detail":  "离线算法简介 - OI Wiki 和另外 9 个页面 - 个人 - Microsoft​ Edge",
+               "detail":  "牛客tracker 和另外 9 个页面 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-04T17:57:05+08:00",
+               "updatedAt":  "2026-08-04T17:59:17+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
