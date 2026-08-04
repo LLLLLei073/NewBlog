@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-04T18:46:50+08:00",
+    "updatedAt":  "2026-08-04T18:47:25+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -13,18 +13,18 @@
                                 "正在使用 ShellExperienceHost":  428,
                                 "正在处理文档":  4678,
                                 "正在使用 explorer":  3086,
-                                "离开电脑":  39641,
+                                "离开电脑":  39676,
                                 "正在浏览网页":  9059,
-                                "正在使用 OpenCode":  265,
+                                "正在使用 DingTalk":  41,
                                 "正在使用 LockApp":  3662,
-                                "正在使用 DingTalk":  41
+                                "正在使用 OpenCode":  265
                             },
                   "date":  "2026-08-04"
               },
     "pc":  {
-               "detail":  "未检测到活动窗口",
-               "activity":  "离开电脑",
-               "updatedAt":  "2026-08-04T18:46:50+08:00",
+               "detail":  "OpenCode",
+               "activity":  "正在使用 OpenCode",
+               "updatedAt":  "2026-08-04T18:47:25+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -36,11 +36,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "VS Code",
-                        "t":  "2026-08-04T13:53:54+08:00",
-                        "activity":  "正在写代码"
-                    },
                     {
                         "detail":  "Office",
                         "t":  "2026-08-04T13:55:36+08:00",
@@ -335,6 +330,11 @@
                         "detail":  "未检测到活动窗口",
                         "t":  "2026-08-04T18:46:50+08:00",
                         "activity":  "离开电脑"
+                    },
+                    {
+                        "detail":  "OpenCode",
+                        "t":  "2026-08-04T18:47:25+08:00",
+                        "activity":  "正在使用 OpenCode"
                     }
                 ]
 }
