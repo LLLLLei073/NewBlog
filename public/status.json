@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-04T10:48:06+08:00",
+    "updatedAt":  "2026-08-04T10:50:19+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,16 +8,16 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  2239,
+                                "正在浏览网页":  2371,
                                 "正在使用 LockApp":  437,
                                 "离开电脑":  39037
                             },
                   "date":  "2026-08-04"
               },
     "pc":  {
-               "detail":  "【模板】01背包（计数）_牛客题霸_牛客网 和另外 3 个页面 - 个人 - Microsoft​ Edge",
+               "detail":  "DeepSeek - 探索未至之境 和另外 5 个页面 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-04T10:48:06+08:00",
+               "updatedAt":  "2026-08-04T10:50:19+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
