@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-04T17:59:17+08:00",
+    "updatedAt":  "2026-08-04T18:00:58+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -14,17 +14,17 @@
                                 "正在处理文档":  4678,
                                 "正在使用 explorer":  336,
                                 "离开电脑":  39641,
-                                "正在浏览网页":  8958,
-                                "正在使用 OpenCode":  265,
+                                "正在浏览网页":  9059,
+                                "正在使用 DingTalk":  41,
                                 "正在使用 LockApp":  3662,
-                                "正在使用 DingTalk":  41
+                                "正在使用 OpenCode":  265
                             },
                   "date":  "2026-08-04"
               },
     "pc":  {
-               "detail":  "牛客tracker 和另外 9 个页面 - 个人 - Microsoft​ Edge",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-04T17:59:17+08:00",
+               "detail":  "Program Manager",
+               "activity":  "正在使用 explorer",
+               "updatedAt":  "2026-08-04T18:00:58+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -36,11 +36,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "微信",
-                        "t":  "2026-08-04T13:51:02+08:00",
-                        "activity":  "正在用微信"
-                    },
                     {
                         "detail":  "Office",
                         "t":  "2026-08-04T13:51:43+08:00",
@@ -335,6 +330,11 @@
                         "detail":  "离线算法简介 - OI Wiki 和另外 9 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-04T17:57:05+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "Program Manager",
+                        "t":  "2026-08-04T18:00:58+08:00",
+                        "activity":  "正在使用 explorer"
                     }
                 ]
 }
