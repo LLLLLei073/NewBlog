@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-04T21:39:30+08:00",
+    "updatedAt":  "2026-08-04T21:41:34+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -16,7 +16,7 @@
                                 "正在写代码":  9204,
                                 "离开电脑":  39739,
                                 "正在使用 DingTalk":  41,
-                                "正在使用 OxygenNotIncluded":  9727,
+                                "正在使用 OxygenNotIncluded":  9850,
                                 "正在使用 explorer":  3086,
                                 "正在使用 OpenCode":  697,
                                 "正在用微信":  295
@@ -26,7 +26,7 @@
     "pc":  {
                "detail":  "Oxygen Not Included",
                "activity":  "正在使用 OxygenNotIncluded",
-               "updatedAt":  "2026-08-04T21:39:30+08:00",
+               "updatedAt":  "2026-08-04T21:41:34+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
