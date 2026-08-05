@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-05T19:24:49+08:00",
+    "updatedAt":  "2026-08-05T19:25:23+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -19,14 +19,15 @@
                                 "正在使用 setup":  41,
                                 "正在使用 explorer":  369,
                                 "正在使用 OpenCode":  126,
-                                "正在用微信":  224
+                                "正在用微信":  224,
+                                "正在使用 Weixin":  33
                             },
                   "date":  "2026-08-05"
               },
     "pc":  {
-               "detail":  "Weixin",
-               "activity":  "正在使用 Weixin",
-               "updatedAt":  "2026-08-05T19:24:49+08:00",
+               "detail":  "OpenCode",
+               "activity":  "正在使用 OpenCode",
+               "updatedAt":  "2026-08-05T19:25:23+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -38,11 +39,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "VS Code",
-                        "t":  "2026-08-05T15:55:36+08:00",
-                        "activity":  "正在写代码"
-                    },
                     {
                         "detail":  "G-Game on a Graph_2026牛客暑期多校训练营6 和另外 3 个页面 - 个人 - Microsoft​…",
                         "t":  "2026-08-05T15:57:47+08:00",
@@ -337,6 +333,11 @@
                         "detail":  "Weixin",
                         "t":  "2026-08-05T19:24:49+08:00",
                         "activity":  "正在使用 Weixin"
+                    },
+                    {
+                        "detail":  "OpenCode",
+                        "t":  "2026-08-05T19:25:23+08:00",
+                        "activity":  "正在使用 OpenCode"
                     }
                 ]
 }
