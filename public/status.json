@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-05T11:58:48+08:00",
+    "updatedAt":  "2026-08-05T11:59:30+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -11,7 +11,7 @@
                                 "正在玩游戏":  37233,
                                 "正在写代码":  41,
                                 "正在处理文档":  41,
-                                "正在使用 explorer":  41,
+                                "正在使用 explorer":  82,
                                 "离开电脑":  255,
                                 "正在浏览网页":  6401,
                                 "正在使用 LockApp":  2475,
@@ -20,9 +20,9 @@
                   "date":  "2026-08-05"
               },
     "pc":  {
-               "detail":  "此电脑 - 文件资源管理器",
-               "activity":  "正在使用 explorer",
-               "updatedAt":  "2026-08-05T11:58:48+08:00",
+               "detail":  "Visual Studio Installer",
+               "activity":  "正在使用 setup",
+               "updatedAt":  "2026-08-05T11:59:30+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -34,11 +34,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "VS Code",
-                        "t":  "2026-08-04T16:31:00+08:00",
-                        "activity":  "正在写代码"
-                    },
                     {
                         "detail":  "链上Nim SG值确定 - DeepSeek 和另外 4 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-04T16:31:42+08:00",
@@ -333,6 +328,11 @@
                         "detail":  "此电脑 - 文件资源管理器",
                         "t":  "2026-08-05T11:58:48+08:00",
                         "activity":  "正在使用 explorer"
+                    },
+                    {
+                        "detail":  "Visual Studio Installer",
+                        "t":  "2026-08-05T11:59:30+08:00",
+                        "activity":  "正在使用 setup"
                     }
                 ]
 }
