@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-05T10:09:12+08:00",
+    "updatedAt":  "2026-08-05T10:11:23+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,7 +8,7 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  2621,
+                                "正在浏览网页":  2752,
                                 "正在玩游戏":  37233,
                                 "正在使用 LockApp":  205,
                                 "离开电脑":  42
@@ -16,9 +16,9 @@
                   "date":  "2026-08-05"
               },
     "pc":  {
-               "detail":  "小彩的数组构造_牛客题霸_牛客网 和另外 4 个页面 - 个人 - Microsoft​ Edge",
+               "detail":  "403 Forbidden 和另外 1 个页面 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-05T10:09:12+08:00",
+               "updatedAt":  "2026-08-05T10:11:23+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
