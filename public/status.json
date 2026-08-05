@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-05T22:09:33+08:00",
+    "updatedAt":  "2026-08-05T22:10:08+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -16,22 +16,22 @@
                                 "正在写代码":  7987,
                                 "正在使用 LockApp":  4053,
                                 "正在使用 typora-update-x64-1.14.9.tmp":  33,
-                                "离开电脑":  4697,
+                                "离开电脑":  4731,
                                 "正在使用私密应用":  336,
                                 "正在使用 setup":  41,
                                 "正在使用 ChatGPT":  33,
+                                "正在用微信":  686,
                                 "正在使用 WindowsTerminal":  216,
                                 "正在使用 explorer":  631,
                                 "正在使用 OpenCode":  2451,
-                                "正在用微信":  686,
                                 "正在使用 Weixin":  33
                             },
                   "date":  "2026-08-05"
               },
     "pc":  {
-               "detail":  "未检测到活动窗口",
-               "activity":  "离开电脑",
-               "updatedAt":  "2026-08-05T22:09:33+08:00",
+               "detail":  "OpenCode",
+               "activity":  "正在使用 OpenCode",
+               "updatedAt":  "2026-08-05T22:10:08+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -43,11 +43,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "系统托盘溢出窗口。",
-                        "t":  "2026-08-05T19:17:51+08:00",
-                        "activity":  "正在使用 explorer"
-                    },
                     {
                         "detail":  "Hermes",
                         "t":  "2026-08-05T19:18:24+08:00",
@@ -342,6 +337,11 @@
                         "detail":  "未检测到活动窗口",
                         "t":  "2026-08-05T22:09:33+08:00",
                         "activity":  "离开电脑"
+                    },
+                    {
+                        "detail":  "OpenCode",
+                        "t":  "2026-08-05T22:10:08+08:00",
+                        "activity":  "正在使用 OpenCode"
                     }
                 ]
 }
