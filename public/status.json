@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-05T22:15:32+08:00",
+    "updatedAt":  "2026-08-05T22:16:06+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,7 +8,7 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  16548,
+                                "正在浏览网页":  16581,
                                 "正在玩游戏":  39915,
                                 "正在使用 Hermes":  1811,
                                 "正在处理文档":  3588,
@@ -20,18 +20,18 @@
                                 "正在使用私密应用":  433,
                                 "正在使用 setup":  41,
                                 "正在使用 ChatGPT":  33,
-                                "正在用微信":  686,
                                 "正在使用 WindowsTerminal":  216,
                                 "正在使用 explorer":  631,
                                 "正在使用 OpenCode":  2548,
+                                "正在用微信":  686,
                                 "正在使用 Weixin":  33
                             },
                   "date":  "2026-08-05"
               },
     "pc":  {
-               "detail":  "Nutlope/hallmark: Anti-AI-slop design skill for Claude Code,…",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-05T22:15:32+08:00",
+               "detail":  "OpenCode",
+               "activity":  "正在使用 OpenCode",
+               "updatedAt":  "2026-08-05T22:16:06+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -43,11 +43,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "OpenCode",
-                        "t":  "2026-08-05T19:24:16+08:00",
-                        "activity":  "正在使用 OpenCode"
-                    },
                     {
                         "detail":  "Weixin",
                         "t":  "2026-08-05T19:24:49+08:00",
@@ -342,6 +337,11 @@
                         "detail":  "Nutlope/hallmark: Anti-AI-slop design skill for Claude Code,…",
                         "t":  "2026-08-05T22:15:32+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "OpenCode",
+                        "t":  "2026-08-05T22:16:06+08:00",
+                        "activity":  "正在使用 OpenCode"
                     }
                 ]
 }
