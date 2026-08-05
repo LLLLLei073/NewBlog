@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-05T22:34:12+08:00",
+    "updatedAt":  "2026-08-05T22:34:46+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -12,7 +12,7 @@
                                 "正在玩游戏":  39915,
                                 "正在使用 Hermes":  1811,
                                 "正在处理文档":  3588,
-                                "正在使用 Typora":  219,
+                                "正在使用 Typora":  252,
                                 "正在写代码":  8021,
                                 "正在使用 LockApp":  4053,
                                 "正在使用 typora-update-x64-1.14.9.tmp":  33,
@@ -20,18 +20,18 @@
                                 "正在使用私密应用":  496,
                                 "正在使用 setup":  41,
                                 "正在使用 ChatGPT":  33,
-                                "正在用微信":  782,
                                 "正在使用 WindowsTerminal":  216,
                                 "正在使用 explorer":  664,
                                 "正在使用 OpenCode":  2894,
+                                "正在用微信":  782,
                                 "正在使用 Weixin":  33
                             },
                   "date":  "2026-08-05"
               },
     "pc":  {
-               "detail":  "USAGE.md - Typora",
-               "activity":  "正在使用 Typora",
-               "updatedAt":  "2026-08-05T22:34:12+08:00",
+               "detail":  "OpenCode",
+               "activity":  "正在使用 OpenCode",
+               "updatedAt":  "2026-08-05T22:34:46+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -43,11 +43,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "OpenCode",
-                        "t":  "2026-08-05T20:33:33+08:00",
-                        "activity":  "正在使用 OpenCode"
-                    },
                     {
                         "detail":  "游戏",
                         "t":  "2026-08-05T20:39:44+08:00",
@@ -342,6 +337,11 @@
                         "detail":  "USAGE.md - Typora",
                         "t":  "2026-08-05T22:34:12+08:00",
                         "activity":  "正在使用 Typora"
+                    },
+                    {
+                        "detail":  "OpenCode",
+                        "t":  "2026-08-05T22:34:46+08:00",
+                        "activity":  "正在使用 OpenCode"
                     }
                 ]
 }
