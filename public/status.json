@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-05T21:00:26+08:00",
+    "updatedAt":  "2026-08-05T21:00:59+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -18,18 +18,18 @@
                                 "正在使用私密应用":  336,
                                 "正在使用 setup":  41,
                                 "正在使用 ChatGPT":  33,
-                                "正在使用 WindowsTerminal":  216,
-                                "正在使用 explorer":  402,
-                                "正在使用 OpenCode":  1299,
                                 "正在用微信":  224,
+                                "正在使用 WindowsTerminal":  216,
+                                "正在使用 explorer":  435,
+                                "正在使用 OpenCode":  1299,
                                 "正在使用 Weixin":  33
                             },
                   "date":  "2026-08-05"
               },
     "pc":  {
-               "detail":  "xl\u0027s mumumumuban - 文件资源管理器",
-               "activity":  "正在使用 explorer",
-               "updatedAt":  "2026-08-05T21:00:26+08:00",
+               "detail":  "更新",
+               "activity":  "正在使用 Typora",
+               "updatedAt":  "2026-08-05T21:00:59+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -41,11 +41,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "打开",
-                        "t":  "2026-08-05T16:57:23+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "",
                         "t":  "2026-08-05T16:59:34+08:00",
@@ -340,6 +335,11 @@
                         "detail":  "xl\u0027s mumumumuban - 文件资源管理器",
                         "t":  "2026-08-05T21:00:26+08:00",
                         "activity":  "正在使用 explorer"
+                    },
+                    {
+                        "detail":  "更新",
+                        "t":  "2026-08-05T21:00:59+08:00",
+                        "activity":  "正在使用 Typora"
                     }
                 ]
 }
