@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-05T19:44:32+08:00",
+    "updatedAt":  "2026-08-05T19:45:36+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -18,16 +18,16 @@
                                 "正在使用私密应用":  336,
                                 "正在使用 setup":  41,
                                 "正在使用 explorer":  402,
-                                "正在使用 OpenCode":  189,
+                                "正在使用 OpenCode":  252,
                                 "正在用微信":  224,
                                 "正在使用 Weixin":  33
                             },
                   "date":  "2026-08-05"
               },
     "pc":  {
-               "detail":  "OpenCode",
-               "activity":  "正在使用 OpenCode",
-               "updatedAt":  "2026-08-05T19:44:32+08:00",
+               "detail":  "未检测到活动窗口",
+               "activity":  "离开电脑",
+               "updatedAt":  "2026-08-05T19:45:36+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -39,11 +39,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "VS Code",
-                        "t":  "2026-08-05T16:00:21+08:00",
-                        "activity":  "正在写代码"
-                    },
                     {
                         "detail":  "牛客竞赛_ACM/NOI/CSP/CCPC/ICPC算法编程高难度练习赛_牛客竞赛OJ 和另外 5 个页面 - 个人 -…",
                         "t":  "2026-08-05T16:08:06+08:00",
@@ -338,6 +333,11 @@
                         "detail":  "OpenCode",
                         "t":  "2026-08-05T19:44:32+08:00",
                         "activity":  "正在使用 OpenCode"
+                    },
+                    {
+                        "detail":  "未检测到活动窗口",
+                        "t":  "2026-08-05T19:45:36+08:00",
+                        "activity":  "离开电脑"
                     }
                 ]
 }
