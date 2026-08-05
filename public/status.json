@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-05T19:19:31+08:00",
+    "updatedAt":  "2026-08-05T19:20:35+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,24 +8,24 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在使用 explorer":  369,
                                 "正在玩游戏":  37233,
                                 "正在写代码":  7987,
                                 "正在处理文档":  3588,
                                 "正在使用私密应用":  336,
                                 "离开电脑":  2199,
                                 "正在浏览网页":  15398,
-                                "正在使用 Hermes":  1591,
+                                "正在用微信":  224,
+                                "正在使用 Hermes":  1654,
                                 "正在使用 setup":  41,
                                 "正在使用 LockApp":  4053,
-                                "正在用微信":  224
+                                "正在使用 explorer":  369
                             },
                   "date":  "2026-08-05"
               },
     "pc":  {
-               "detail":  "Hermes",
-               "activity":  "正在使用 Hermes",
-               "updatedAt":  "2026-08-05T19:19:31+08:00",
+               "detail":  "[2608.02150] PhyCheck: Fine-Grained Evidence-Grounded Datase…",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-05T19:20:35+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -37,11 +37,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "VS Code",
-                        "t":  "2026-08-05T15:37:01+08:00",
-                        "activity":  "正在写代码"
-                    },
                     {
                         "detail":  "G-Game on a Graph_2026牛客暑期多校训练营6 和另外 3 个页面 - 个人 - Microsoft​…",
                         "t":  "2026-08-05T15:51:50+08:00",
@@ -336,6 +331,11 @@
                         "detail":  "Hermes",
                         "t":  "2026-08-05T19:19:31+08:00",
                         "activity":  "正在使用 Hermes"
+                    },
+                    {
+                        "detail":  "[2608.02150] PhyCheck: Fine-Grained Evidence-Grounded Datase…",
+                        "t":  "2026-08-05T19:20:35+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
