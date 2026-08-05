@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-05T10:14:57+08:00",
+    "updatedAt":  "2026-08-05T10:15:38+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,18 +8,18 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  2924,
                                 "正在玩游戏":  37233,
                                 "正在处理文档":  41,
-                                "正在使用 LockApp":  205,
-                                "离开电脑":  42
+                                "离开电脑":  42,
+                                "正在浏览网页":  2965,
+                                "正在使用 LockApp":  205
                             },
                   "date":  "2026-08-05"
               },
     "pc":  {
-               "detail":  "DeepSeek - 探索未至之境 和另外 2 个页面 - 个人 - Microsoft​ Edge",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-05T10:14:57+08:00",
+               "detail":  "选择一个目标",
+               "activity":  "正在使用 explorer",
+               "updatedAt":  "2026-08-05T10:15:38+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -31,11 +31,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "1010 链上 Nim 和另外 2 个页面 - 个人 - Microsoft​ Edge",
-                        "t":  "2026-08-04T15:03:42+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "VS Code",
                         "t":  "2026-08-04T15:09:16+08:00",
@@ -330,6 +325,11 @@
                         "detail":  "DeepSeek - 探索未至之境 和另外 2 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-05T10:14:57+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "选择一个目标",
+                        "t":  "2026-08-05T10:15:38+08:00",
+                        "activity":  "正在使用 explorer"
                     }
                 ]
 }
