@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-05T19:54:24+08:00",
+    "updatedAt":  "2026-08-05T19:55:58+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -17,18 +17,18 @@
                                 "离开电脑":  3432,
                                 "正在使用私密应用":  336,
                                 "正在使用 setup":  41,
-                                "正在使用 WindowsTerminal":  123,
+                                "正在用微信":  224,
+                                "正在使用 WindowsTerminal":  216,
                                 "正在使用 explorer":  402,
                                 "正在使用 OpenCode":  252,
-                                "正在用微信":  224,
                                 "正在使用 Weixin":  33
                             },
                   "date":  "2026-08-05"
               },
     "pc":  {
-               "detail":  "C:\\Users\\60421\\AppData\\Local\\hermes\\hermes-agent\\venv\\Script…",
-               "activity":  "正在使用 WindowsTerminal",
-               "updatedAt":  "2026-08-05T19:54:24+08:00",
+               "detail":  "游戏",
+               "activity":  "正在玩游戏",
+               "updatedAt":  "2026-08-05T19:55:58+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -40,11 +40,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "牛客竞赛_ACM/NOI/CSP/CCPC/ICPC算法编程高难度练习赛_牛客竞赛OJ 和另外 6 个页面 - 个人 -…",
-                        "t":  "2026-08-05T16:25:48+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "VS Code",
                         "t":  "2026-08-05T16:26:29+08:00",
@@ -339,6 +334,11 @@
                         "detail":  "C:\\Users\\60421\\AppData\\Local\\hermes\\hermes-agent\\venv\\Script…",
                         "t":  "2026-08-05T19:52:20+08:00",
                         "activity":  "正在使用 WindowsTerminal"
+                    },
+                    {
+                        "detail":  "游戏",
+                        "t":  "2026-08-05T19:55:58+08:00",
+                        "activity":  "正在玩游戏"
                     }
                 ]
 }
