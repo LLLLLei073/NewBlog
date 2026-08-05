@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-05T22:24:06+08:00",
+    "updatedAt":  "2026-08-05T22:26:10+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,7 +8,7 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  16708,
+                                "正在浏览网页":  16832,
                                 "正在玩游戏":  39915,
                                 "正在使用 Hermes":  1811,
                                 "正在处理文档":  3588,
@@ -20,18 +20,18 @@
                                 "正在使用私密应用":  496,
                                 "正在使用 setup":  41,
                                 "正在使用 ChatGPT":  33,
+                                "正在用微信":  749,
                                 "正在使用 WindowsTerminal":  216,
                                 "正在使用 explorer":  664,
                                 "正在使用 OpenCode":  2738,
-                                "正在用微信":  749,
                                 "正在使用 Weixin":  33
                             },
                   "date":  "2026-08-05"
               },
     "pc":  {
-               "detail":  "DeepSeek 开放平台 和另外 2 个页面 - 个人 - Microsoft​ Edge",
+               "detail":  "ACM 算法知识库 和另外 1 个页面 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-05T22:24:06+08:00",
+               "updatedAt":  "2026-08-05T22:26:10+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
