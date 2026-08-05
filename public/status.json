@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-05T20:35:37+08:00",
+    "updatedAt":  "2026-08-05T20:37:41+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -18,10 +18,10 @@
                                 "正在使用私密应用":  336,
                                 "正在使用 setup":  41,
                                 "正在使用 ChatGPT":  33,
-                                "正在用微信":  224,
                                 "正在使用 WindowsTerminal":  216,
                                 "正在使用 explorer":  402,
-                                "正在使用 OpenCode":  375,
+                                "正在使用 OpenCode":  498,
+                                "正在用微信":  224,
                                 "正在使用 Weixin":  33
                             },
                   "date":  "2026-08-05"
@@ -29,7 +29,7 @@
     "pc":  {
                "detail":  "OpenCode",
                "activity":  "正在使用 OpenCode",
-               "updatedAt":  "2026-08-05T20:35:37+08:00",
+               "updatedAt":  "2026-08-05T20:37:41+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
