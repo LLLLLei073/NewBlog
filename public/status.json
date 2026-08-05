@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-05T12:59:03+08:00",
+    "updatedAt":  "2026-08-05T13:00:14+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -10,21 +10,21 @@
                   "stats":  {
                                 "正在玩游戏":  37233,
                                 "正在写代码":  546,
-                                "正在处理文档":  1082,
+                                "正在处理文档":  1153,
                                 "正在使用 explorer":  82,
                                 "离开电脑":  255,
                                 "正在浏览网页":  8252,
-                                "正在使用 setup":  41,
+                                "正在用微信":  41,
                                 "正在使用 LockApp":  2475,
                                 "正在使用私密应用":  254,
-                                "正在用微信":  41
+                                "正在使用 setup":  41
                             },
                   "date":  "2026-08-05"
               },
     "pc":  {
-               "detail":  "Office",
-               "activity":  "正在处理文档",
-               "updatedAt":  "2026-08-05T12:59:03+08:00",
+               "detail":  "xl\u0027s mumumumuban - 文件资源管理器",
+               "activity":  "正在使用 explorer",
+               "updatedAt":  "2026-08-05T13:00:14+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -36,11 +36,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Windows Shell Experience 主机",
-                        "t":  "2026-08-04T17:02:43+08:00",
-                        "activity":  "正在使用 ShellExperienceHost"
-                    },
                     {
                         "detail":  "Windows 默认锁屏界面",
                         "t":  "2026-08-04T17:09:51+08:00",
@@ -335,6 +330,11 @@
                         "detail":  "Office",
                         "t":  "2026-08-05T12:56:51+08:00",
                         "activity":  "正在处理文档"
+                    },
+                    {
+                        "detail":  "xl\u0027s mumumumuban - 文件资源管理器",
+                        "t":  "2026-08-05T13:00:14+08:00",
+                        "activity":  "正在使用 explorer"
                     }
                 ]
 }
