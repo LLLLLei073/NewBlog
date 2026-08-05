@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-05T09:21:16+08:00",
+    "updatedAt":  "2026-08-05T09:23:30+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,14 +8,15 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在玩游戏":  37233
+                                "正在玩游戏":  37233,
+                                "正在使用 LockApp":  133
                             },
                   "date":  "2026-08-05"
               },
     "pc":  {
                "detail":  "Windows 默认锁屏界面",
                "activity":  "正在使用 LockApp",
-               "updatedAt":  "2026-08-05T09:21:16+08:00",
+               "updatedAt":  "2026-08-05T09:23:30+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
