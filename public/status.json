@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-06T17:07:08+08:00",
+    "updatedAt":  "2026-08-06T17:07:49+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -13,16 +13,16 @@
                                 "正在使用 OpenCode":  37495,
                                 "正在处理文档":  1586,
                                 "离开电脑":  82,
-                                "正在浏览网页":  10047,
+                                "正在浏览网页":  10088,
                                 "正在使用 LockApp":  2923,
                                 "正在使用 ollama app":  325
                             },
                   "date":  "2026-08-06"
               },
     "pc":  {
-               "detail":  "DeepSeek - 探索未至之境 和另外 4 个页面 - 个人 - Microsoft​ Edge",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-06T17:07:08+08:00",
+               "detail":  "VS Code",
+               "activity":  "正在写代码",
+               "updatedAt":  "2026-08-06T17:07:49+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -34,11 +34,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "牛客tracker 和另外 1 个页面 - 个人 - Microsoft​ Edge",
-                        "t":  "2026-08-06T09:20:27+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "Windows 默认锁屏界面",
                         "t":  "2026-08-06T11:11:15+08:00",
@@ -333,6 +328,11 @@
                         "detail":  "DeepSeek - 探索未至之境 和另外 4 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-06T17:07:08+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "VS Code",
+                        "t":  "2026-08-06T17:07:49+08:00",
+                        "activity":  "正在写代码"
                     }
                 ]
 }
