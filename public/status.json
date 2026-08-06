@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-06T14:17:49+08:00",
+    "updatedAt":  "2026-08-06T14:20:00+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -9,7 +9,7 @@
     "daily":  {
                   "stats":  {
                                 "正在用微信":  41,
-                                "正在写代码":  4738,
+                                "正在写代码":  4869,
                                 "正在使用 OpenCode":  37495,
                                 "正在处理文档":  737,
                                 "正在浏览网页":  9355,
@@ -18,9 +18,9 @@
                   "date":  "2026-08-06"
               },
     "pc":  {
-               "detail":  "VS Code",
-               "activity":  "正在写代码",
-               "updatedAt":  "2026-08-06T14:17:49+08:00",
+               "detail":  "Ollama",
+               "activity":  "正在使用 ollama app",
+               "updatedAt":  "2026-08-06T14:20:00+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -32,11 +32,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "ACM 算法知识库 - 个人 - Microsoft​ Edge",
-                        "t":  "2026-08-05T21:56:16+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "OpenCode",
                         "t":  "2026-08-05T21:56:49+08:00",
@@ -331,6 +326,11 @@
                         "detail":  "VS Code",
                         "t":  "2026-08-06T14:02:30+08:00",
                         "activity":  "正在写代码"
+                    },
+                    {
+                        "detail":  "Ollama",
+                        "t":  "2026-08-06T14:20:00+08:00",
+                        "activity":  "正在使用 ollama app"
                     }
                 ]
 }
