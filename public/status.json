@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-06T14:37:12+08:00",
+    "updatedAt":  "2026-08-06T14:37:54+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -14,14 +14,14 @@
                                 "正在处理文档":  737,
                                 "正在浏览网页":  9355,
                                 "正在使用 LockApp":  2923,
-                                "正在使用 ollama app":  243
+                                "正在使用 ollama app":  284
                             },
                   "date":  "2026-08-06"
               },
     "pc":  {
-               "detail":  "Ollama",
-               "activity":  "正在使用 ollama app",
-               "updatedAt":  "2026-08-06T14:37:12+08:00",
+               "detail":  "VS Code",
+               "activity":  "正在写代码",
+               "updatedAt":  "2026-08-06T14:37:54+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -33,11 +33,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "OpenCode",
-                        "t":  "2026-08-05T21:59:35+08:00",
-                        "activity":  "正在使用 OpenCode"
-                    },
                     {
                         "detail":  "Program Manager",
                         "t":  "2026-08-05T22:00:08+08:00",
@@ -332,6 +327,11 @@
                         "detail":  "Ollama",
                         "t":  "2026-08-06T14:37:12+08:00",
                         "activity":  "正在使用 ollama app"
+                    },
+                    {
+                        "detail":  "VS Code",
+                        "t":  "2026-08-06T14:37:54+08:00",
+                        "activity":  "正在写代码"
                     }
                 ]
 }
