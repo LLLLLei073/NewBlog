@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-06T20:41:50+08:00",
+    "updatedAt":  "2026-08-06T22:35:46+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -12,7 +12,7 @@
                                 "正在写代码":  15334,
                                 "正在使用 OpenCode":  37495,
                                 "正在处理文档":  2002,
-                                "离开电脑":  3022,
+                                "离开电脑":  9858,
                                 "正在浏览网页":  14523,
                                 "正在使用 LockApp":  5416,
                                 "正在使用 ollama app":  325
@@ -20,9 +20,9 @@
                   "date":  "2026-08-06"
               },
     "pc":  {
-               "detail":  "未检测到活动窗口",
-               "activity":  "离开电脑",
-               "updatedAt":  "2026-08-06T20:41:50+08:00",
+               "detail":  "Codeforces Round 1115 (Div. 2) - Codeforces - 个人 - Microsoft…",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-06T22:35:46+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -34,11 +34,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Office",
-                        "t":  "2026-08-06T15:53:08+08:00",
-                        "activity":  "正在处理文档"
-                    },
                     {
                         "detail":  "VS Code",
                         "t":  "2026-08-06T15:56:01+08:00",
@@ -333,6 +328,11 @@
                         "detail":  "未检测到活动窗口",
                         "t":  "2026-08-06T20:41:50+08:00",
                         "activity":  "离开电脑"
+                    },
+                    {
+                        "detail":  "Codeforces Round 1115 (Div. 2) - Codeforces - 个人 - Microsoft…",
+                        "t":  "2026-08-06T22:35:46+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
