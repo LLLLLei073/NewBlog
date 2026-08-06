@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-06T10:41:30+08:00",
+    "updatedAt":  "2026-08-06T10:43:41+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,15 +8,15 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  4850,
+                                "正在浏览网页":  4981,
                                 "正在使用 OpenCode":  37495
                             },
                   "date":  "2026-08-06"
               },
     "pc":  {
-               "detail":  "迷宫寻路_牛客题霸_牛客网 和另外 3 个页面 - 个人 - Microsoft​ Edge",
+               "detail":  "走迷宫_牛客题霸_牛客网 和另外 3 个页面 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-06T10:41:30+08:00",
+               "updatedAt":  "2026-08-06T10:43:41+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
