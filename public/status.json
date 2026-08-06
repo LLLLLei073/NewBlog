@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-06T12:23:45+08:00",
+    "updatedAt":  "2026-08-06T12:24:56+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -9,7 +9,7 @@
     "daily":  {
                   "stats":  {
                                 "正在用微信":  41,
-                                "正在写代码":  988,
+                                "正在写代码":  1059,
                                 "正在使用 OpenCode":  37495,
                                 "正在处理文档":  172,
                                 "正在浏览网页":  6844,
@@ -18,9 +18,9 @@
                   "date":  "2026-08-06"
               },
     "pc":  {
-               "detail":  "VS Code",
-               "activity":  "正在写代码",
-               "updatedAt":  "2026-08-06T12:23:45+08:00",
+               "detail":  "Rank 和另外 1 个页面 - 个人 - Microsoft​ Edge",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-06T12:24:56+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -32,11 +32,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "ACM 算法知识库 和另外 2 个页面 - 个人 - Microsoft​ Edge",
-                        "t":  "2026-08-05T21:17:52+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "OpenCode",
                         "t":  "2026-08-05T21:18:55+08:00",
@@ -331,6 +326,11 @@
                         "detail":  "VS Code",
                         "t":  "2026-08-06T12:23:45+08:00",
                         "activity":  "正在写代码"
+                    },
+                    {
+                        "detail":  "Rank 和另外 1 个页面 - 个人 - Microsoft​ Edge",
+                        "t":  "2026-08-06T12:24:56+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
