@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-06T12:02:40+08:00",
+    "updatedAt":  "2026-08-06T12:04:21+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,18 +8,18 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  6672,
                                 "正在用微信":  41,
-                                "正在使用 LockApp":  2923,
-                                "正在处理文档":  71,
-                                "正在使用 OpenCode":  37495
+                                "正在使用 OpenCode":  37495,
+                                "正在处理文档":  172,
+                                "正在浏览网页":  6672,
+                                "正在使用 LockApp":  2923
                             },
                   "date":  "2026-08-06"
               },
     "pc":  {
-               "detail":  "Office",
-               "activity":  "正在处理文档",
-               "updatedAt":  "2026-08-06T12:02:40+08:00",
+               "detail":  "VS Code",
+               "activity":  "正在写代码",
+               "updatedAt":  "2026-08-06T12:04:21+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -31,11 +31,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "OpenCode",
-                        "t":  "2026-08-05T21:10:03+08:00",
-                        "activity":  "正在使用 OpenCode"
-                    },
                     {
                         "detail":  "ACM 算法知识库 和另外 2 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-05T21:10:37+08:00",
@@ -330,6 +325,11 @@
                         "detail":  "Office",
                         "t":  "2026-08-06T12:02:40+08:00",
                         "activity":  "正在处理文档"
+                    },
+                    {
+                        "detail":  "VS Code",
+                        "t":  "2026-08-06T12:04:21+08:00",
+                        "activity":  "正在写代码"
                     }
                 ]
 }
