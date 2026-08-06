@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-06T18:37:32+08:00",
+    "updatedAt":  "2026-08-06T18:38:13+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -13,16 +13,16 @@
                                 "正在使用 OpenCode":  37495,
                                 "正在处理文档":  2002,
                                 "离开电脑":  82,
-                                "正在浏览网页":  11412,
+                                "正在浏览网页":  11453,
                                 "正在使用 LockApp":  4858,
                                 "正在使用 ollama app":  325
                             },
                   "date":  "2026-08-06"
               },
     "pc":  {
-               "detail":  "Submit #4213 和另外 5 个页面 - 个人 - Microsoft​ Edge",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-06T18:37:32+08:00",
+               "detail":  "VS Code",
+               "activity":  "正在写代码",
+               "updatedAt":  "2026-08-06T18:38:13+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -34,11 +34,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Submit #5475 和另外 1 个页面 - 个人 - Microsoft​ Edge",
-                        "t":  "2026-08-06T14:46:42+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "VS Code",
                         "t":  "2026-08-06T14:50:06+08:00",
@@ -333,6 +328,11 @@
                         "detail":  "Submit #4213 和另外 5 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-06T18:37:32+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "VS Code",
+                        "t":  "2026-08-06T18:38:13+08:00",
+                        "activity":  "正在写代码"
                     }
                 ]
 }
