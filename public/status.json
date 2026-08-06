@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-06T11:03:29+08:00",
+    "updatedAt":  "2026-08-06T11:11:15+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,15 +8,15 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  6166,
+                                "正在浏览网页":  6631,
                                 "正在使用 OpenCode":  37495
                             },
                   "date":  "2026-08-06"
               },
     "pc":  {
-               "detail":  "迷宫寻路_牛客题霸_牛客网 和另外 2 个页面 - 个人 - Microsoft​ Edge",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-06T11:03:29+08:00",
+               "detail":  "Windows 默认锁屏界面",
+               "activity":  "正在使用 LockApp",
+               "updatedAt":  "2026-08-06T11:11:15+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -28,11 +28,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Setup - Typora version 1.14.9",
-                        "t":  "2026-08-05T21:05:14+08:00",
-                        "activity":  "正在使用 typora-update-x64-1.14.9.tmp"
-                    },
                     {
                         "detail":  "README.md - Typora",
                         "t":  "2026-08-05T21:05:48+08:00",
@@ -327,6 +322,11 @@
                         "detail":  "牛客tracker 和另外 1 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-06T09:20:27+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "Windows 默认锁屏界面",
+                        "t":  "2026-08-06T11:11:15+08:00",
+                        "activity":  "正在使用 LockApp"
                     }
                 ]
 }
