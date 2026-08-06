@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-06T22:55:06+08:00",
+    "updatedAt":  "2026-08-06T22:57:10+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -13,16 +13,16 @@
                                 "正在使用 OpenCode":  37495,
                                 "正在处理文档":  2002,
                                 "离开电脑":  9858,
-                                "正在浏览网页":  14687,
+                                "正在浏览网页":  14811,
                                 "正在使用 LockApp":  5416,
                                 "正在使用 ollama app":  325
                             },
                   "date":  "2026-08-06"
               },
     "pc":  {
-               "detail":  "DeepSeek - 探索未至之境 和另外 4 个页面 - 个人 - Microsoft​ Edge",
+               "detail":  "Problem - B - Codeforces 和另外 4 个页面 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-06T22:55:06+08:00",
+               "updatedAt":  "2026-08-06T22:57:10+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
