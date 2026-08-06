@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-06T15:55:19+08:00",
+    "updatedAt":  "2026-08-06T15:56:01+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -11,7 +11,7 @@
                                 "正在用微信":  41,
                                 "正在写代码":  9206,
                                 "正在使用 OpenCode":  37495,
-                                "正在处理文档":  1332,
+                                "正在处理文档":  1373,
                                 "离开电脑":  41,
                                 "正在浏览网页":  9801,
                                 "正在使用 LockApp":  2923,
@@ -20,9 +20,9 @@
                   "date":  "2026-08-06"
               },
     "pc":  {
-               "detail":  "Office",
-               "activity":  "正在处理文档",
-               "updatedAt":  "2026-08-06T15:55:19+08:00",
+               "detail":  "VS Code",
+               "activity":  "正在写代码",
+               "updatedAt":  "2026-08-06T15:56:01+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -34,11 +34,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Nutlope/hallmark: Anti-AI-slop design skill for Claude Code,…",
-                        "t":  "2026-08-05T22:15:32+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "OpenCode",
                         "t":  "2026-08-05T22:16:06+08:00",
@@ -333,6 +328,11 @@
                         "detail":  "Office",
                         "t":  "2026-08-06T15:53:08+08:00",
                         "activity":  "正在处理文档"
+                    },
+                    {
+                        "detail":  "VS Code",
+                        "t":  "2026-08-06T15:56:01+08:00",
+                        "activity":  "正在写代码"
                     }
                 ]
 }
