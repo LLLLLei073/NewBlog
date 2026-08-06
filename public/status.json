@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-07T00:02:59+08:00",
+    "updatedAt":  "2026-08-07T00:05:03+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,15 +8,15 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在写代码":  63,
-                                "正在浏览网页":  124
+                                "正在浏览网页":  247,
+                                "正在写代码":  63
                             },
                   "date":  "2026-08-07"
               },
     "pc":  {
-               "detail":  "TLE优化方案 - DeepSeek 和另外 6 个页面 - 个人 - Microsoft​ Edge",
+               "detail":  "纸牌游戏_牛客题霸_牛客网 和另外 5 个页面 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-07T00:02:59+08:00",
+               "updatedAt":  "2026-08-07T00:05:03+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
