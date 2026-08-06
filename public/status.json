@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-06T15:14:22+08:00",
+    "updatedAt":  "2026-08-06T15:15:03+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -13,16 +13,16 @@
                                 "正在使用 OpenCode":  37495,
                                 "正在处理文档":  737,
                                 "离开电脑":  41,
-                                "正在浏览网页":  9689,
+                                "正在浏览网页":  9730,
                                 "正在使用 LockApp":  2923,
                                 "正在使用 ollama app":  284
                             },
                   "date":  "2026-08-06"
               },
     "pc":  {
-               "detail":  "1012 P2P 和另外 1 个页面 - 个人 - Microsoft​ Edge",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-06T15:14:22+08:00",
+               "detail":  "VS Code",
+               "activity":  "正在写代码",
+               "updatedAt":  "2026-08-06T15:15:03+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -34,11 +34,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "OpenCode",
-                        "t":  "2026-08-05T22:10:08+08:00",
-                        "activity":  "正在使用 OpenCode"
-                    },
                     {
                         "detail":  "ACM 算法知识库 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-05T22:11:13+08:00",
@@ -333,6 +328,11 @@
                         "detail":  "1012 P2P 和另外 1 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-06T15:12:11+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "VS Code",
+                        "t":  "2026-08-06T15:15:03+08:00",
+                        "activity":  "正在写代码"
                     }
                 ]
 }
