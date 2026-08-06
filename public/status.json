@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-06T13:26:17+08:00",
+    "updatedAt":  "2026-08-06T13:28:28+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -12,15 +12,15 @@
                                 "正在写代码":  3821,
                                 "正在使用 OpenCode":  37495,
                                 "正在处理文档":  737,
-                                "正在浏览网页":  7188,
+                                "正在浏览网页":  7319,
                                 "正在使用 LockApp":  2923
                             },
                   "date":  "2026-08-06"
               },
     "pc":  {
-               "detail":  "Rank 和另外 1 个页面 - 个人 - Microsoft​ Edge",
+               "detail":  "1012 P2P 和另外 1 个页面 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-06T13:26:17+08:00",
+               "updatedAt":  "2026-08-06T13:28:28+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
