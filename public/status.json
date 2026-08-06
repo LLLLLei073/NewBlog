@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-06T23:41:34+08:00",
+    "updatedAt":  "2026-08-06T23:43:38+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -12,18 +12,18 @@
                                 "正在写代码":  18212,
                                 "正在使用 OpenCode":  37495,
                                 "正在处理文档":  2002,
-                                "正在使用 DeepL":  94,
                                 "离开电脑":  9858,
-                                "正在浏览网页":  15475,
+                                "正在浏览网页":  15598,
+                                "正在使用 ollama app":  325,
                                 "正在使用 LockApp":  5416,
-                                "正在使用 ollama app":  325
+                                "正在使用 DeepL":  94
                             },
                   "date":  "2026-08-06"
               },
     "pc":  {
                "detail":  "Problem - C - Codeforces 和另外 1 个页面 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-06T23:41:34+08:00",
+               "updatedAt":  "2026-08-06T23:43:38+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
