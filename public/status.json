@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-06T17:22:01+08:00",
+    "updatedAt":  "2026-08-06T17:23:43+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -13,16 +13,16 @@
                                 "正在使用 OpenCode":  37495,
                                 "正在处理文档":  1586,
                                 "离开电脑":  82,
-                                "正在浏览网页":  10361,
+                                "正在浏览网页":  10462,
                                 "正在使用 LockApp":  2923,
                                 "正在使用 ollama app":  325
                             },
                   "date":  "2026-08-06"
               },
     "pc":  {
-               "detail":  "Submit 和另外 2 个页面 - 个人 - Microsoft​ Edge",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-06T17:22:01+08:00",
+               "detail":  "VS Code",
+               "activity":  "正在写代码",
+               "updatedAt":  "2026-08-06T17:23:43+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -34,11 +34,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "VS Code",
-                        "t":  "2026-08-06T12:04:21+08:00",
-                        "activity":  "正在写代码"
-                    },
                     {
                         "detail":  "1001 Grand Mex 和另外 1 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-06T12:20:52+08:00",
@@ -333,6 +328,11 @@
                         "detail":  "Submit 和另外 2 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-06T17:22:01+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "VS Code",
+                        "t":  "2026-08-06T17:23:43+08:00",
+                        "activity":  "正在写代码"
                     }
                 ]
 }
