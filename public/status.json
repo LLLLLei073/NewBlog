@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-06T12:34:22+08:00",
+    "updatedAt":  "2026-08-06T12:36:34+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -12,15 +12,15 @@
                                 "正在写代码":  1583,
                                 "正在使用 OpenCode":  37495,
                                 "正在处理文档":  172,
-                                "正在浏览网页":  6885,
+                                "正在浏览网页":  7016,
                                 "正在使用 LockApp":  2923
                             },
                   "date":  "2026-08-06"
               },
     "pc":  {
-               "detail":  "Status 和另外 1 个页面 - 个人 - Microsoft​ Edge",
+               "detail":  "Submit #605 和另外 1 个页面 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-06T12:34:22+08:00",
+               "updatedAt":  "2026-08-06T12:36:34+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
