@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-06T12:20:52+08:00",
+    "updatedAt":  "2026-08-06T12:23:03+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -12,15 +12,15 @@
                                 "正在写代码":  988,
                                 "正在使用 OpenCode":  37495,
                                 "正在处理文档":  172,
-                                "正在浏览网页":  6672,
+                                "正在浏览网页":  6803,
                                 "正在使用 LockApp":  2923
                             },
                   "date":  "2026-08-06"
               },
     "pc":  {
-               "detail":  "1001 Grand Mex 和另外 1 个页面 - 个人 - Microsoft​ Edge",
+               "detail":  "1010 Card Damage 和另外 1 个页面 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-06T12:20:52+08:00",
+               "updatedAt":  "2026-08-06T12:23:03+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
