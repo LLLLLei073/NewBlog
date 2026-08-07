@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-07T16:48:15+08:00",
+    "updatedAt":  "2026-08-07T16:50:26+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -14,16 +14,16 @@
                                 "正在处理文档":  5279,
                                 "正在使用 explorer":  82,
                                 "离开电脑":  1042,
-                                "正在浏览网页":  42921,
+                                "正在浏览网页":  43052,
                                 "正在使用 LockApp":  1310,
                                 "正在使用私密应用":  516
                             },
                   "date":  "2026-08-07"
               },
     "pc":  {
-               "detail":  "牛客竞赛_ACM/NOI/CSP/CCPC/ICPC算法编程高难度练习赛_牛客竞赛OJ 和另外 1 个页面 - 个人 -…",
+               "detail":  "链接：https://ac.nowcoder.com/acm/c - DeepSeek 和另外 4 个页面 - 个人 -…",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-07T16:48:15+08:00",
+               "updatedAt":  "2026-08-07T16:50:26+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
