@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-07T22:15:38+08:00",
+    "updatedAt":  "2026-08-07T22:16:15+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -9,8 +9,7 @@
     "daily":  {
                   "stats":  {
                                 "正在浏览网页":  45214,
-                                "正在使用 CloudNotifications":  638,
-                                "正在使用 Hermes":  127,
+                                "正在使用 Hermes":  164,
                                 "正在处理文档":  5412,
                                 "正在使用 LockApp":  5079,
                                 "正在使用 CF Friend Tracker":  66,
@@ -21,16 +20,17 @@
                                 "正在使用 ShellHost":  72,
                                 "离开电脑":  2295,
                                 "正在使用私密应用":  516,
-                                "正在使用 explorer":  633,
                                 "正在用微信":  560,
+                                "正在使用 explorer":  633,
+                                "正在使用 CloudNotifications":  638,
                                 "正在使用 Dism++x64":  311
                             },
                   "date":  "2026-08-07"
               },
     "pc":  {
-               "detail":  "Hermes",
-               "activity":  "正在使用 Hermes",
-               "updatedAt":  "2026-08-07T22:15:38+08:00",
+               "detail":  "OpenCode",
+               "activity":  "正在使用 OpenCode",
+               "updatedAt":  "2026-08-07T22:16:15+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -42,11 +42,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Office",
-                        "t":  "2026-08-07T15:38:57+08:00",
-                        "activity":  "正在处理文档"
-                    },
                     {
                         "detail":  "贴靠助手",
                         "t":  "2026-08-07T15:44:31+08:00",
@@ -341,6 +336,11 @@
                         "detail":  "Hermes",
                         "t":  "2026-08-07T22:15:38+08:00",
                         "activity":  "正在使用 Hermes"
+                    },
+                    {
+                        "detail":  "OpenCode",
+                        "t":  "2026-08-07T22:16:15+08:00",
+                        "activity":  "正在使用 OpenCode"
                     }
                 ]
 }
