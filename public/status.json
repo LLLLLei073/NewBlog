@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-07T21:30:14+08:00",
+    "updatedAt":  "2026-08-07T21:32:20+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -18,15 +18,15 @@
                                 "正在使用 ShellHost":  72,
                                 "离开电脑":  1190,
                                 "正在使用私密应用":  516,
-                                "正在使用 explorer":  434,
+                                "正在使用 explorer":  560,
                                 "正在用微信":  560
                             },
                   "date":  "2026-08-07"
               },
     "pc":  {
-               "detail":  "已完成 99%",
+               "detail":  "Program Manager",
                "activity":  "正在使用 explorer",
-               "updatedAt":  "2026-08-07T21:30:14+08:00",
+               "updatedAt":  "2026-08-07T21:32:20+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
