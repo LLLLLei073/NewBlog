@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-07T13:35:14+08:00",
+    "updatedAt":  "2026-08-07T13:36:26+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -9,7 +9,7 @@
     "daily":  {
                   "stats":  {
                                 "正在用微信":  164,
-                                "正在写代码":  3483,
+                                "正在写代码":  3554,
                                 "正在使用 DeepL":  123,
                                 "正在处理文档":  1717,
                                 "正在使用 explorer":  41,
@@ -21,9 +21,9 @@
                   "date":  "2026-08-07"
               },
     "pc":  {
-               "detail":  "VS Code",
-               "activity":  "正在写代码",
-               "updatedAt":  "2026-08-07T13:35:14+08:00",
+               "detail":  "Office",
+               "activity":  "正在处理文档",
+               "updatedAt":  "2026-08-07T13:36:26+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -35,11 +35,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Status - Codeforces Round 1115 (Div. 2) - Codeforces 和另外 6 个…",
-                        "t":  "2026-08-06T23:23:40+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "VS Code",
                         "t":  "2026-08-06T23:26:17+08:00",
@@ -334,6 +329,11 @@
                         "detail":  "VS Code",
                         "t":  "2026-08-07T13:35:14+08:00",
                         "activity":  "正在写代码"
+                    },
+                    {
+                        "detail":  "Office",
+                        "t":  "2026-08-07T13:36:26+08:00",
+                        "activity":  "正在处理文档"
                     }
                 ]
 }
