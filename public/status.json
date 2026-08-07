@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-07T21:16:18+08:00",
+    "updatedAt":  "2026-08-07T21:16:55+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -15,7 +15,7 @@
                                 "正在看视频":  165,
                                 "正在写代码":  8590,
                                 "正在使用 StartMenuExperienceHost":  9991,
-                                "正在使用 ShellHost":  36,
+                                "正在使用 ShellHost":  72,
                                 "离开电脑":  1153,
                                 "正在使用私密应用":  516,
                                 "正在使用 explorer":  82,
@@ -24,9 +24,9 @@
                   "date":  "2026-08-07"
               },
     "pc":  {
-               "detail":  "快速设置",
-               "activity":  "正在使用 ShellHost",
-               "updatedAt":  "2026-08-07T21:16:18+08:00",
+               "detail":  "本地部署最强开源视频模型 MiniMax H3",
+               "activity":  "正在看视频",
+               "updatedAt":  "2026-08-07T21:16:55+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -38,11 +38,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Office",
-                        "t":  "2026-08-07T13:26:29+08:00",
-                        "activity":  "正在处理文档"
-                    },
                     {
                         "detail":  "VS Code",
                         "t":  "2026-08-07T13:35:14+08:00",
@@ -337,6 +332,11 @@
                         "detail":  "快速设置",
                         "t":  "2026-08-07T21:16:18+08:00",
                         "activity":  "正在使用 ShellHost"
+                    },
+                    {
+                        "detail":  "本地部署最强开源视频模型 MiniMax H3",
+                        "t":  "2026-08-07T21:16:55+08:00",
+                        "activity":  "正在看视频"
                     }
                 ]
 }
