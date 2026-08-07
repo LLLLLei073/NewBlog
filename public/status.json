@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-07T14:08:50+08:00",
+    "updatedAt":  "2026-08-07T14:09:31+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -9,7 +9,7 @@
     "daily":  {
                   "stats":  {
                                 "正在用微信":  407,
-                                "正在写代码":  5167,
+                                "正在写代码":  5208,
                                 "正在使用 DeepL":  123,
                                 "正在处理文档":  1758,
                                 "正在使用 explorer":  41,
@@ -21,9 +21,9 @@
                   "date":  "2026-08-07"
               },
     "pc":  {
-               "detail":  "VS Code",
-               "activity":  "正在写代码",
-               "updatedAt":  "2026-08-07T14:08:50+08:00",
+               "detail":  "long long 不够用？详解 __int128 - FReQuenter - 博客园 和另外 8 个页面 - 个人 …",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-07T14:09:31+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -35,11 +35,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "VS Code",
-                        "t":  "2026-08-06T23:34:15+08:00",
-                        "activity":  "正在写代码"
-                    },
                     {
                         "detail":  "Problem - C - Codeforces 和另外 1 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-06T23:38:22+08:00",
@@ -334,6 +329,11 @@
                         "detail":  "VS Code",
                         "t":  "2026-08-07T14:08:50+08:00",
                         "activity":  "正在写代码"
+                    },
+                    {
+                        "detail":  "long long 不够用？详解 __int128 - FReQuenter - 博客园 和另外 8 个页面 - 个人 …",
+                        "t":  "2026-08-07T14:09:31+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
