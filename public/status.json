@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-07T11:38:10+08:00",
+    "updatedAt":  "2026-08-07T11:40:21+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -12,14 +12,14 @@
                                 "正在写代码":  63,
                                 "离开电脑":  43,
                                 "正在浏览网页":  40682,
-                                "正在使用 LockApp":  1048
+                                "正在使用 LockApp":  1179
                             },
                   "date":  "2026-08-07"
               },
     "pc":  {
                "detail":  "Windows 默认锁屏界面",
                "activity":  "正在使用 LockApp",
-               "updatedAt":  "2026-08-07T11:38:10+08:00",
+               "updatedAt":  "2026-08-07T11:40:21+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
