@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-07T17:01:23+08:00",
+    "updatedAt":  "2026-08-07T17:10:08+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -14,16 +14,16 @@
                                 "正在处理文档":  5279,
                                 "正在使用 explorer":  82,
                                 "离开电脑":  1042,
-                                "正在浏览网页":  43707,
+                                "正在浏览网页":  44232,
                                 "正在使用 LockApp":  1310,
                                 "正在使用私密应用":  516
                             },
                   "date":  "2026-08-07"
               },
     "pc":  {
-               "detail":  "DeepSeek - 探索未至之境 和另外 4 个页面 - 个人 - Microsoft​ Edge",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-07T17:01:23+08:00",
+               "detail":  "Windows 默认锁屏界面",
+               "activity":  "正在使用 LockApp",
+               "updatedAt":  "2026-08-07T17:10:08+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -35,11 +35,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "DeepL",
-                        "t":  "2026-08-07T13:02:47+08:00",
-                        "activity":  "正在使用 DeepL"
-                    },
                     {
                         "detail":  "VS Code",
                         "t":  "2026-08-07T13:03:28+08:00",
@@ -334,6 +329,11 @@
                         "detail":  "牛客竞赛_ACM/NOI/CSP/CCPC/ICPC算法编程高难度练习赛_牛客竞赛OJ 和另外 1 个页面 - 个人 -…",
                         "t":  "2026-08-07T16:48:15+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "Windows 默认锁屏界面",
+                        "t":  "2026-08-07T17:10:08+08:00",
+                        "activity":  "正在使用 LockApp"
                     }
                 ]
 }
