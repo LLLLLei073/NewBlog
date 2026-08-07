@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-07T20:59:39+08:00",
+    "updatedAt":  "2026-08-07T21:00:19+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,23 +8,23 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在使用 StartMenuExperienceHost":  9991,
                                 "正在用微信":  560,
                                 "正在写代码":  8590,
                                 "正在使用 DeepL":  123,
+                                "正在使用私密应用":  516,
                                 "正在处理文档":  5279,
                                 "正在使用 explorer":  82,
-                                "离开电脑":  1042,
+                                "离开电脑":  1081,
                                 "正在浏览网页":  44232,
                                 "正在使用 LockApp":  5079,
-                                "正在使用私密应用":  516
+                                "正在使用 StartMenuExperienceHost":  9991
                             },
                   "date":  "2026-08-07"
               },
     "pc":  {
-               "detail":  "未检测到活动窗口",
-               "activity":  "离开电脑",
-               "updatedAt":  "2026-08-07T20:59:39+08:00",
+               "detail":  "牛客竞赛OJ_ACM/NOI/CSP/CCPC/ICPC_信息学编程算法训练平台 - 个人 - Microsoft​ E…",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-07T21:00:19+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -36,11 +36,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "VS Code",
-                        "t":  "2026-08-07T13:04:51+08:00",
-                        "activity":  "正在写代码"
-                    },
                     {
                         "detail":  "substr out_of_range fix - DeepSeek 和另外 5 个页面 - 个人 - Microsof…",
                         "t":  "2026-08-07T13:05:32+08:00",
@@ -335,6 +330,11 @@
                         "detail":  "未检测到活动窗口",
                         "t":  "2026-08-07T20:59:39+08:00",
                         "activity":  "离开电脑"
+                    },
+                    {
+                        "detail":  "牛客竞赛OJ_ACM/NOI/CSP/CCPC/ICPC_信息学编程算法训练平台 - 个人 - Microsoft​ E…",
+                        "t":  "2026-08-07T21:00:19+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
