@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-07T16:08:32+08:00",
+    "updatedAt":  "2026-08-07T16:10:43+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -14,16 +14,16 @@
                                 "正在处理文档":  4209,
                                 "正在使用 explorer":  82,
                                 "离开电脑":  941,
-                                "正在浏览网页":  42667,
+                                "正在浏览网页":  42798,
                                 "正在使用 LockApp":  1310,
                                 "正在使用私密应用":  82
                             },
                   "date":  "2026-08-07"
               },
     "pc":  {
-               "detail":  "牛客缩写题解 - DeepSeek 和另外 6 个页面 - 个人 - Microsoft​ Edge",
+               "detail":  "K-D-Mail Institution Codes_2026牛客暑期多校训练营7 和另外 2 个页面 - 个人 - M…",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-07T16:08:32+08:00",
+               "updatedAt":  "2026-08-07T16:10:43+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
