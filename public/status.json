@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-07T22:45:26+08:00",
+    "updatedAt":  "2026-08-07T22:47:32+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,8 +8,7 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  45482,
-                                "正在使用 CloudNotifications":  638,
+                                "正在浏览网页":  45608,
                                 "正在使用 Hermes":  164,
                                 "正在处理文档":  5449,
                                 "正在使用 LockApp":  5079,
@@ -21,17 +20,18 @@
                                 "正在使用 ShellHost":  72,
                                 "离开电脑":  2295,
                                 "正在使用私密应用":  516,
+                                "正在用微信":  596,
                                 "正在使用 explorer":  705,
                                 "正在使用 OpenCode":  1327,
-                                "正在用微信":  596,
+                                "正在使用 CloudNotifications":  638,
                                 "正在使用 Dism++x64":  311
                             },
                   "date":  "2026-08-07"
               },
     "pc":  {
-               "detail":  "账号登录-火山引擎 和另外 6 个页面 - 个人 - Microsoft​ Edge",
+               "detail":  "账号管理-火山引擎 和另外 7 个页面 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-07T22:45:26+08:00",
+               "updatedAt":  "2026-08-07T22:47:32+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
