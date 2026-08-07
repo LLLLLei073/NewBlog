@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-07T21:32:20+08:00",
+    "updatedAt":  "2026-08-07T21:32:58+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -18,15 +18,15 @@
                                 "正在使用 ShellHost":  72,
                                 "离开电脑":  1190,
                                 "正在使用私密应用":  516,
-                                "正在使用 explorer":  560,
+                                "正在使用 explorer":  597,
                                 "正在用微信":  560
                             },
                   "date":  "2026-08-07"
               },
     "pc":  {
-               "detail":  "Program Manager",
-               "activity":  "正在使用 explorer",
-               "updatedAt":  "2026-08-07T21:32:20+08:00",
+               "detail":  "未检测到活动窗口",
+               "activity":  "离开电脑",
+               "updatedAt":  "2026-08-07T21:32:58+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -38,11 +38,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "VS Code",
-                        "t":  "2026-08-07T14:10:12+08:00",
-                        "activity":  "正在写代码"
-                    },
                     {
                         "detail":  "long long 不够用？详解 __int128 - FReQuenter - 博客园 和另外 8 个页面 - 个人 …",
                         "t":  "2026-08-07T14:10:53+08:00",
@@ -337,6 +332,11 @@
                         "detail":  "此电脑 - 文件资源管理器",
                         "t":  "2026-08-07T21:28:06+08:00",
                         "activity":  "正在使用 explorer"
+                    },
+                    {
+                        "detail":  "未检测到活动窗口",
+                        "t":  "2026-08-07T21:32:58+08:00",
+                        "activity":  "离开电脑"
                     }
                 ]
 }
