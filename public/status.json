@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-07T22:20:40+08:00",
+    "updatedAt":  "2026-08-07T22:21:17+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -9,6 +9,7 @@
     "daily":  {
                   "stats":  {
                                 "正在浏览网页":  45281,
+                                "正在使用 CloudNotifications":  638,
                                 "正在使用 Hermes":  164,
                                 "正在处理文档":  5449,
                                 "正在使用 LockApp":  5079,
@@ -20,18 +21,17 @@
                                 "正在使用 ShellHost":  72,
                                 "离开电脑":  2295,
                                 "正在使用私密应用":  516,
-                                "正在用微信":  596,
                                 "正在使用 explorer":  705,
-                                "正在使用 OpenCode":  50,
-                                "正在使用 CloudNotifications":  638,
+                                "正在使用 OpenCode":  87,
+                                "正在用微信":  596,
                                 "正在使用 Dism++x64":  311
                             },
                   "date":  "2026-08-07"
               },
     "pc":  {
-               "detail":  "OpenCode",
-               "activity":  "正在使用 OpenCode",
-               "updatedAt":  "2026-08-07T22:20:40+08:00",
+               "detail":  "火山方舟 - 首页 和另外 6 个页面 - 个人 - Microsoft​ Edge",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-07T22:21:17+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -43,11 +43,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Office",
-                        "t":  "2026-08-07T15:57:43+08:00",
-                        "activity":  "正在处理文档"
-                    },
                     {
                         "detail":  "DeepSeek - 探索未至之境 和另外 5 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-07T15:58:24+08:00",
@@ -342,6 +337,11 @@
                         "detail":  "OpenCode",
                         "t":  "2026-08-07T22:20:40+08:00",
                         "activity":  "正在使用 OpenCode"
+                    },
+                    {
+                        "detail":  "火山方舟 - 首页 和另外 6 个页面 - 个人 - Microsoft​ Edge",
+                        "t":  "2026-08-07T22:21:17+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
