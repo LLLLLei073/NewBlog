@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-07T21:52:14+08:00",
+    "updatedAt":  "2026-08-07T21:54:22+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -9,7 +9,6 @@
     "daily":  {
                   "stats":  {
                                 "正在浏览网页":  45178,
-                                "正在使用 CloudNotifications":  129,
                                 "正在处理文档":  5279,
                                 "正在使用 LockApp":  5079,
                                 "正在使用 DeepL":  123,
@@ -19,15 +18,16 @@
                                 "正在使用 ShellHost":  72,
                                 "离开电脑":  2117,
                                 "正在使用私密应用":  516,
+                                "正在用微信":  560,
                                 "正在使用 explorer":  597,
-                                "正在用微信":  560
+                                "正在使用 CloudNotifications":  256
                             },
                   "date":  "2026-08-07"
               },
     "pc":  {
                "detail":  "磁盘空间不足",
                "activity":  "正在使用 CloudNotifications",
-               "updatedAt":  "2026-08-07T21:52:14+08:00",
+               "updatedAt":  "2026-08-07T21:54:22+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
