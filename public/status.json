@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-07T22:47:32+08:00",
+    "updatedAt":  "2026-08-07T22:48:39+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,7 +8,8 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  45608,
+                                "正在浏览网页":  45674,
+                                "正在使用 CloudNotifications":  638,
                                 "正在使用 Hermes":  164,
                                 "正在处理文档":  5449,
                                 "正在使用 LockApp":  5079,
@@ -20,18 +21,17 @@
                                 "正在使用 ShellHost":  72,
                                 "离开电脑":  2295,
                                 "正在使用私密应用":  516,
-                                "正在用微信":  596,
                                 "正在使用 explorer":  705,
                                 "正在使用 OpenCode":  1327,
-                                "正在使用 CloudNotifications":  638,
+                                "正在用微信":  596,
                                 "正在使用 Dism++x64":  311
                             },
                   "date":  "2026-08-07"
               },
     "pc":  {
-               "detail":  "账号管理-火山引擎 和另外 7 个页面 - 个人 - Microsoft​ Edge",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-07T22:47:32+08:00",
+               "detail":  "搜索",
+               "activity":  "正在使用 SearchHost",
+               "updatedAt":  "2026-08-07T22:48:39+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -43,11 +43,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "牛客竞赛_ACM/NOI/CSP/CCPC/ICPC算法编程高难度练习赛_牛客竞赛OJ 和另外 1 个页面 - 个人 -…",
-                        "t":  "2026-08-07T16:13:06+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "Office",
                         "t":  "2026-08-07T16:13:47+08:00",
@@ -342,6 +337,11 @@
                         "detail":  "账号管理-火山引擎 和另外 6 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-07T22:43:18+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "搜索",
+                        "t":  "2026-08-07T22:48:39+08:00",
+                        "activity":  "正在使用 SearchHost"
                     }
                 ]
 }
