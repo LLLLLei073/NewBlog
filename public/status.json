@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-07T21:58:37+08:00",
+    "updatedAt":  "2026-08-07T22:00:44+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -9,6 +9,7 @@
     "daily":  {
                   "stats":  {
                                 "正在浏览网页":  45178,
+                                "正在使用 CloudNotifications":  638,
                                 "正在处理文档":  5279,
                                 "正在使用 LockApp":  5079,
                                 "正在使用 DeepL":  123,
@@ -18,16 +19,15 @@
                                 "正在使用 ShellHost":  72,
                                 "离开电脑":  2117,
                                 "正在使用私密应用":  516,
-                                "正在用微信":  560,
                                 "正在使用 explorer":  597,
-                                "正在使用 CloudNotifications":  511
+                                "正在用微信":  560
                             },
                   "date":  "2026-08-07"
               },
     "pc":  {
-               "detail":  "磁盘空间不足",
-               "activity":  "正在使用 CloudNotifications",
-               "updatedAt":  "2026-08-07T21:58:37+08:00",
+               "detail":  "MiniMax-H3 · 模型库 和另外 3 个页面 - 个人 - Microsoft​ Edge",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-07T22:00:44+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -39,11 +39,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "牛客竞赛_ACM/NOI/CSP/CCPC/ICPC算法编程高难度练习赛_牛客竞赛OJ 和另外 8 个页面 - 个人 -…",
-                        "t":  "2026-08-07T14:12:46+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "VS Code",
                         "t":  "2026-08-07T14:13:27+08:00",
@@ -338,6 +333,11 @@
                         "detail":  "磁盘空间不足",
                         "t":  "2026-08-07T21:50:05+08:00",
                         "activity":  "正在使用 CloudNotifications"
+                    },
+                    {
+                        "detail":  "MiniMax-H3 · 模型库 和另外 3 个页面 - 个人 - Microsoft​ Edge",
+                        "t":  "2026-08-07T22:00:44+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
