@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-07T14:58:40+08:00",
+    "updatedAt":  "2026-08-07T15:00:52+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -14,16 +14,16 @@
                                 "正在处理文档":  3300,
                                 "正在使用 explorer":  41,
                                 "离开电脑":  941,
-                                "正在浏览网页":  41294,
+                                "正在浏览网页":  41425,
                                 "正在使用 LockApp":  1310,
                                 "正在使用私密应用":  82
                             },
                   "date":  "2026-08-07"
               },
     "pc":  {
-               "detail":  "牛客竞赛_ACM/NOI/CSP/CCPC/ICPC算法编程高难度练习赛_牛客竞赛OJ 和另外 2 个页面 - 个人 -…",
+               "detail":  "G-Both of You, Dance Like You Want to Win!_2026牛客暑期多校训练营7 和另…",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-07T14:58:40+08:00",
+               "updatedAt":  "2026-08-07T15:00:52+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
