@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-07T14:28:28+08:00",
+    "updatedAt":  "2026-08-07T14:29:39+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -9,7 +9,7 @@
     "daily":  {
                   "stats":  {
                                 "正在用微信":  448,
-                                "正在写代码":  6147,
+                                "正在写代码":  6218,
                                 "正在使用 DeepL":  123,
                                 "正在处理文档":  1758,
                                 "正在使用 explorer":  41,
@@ -21,9 +21,9 @@
                   "date":  "2026-08-07"
               },
     "pc":  {
-               "detail":  "VS Code",
-               "activity":  "正在写代码",
-               "updatedAt":  "2026-08-07T14:28:28+08:00",
+               "detail":  "代码查看 和另外 6 个页面 - 个人 - Microsoft​ Edge",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-07T14:29:39+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -35,11 +35,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "VS Code",
-                        "t":  "2026-08-06T23:56:06+08:00",
-                        "activity":  "正在写代码"
-                    },
                     {
                         "detail":  "Standings - Codeforces Round 1115 (Div. 2) - Codeforces 和另外 …",
                         "t":  "2026-08-06T23:56:40+08:00",
@@ -334,6 +329,11 @@
                         "detail":  "VS Code",
                         "t":  "2026-08-07T14:15:20+08:00",
                         "activity":  "正在写代码"
+                    },
+                    {
+                        "detail":  "代码查看 和另外 6 个页面 - 个人 - Microsoft​ Edge",
+                        "t":  "2026-08-07T14:29:39+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
