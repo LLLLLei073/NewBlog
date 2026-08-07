@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-07T22:13:25+08:00",
+    "updatedAt":  "2026-08-07T22:14:31+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -9,7 +9,6 @@
     "daily":  {
                   "stats":  {
                                 "正在浏览网页":  45214,
-                                "正在使用 CloudNotifications":  638,
                                 "正在使用 Hermes":  127,
                                 "正在处理文档":  5412,
                                 "正在使用 LockApp":  5079,
@@ -18,18 +17,19 @@
                                 "正在写代码":  8590,
                                 "正在使用 StartMenuExperienceHost":  9991,
                                 "正在使用 ShellHost":  72,
-                                "离开电脑":  2229,
+                                "离开电脑":  2295,
                                 "正在使用私密应用":  516,
-                                "正在使用 explorer":  633,
                                 "正在用微信":  560,
+                                "正在使用 explorer":  633,
+                                "正在使用 CloudNotifications":  638,
                                 "正在使用 Dism++x64":  311
                             },
                   "date":  "2026-08-07"
               },
     "pc":  {
-               "detail":  "未检测到活动窗口",
-               "activity":  "离开电脑",
-               "updatedAt":  "2026-08-07T22:13:25+08:00",
+               "detail":  "CF Friends Tracker",
+               "activity":  "正在使用 CF Friend Tracker",
+               "updatedAt":  "2026-08-07T22:14:31+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -41,11 +41,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "VS Code",
-                        "t":  "2026-08-07T15:08:07+08:00",
-                        "activity":  "正在写代码"
-                    },
                     {
                         "detail":  "G-Both of You, Dance Like You Want to Win!_2026牛客暑期多校训练营7 和另…",
                         "t":  "2026-08-07T15:37:46+08:00",
@@ -340,6 +335,11 @@
                         "detail":  "未检测到活动窗口",
                         "t":  "2026-08-07T22:13:25+08:00",
                         "activity":  "离开电脑"
+                    },
+                    {
+                        "detail":  "CF Friends Tracker",
+                        "t":  "2026-08-07T22:14:31+08:00",
+                        "activity":  "正在使用 CF Friend Tracker"
                     }
                 ]
 }
