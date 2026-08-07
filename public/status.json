@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-07T22:18:50+08:00",
+    "updatedAt":  "2026-08-07T22:19:27+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -9,7 +9,6 @@
     "daily":  {
                   "stats":  {
                                 "正在浏览网页":  45281,
-                                "正在使用 CloudNotifications":  638,
                                 "正在使用 Hermes":  164,
                                 "正在处理文档":  5449,
                                 "正在使用 LockApp":  5079,
@@ -21,17 +20,18 @@
                                 "正在使用 ShellHost":  72,
                                 "离开电脑":  2295,
                                 "正在使用私密应用":  516,
-                                "正在使用 explorer":  633,
-                                "正在使用 OpenCode":  50,
                                 "正在用微信":  560,
+                                "正在使用 explorer":  669,
+                                "正在使用 OpenCode":  50,
+                                "正在使用 CloudNotifications":  638,
                                 "正在使用 Dism++x64":  311
                             },
                   "date":  "2026-08-07"
               },
     "pc":  {
-               "detail":  "hdu - 文件资源管理器",
-               "activity":  "正在使用 explorer",
-               "updatedAt":  "2026-08-07T22:18:50+08:00",
+               "detail":  "微信",
+               "activity":  "正在用微信",
+               "updatedAt":  "2026-08-07T22:19:27+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -43,11 +43,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "VS Code",
-                        "t":  "2026-08-07T15:48:35+08:00",
-                        "activity":  "正在写代码"
-                    },
                     {
                         "detail":  "Office",
                         "t":  "2026-08-07T15:49:16+08:00",
@@ -342,6 +337,11 @@
                         "detail":  "hdu - 文件资源管理器",
                         "t":  "2026-08-07T22:18:50+08:00",
                         "activity":  "正在使用 explorer"
+                    },
+                    {
+                        "detail":  "微信",
+                        "t":  "2026-08-07T22:19:27+08:00",
+                        "activity":  "正在用微信"
                     }
                 ]
 }
