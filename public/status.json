@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-07T22:14:31+08:00",
+    "updatedAt":  "2026-08-07T22:15:38+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -9,9 +9,11 @@
     "daily":  {
                   "stats":  {
                                 "正在浏览网页":  45214,
+                                "正在使用 CloudNotifications":  638,
                                 "正在使用 Hermes":  127,
                                 "正在处理文档":  5412,
                                 "正在使用 LockApp":  5079,
+                                "正在使用 CF Friend Tracker":  66,
                                 "正在使用 DeepL":  123,
                                 "正在看视频":  402,
                                 "正在写代码":  8590,
@@ -19,17 +21,16 @@
                                 "正在使用 ShellHost":  72,
                                 "离开电脑":  2295,
                                 "正在使用私密应用":  516,
-                                "正在用微信":  560,
                                 "正在使用 explorer":  633,
-                                "正在使用 CloudNotifications":  638,
+                                "正在用微信":  560,
                                 "正在使用 Dism++x64":  311
                             },
                   "date":  "2026-08-07"
               },
     "pc":  {
-               "detail":  "CF Friends Tracker",
-               "activity":  "正在使用 CF Friend Tracker",
-               "updatedAt":  "2026-08-07T22:14:31+08:00",
+               "detail":  "Hermes",
+               "activity":  "正在使用 Hermes",
+               "updatedAt":  "2026-08-07T22:15:38+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -41,11 +42,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "G-Both of You, Dance Like You Want to Win!_2026牛客暑期多校训练营7 和另…",
-                        "t":  "2026-08-07T15:37:46+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "Office",
                         "t":  "2026-08-07T15:38:57+08:00",
@@ -340,6 +336,11 @@
                         "detail":  "CF Friends Tracker",
                         "t":  "2026-08-07T22:14:31+08:00",
                         "activity":  "正在使用 CF Friend Tracker"
+                    },
+                    {
+                        "detail":  "Hermes",
+                        "t":  "2026-08-07T22:15:38+08:00",
+                        "activity":  "正在使用 Hermes"
                     }
                 ]
 }
