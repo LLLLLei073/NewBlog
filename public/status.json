@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-07T21:20:38+08:00",
+    "updatedAt":  "2026-08-07T21:22:16+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -18,15 +18,15 @@
                                 "正在使用 ShellHost":  72,
                                 "离开电脑":  1153,
                                 "正在使用私密应用":  516,
-                                "正在使用 explorer":  208,
+                                "正在使用 explorer":  306,
                                 "正在用微信":  560
                             },
                   "date":  "2026-08-07"
               },
     "pc":  {
-               "detail":  "剩余 10 秒",
-               "activity":  "正在使用 explorer",
-               "updatedAt":  "2026-08-07T21:20:38+08:00",
+               "detail":  "GitHub 和另外 2 个页面 - 个人 - Microsoft​ Edge",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-07T21:22:16+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -38,11 +38,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Office",
-                        "t":  "2026-08-07T13:36:26+08:00",
-                        "activity":  "正在处理文档"
-                    },
                     {
                         "detail":  "VS Code",
                         "t":  "2026-08-07T13:37:07+08:00",
@@ -337,6 +332,11 @@
                         "detail":  "选择一个目标",
                         "t":  "2026-08-07T21:18:31+08:00",
                         "activity":  "正在使用 explorer"
+                    },
+                    {
+                        "detail":  "GitHub 和另外 2 个页面 - 个人 - Microsoft​ Edge",
+                        "t":  "2026-08-07T21:22:16+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
