@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-07T16:59:12+08:00",
+    "updatedAt":  "2026-08-07T17:01:23+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -14,16 +14,16 @@
                                 "正在处理文档":  5279,
                                 "正在使用 explorer":  82,
                                 "离开电脑":  1042,
-                                "正在浏览网页":  43576,
+                                "正在浏览网页":  43707,
                                 "正在使用 LockApp":  1310,
                                 "正在使用私密应用":  516
                             },
                   "date":  "2026-08-07"
               },
     "pc":  {
-               "detail":  "牛客网题目A题解 - DeepSeek 和另外 4 个页面 - 个人 - Microsoft​ Edge",
+               "detail":  "DeepSeek - 探索未至之境 和另外 4 个页面 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-07T16:59:12+08:00",
+               "updatedAt":  "2026-08-07T17:01:23+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
