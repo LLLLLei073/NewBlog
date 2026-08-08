@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-08T15:34:43+08:00",
+    "updatedAt":  "2026-08-08T15:36:50+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -14,16 +14,16 @@
                                 "正在使用 Frostpunk":  2621,
                                 "正在使用 SearchHost":  52140,
                                 "正在使用 Hermes":  4355,
-                                "正在浏览网页":  744,
+                                "正在浏览网页":  870,
                                 "正在使用 CF Friend Tracker":  35,
                                 "正在使用 Typora":  66
                             },
                   "date":  "2026-08-08"
               },
     "pc":  {
-               "detail":  "SpcGame 和另外 4 个页面 - 个人 - Microsoft​ Edge",
+               "detail":  "火山方舟 - Coding Plan 和另外 3 个页面 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-08T15:34:43+08:00",
+               "updatedAt":  "2026-08-08T15:36:50+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
