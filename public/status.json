@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-08T19:03:58+08:00",
+    "updatedAt":  "2026-08-08T19:04:34+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -10,7 +10,7 @@
                   "stats":  {
                                 "正在浏览网页":  1204,
                                 "正在玩游戏":  235,
-                                "正在使用 Hermes":  4392,
+                                "正在使用 Hermes":  4428,
                                 "正在使用 Typora":  66,
                                 "正在使用 CF Friend Tracker":  35,
                                 "正在使用 CodexDreamSkin-Setup-v1.5.12.tmp":  35,
@@ -25,9 +25,9 @@
                   "date":  "2026-08-08"
               },
     "pc":  {
-               "detail":  "Hermes",
-               "activity":  "正在使用 Hermes",
-               "updatedAt":  "2026-08-08T19:03:58+08:00",
+               "detail":  "账号登录-火山引擎 - 个人 - Microsoft​ Edge",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-08T19:04:34+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -39,11 +39,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "未检测到活动窗口",
-                        "t":  "2026-08-07T22:10:37+08:00",
-                        "activity":  "离开电脑"
-                    },
                     {
                         "detail":  "Hermes",
                         "t":  "2026-08-07T22:11:17+08:00",
@@ -338,6 +333,11 @@
                         "detail":  "Hermes",
                         "t":  "2026-08-08T19:03:58+08:00",
                         "activity":  "正在使用 Hermes"
+                    },
+                    {
+                        "detail":  "账号登录-火山引擎 - 个人 - Microsoft​ Edge",
+                        "t":  "2026-08-08T19:04:34+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
