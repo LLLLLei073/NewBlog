@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-08T14:09:51+08:00",
+    "updatedAt":  "2026-08-08T14:10:28+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -9,18 +9,18 @@
     "daily":  {
                   "stats":  {
                                 "正在玩游戏":  200,
-                                "正在使用 explorer":  98,
+                                "正在使用 explorer":  135,
+                                "正在浏览网页":  165,
                                 "正在使用 Frostpunk":  2621,
                                 "正在使用 SearchHost":  52140,
-                                "正在浏览网页":  165,
                                 "正在使用 CF Friend Tracker":  35
                             },
                   "date":  "2026-08-08"
               },
     "pc":  {
-               "detail":  "Program Manager",
-               "activity":  "正在使用 explorer",
-               "updatedAt":  "2026-08-08T14:09:51+08:00",
+               "detail":  "Hermes",
+               "activity":  "正在使用 Hermes",
+               "updatedAt":  "2026-08-08T14:10:28+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -32,11 +32,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "牛客竞赛_ACM/NOI/CSP/CCPC/ICPC算法编程高难度练习赛_牛客竞赛OJ 和另外 1 个页面 - 个人 -…",
-                        "t":  "2026-08-07T16:48:15+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "Windows 默认锁屏界面",
                         "t":  "2026-08-07T17:10:08+08:00",
@@ -331,6 +326,11 @@
                         "detail":  "Program Manager",
                         "t":  "2026-08-08T14:09:51+08:00",
                         "activity":  "正在使用 explorer"
+                    },
+                    {
+                        "detail":  "Hermes",
+                        "t":  "2026-08-08T14:10:28+08:00",
+                        "activity":  "正在使用 Hermes"
                     }
                 ]
 }
