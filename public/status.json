@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-08T19:04:34+08:00",
+    "updatedAt":  "2026-08-08T19:06:41+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,7 +8,7 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  1204,
+                                "正在浏览网页":  1330,
                                 "正在玩游戏":  235,
                                 "正在使用 Hermes":  4428,
                                 "正在使用 Typora":  66,
@@ -25,9 +25,9 @@
                   "date":  "2026-08-08"
               },
     "pc":  {
-               "detail":  "账号登录-火山引擎 - 个人 - Microsoft​ Edge",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-08T19:04:34+08:00",
+               "detail":  "README.md - Typora",
+               "activity":  "正在使用 Typora",
+               "updatedAt":  "2026-08-08T19:06:41+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -39,11 +39,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Hermes",
-                        "t":  "2026-08-07T22:11:17+08:00",
-                        "activity":  "正在使用 Hermes"
-                    },
                     {
                         "detail":  "未检测到活动窗口",
                         "t":  "2026-08-07T22:13:25+08:00",
@@ -338,6 +333,11 @@
                         "detail":  "账号登录-火山引擎 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-08T19:04:34+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "README.md - Typora",
+                        "t":  "2026-08-08T19:06:41+08:00",
+                        "activity":  "正在使用 Typora"
                     }
                 ]
 }
