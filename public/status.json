@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-08T16:25:33+08:00",
+    "updatedAt":  "2026-08-08T16:26:10+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -16,7 +16,7 @@
                                 "正在使用 CodexDreamSkin-Setup-v1.5.12.tmp":  35,
                                 "正在使用 Frostpunk":  2621,
                                 "正在看视频":  2482,
-                                "离开电脑":  36,
+                                "离开电脑":  73,
                                 "正在使用 ChatGPT":  104,
                                 "正在使用 spcgame":  36,
                                 "正在使用 explorer":  135,
@@ -25,9 +25,9 @@
                   "date":  "2026-08-08"
               },
     "pc":  {
-               "detail":  "未检测到活动窗口",
-               "activity":  "离开电脑",
-               "updatedAt":  "2026-08-08T16:25:33+08:00",
+               "detail":  "ChatGPT",
+               "activity":  "正在使用 ChatGPT",
+               "updatedAt":  "2026-08-08T16:26:10+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -39,11 +39,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "未检测到活动窗口",
-                        "t":  "2026-08-07T22:01:57+08:00",
-                        "activity":  "离开电脑"
-                    },
                     {
                         "detail":  "Office",
                         "t":  "2026-08-07T22:02:35+08:00",
@@ -338,6 +333,11 @@
                         "detail":  "未检测到活动窗口",
                         "t":  "2026-08-08T16:25:33+08:00",
                         "activity":  "离开电脑"
+                    },
+                    {
+                        "detail":  "ChatGPT",
+                        "t":  "2026-08-08T16:26:10+08:00",
+                        "activity":  "正在使用 ChatGPT"
                     }
                 ]
 }
