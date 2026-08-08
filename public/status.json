@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-08T15:50:57+08:00",
+    "updatedAt":  "2026-08-08T15:53:03+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -9,13 +9,13 @@
     "daily":  {
                   "stats":  {
                                 "正在玩游戏":  235,
-                                "正在浏览网页":  906,
+                                "正在使用 spcgame":  36,
                                 "正在使用 explorer":  135,
-                                "正在看视频":  733,
+                                "正在看视频":  859,
                                 "正在使用 Frostpunk":  2621,
                                 "正在使用 SearchHost":  52140,
                                 "正在使用 Hermes":  4392,
-                                "正在使用 spcgame":  36,
+                                "正在浏览网页":  906,
                                 "正在使用 CF Friend Tracker":  35,
                                 "正在使用 Typora":  66
                             },
@@ -24,7 +24,7 @@
     "pc":  {
                "detail":  "【群星 Stellaris】为了人类纯净的未来（合集）",
                "activity":  "正在看视频",
-               "updatedAt":  "2026-08-08T15:50:57+08:00",
+               "updatedAt":  "2026-08-08T15:53:03+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
