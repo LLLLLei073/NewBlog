@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-08T14:07:05+08:00",
+    "updatedAt":  "2026-08-08T14:07:41+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,18 +8,19 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在使用 explorer":  98,
                                 "正在玩游戏":  200,
-                                "正在使用 Frostpunk":  2621,
+                                "正在使用 explorer":  98,
                                 "正在浏览网页":  36,
-                                "正在使用 SearchHost":  52140
+                                "正在使用 Frostpunk":  2621,
+                                "正在使用 SearchHost":  52140,
+                                "正在使用 CF Friend Tracker":  35
                             },
                   "date":  "2026-08-08"
               },
     "pc":  {
-               "detail":  "CF Friends Tracker",
-               "activity":  "正在使用 CF Friend Tracker",
-               "updatedAt":  "2026-08-08T14:07:05+08:00",
+               "detail":  "牛客tracker 和另外 2 个页面 - 个人 - Microsoft​ Edge",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-08T14:07:41+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -31,11 +32,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "微信",
-                        "t":  "2026-08-07T16:40:18+08:00",
-                        "activity":  "正在用微信"
-                    },
                     {
                         "detail":  "VS Code",
                         "t":  "2026-08-07T16:41:00+08:00",
@@ -330,6 +326,11 @@
                         "detail":  "CF Friends Tracker",
                         "t":  "2026-08-08T14:07:05+08:00",
                         "activity":  "正在使用 CF Friend Tracker"
+                    },
+                    {
+                        "detail":  "牛客tracker 和另外 2 个页面 - 个人 - Microsoft​ Edge",
+                        "t":  "2026-08-08T14:07:41+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
