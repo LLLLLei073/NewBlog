@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-08T13:24:38+08:00",
+    "updatedAt":  "2026-08-08T13:26:46+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -9,7 +9,7 @@
     "daily":  {
                   "stats":  {
                                 "正在玩游戏":  165,
-                                "正在使用 Frostpunk":  253,
+                                "正在使用 Frostpunk":  380,
                                 "正在使用 SearchHost":  52140
                             },
                   "date":  "2026-08-08"
@@ -17,7 +17,7 @@
     "pc":  {
                "detail":  "Frostpunk",
                "activity":  "正在使用 Frostpunk",
-               "updatedAt":  "2026-08-08T13:24:38+08:00",
+               "updatedAt":  "2026-08-08T13:26:46+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
