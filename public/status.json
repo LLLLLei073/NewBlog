@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-08T14:57:30+08:00",
+    "updatedAt":  "2026-08-08T14:59:38+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -14,7 +14,7 @@
                                 "正在使用 Frostpunk":  2621,
                                 "正在使用 SearchHost":  52140,
                                 "正在使用 Hermes":  2509,
-                                "正在浏览网页":  364,
+                                "正在浏览网页":  491,
                                 "正在使用 CF Friend Tracker":  35,
                                 "正在使用 Typora":  66
                             },
@@ -23,7 +23,7 @@
     "pc":  {
                "detail":  "火山方舟 - Coding Plan 和另外 3 个页面 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-08T14:57:30+08:00",
+               "updatedAt":  "2026-08-08T14:59:38+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
