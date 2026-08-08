@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-08T19:29:59+08:00",
+    "updatedAt":  "2026-08-08T19:32:05+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -10,17 +10,17 @@
                   "stats":  {
                                 "正在浏览网页":  1939,
                                 "正在玩游戏":  235,
-                                "正在使用 Hermes":  4813,
+                                "正在使用 Hermes":  4938,
                                 "正在使用 Typora":  101,
                                 "正在使用 CF Friend Tracker":  35,
                                 "正在使用 CodexDreamSkin-Setup-v1.5.12.tmp":  35,
                                 "正在使用 Frostpunk":  2621,
                                 "正在看视频":  2482,
+                                "正在使用 explorer":  9367,
                                 "离开电脑":  110,
                                 "正在敲命令":  36,
                                 "正在使用 ChatGPT":  206,
                                 "正在使用 spcgame":  296,
-                                "正在使用 explorer":  9367,
                                 "正在使用 SearchHost":  52140
                             },
                   "date":  "2026-08-08"
@@ -28,7 +28,7 @@
     "pc":  {
                "detail":  "Hermes",
                "activity":  "正在使用 Hermes",
-               "updatedAt":  "2026-08-08T19:29:59+08:00",
+               "updatedAt":  "2026-08-08T19:32:05+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
