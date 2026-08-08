@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-08T19:03:20+08:00",
+    "updatedAt":  "2026-08-08T19:03:58+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -16,7 +16,7 @@
                                 "正在使用 CodexDreamSkin-Setup-v1.5.12.tmp":  35,
                                 "正在使用 Frostpunk":  2621,
                                 "正在看视频":  2482,
-                                "离开电脑":  73,
+                                "离开电脑":  110,
                                 "正在使用 ChatGPT":  140,
                                 "正在使用 spcgame":  36,
                                 "正在使用 explorer":  9367,
@@ -25,9 +25,9 @@
                   "date":  "2026-08-08"
               },
     "pc":  {
-               "detail":  "未检测到活动窗口",
-               "activity":  "离开电脑",
-               "updatedAt":  "2026-08-08T19:03:20+08:00",
+               "detail":  "Hermes",
+               "activity":  "正在使用 Hermes",
+               "updatedAt":  "2026-08-08T19:03:58+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -39,11 +39,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Dism++x64 10.1.1002.1 UEFI Firmware",
-                        "t":  "2026-08-07T22:05:25+08:00",
-                        "activity":  "正在使用 Dism++x64"
-                    },
                     {
                         "detail":  "未检测到活动窗口",
                         "t":  "2026-08-07T22:10:37+08:00",
@@ -338,6 +333,11 @@
                         "detail":  "未检测到活动窗口",
                         "t":  "2026-08-08T19:03:20+08:00",
                         "activity":  "离开电脑"
+                    },
+                    {
+                        "detail":  "Hermes",
+                        "t":  "2026-08-08T19:03:58+08:00",
+                        "activity":  "正在使用 Hermes"
                     }
                 ]
 }
