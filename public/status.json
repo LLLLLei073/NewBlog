@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-08T20:31:26+08:00",
+    "updatedAt":  "2026-08-08T20:33:32+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,7 +8,7 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  2167,
+                                "正在浏览网页":  2292,
                                 "正在玩游戏":  235,
                                 "正在使用 Hermes":  7192,
                                 "正在使用 Typora":  101,
@@ -16,14 +16,14 @@
                                 "正在使用 CodexDreamSkin-Setup-v1.5.12.tmp":  35,
                                 "正在使用 Frostpunk":  2621,
                                 "正在看视频":  2548,
+                                "正在使用 explorer":  9402,
                                 "正在使用 WorkBuddy":  163,
                                 "离开电脑":  182,
                                 "正在敲命令":  36,
                                 "正在使用 reasonix-desktop":  36,
                                 "正在使用 ChatGPT":  206,
-                                "正在使用 spcgame":  849,
                                 "正在使用 WindowsTerminal":  132,
-                                "正在使用 explorer":  9402,
+                                "正在使用 spcgame":  849,
                                 "正在使用 SearchHost":  52140
                             },
                   "date":  "2026-08-08"
@@ -31,7 +31,7 @@
     "pc":  {
                "detail":  "牛牛的考试_牛客题霸_牛客网 和另外 2 个页面 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-08T20:31:26+08:00",
+               "updatedAt":  "2026-08-08T20:33:32+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
