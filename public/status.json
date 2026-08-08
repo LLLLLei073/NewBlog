@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-08T13:30:29+08:00",
+    "updatedAt":  "2026-08-08T13:32:07+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,6 +8,7 @@
               },
     "daily":  {
                   "stats":  {
+                                "正在使用 explorer":  98,
                                 "正在玩游戏":  165,
                                 "正在使用 Frostpunk":  602,
                                 "正在使用 SearchHost":  52140
@@ -15,9 +16,9 @@
                   "date":  "2026-08-08"
               },
     "pc":  {
-               "detail":  "Program Manager",
-               "activity":  "正在使用 explorer",
-               "updatedAt":  "2026-08-08T13:30:29+08:00",
+               "detail":  "Frostpunk",
+               "activity":  "正在使用 Frostpunk",
+               "updatedAt":  "2026-08-08T13:32:07+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -29,11 +30,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "未检测到活动窗口",
-                        "t":  "2026-08-07T16:19:03+08:00",
-                        "activity":  "离开电脑"
-                    },
                     {
                         "detail":  "Office",
                         "t":  "2026-08-07T16:20:44+08:00",
@@ -328,6 +324,11 @@
                         "detail":  "Program Manager",
                         "t":  "2026-08-08T13:30:29+08:00",
                         "activity":  "正在使用 explorer"
+                    },
+                    {
+                        "detail":  "Frostpunk",
+                        "t":  "2026-08-08T13:32:07+08:00",
+                        "activity":  "正在使用 Frostpunk"
                     }
                 ]
 }
