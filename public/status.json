@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-08T16:13:38+08:00",
+    "updatedAt":  "2026-08-08T16:15:45+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -9,23 +9,23 @@
     "daily":  {
                   "stats":  {
                                 "正在玩游戏":  235,
-                                "正在使用 spcgame":  36,
+                                "正在浏览网页":  1044,
                                 "正在使用 explorer":  135,
-                                "正在看视频":  1843,
+                                "正在看视频":  1969,
                                 "正在使用 Frostpunk":  2621,
                                 "正在使用 ChatGPT":  104,
                                 "正在使用 SearchHost":  52140,
                                 "正在使用 Hermes":  4392,
-                                "正在浏览网页":  1044,
+                                "正在使用 spcgame":  36,
                                 "正在使用 CF Friend Tracker":  35,
                                 "正在使用 Typora":  66
                             },
                   "date":  "2026-08-08"
               },
     "pc":  {
-               "detail":  "哔哩哔哩 (゜-゜)つロ 干杯~-bilibili",
+               "detail":  "【明透/熟肉】「唯独歌手这一点，我绝不会妥协。」明透谈自己的坚持",
                "activity":  "正在看视频",
-               "updatedAt":  "2026-08-08T16:13:38+08:00",
+               "updatedAt":  "2026-08-08T16:15:45+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
