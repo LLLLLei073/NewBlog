@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-08T16:09:35+08:00",
+    "updatedAt":  "2026-08-08T16:10:11+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -9,23 +9,23 @@
     "daily":  {
                   "stats":  {
                                 "正在玩游戏":  235,
-                                "正在浏览网页":  906,
+                                "正在使用 spcgame":  36,
                                 "正在使用 explorer":  135,
                                 "正在看视频":  1807,
                                 "正在使用 Frostpunk":  2621,
                                 "正在使用 ChatGPT":  37,
                                 "正在使用 SearchHost":  52140,
                                 "正在使用 Hermes":  4392,
-                                "正在使用 spcgame":  36,
+                                "正在浏览网页":  942,
                                 "正在使用 CF Friend Tracker":  35,
                                 "正在使用 Typora":  66
                             },
                   "date":  "2026-08-08"
               },
     "pc":  {
-               "detail":  "chatgpt - 搜索 - 个人 - Microsoft​ Edge",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-08T16:09:35+08:00",
+               "detail":  "哔哩哔哩 (゜-゜)つロ 干杯~-bilibili",
+               "activity":  "正在看视频",
+               "updatedAt":  "2026-08-08T16:10:11+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -37,11 +37,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "MiniMax-H3 · 模型库 和另外 3 个页面 - 个人 - Microsoft​ Edge",
-                        "t":  "2026-08-07T21:24:43+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "本地部署最强开源视频模型 MiniMax H3",
                         "t":  "2026-08-07T21:26:20+08:00",
@@ -336,6 +331,11 @@
                         "detail":  "chatgpt - 搜索 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-08T16:09:35+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "哔哩哔哩 (゜-゜)つロ 干杯~-bilibili",
+                        "t":  "2026-08-08T16:10:11+08:00",
+                        "activity":  "正在看视频"
                     }
                 ]
 }
