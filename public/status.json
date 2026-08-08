@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-08T13:17:39+08:00",
+    "updatedAt":  "2026-08-08T13:19:48+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,14 +8,15 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在使用 SearchHost":  52140
+                                "正在使用 SearchHost":  52140,
+                                "正在玩游戏":  129
                             },
                   "date":  "2026-08-08"
               },
     "pc":  {
                "detail":  "游戏",
                "activity":  "正在玩游戏",
-               "updatedAt":  "2026-08-08T13:17:39+08:00",
+               "updatedAt":  "2026-08-08T13:19:48+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
