@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-08T14:03:46+08:00",
+    "updatedAt":  "2026-08-08T14:05:54+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -10,15 +10,15 @@
                   "stats":  {
                                 "正在使用 explorer":  98,
                                 "正在玩游戏":  165,
-                                "正在使用 Frostpunk":  2494,
+                                "正在使用 Frostpunk":  2621,
                                 "正在使用 SearchHost":  52140
                             },
                   "date":  "2026-08-08"
               },
     "pc":  {
-               "detail":  "Frostpunk",
-               "activity":  "正在使用 Frostpunk",
-               "updatedAt":  "2026-08-08T14:03:46+08:00",
+               "detail":  "游戏",
+               "activity":  "正在玩游戏",
+               "updatedAt":  "2026-08-08T14:05:54+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -30,11 +30,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Office",
-                        "t":  "2026-08-07T16:20:44+08:00",
-                        "activity":  "正在处理文档"
-                    },
                     {
                         "detail":  "",
                         "t":  "2026-08-07T16:32:22+08:00",
@@ -329,6 +324,11 @@
                         "detail":  "Frostpunk",
                         "t":  "2026-08-08T13:32:07+08:00",
                         "activity":  "正在使用 Frostpunk"
+                    },
+                    {
+                        "detail":  "游戏",
+                        "t":  "2026-08-08T14:05:54+08:00",
+                        "activity":  "正在玩游戏"
                     }
                 ]
 }
