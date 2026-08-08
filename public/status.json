@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-08T16:24:19+08:00",
+    "updatedAt":  "2026-08-08T16:24:57+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,25 +8,25 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在玩游戏":  235,
-                                "正在使用 spcgame":  36,
-                                "正在使用 explorer":  135,
-                                "正在看视频":  2444,
-                                "正在使用 Frostpunk":  2621,
-                                "正在使用 ChatGPT":  104,
-                                "正在使用 SearchHost":  52140,
-                                "离开电脑":  36,
-                                "正在使用 Hermes":  4392,
                                 "正在浏览网页":  1044,
+                                "正在玩游戏":  235,
+                                "正在使用 Hermes":  4392,
+                                "正在使用 Typora":  66,
                                 "正在使用 CF Friend Tracker":  35,
-                                "正在使用 Typora":  66
+                                "正在使用 Frostpunk":  2621,
+                                "正在看视频":  2482,
+                                "正在使用 explorer":  135,
+                                "离开电脑":  36,
+                                "正在使用 ChatGPT":  104,
+                                "正在使用 spcgame":  36,
+                                "正在使用 SearchHost":  52140
                             },
                   "date":  "2026-08-08"
               },
     "pc":  {
-               "detail":  "来回顾一下 vibe coding 一年里最有意义的 prompt 喵！",
-               "activity":  "正在看视频",
-               "updatedAt":  "2026-08-08T16:24:19+08:00",
+               "detail":  "安装 - Codex Dream Skin 1.5.12",
+               "activity":  "正在使用 CodexDreamSkin-Setup-v1.5.12.tmp",
+               "updatedAt":  "2026-08-08T16:24:57+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -38,11 +38,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "MiniMax-H3 · 模型库 和另外 3 个页面 - 个人 - Microsoft​ Edge",
-                        "t":  "2026-08-07T22:00:44+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "下载 - 文件资源管理器",
                         "t":  "2026-08-07T22:01:21+08:00",
@@ -337,6 +332,11 @@
                         "detail":  "来回顾一下 vibe coding 一年里最有意义的 prompt 喵！",
                         "t":  "2026-08-08T16:24:19+08:00",
                         "activity":  "正在看视频"
+                    },
+                    {
+                        "detail":  "安装 - Codex Dream Skin 1.5.12",
+                        "t":  "2026-08-08T16:24:57+08:00",
+                        "activity":  "正在使用 CodexDreamSkin-Setup-v1.5.12.tmp"
                     }
                 ]
 }
