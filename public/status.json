@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-07T22:48:39+08:00",
+    "updatedAt":  "2026-08-08T13:17:39+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,30 +8,14 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  45674,
-                                "正在使用 CloudNotifications":  638,
-                                "正在使用 Hermes":  164,
-                                "正在处理文档":  5449,
-                                "正在使用 LockApp":  5079,
-                                "正在使用 CF Friend Tracker":  66,
-                                "正在使用 DeepL":  123,
-                                "正在看视频":  402,
-                                "正在写代码":  8590,
-                                "正在使用 StartMenuExperienceHost":  9991,
-                                "正在使用 ShellHost":  72,
-                                "离开电脑":  2295,
-                                "正在使用私密应用":  516,
-                                "正在使用 explorer":  705,
-                                "正在使用 OpenCode":  1327,
-                                "正在用微信":  596,
-                                "正在使用 Dism++x64":  311
+                                "正在使用 SearchHost":  52140
                             },
-                  "date":  "2026-08-07"
+                  "date":  "2026-08-08"
               },
     "pc":  {
-               "detail":  "搜索",
-               "activity":  "正在使用 SearchHost",
-               "updatedAt":  "2026-08-07T22:48:39+08:00",
+               "detail":  "游戏",
+               "activity":  "正在玩游戏",
+               "updatedAt":  "2026-08-08T13:17:39+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -43,11 +27,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Office",
-                        "t":  "2026-08-07T16:13:47+08:00",
-                        "activity":  "正在处理文档"
-                    },
                     {
                         "detail":  "牛客竞赛_ACM/NOI/CSP/CCPC/ICPC算法编程高难度练习赛_牛客竞赛OJ 和另外 1 个页面 - 个人 -…",
                         "t":  "2026-08-07T16:17:10+08:00",
@@ -342,6 +321,11 @@
                         "detail":  "搜索",
                         "t":  "2026-08-07T22:48:39+08:00",
                         "activity":  "正在使用 SearchHost"
+                    },
+                    {
+                        "detail":  "游戏",
+                        "t":  "2026-08-08T13:17:39+08:00",
+                        "activity":  "正在玩游戏"
                     }
                 ]
 }
