@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-08T14:33:39+08:00",
+    "updatedAt":  "2026-08-08T14:35:45+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -13,16 +13,16 @@
                                 "正在看视频":  36,
                                 "正在使用 Frostpunk":  2621,
                                 "正在使用 SearchHost":  52140,
-                                "正在使用 Hermes":  1274,
+                                "正在使用 Hermes":  1400,
                                 "正在浏览网页":  238,
                                 "正在使用 CF Friend Tracker":  35
                             },
                   "date":  "2026-08-08"
               },
     "pc":  {
-               "detail":  "Hermes",
-               "activity":  "正在使用 Hermes",
-               "updatedAt":  "2026-08-08T14:33:39+08:00",
+               "detail":  "2026-08-08_141355-spcgame-city-builder.md - Typora",
+               "activity":  "正在使用 Typora",
+               "updatedAt":  "2026-08-08T14:35:45+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -34,11 +34,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Comfy-Org/ComfyUI: The most powerful and modular diffusion m…",
-                        "t":  "2026-08-07T21:12:10+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "快速设置",
                         "t":  "2026-08-07T21:12:46+08:00",
@@ -333,6 +328,11 @@
                         "detail":  "Hermes",
                         "t":  "2026-08-08T14:18:46+08:00",
                         "activity":  "正在使用 Hermes"
+                    },
+                    {
+                        "detail":  "2026-08-08_141355-spcgame-city-builder.md - Typora",
+                        "t":  "2026-08-08T14:35:45+08:00",
+                        "activity":  "正在使用 Typora"
                     }
                 ]
 }
