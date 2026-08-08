@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-08T14:51:41+08:00",
+    "updatedAt":  "2026-08-08T14:53:47+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -13,7 +13,7 @@
                                 "正在看视频":  36,
                                 "正在使用 Frostpunk":  2621,
                                 "正在使用 SearchHost":  52140,
-                                "正在使用 Hermes":  2288,
+                                "正在使用 Hermes":  2413,
                                 "正在浏览网页":  238,
                                 "正在使用 CF Friend Tracker":  35,
                                 "正在使用 Typora":  66
@@ -23,7 +23,7 @@
     "pc":  {
                "detail":  "Hermes",
                "activity":  "正在使用 Hermes",
-               "updatedAt":  "2026-08-08T14:51:41+08:00",
+               "updatedAt":  "2026-08-08T14:53:47+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
