@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-08T14:10:28+08:00",
+    "updatedAt":  "2026-08-08T14:12:05+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -10,17 +10,18 @@
                   "stats":  {
                                 "正在玩游戏":  200,
                                 "正在使用 explorer":  135,
-                                "正在浏览网页":  165,
                                 "正在使用 Frostpunk":  2621,
                                 "正在使用 SearchHost":  52140,
+                                "正在使用 Hermes":  96,
+                                "正在浏览网页":  165,
                                 "正在使用 CF Friend Tracker":  35
                             },
                   "date":  "2026-08-08"
               },
     "pc":  {
-               "detail":  "Hermes",
-               "activity":  "正在使用 Hermes",
-               "updatedAt":  "2026-08-08T14:10:28+08:00",
+               "detail":  "DeepSeek - 探索未至之境 和另外 2 个页面 - 个人 - Microsoft​ Edge",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-08T14:12:05+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -32,11 +33,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Windows 默认锁屏界面",
-                        "t":  "2026-08-07T17:10:08+08:00",
-                        "activity":  "正在使用 LockApp"
-                    },
                     {
                         "detail":  "开始",
                         "t":  "2026-08-07T18:13:08+08:00",
@@ -331,6 +327,11 @@
                         "detail":  "Hermes",
                         "t":  "2026-08-08T14:10:28+08:00",
                         "activity":  "正在使用 Hermes"
+                    },
+                    {
+                        "detail":  "DeepSeek - 探索未至之境 和另外 2 个页面 - 个人 - Microsoft​ Edge",
+                        "t":  "2026-08-08T14:12:05+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
