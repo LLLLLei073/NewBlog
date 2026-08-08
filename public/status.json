@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-08T19:09:59+08:00",
+    "updatedAt":  "2026-08-08T19:12:08+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,7 +8,7 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  1330,
+                                "正在浏览网页":  1459,
                                 "正在玩游戏":  235,
                                 "正在使用 Hermes":  4553,
                                 "正在使用 Typora":  101,
@@ -16,19 +16,19 @@
                                 "正在使用 CodexDreamSkin-Setup-v1.5.12.tmp":  35,
                                 "正在使用 Frostpunk":  2621,
                                 "正在看视频":  2482,
-                                "正在使用 explorer":  9367,
                                 "离开电脑":  110,
                                 "正在敲命令":  36,
                                 "正在使用 ChatGPT":  140,
                                 "正在使用 spcgame":  36,
+                                "正在使用 explorer":  9367,
                                 "正在使用 SearchHost":  52140
                             },
                   "date":  "2026-08-08"
               },
     "pc":  {
-               "detail":  "火山引擎控制台 - 个人 - Microsoft​ Edge",
+               "detail":  "火山方舟 - Coding Plan - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-08T19:09:59+08:00",
+               "updatedAt":  "2026-08-08T19:12:08+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
