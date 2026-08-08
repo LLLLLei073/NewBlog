@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-08T14:35:45+08:00",
+    "updatedAt":  "2026-08-08T14:36:51+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -15,14 +15,15 @@
                                 "正在使用 SearchHost":  52140,
                                 "正在使用 Hermes":  1400,
                                 "正在浏览网页":  238,
-                                "正在使用 CF Friend Tracker":  35
+                                "正在使用 CF Friend Tracker":  35,
+                                "正在使用 Typora":  66
                             },
                   "date":  "2026-08-08"
               },
     "pc":  {
-               "detail":  "2026-08-08_141355-spcgame-city-builder.md - Typora",
-               "activity":  "正在使用 Typora",
-               "updatedAt":  "2026-08-08T14:35:45+08:00",
+               "detail":  "Hermes",
+               "activity":  "正在使用 Hermes",
+               "updatedAt":  "2026-08-08T14:36:51+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -34,11 +35,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "快速设置",
-                        "t":  "2026-08-07T21:12:46+08:00",
-                        "activity":  "正在使用 ShellHost"
-                    },
                     {
                         "detail":  "未检测到活动窗口",
                         "t":  "2026-08-07T21:13:23+08:00",
@@ -333,6 +329,11 @@
                         "detail":  "2026-08-08_141355-spcgame-city-builder.md - Typora",
                         "t":  "2026-08-08T14:35:45+08:00",
                         "activity":  "正在使用 Typora"
+                    },
+                    {
+                        "detail":  "Hermes",
+                        "t":  "2026-08-08T14:36:51+08:00",
+                        "activity":  "正在使用 Hermes"
                     }
                 ]
 }
