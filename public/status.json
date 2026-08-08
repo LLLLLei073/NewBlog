@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-08T14:05:54+08:00",
+    "updatedAt":  "2026-08-08T14:06:29+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -9,16 +9,16 @@
     "daily":  {
                   "stats":  {
                                 "正在使用 explorer":  98,
-                                "正在玩游戏":  165,
+                                "正在玩游戏":  200,
                                 "正在使用 Frostpunk":  2621,
                                 "正在使用 SearchHost":  52140
                             },
                   "date":  "2026-08-08"
               },
     "pc":  {
-               "detail":  "游戏",
-               "activity":  "正在玩游戏",
-               "updatedAt":  "2026-08-08T14:05:54+08:00",
+               "detail":  "Codeforces 和另外 2 个页面 - 个人 - Microsoft​ Edge",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-08T14:06:29+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -30,11 +30,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "",
-                        "t":  "2026-08-07T16:32:22+08:00",
-                        "activity":  "正在使用私密应用"
-                    },
                     {
                         "detail":  "VS Code",
                         "t":  "2026-08-07T16:39:37+08:00",
@@ -329,6 +324,11 @@
                         "detail":  "游戏",
                         "t":  "2026-08-08T14:05:54+08:00",
                         "activity":  "正在玩游戏"
+                    },
+                    {
+                        "detail":  "Codeforces 和另外 2 个页面 - 个人 - Microsoft​ Edge",
+                        "t":  "2026-08-08T14:06:29+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
