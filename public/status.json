@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-09T18:00:59+08:00",
+    "updatedAt":  "2026-08-09T18:03:06+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -13,7 +13,7 @@
                                 "正在使用 LockApp":  3125,
                                 "正在看视频":  191,
                                 "正在使用 Frostpunk":  3156,
-                                "正在使用 java":  1767,
+                                "正在使用 java":  1893,
                                 "正在使用 clash-verge":  37,
                                 "离开电脑":  1850,
                                 "正在使用 Plain Craft Launcher 2":  34,
@@ -28,7 +28,7 @@
     "pc":  {
                "detail":  "你好，新蒸程！1.7",
                "activity":  "正在使用 java",
-               "updatedAt":  "2026-08-09T18:00:59+08:00",
+               "updatedAt":  "2026-08-09T18:03:06+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
