@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-09T16:15:00+08:00",
+    "updatedAt":  "2026-08-09T16:17:07+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,23 +8,23 @@
               },
     "daily":  {
                   "stats":  {
+                                "正在敲命令":  449,
                                 "正在玩游戏":  126,
                                 "正在使用 DeepL":  36,
                                 "正在使用 explorer":  470,
                                 "离开电脑":  994,
                                 "正在浏览网页":  58139,
-                                "正在使用 ollama app":  97,
-                                "正在使用 SearchHost":  756,
+                                "正在使用 SearchHost":  882,
                                 "正在使用 clash-verge":  37,
                                 "正在使用 LockApp":  3125,
-                                "正在敲命令":  449
+                                "正在使用 ollama app":  97
                             },
                   "date":  "2026-08-09"
               },
     "pc":  {
                "detail":  "搜索",
                "activity":  "正在使用 SearchHost",
-               "updatedAt":  "2026-08-09T16:15:00+08:00",
+               "updatedAt":  "2026-08-09T16:17:07+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
