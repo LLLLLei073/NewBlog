@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-09T23:29:29+08:00",
+    "updatedAt":  "2026-08-09T23:31:36+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -10,6 +10,7 @@
                   "stats":  {
                                 "正在浏览网页":  66843,
                                 "正在使用 ollama app":  97,
+                                "正在使用 Weixin":  126,
                                 "正在使用 LockApp":  3125,
                                 "正在使用 dwm":  35,
                                 "正在看视频":  649,
@@ -17,7 +18,7 @@
                                 "正在使用 java":  2019,
                                 "正在使用 clash-verge":  37,
                                 "正在写代码":  2213,
-                                "正在用微信":  255,
+                                "正在使用 SearchHost":  976,
                                 "离开电脑":  8066,
                                 "正在敲命令":  449,
                                 "正在使用 ChatGPT":  323,
@@ -28,7 +29,7 @@
                                 "正在使用 SnippingTool":  34,
                                 "正在使用 DeepL":  36,
                                 "正在使用 Plain Craft Launcher 2":  34,
-                                "正在使用 SearchHost":  976,
+                                "正在用微信":  255,
                                 "正在使用 my-ai-town-windows":  825,
                                 "正在使用 oj_helper":  37
                             },
@@ -37,7 +38,7 @@
     "pc":  {
                "detail":  "朋友圈",
                "activity":  "正在使用 Weixin",
-               "updatedAt":  "2026-08-09T23:29:29+08:00",
+               "updatedAt":  "2026-08-09T23:31:36+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
