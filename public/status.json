@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-09T10:24:44+08:00",
+    "updatedAt":  "2026-08-09T10:26:53+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -11,7 +11,7 @@
                                 "正在使用 ollama app":  97,
                                 "正在使用 explorer":  72,
                                 "离开电脑":  103,
-                                "正在浏览网页":  39801,
+                                "正在浏览网页":  39929,
                                 "正在使用 clash-verge":  37,
                                 "正在使用 LockApp":  3088,
                                 "正在敲命令":  36
@@ -21,7 +21,7 @@
     "pc":  {
                "detail":  "*video_minimax_h3_t2v - ComfyUI 和另外 1 个页面 - 个人 - Microsoft​ …",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-09T10:24:44+08:00",
+               "updatedAt":  "2026-08-09T10:26:53+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
