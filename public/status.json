@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-09T18:19:57+08:00",
+    "updatedAt":  "2026-08-09T18:22:03+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -15,7 +15,7 @@
                                 "正在使用 Frostpunk":  3156,
                                 "正在使用 java":  2019,
                                 "正在使用 clash-verge":  37,
-                                "离开电脑":  2731,
+                                "离开电脑":  2857,
                                 "正在使用 Plain Craft Launcher 2":  34,
                                 "正在敲命令":  449,
                                 "正在使用 explorer":  470,
@@ -28,7 +28,7 @@
     "pc":  {
                "detail":  "未检测到活动窗口",
                "activity":  "离开电脑",
-               "updatedAt":  "2026-08-09T18:19:57+08:00",
+               "updatedAt":  "2026-08-09T18:22:03+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
