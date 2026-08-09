@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-09T22:38:26+08:00",
+    "updatedAt":  "2026-08-09T22:40:33+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -16,8 +16,8 @@
                                 "正在使用 Frostpunk":  3156,
                                 "正在使用 java":  2019,
                                 "正在使用 clash-verge":  37,
-                                "正在写代码":  490,
-                                "正在使用 SearchHost":  976,
+                                "正在写代码":  617,
+                                "正在用微信":  255,
                                 "离开电脑":  8066,
                                 "正在敲命令":  449,
                                 "正在使用 ChatGPT":  323,
@@ -27,7 +27,7 @@
                                 "正在使用 explorer":  504,
                                 "正在使用 DeepL":  36,
                                 "正在使用 Plain Craft Launcher 2":  34,
-                                "正在用微信":  255,
+                                "正在使用 SearchHost":  976,
                                 "正在使用 my-ai-town-windows":  825,
                                 "正在使用 oj_helper":  37
                             },
@@ -36,7 +36,7 @@
     "pc":  {
                "detail":  "VS Code",
                "activity":  "正在写代码",
-               "updatedAt":  "2026-08-09T22:38:26+08:00",
+               "updatedAt":  "2026-08-09T22:40:33+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
