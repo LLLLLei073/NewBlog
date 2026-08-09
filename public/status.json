@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-10T00:21:55+08:00",
+    "updatedAt":  "2026-08-10T00:22:29+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -9,14 +9,15 @@
     "daily":  {
                   "stats":  {
                                 "正在浏览网页":  463,
+                                "正在使用 Weixin":  33,
                                 "正在写代码":  905
                             },
                   "date":  "2026-08-10"
               },
     "pc":  {
-               "detail":  "朋友圈",
-               "activity":  "正在使用 Weixin",
-               "updatedAt":  "2026-08-10T00:21:55+08:00",
+               "detail":  "Problem - E - Codeforces 和另外 3 个页面 - 个人 - Microsoft​ Edge",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-10T00:22:29+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -28,11 +29,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "VS Code",
-                        "t":  "2026-08-09T22:38:26+08:00",
-                        "activity":  "正在写代码"
-                    },
                     {
                         "detail":  "Status - Codeforces Round 1116 (Div. 2) - Codeforces 和另外 1 个…",
                         "t":  "2026-08-09T22:41:10+08:00",
@@ -327,6 +323,11 @@
                         "detail":  "朋友圈",
                         "t":  "2026-08-10T00:21:55+08:00",
                         "activity":  "正在使用 Weixin"
+                    },
+                    {
+                        "detail":  "Problem - E - Codeforces 和另外 3 个页面 - 个人 - Microsoft​ Edge",
+                        "t":  "2026-08-10T00:22:29+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
