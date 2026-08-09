@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-09T10:36:40+08:00",
+    "updatedAt":  "2026-08-09T10:38:47+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -10,7 +10,7 @@
                   "stats":  {
                                 "正在使用 ollama app":  97,
                                 "正在使用 explorer":  145,
-                                "离开电脑":  170,
+                                "离开电脑":  296,
                                 "正在浏览网页":  40373,
                                 "正在使用 clash-verge":  37,
                                 "正在使用 LockApp":  3088,
@@ -21,7 +21,7 @@
     "pc":  {
                "detail":  "未检测到活动窗口",
                "activity":  "离开电脑",
-               "updatedAt":  "2026-08-09T10:36:40+08:00",
+               "updatedAt":  "2026-08-09T10:38:47+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
