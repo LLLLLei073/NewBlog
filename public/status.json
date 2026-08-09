@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-09T23:17:43+08:00",
+    "updatedAt":  "2026-08-09T23:19:47+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,7 +8,7 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  66432,
+                                "正在浏览网页":  66556,
                                 "正在使用 ollama app":  97,
                                 "正在使用 LockApp":  3125,
                                 "正在使用 dwm":  35,
@@ -17,7 +17,7 @@
                                 "正在使用 java":  2019,
                                 "正在使用 clash-verge":  37,
                                 "正在写代码":  1922,
-                                "正在使用 SearchHost":  976,
+                                "正在用微信":  255,
                                 "离开电脑":  8066,
                                 "正在敲命令":  449,
                                 "正在使用 ChatGPT":  323,
@@ -28,7 +28,7 @@
                                 "正在使用 SnippingTool":  34,
                                 "正在使用 DeepL":  36,
                                 "正在使用 Plain Craft Launcher 2":  34,
-                                "正在用微信":  255,
+                                "正在使用 SearchHost":  976,
                                 "正在使用 my-ai-town-windows":  825,
                                 "正在使用 oj_helper":  37
                             },
@@ -37,7 +37,7 @@
     "pc":  {
                "detail":  "Standings - Codeforces Round 1116 (Div. 2) - Codeforces 和另外 …",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-09T23:17:43+08:00",
+               "updatedAt":  "2026-08-09T23:19:47+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
