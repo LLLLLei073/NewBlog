@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-09T17:30:49+08:00",
+    "updatedAt":  "2026-08-09T17:31:24+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -9,24 +9,25 @@
     "daily":  {
                   "stats":  {
                                 "正在浏览网页":  58139,
-                                "正在使用 ollama app":  97,
+                                "正在玩游戏":  233,
                                 "正在使用 LockApp":  3125,
                                 "正在看视频":  191,
                                 "正在使用 Frostpunk":  3156,
-                                "正在玩游戏":  233,
                                 "正在使用 clash-verge":  37,
                                 "离开电脑":  1850,
                                 "正在敲命令":  449,
                                 "正在使用 explorer":  470,
                                 "正在使用 DeepL":  36,
-                                "正在使用 SearchHost":  976
+                                "正在使用 Plain Craft Launcher 2":  34,
+                                "正在使用 SearchHost":  976,
+                                "正在使用 ollama app":  97
                             },
                   "date":  "2026-08-09"
               },
     "pc":  {
-               "detail":  "Plain Craft Launcher",
-               "activity":  "正在使用 Plain Craft Launcher 2",
-               "updatedAt":  "2026-08-09T17:30:49+08:00",
+               "detail":  "Minecraft: NeoForge Loading...",
+               "activity":  "正在使用 java",
+               "updatedAt":  "2026-08-09T17:31:24+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -38,11 +39,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "WorkBuddy",
-                        "t":  "2026-08-08T21:05:05+08:00",
-                        "activity":  "正在使用 WorkBuddy"
-                    },
                     {
                         "detail":  "Hermes",
                         "t":  "2026-08-08T21:05:42+08:00",
@@ -337,6 +333,11 @@
                         "detail":  "Plain Craft Launcher",
                         "t":  "2026-08-09T17:30:49+08:00",
                         "activity":  "正在使用 Plain Craft Launcher 2"
+                    },
+                    {
+                        "detail":  "Minecraft: NeoForge Loading...",
+                        "t":  "2026-08-09T17:31:24+08:00",
+                        "activity":  "正在使用 java"
                     }
                 ]
 }
