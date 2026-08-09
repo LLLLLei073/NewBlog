@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-09T23:58:56+08:00",
+    "updatedAt":  "2026-08-10T00:01:01+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,37 +8,14 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  67233,
-                                "正在使用 ollama app":  97,
-                                "正在使用 Weixin":  163,
-                                "正在使用 LockApp":  3125,
-                                "正在使用 dwm":  35,
-                                "正在看视频":  649,
-                                "正在使用 Frostpunk":  3156,
-                                "正在使用 java":  2019,
-                                "正在使用 clash-verge":  37,
-                                "正在写代码":  3382,
-                                "正在使用 SearchHost":  976,
-                                "离开电脑":  8066,
-                                "正在敲命令":  449,
-                                "正在使用 ChatGPT":  323,
-                                "正在使用 Qwen-1.0.3.44-release-win-x64":  67,
-                                "正在使用 quark_cloud_drive":  177,
-                                "正在玩游戏":  233,
-                                "正在使用 explorer":  539,
-                                "正在使用 SnippingTool":  34,
-                                "正在使用 DeepL":  36,
-                                "正在使用 Plain Craft Launcher 2":  34,
-                                "正在用微信":  255,
-                                "正在使用 my-ai-town-windows":  825,
-                                "正在使用 oj_helper":  37
+                                "正在写代码":  125
                             },
-                  "date":  "2026-08-09"
+                  "date":  "2026-08-10"
               },
     "pc":  {
                "detail":  "VS Code",
                "activity":  "正在写代码",
-               "updatedAt":  "2026-08-09T23:58:56+08:00",
+               "updatedAt":  "2026-08-10T00:01:01+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
