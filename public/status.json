@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-10T00:01:38+08:00",
+    "updatedAt":  "2026-08-10T00:02:16+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,14 +8,15 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在写代码":  161
+                                "正在写代码":  161,
+                                "正在浏览网页":  37
                             },
                   "date":  "2026-08-10"
               },
     "pc":  {
-               "detail":  "二进制串操作计数 - DeepSeek 和另外 3 个页面 - 个人 - Microsoft​ Edge",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-10T00:01:38+08:00",
+               "detail":  "VS Code",
+               "activity":  "正在写代码",
+               "updatedAt":  "2026-08-10T00:02:16+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -27,11 +28,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "VS Code",
-                        "t":  "2026-08-09T20:16:45+08:00",
-                        "activity":  "正在写代码"
-                    },
                     {
                         "detail":  "DeepSeek - 探索未至之境 和另外 8 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-09T20:17:20+08:00",
@@ -326,6 +322,11 @@
                         "detail":  "二进制串操作计数 - DeepSeek 和另外 3 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-10T00:01:38+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "VS Code",
+                        "t":  "2026-08-10T00:02:16+08:00",
+                        "activity":  "正在写代码"
                     }
                 ]
 }
