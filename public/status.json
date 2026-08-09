@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-09T18:53:45+08:00",
+    "updatedAt":  "2026-08-09T18:54:22+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -25,14 +25,15 @@
                                 "正在使用 DeepL":  36,
                                 "正在使用 Plain Craft Launcher 2":  34,
                                 "正在使用 SearchHost":  976,
-                                "正在使用 my-ai-town-windows":  825
+                                "正在使用 my-ai-town-windows":  825,
+                                "正在使用 oj_helper":  37
                             },
                   "date":  "2026-08-09"
               },
     "pc":  {
-               "detail":  "oj_helper",
-               "activity":  "正在使用 oj_helper",
-               "updatedAt":  "2026-08-09T18:53:45+08:00",
+               "detail":  "哔哩哔哩 (゜-゜)つロ 干杯~-bilibili",
+               "activity":  "正在看视频",
+               "updatedAt":  "2026-08-09T18:54:22+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -44,11 +45,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Windows 默认锁屏界面",
-                        "t":  "2026-08-09T09:18:44+08:00",
-                        "activity":  "正在使用 LockApp"
-                    },
                     {
                         "detail":  "未检测到活动窗口",
                         "t":  "2026-08-09T10:10:23+08:00",
@@ -343,6 +339,11 @@
                         "detail":  "oj_helper",
                         "t":  "2026-08-09T18:53:45+08:00",
                         "activity":  "正在使用 oj_helper"
+                    },
+                    {
+                        "detail":  "哔哩哔哩 (゜-゜)つロ 干杯~-bilibili",
+                        "t":  "2026-08-09T18:54:22+08:00",
+                        "activity":  "正在看视频"
                     }
                 ]
 }
