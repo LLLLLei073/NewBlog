@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-10T00:13:03+08:00",
+    "updatedAt":  "2026-08-10T00:14:40+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,15 +8,15 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  138,
+                                "正在浏览网页":  234,
                                 "正在写代码":  704
                             },
                   "date":  "2026-08-10"
               },
     "pc":  {
-               "detail":  "二进制串操作计数 - DeepSeek 和另外 3 个页面 - 个人 - Microsoft​ Edge",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-10T00:13:03+08:00",
+               "detail":  "VS Code",
+               "activity":  "正在写代码",
+               "updatedAt":  "2026-08-10T00:14:40+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -28,11 +28,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Qwen 安装",
-                        "t":  "2026-08-09T20:53:59+08:00",
-                        "activity":  "正在使用 Qwen-1.0.3.44-release-win-x64"
-                    },
                     {
                         "detail":  "桌面 - 文件资源管理器",
                         "t":  "2026-08-09T20:55:07+08:00",
@@ -327,6 +322,11 @@
                         "detail":  "二进制串操作计数 - DeepSeek 和另外 3 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-10T00:13:03+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "VS Code",
+                        "t":  "2026-08-10T00:14:40+08:00",
+                        "activity":  "正在写代码"
                     }
                 ]
 }
