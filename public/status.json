@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-09T18:56:27+08:00",
+    "updatedAt":  "2026-08-09T18:58:32+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -12,7 +12,7 @@
                                 "正在使用 ollama app":  97,
                                 "正在使用 LockApp":  3125,
                                 "正在使用 dwm":  35,
-                                "正在看视频":  430,
+                                "正在看视频":  554,
                                 "正在使用 Frostpunk":  3156,
                                 "正在使用 java":  2019,
                                 "正在使用 clash-verge":  37,
@@ -31,9 +31,9 @@
                   "date":  "2026-08-09"
               },
     "pc":  {
-               "detail":  "Cherry Studio V2 来了，超详细攻略 + 真实使用场景分享",
+               "detail":  "AI产品经理VibeCoding搭产品项目",
                "activity":  "正在看视频",
-               "updatedAt":  "2026-08-09T18:56:27+08:00",
+               "updatedAt":  "2026-08-09T18:58:32+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
