@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-09T20:53:59+08:00",
+    "updatedAt":  "2026-08-09T20:55:07+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -20,6 +20,7 @@
                                 "离开电脑":  2992,
                                 "正在敲命令":  449,
                                 "正在使用 ChatGPT":  323,
+                                "正在使用 Qwen-1.0.3.44-release-win-x64":  67,
                                 "正在使用 quark_cloud_drive":  177,
                                 "正在玩游戏":  233,
                                 "正在使用 explorer":  470,
@@ -32,9 +33,9 @@
                   "date":  "2026-08-09"
               },
     "pc":  {
-               "detail":  "Qwen 安装",
-               "activity":  "正在使用 Qwen-1.0.3.44-release-win-x64",
-               "updatedAt":  "2026-08-09T20:53:59+08:00",
+               "detail":  "桌面 - 文件资源管理器",
+               "activity":  "正在使用 explorer",
+               "updatedAt":  "2026-08-09T20:55:07+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -46,11 +47,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "diffusion_models - 文件资源管理器",
-                        "t":  "2026-08-09T10:36:04+08:00",
-                        "activity":  "正在使用 explorer"
-                    },
                     {
                         "detail":  "未检测到活动窗口",
                         "t":  "2026-08-09T10:36:40+08:00",
@@ -345,6 +341,11 @@
                         "detail":  "Qwen 安装",
                         "t":  "2026-08-09T20:53:59+08:00",
                         "activity":  "正在使用 Qwen-1.0.3.44-release-win-x64"
+                    },
+                    {
+                        "detail":  "桌面 - 文件资源管理器",
+                        "t":  "2026-08-09T20:55:07+08:00",
+                        "activity":  "正在使用 explorer"
                     }
                 ]
 }
