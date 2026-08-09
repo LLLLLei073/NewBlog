@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-09T17:33:28+08:00",
+    "updatedAt":  "2026-08-09T17:35:35+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -13,13 +13,13 @@
                                 "正在使用 LockApp":  3125,
                                 "正在看视频":  191,
                                 "正在使用 Frostpunk":  3156,
-                                "正在使用 java":  124,
+                                "正在使用 java":  250,
                                 "正在使用 clash-verge":  37,
                                 "离开电脑":  1850,
+                                "正在使用 Plain Craft Launcher 2":  34,
                                 "正在敲命令":  449,
                                 "正在使用 explorer":  470,
                                 "正在使用 DeepL":  36,
-                                "正在使用 Plain Craft Launcher 2":  34,
                                 "正在使用 SearchHost":  976,
                                 "正在使用 ollama app":  97
                             },
@@ -28,7 +28,7 @@
     "pc":  {
                "detail":  "你好，新蒸程！1.7",
                "activity":  "正在使用 java",
-               "updatedAt":  "2026-08-09T17:33:28+08:00",
+               "updatedAt":  "2026-08-09T17:35:35+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
