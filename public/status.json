@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-09T22:54:01+08:00",
+    "updatedAt":  "2026-08-09T22:56:09+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -16,8 +16,8 @@
                                 "正在使用 Frostpunk":  3156,
                                 "正在使用 java":  2019,
                                 "正在使用 clash-verge":  37,
-                                "正在写代码":  1191,
-                                "正在使用 SearchHost":  976,
+                                "正在写代码":  1319,
+                                "正在用微信":  255,
                                 "离开电脑":  8066,
                                 "正在敲命令":  449,
                                 "正在使用 ChatGPT":  323,
@@ -27,16 +27,16 @@
                                 "正在使用 explorer":  504,
                                 "正在使用 DeepL":  36,
                                 "正在使用 Plain Craft Launcher 2":  34,
-                                "正在用微信":  255,
+                                "正在使用 SearchHost":  976,
                                 "正在使用 my-ai-town-windows":  825,
                                 "正在使用 oj_helper":  37
                             },
                   "date":  "2026-08-09"
               },
     "pc":  {
-               "detail":  "VS Code",
-               "activity":  "正在写代码",
-               "updatedAt":  "2026-08-09T22:54:01+08:00",
+               "detail":  "Status - Codeforces Round 1116 (Div. 2) - Codeforces 和另外 3 个…",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-09T22:56:09+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -48,11 +48,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Frostpunk",
-                        "t":  "2026-08-09T16:19:22+08:00",
-                        "activity":  "正在使用 Frostpunk"
-                    },
                     {
                         "detail":  "回归我荒废6年的游戏服务器",
                         "t":  "2026-08-09T17:12:10+08:00",
@@ -347,6 +342,11 @@
                         "detail":  "VS Code",
                         "t":  "2026-08-09T22:54:01+08:00",
                         "activity":  "正在写代码"
+                    },
+                    {
+                        "detail":  "Status - Codeforces Round 1116 (Div. 2) - Codeforces 和另外 3 个…",
+                        "t":  "2026-08-09T22:56:09+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
