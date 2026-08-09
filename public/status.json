@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-09T11:20:42+08:00",
+    "updatedAt":  "2026-08-09T11:21:48+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -12,7 +12,7 @@
                                 "正在使用 DeepL":  36,
                                 "正在使用 explorer":  435,
                                 "离开电脑":  994,
-                                "正在浏览网页":  41856,
+                                "正在浏览网页":  41921,
                                 "正在使用 clash-verge":  37,
                                 "正在使用 LockApp":  3088,
                                 "正在敲命令":  36
@@ -20,9 +20,9 @@
                   "date":  "2026-08-09"
               },
     "pc":  {
-               "detail":  "*video_minimax_h3_t2v (2) - ComfyUI 和另外 1 个页面 - 个人 - Microso…",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-09T11:20:42+08:00",
+               "detail":  "终端",
+               "activity":  "正在敲命令",
+               "updatedAt":  "2026-08-09T11:21:48+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -34,11 +34,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Reasonix",
-                        "t":  "2026-08-08T20:15:03+08:00",
-                        "activity":  "正在使用 reasonix-desktop"
-                    },
                     {
                         "detail":  "哔哩哔哩 (゜-゜)つロ 干杯~-bilibili",
                         "t":  "2026-08-08T20:15:39+08:00",
@@ -333,6 +328,11 @@
                         "detail":  "[53%][0%] MiniMaxH3ImageToVideo 和另外 1 个页面 - 个人 - Microsoft​ …",
                         "t":  "2026-08-09T11:10:09+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "终端",
+                        "t":  "2026-08-09T11:21:48+08:00",
+                        "activity":  "正在敲命令"
                     }
                 ]
 }
