@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-10T00:04:22+08:00",
+    "updatedAt":  "2026-08-10T00:06:30+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -9,14 +9,14 @@
     "daily":  {
                   "stats":  {
                                 "正在浏览网页":  37,
-                                "正在写代码":  287
+                                "正在写代码":  414
                             },
                   "date":  "2026-08-10"
               },
     "pc":  {
                "detail":  "VS Code",
                "activity":  "正在写代码",
-               "updatedAt":  "2026-08-10T00:04:22+08:00",
+               "updatedAt":  "2026-08-10T00:06:30+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
