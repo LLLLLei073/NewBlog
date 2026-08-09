@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-09T18:38:39+08:00",
+    "updatedAt":  "2026-08-09T18:40:46+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -25,14 +25,14 @@
                                 "正在使用 DeepL":  36,
                                 "正在使用 Plain Craft Launcher 2":  34,
                                 "正在使用 SearchHost":  976,
-                                "正在使用 my-ai-town-windows":  314
+                                "正在使用 my-ai-town-windows":  441
                             },
                   "date":  "2026-08-09"
               },
     "pc":  {
-               "detail":  "我的ai小镇",
-               "activity":  "正在使用 my-ai-town-windows",
-               "updatedAt":  "2026-08-09T18:38:39+08:00",
+               "detail":  "大模型服务平台百炼控制台 - 个人 - Microsoft​ Edge",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-09T18:40:46+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -44,11 +44,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Hermes",
-                        "t":  "2026-08-08T21:36:28+08:00",
-                        "activity":  "正在使用 Hermes"
-                    },
                     {
                         "detail":  "SpcGame",
                         "t":  "2026-08-08T21:37:06+08:00",
@@ -343,6 +338,11 @@
                         "detail":  "我的ai小镇",
                         "t":  "2026-08-09T18:34:26+08:00",
                         "activity":  "正在使用 my-ai-town-windows"
+                    },
+                    {
+                        "detail":  "大模型服务平台百炼控制台 - 个人 - Microsoft​ Edge",
+                        "t":  "2026-08-09T18:40:46+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
