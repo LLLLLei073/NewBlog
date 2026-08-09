@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-09T18:36:33+08:00",
+    "updatedAt":  "2026-08-09T18:38:39+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -9,30 +9,30 @@
     "daily":  {
                   "stats":  {
                                 "正在浏览网页":  58313,
-                                "正在玩游戏":  233,
+                                "正在使用 ollama app":  97,
                                 "正在使用 LockApp":  3125,
                                 "正在使用 dwm":  35,
                                 "正在看视频":  305,
                                 "正在使用 Frostpunk":  3156,
                                 "正在使用 java":  2019,
                                 "正在使用 clash-verge":  37,
-                                "正在使用 ollama app":  97,
                                 "离开电脑":  2992,
                                 "正在敲命令":  449,
                                 "正在使用 ChatGPT":  36,
                                 "正在使用 quark_cloud_drive":  177,
+                                "正在玩游戏":  233,
                                 "正在使用 explorer":  470,
                                 "正在使用 DeepL":  36,
                                 "正在使用 Plain Craft Launcher 2":  34,
                                 "正在使用 SearchHost":  976,
-                                "正在使用 my-ai-town-windows":  189
+                                "正在使用 my-ai-town-windows":  314
                             },
                   "date":  "2026-08-09"
               },
     "pc":  {
                "detail":  "我的ai小镇",
                "activity":  "正在使用 my-ai-town-windows",
-               "updatedAt":  "2026-08-09T18:36:33+08:00",
+               "updatedAt":  "2026-08-09T18:38:39+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
