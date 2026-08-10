@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-10T21:21:35+08:00",
+    "updatedAt":  "2026-08-10T21:23:39+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -10,7 +10,7 @@
                   "stats":  {
                                 "正在浏览网页":  3393,
                                 "正在使用 WeMeetApp":  2065,
-                                "正在看视频":  6447,
+                                "正在看视频":  6570,
                                 "正在使用 LockApp":  34,
                                 "正在使用 CF Friend Tracker":  287,
                                 "正在使用 Obsidian":  906,
@@ -20,19 +20,19 @@
                                 "正在使用 ShellHost":  105,
                                 "离开电脑":  962,
                                 "正在使用 ChatGPT":  33,
-                                "正在用微信":  31,
                                 "正在使用 Cursor":  74,
                                 "正在使用 explorer":  43742,
                                 "正在使用 SnippingTool":  36,
                                 "正在使用 OpenCode":  16204,
+                                "正在用微信":  31,
                                 "正在使用 Weixin":  133
                             },
                   "date":  "2026-08-10"
               },
     "pc":  {
-               "detail":  "Hermes+Obsidian+LLM wkii，构建AI知识库",
+               "detail":  "我把obsidian做成了霍格沃滋",
                "activity":  "正在看视频",
-               "updatedAt":  "2026-08-10T21:21:35+08:00",
+               "updatedAt":  "2026-08-10T21:23:39+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
