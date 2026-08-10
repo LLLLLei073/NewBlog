@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-10T21:18:23+08:00",
+    "updatedAt":  "2026-08-10T21:18:57+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -10,7 +10,7 @@
                   "stats":  {
                                 "正在浏览网页":  3393,
                                 "正在使用 WeMeetApp":  2065,
-                                "正在看视频":  6291,
+                                "正在看视频":  6324,
                                 "正在使用 LockApp":  34,
                                 "正在使用 CF Friend Tracker":  287,
                                 "正在使用 Obsidian":  906,
@@ -19,19 +19,19 @@
                                 "正在写代码":  905,
                                 "正在使用 ShellHost":  105,
                                 "离开电脑":  962,
+                                "正在用微信":  31,
                                 "正在使用 Cursor":  74,
                                 "正在使用 explorer":  43742,
                                 "正在使用 SnippingTool":  36,
                                 "正在使用 OpenCode":  16204,
-                                "正在用微信":  31,
                                 "正在使用 Weixin":  133
                             },
                   "date":  "2026-08-10"
               },
     "pc":  {
-               "detail":  "史上最强大的英语近义词词典与Obsidian软件联合军演",
-               "activity":  "正在看视频",
-               "updatedAt":  "2026-08-10T21:18:23+08:00",
+               "detail":  "ChatGPT",
+               "activity":  "正在使用 ChatGPT",
+               "updatedAt":  "2026-08-10T21:18:57+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -43,11 +43,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "系统托盘溢出窗口。",
-                        "t":  "2026-08-10T12:32:48+08:00",
-                        "activity":  "正在使用 explorer"
-                    },
                     {
                         "detail":  "未检测到活动窗口",
                         "t":  "2026-08-10T12:45:28+08:00",
@@ -342,6 +337,11 @@
                         "detail":  "Hermes+Obsidian+LLM wkii，构建AI知识库",
                         "t":  "2026-08-10T21:16:19+08:00",
                         "activity":  "正在看视频"
+                    },
+                    {
+                        "detail":  "ChatGPT",
+                        "t":  "2026-08-10T21:18:57+08:00",
+                        "activity":  "正在使用 ChatGPT"
                     }
                 ]
 }
