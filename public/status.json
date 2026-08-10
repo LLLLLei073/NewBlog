@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-10T13:09:02+08:00",
+    "updatedAt":  "2026-08-10T13:09:38+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -12,16 +12,16 @@
                                 "正在写代码":  905,
                                 "正在使用 explorer":  43542,
                                 "离开电脑":  891,
-                                "正在浏览网页":  538,
+                                "正在浏览网页":  574,
                                 "正在使用 Weixin":  99,
                                 "正在使用 SnippingTool":  36
                             },
                   "date":  "2026-08-10"
               },
     "pc":  {
-               "detail":  "火山方舟 - Coding Plan - 个人 - Microsoft​ Edge",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-10T13:09:02+08:00",
+               "detail":  "从两个妹妹开始，从零成为异世界领主的生活！",
+               "activity":  "正在看视频",
+               "updatedAt":  "2026-08-10T13:09:38+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -33,11 +33,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "VS Code",
-                        "t":  "2026-08-09T22:58:01+08:00",
-                        "activity":  "正在写代码"
-                    },
                     {
                         "detail":  "Status - Codeforces Round 1116 (Div. 2) - Codeforces 和另外 5 个…",
                         "t":  "2026-08-09T22:58:37+08:00",
@@ -332,6 +327,11 @@
                         "detail":  "火山方舟 - Coding Plan - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-10T13:09:02+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "从两个妹妹开始，从零成为异世界领主的生活！",
+                        "t":  "2026-08-10T13:09:38+08:00",
+                        "activity":  "正在看视频"
                     }
                 ]
 }
