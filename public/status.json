@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-10T21:31:29+08:00",
+    "updatedAt":  "2026-08-10T21:32:03+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,7 +8,7 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  3486,
+                                "正在浏览网页":  3520,
                                 "正在使用 WeMeetApp":  2065,
                                 "正在看视频":  6944,
                                 "正在使用 LockApp":  34,
@@ -20,19 +20,19 @@
                                 "正在使用 ShellHost":  105,
                                 "离开电脑":  962,
                                 "正在使用 ChatGPT":  33,
-                                "正在用微信":  31,
                                 "正在使用 Cursor":  74,
                                 "正在使用 explorer":  43742,
                                 "正在使用 SnippingTool":  36,
                                 "正在使用 OpenCode":  16204,
+                                "正在用微信":  31,
                                 "正在使用 Weixin":  133
                             },
                   "date":  "2026-08-10"
               },
     "pc":  {
-               "detail":  "Edit Profile | Cursor - The best way to code with AI 和另外 1 个…",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-10T21:31:29+08:00",
+               "detail":  "Windows Shell Experience 主机",
+               "activity":  "正在使用 ShellExperienceHost",
+               "updatedAt":  "2026-08-10T21:32:03+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -44,11 +44,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "牛客竞赛OJ_ACM/NOI/CSP/CCPC/ICPC_信息学编程算法训练平台 - 个人 - Microsoft​ E…",
-                        "t":  "2026-08-10T13:13:23+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "CF Friends Tracker",
                         "t":  "2026-08-10T13:18:44+08:00",
@@ -343,6 +338,11 @@
                         "detail":  "Edit Profile | Cursor - The best way to code with AI 和另外 1 个…",
                         "t":  "2026-08-10T21:31:29+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "Windows Shell Experience 主机",
+                        "t":  "2026-08-10T21:32:03+08:00",
+                        "activity":  "正在使用 ShellExperienceHost"
                     }
                 ]
 }
