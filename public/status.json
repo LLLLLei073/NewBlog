@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-10T21:18:57+08:00",
+    "updatedAt":  "2026-08-10T21:19:31+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -19,19 +19,20 @@
                                 "正在写代码":  905,
                                 "正在使用 ShellHost":  105,
                                 "离开电脑":  962,
-                                "正在用微信":  31,
+                                "正在使用 ChatGPT":  33,
                                 "正在使用 Cursor":  74,
                                 "正在使用 explorer":  43742,
                                 "正在使用 SnippingTool":  36,
                                 "正在使用 OpenCode":  16204,
+                                "正在用微信":  31,
                                 "正在使用 Weixin":  133
                             },
                   "date":  "2026-08-10"
               },
     "pc":  {
-               "detail":  "ChatGPT",
-               "activity":  "正在使用 ChatGPT",
-               "updatedAt":  "2026-08-10T21:18:57+08:00",
+               "detail":  "obsidian AI插件对比",
+               "activity":  "正在看视频",
+               "updatedAt":  "2026-08-10T21:19:31+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -43,11 +44,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "未检测到活动窗口",
-                        "t":  "2026-08-10T12:45:28+08:00",
-                        "activity":  "离开电脑"
-                    },
                     {
                         "detail":  "游戏",
                         "t":  "2026-08-10T12:46:08+08:00",
@@ -342,6 +338,11 @@
                         "detail":  "ChatGPT",
                         "t":  "2026-08-10T21:18:57+08:00",
                         "activity":  "正在使用 ChatGPT"
+                    },
+                    {
+                        "detail":  "obsidian AI插件对比",
+                        "t":  "2026-08-10T21:19:31+08:00",
+                        "activity":  "正在看视频"
                     }
                 ]
 }
