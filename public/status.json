@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-10T20:25:01+08:00",
+    "updatedAt":  "2026-08-10T20:25:36+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -14,23 +14,23 @@
                                 "正在使用 CF Friend Tracker":  287,
                                 "正在看视频":  4892,
                                 "正在玩游戏":  1367,
-                                "正在使用 clash-verge":  96,
+                                "正在使用 clash-verge":  131,
                                 "正在写代码":  905,
                                 "正在使用 ShellHost":  70,
                                 "离开电脑":  928,
-                                "正在用微信":  31,
                                 "正在使用 Cursor":  74,
                                 "正在使用 explorer":  43614,
                                 "正在使用 SnippingTool":  36,
                                 "正在使用 OpenCode":  16204,
+                                "正在用微信":  31,
                                 "正在使用 Weixin":  133
                             },
                   "date":  "2026-08-10"
               },
     "pc":  {
-               "detail":  "Clash Verge",
-               "activity":  "正在使用 clash-verge",
-               "updatedAt":  "2026-08-10T20:25:01+08:00",
+               "detail":  "Program Manager",
+               "activity":  "正在使用 explorer",
+               "updatedAt":  "2026-08-10T20:25:36+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -42,11 +42,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Data (D:) - 文件资源管理器",
-                        "t":  "2026-08-09T23:58:21+08:00",
-                        "activity":  "正在使用 explorer"
-                    },
                     {
                         "detail":  "VS Code",
                         "t":  "2026-08-09T23:58:56+08:00",
@@ -341,6 +336,11 @@
                         "detail":  "Clash Verge",
                         "t":  "2026-08-10T20:25:01+08:00",
                         "activity":  "正在使用 clash-verge"
+                    },
+                    {
+                        "detail":  "Program Manager",
+                        "t":  "2026-08-10T20:25:36+08:00",
+                        "activity":  "正在使用 explorer"
                     }
                 ]
 }
