@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-10T13:22:57+08:00",
+    "updatedAt":  "2026-08-10T13:23:33+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -10,20 +10,20 @@
                   "stats":  {
                                 "正在玩游戏":  1367,
                                 "正在写代码":  905,
-                                "正在看视频":  224,
                                 "正在使用 explorer":  43542,
                                 "离开电脑":  891,
                                 "正在浏览网页":  894,
-                                "正在使用 CF Friend Tracker":  251,
                                 "正在使用 Weixin":  99,
+                                "正在使用 CF Friend Tracker":  287,
+                                "正在看视频":  224,
                                 "正在使用 SnippingTool":  36
                             },
                   "date":  "2026-08-10"
               },
     "pc":  {
-               "detail":  "CF Friends Tracker",
-               "activity":  "正在使用 CF Friend Tracker",
-               "updatedAt":  "2026-08-10T13:22:57+08:00",
+               "detail":  "LLLLLLei - Codeforces - 个人 - Microsoft​ Edge",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-10T13:23:33+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -35,11 +35,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "全问号方案数 - DeepSeek 和另外 5 个页面 - 个人 - Microsoft​ Edge",
-                        "t":  "2026-08-09T22:59:52+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "VS Code",
                         "t":  "2026-08-09T23:00:58+08:00",
@@ -334,6 +329,11 @@
                         "detail":  "CF Friends Tracker",
                         "t":  "2026-08-10T13:18:44+08:00",
                         "activity":  "正在使用 CF Friend Tracker"
+                    },
+                    {
+                        "detail":  "LLLLLLei - Codeforces - 个人 - Microsoft​ Edge",
+                        "t":  "2026-08-10T13:23:33+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
