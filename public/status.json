@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-10T19:41:21+08:00",
+    "updatedAt":  "2026-08-10T19:41:56+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,25 +8,26 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在玩游戏":  1367,
-                                "正在写代码":  905,
-                                "正在使用 OpenCode":  16204,
-                                "正在使用 explorer":  43578,
-                                "正在看视频":  4892,
                                 "正在浏览网页":  2524,
-                                "正在使用 CF Friend Tracker":  287,
-                                "离开电脑":  891,
-                                "正在使用 Weixin":  133,
+                                "正在玩游戏":  1367,
                                 "正在使用 LockApp":  34,
+                                "正在使用 WeMeetApp":  35,
+                                "正在使用 CF Friend Tracker":  287,
+                                "正在看视频":  4892,
+                                "正在写代码":  905,
+                                "离开电脑":  891,
+                                "正在使用 explorer":  43578,
                                 "正在使用 SnippingTool":  36,
-                                "正在用微信":  31
+                                "正在使用 OpenCode":  16204,
+                                "正在用微信":  31,
+                                "正在使用 Weixin":  133
                             },
                   "date":  "2026-08-10"
               },
     "pc":  {
-               "detail":  "加入会议",
-               "activity":  "正在使用 WeMeetApp",
-               "updatedAt":  "2026-08-10T19:41:21+08:00",
+               "detail":  "快速设置",
+               "activity":  "正在使用 ShellHost",
+               "updatedAt":  "2026-08-10T19:41:56+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -38,11 +39,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "DeepSeek - 探索未至之境 和另外 2 个页面 - 个人 - Microsoft​ Edge",
-                        "t":  "2026-08-09T23:16:32+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "截图工具覆盖",
                         "t":  "2026-08-09T23:17:08+08:00",
@@ -337,6 +333,11 @@
                         "detail":  "加入会议",
                         "t":  "2026-08-10T19:41:21+08:00",
                         "activity":  "正在使用 WeMeetApp"
+                    },
+                    {
+                        "detail":  "快速设置",
+                        "t":  "2026-08-10T19:41:56+08:00",
+                        "activity":  "正在使用 ShellHost"
                     }
                 ]
 }
