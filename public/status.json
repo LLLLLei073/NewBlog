@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-10T19:41:56+08:00",
+    "updatedAt":  "2026-08-10T19:42:31+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -9,12 +9,13 @@
     "daily":  {
                   "stats":  {
                                 "正在浏览网页":  2524,
-                                "正在玩游戏":  1367,
-                                "正在使用 LockApp":  34,
                                 "正在使用 WeMeetApp":  35,
+                                "正在使用 LockApp":  34,
                                 "正在使用 CF Friend Tracker":  287,
+                                "正在玩游戏":  1367,
                                 "正在看视频":  4892,
                                 "正在写代码":  905,
+                                "正在使用 ShellHost":  34,
                                 "离开电脑":  891,
                                 "正在使用 explorer":  43578,
                                 "正在使用 SnippingTool":  36,
@@ -25,9 +26,9 @@
                   "date":  "2026-08-10"
               },
     "pc":  {
-               "detail":  "快速设置",
-               "activity":  "正在使用 ShellHost",
-               "updatedAt":  "2026-08-10T19:41:56+08:00",
+               "detail":  "可耐滴小盆友的个人会议室",
+               "activity":  "正在使用 WeMeetApp",
+               "updatedAt":  "2026-08-10T19:42:31+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -39,11 +40,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "截图工具覆盖",
-                        "t":  "2026-08-09T23:17:08+08:00",
-                        "activity":  "正在使用 SnippingTool"
-                    },
                     {
                         "detail":  "Standings - Codeforces Round 1116 (Div. 2) - Codeforces 和另外 …",
                         "t":  "2026-08-09T23:17:43+08:00",
@@ -338,6 +334,11 @@
                         "detail":  "快速设置",
                         "t":  "2026-08-10T19:41:56+08:00",
                         "activity":  "正在使用 ShellHost"
+                    },
+                    {
+                        "detail":  "可耐滴小盆友的个人会议室",
+                        "t":  "2026-08-10T19:42:31+08:00",
+                        "activity":  "正在使用 WeMeetApp"
                     }
                 ]
 }
