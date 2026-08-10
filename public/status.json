@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-10T20:07:27+08:00",
+    "updatedAt":  "2026-08-10T20:09:33+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -9,7 +9,7 @@
     "daily":  {
                   "stats":  {
                                 "正在浏览网页":  2524,
-                                "正在使用 WeMeetApp":  1489,
+                                "正在使用 WeMeetApp":  1615,
                                 "正在使用 LockApp":  34,
                                 "正在使用 CF Friend Tracker":  287,
                                 "正在玩游戏":  1367,
@@ -17,18 +17,18 @@
                                 "正在写代码":  905,
                                 "正在使用 ShellHost":  70,
                                 "离开电脑":  891,
-                                "正在用微信":  31,
                                 "正在使用 explorer":  43578,
                                 "正在使用 SnippingTool":  36,
                                 "正在使用 OpenCode":  16204,
+                                "正在用微信":  31,
                                 "正在使用 Weixin":  133
                             },
                   "date":  "2026-08-10"
               },
     "pc":  {
-               "detail":  "腾讯会议",
+               "detail":  "可耐滴小盆友的个人会议室",
                "activity":  "正在使用 WeMeetApp",
-               "updatedAt":  "2026-08-10T20:07:27+08:00",
+               "updatedAt":  "2026-08-10T20:09:33+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
