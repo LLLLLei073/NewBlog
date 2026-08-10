@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-10T18:52:34+08:00",
+    "updatedAt":  "2026-08-10T18:54:41+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -13,7 +13,7 @@
                                 "正在使用 OpenCode":  16204,
                                 "正在使用 explorer":  43578,
                                 "正在看视频":  2331,
-                                "正在浏览网页":  2203,
+                                "正在浏览网页":  2329,
                                 "正在使用 CF Friend Tracker":  287,
                                 "离开电脑":  891,
                                 "正在使用 Weixin":  133,
@@ -23,9 +23,9 @@
                   "date":  "2026-08-10"
               },
     "pc":  {
-               "detail":  "力扣 (LeetCode) 全球极客挚爱的技术成长平台 - 个人 - Microsoft​ Edge",
+               "detail":  "小羊肖恩 - 力扣（LeetCode） 和另外 2 个页面 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-10T18:52:34+08:00",
+               "updatedAt":  "2026-08-10T18:54:41+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
