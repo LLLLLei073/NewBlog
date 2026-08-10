@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-10T18:15:35+08:00",
+    "updatedAt":  "2026-08-10T18:16:07+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -17,14 +17,15 @@
                                 "正在使用 CF Friend Tracker":  287,
                                 "离开电脑":  891,
                                 "正在使用 Weixin":  99,
-                                "正在使用 SnippingTool":  36
+                                "正在使用 SnippingTool":  36,
+                                "正在用微信":  31
                             },
                   "date":  "2026-08-10"
               },
     "pc":  {
-               "detail":  "微信",
-               "activity":  "正在用微信",
-               "updatedAt":  "2026-08-10T18:15:35+08:00",
+               "detail":  "图片和视频",
+               "activity":  "正在使用 Weixin",
+               "updatedAt":  "2026-08-10T18:16:07+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -36,11 +37,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "VS Code",
-                        "t":  "2026-08-09T23:04:55+08:00",
-                        "activity":  "正在写代码"
-                    },
                     {
                         "detail":  "全问号方案数 - DeepSeek 和另外 6 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-09T23:06:32+08:00",
@@ -335,6 +331,11 @@
                         "detail":  "微信",
                         "t":  "2026-08-10T18:15:35+08:00",
                         "activity":  "正在用微信"
+                    },
+                    {
+                        "detail":  "图片和视频",
+                        "t":  "2026-08-10T18:16:07+08:00",
+                        "activity":  "正在使用 Weixin"
                     }
                 ]
 }
