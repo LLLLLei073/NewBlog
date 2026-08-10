@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-10T13:40:08+08:00",
+    "updatedAt":  "2026-08-10T13:42:14+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -10,12 +10,12 @@
                   "stats":  {
                                 "正在玩游戏":  1367,
                                 "正在写代码":  905,
-                                "正在看视频":  224,
                                 "正在使用 explorer":  43578,
                                 "离开电脑":  891,
-                                "正在浏览网页":  1848,
-                                "正在使用 CF Friend Tracker":  287,
+                                "正在浏览网页":  1974,
                                 "正在使用 Weixin":  99,
+                                "正在使用 CF Friend Tracker":  287,
+                                "正在看视频":  224,
                                 "正在使用 SnippingTool":  36
                             },
                   "date":  "2026-08-10"
@@ -23,7 +23,7 @@
     "pc":  {
                "detail":  "Dashboard - Codeforces Round 1115 (Div. 2) - Codeforces 和另外 …",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-10T13:40:08+08:00",
+               "updatedAt":  "2026-08-10T13:42:14+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
