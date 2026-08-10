@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-10T20:17:04+08:00",
+    "updatedAt":  "2026-08-10T20:17:41+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -17,18 +17,19 @@
                                 "正在写代码":  905,
                                 "正在使用 ShellHost":  70,
                                 "离开电脑":  891,
-                                "正在用微信":  31,
+                                "正在使用 Cursor":  36,
                                 "正在使用 explorer":  43614,
                                 "正在使用 SnippingTool":  36,
                                 "正在使用 OpenCode":  16204,
+                                "正在用微信":  31,
                                 "正在使用 Weixin":  133
                             },
                   "date":  "2026-08-10"
               },
     "pc":  {
-               "detail":  "Cursor Agents",
-               "activity":  "正在使用 Cursor",
-               "updatedAt":  "2026-08-10T20:17:04+08:00",
+               "detail":  "登录 和另外 1 个页面 - 个人 - Microsoft​ Edge",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-10T20:17:41+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -40,11 +41,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "VS Code",
-                        "t":  "2026-08-09T23:32:47+08:00",
-                        "activity":  "正在写代码"
-                    },
                     {
                         "detail":  "Status - Codeforces Round 1116 (Div. 2) - Codeforces 和另外 1 个…",
                         "t":  "2026-08-09T23:47:59+08:00",
@@ -339,6 +335,11 @@
                         "detail":  "Cursor Agents",
                         "t":  "2026-08-10T20:17:04+08:00",
                         "activity":  "正在使用 Cursor"
+                    },
+                    {
+                        "detail":  "登录 和另外 1 个页面 - 个人 - Microsoft​ Edge",
+                        "t":  "2026-08-10T20:17:41+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
