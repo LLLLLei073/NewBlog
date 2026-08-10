@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-10T13:25:16+08:00",
+    "updatedAt":  "2026-08-10T13:27:25+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -10,20 +10,20 @@
                   "stats":  {
                                 "正在玩游戏":  1367,
                                 "正在写代码":  905,
+                                "正在看视频":  224,
                                 "正在使用 explorer":  43578,
                                 "离开电脑":  891,
-                                "正在浏览网页":  960,
-                                "正在使用 Weixin":  99,
+                                "正在浏览网页":  1088,
                                 "正在使用 CF Friend Tracker":  287,
-                                "正在看视频":  224,
+                                "正在使用 Weixin":  99,
                                 "正在使用 SnippingTool":  36
                             },
                   "date":  "2026-08-10"
               },
     "pc":  {
-               "detail":  "Silencer76的比赛主页 和另外 4 个页面 - 个人 - Microsoft​ Edge",
+               "detail":  "Codeforces 和另外 2 个页面 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-10T13:25:16+08:00",
+               "updatedAt":  "2026-08-10T13:27:25+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
