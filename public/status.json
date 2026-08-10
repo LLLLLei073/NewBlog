@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-10T20:33:16+08:00",
+    "updatedAt":  "2026-08-10T20:35:24+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,7 +8,7 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  3069,
+                                "正在浏览网页":  3197,
                                 "正在使用 WeMeetApp":  2065,
                                 "正在使用 LockApp":  34,
                                 "正在使用 CF Friend Tracker":  287,
@@ -18,19 +18,19 @@
                                 "正在写代码":  905,
                                 "正在使用 ShellHost":  105,
                                 "离开电脑":  962,
-                                "正在用微信":  31,
                                 "正在使用 Cursor":  74,
                                 "正在使用 explorer":  43686,
                                 "正在使用 SnippingTool":  36,
                                 "正在使用 OpenCode":  16204,
+                                "正在用微信":  31,
                                 "正在使用 Weixin":  133
                             },
                   "date":  "2026-08-10"
               },
     "pc":  {
-               "detail":  "QQ邮箱 和另外 6 个页面 - 个人 - Microsoft​ Edge",
+               "detail":  "账号 - Obsidian 和另外 5 个页面 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-10T20:33:16+08:00",
+               "updatedAt":  "2026-08-10T20:35:24+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
