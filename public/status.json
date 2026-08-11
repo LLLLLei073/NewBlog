@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-11T10:34:07+08:00",
+    "updatedAt":  "2026-08-11T10:34:49+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -12,16 +12,16 @@
                                 "正在使用 HiBitUninstaller":  172,
                                 "正在使用 Dism++x64":  41,
                                 "正在使用 ApplicationFrameHost":  41,
-                                "正在使用 explorer":  43314,
+                                "正在使用 explorer":  43355,
                                 "离开电脑":  46,
                                 "正在浏览网页":  1488
                             },
                   "date":  "2026-08-11"
               },
     "pc":  {
-               "detail":  "2 个正在运行的操作",
-               "activity":  "正在使用 explorer",
-               "updatedAt":  "2026-08-11T10:34:07+08:00",
+               "detail":  "卸载剪映专业版",
+               "activity":  "正在使用 uninst",
+               "updatedAt":  "2026-08-11T10:34:49+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -33,11 +33,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Windows 默认锁屏界面",
-                        "t":  "2026-08-10T19:40:46+08:00",
-                        "activity":  "正在使用 LockApp"
-                    },
                     {
                         "detail":  "加入会议",
                         "t":  "2026-08-10T19:41:21+08:00",
@@ -332,6 +327,11 @@
                         "detail":  "2 个正在运行的操作",
                         "t":  "2026-08-11T10:34:07+08:00",
                         "activity":  "正在使用 explorer"
+                    },
+                    {
+                        "detail":  "卸载剪映专业版",
+                        "t":  "2026-08-11T10:34:49+08:00",
+                        "activity":  "正在使用 uninst"
                     }
                 ]
 }
