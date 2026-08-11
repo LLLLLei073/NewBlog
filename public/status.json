@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-11T12:13:21+08:00",
+    "updatedAt":  "2026-08-11T12:14:33+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -15,7 +15,7 @@
                                 "正在使用 OfficeClickToRun":  71,
                                 "正在使用 LockApp":  1220,
                                 "正在使用 clash-verge":  41,
-                                "正在写代码":  131,
+                                "正在写代码":  202,
                                 "离开电脑":  46,
                                 "正在使用 setup":  131,
                                 "正在处理文档":  172,
@@ -28,9 +28,9 @@
                   "date":  "2026-08-11"
               },
     "pc":  {
-               "detail":  "VS Code",
-               "activity":  "正在写代码",
-               "updatedAt":  "2026-08-11T12:13:21+08:00",
+               "detail":  "主文件夹 - 文件资源管理器",
+               "activity":  "正在使用 explorer",
+               "updatedAt":  "2026-08-11T12:14:33+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -42,11 +42,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "onsidian - 搜索 和另外 2 个页面 - 个人 - Microsoft​ Edge",
-                        "t":  "2026-08-10T20:26:12+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "Program Manager",
                         "t":  "2026-08-10T20:27:21+08:00",
@@ -341,6 +336,11 @@
                         "detail":  "VS Code",
                         "t":  "2026-08-11T12:11:10+08:00",
                         "activity":  "正在写代码"
+                    },
+                    {
+                        "detail":  "主文件夹 - 文件资源管理器",
+                        "t":  "2026-08-11T12:14:33+08:00",
+                        "activity":  "正在使用 explorer"
                     }
                 ]
 }
