@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-11T11:07:09+08:00",
+    "updatedAt":  "2026-08-11T11:09:20+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,25 +8,25 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在使用 OfficeClickToRun":  71,
-                                "正在玩游戏":  41,
+                                "正在浏览网页":  3116,
                                 "正在使用 HiBitUninstaller":  172,
-                                "正在使用 Dism++x64":  41,
+                                "正在玩游戏":  41,
+                                "正在使用 uninst":  41,
+                                "正在使用 OfficeClickToRun":  71,
+                                "正在使用 clash-verge":  41,
+                                "离开电脑":  46,
+                                "正在使用 setup":  131,
                                 "正在使用 ApplicationFrameHost":  82,
                                 "正在使用 explorer":  43396,
-                                "离开电脑":  46,
-                                "正在浏览网页":  2985,
-                                "正在使用 clash-verge":  41,
                                 "正在使用 NVIDIA Broadcast":  71,
-                                "正在使用 uninst":  41,
-                                "正在使用 setup":  131
+                                "正在使用 Dism++x64":  41
                             },
                   "date":  "2026-08-11"
               },
     "pc":  {
                "detail":  "小红走象步_牛客题霸_牛客网 和另外 2 个页面 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-11T11:07:09+08:00",
+               "updatedAt":  "2026-08-11T11:09:20+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
