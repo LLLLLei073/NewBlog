@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-11T14:25:26+08:00",
+    "updatedAt":  "2026-08-11T14:26:08+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -21,16 +21,16 @@
                                 "正在处理文档":  172,
                                 "正在使用 ApplicationFrameHost":  82,
                                 "正在使用 explorer":  43437,
-                                "正在用微信":  41,
+                                "正在用微信":  82,
                                 "正在使用 NVIDIA Broadcast":  71,
                                 "正在使用 Dism++x64":  41
                             },
                   "date":  "2026-08-11"
               },
     "pc":  {
-               "detail":  "微信",
-               "activity":  "正在用微信",
-               "updatedAt":  "2026-08-11T14:25:26+08:00",
+               "detail":  "VS Code",
+               "activity":  "正在写代码",
+               "updatedAt":  "2026-08-11T14:26:08+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -42,11 +42,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Hermes+Obsidian+LLM wkii，构建AI知识库",
-                        "t":  "2026-08-10T21:16:19+08:00",
-                        "activity":  "正在看视频"
-                    },
                     {
                         "detail":  "ChatGPT",
                         "t":  "2026-08-10T21:18:57+08:00",
@@ -341,6 +336,11 @@
                         "detail":  "微信",
                         "t":  "2026-08-11T14:25:26+08:00",
                         "activity":  "正在用微信"
+                    },
+                    {
+                        "detail":  "VS Code",
+                        "t":  "2026-08-11T14:26:08+08:00",
+                        "activity":  "正在写代码"
                     }
                 ]
 }
