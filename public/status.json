@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-11T18:37:37+08:00",
+    "updatedAt":  "2026-08-11T18:38:41+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -16,7 +16,7 @@
                                 "正在使用 LockApp":  1220,
                                 "正在使用 clash-verge":  82,
                                 "正在写代码":  13475,
-                                "正在用微信":  156,
+                                "正在使用 Cursor":  63,
                                 "离开电脑":  223,
                                 "正在使用私密应用":  41,
                                 "正在使用 setup":  131,
@@ -24,15 +24,16 @@
                                 "正在使用 ApplicationFrameHost":  82,
                                 "正在使用 explorer":  45580,
                                 "正在使用 OpenCode":  2107,
+                                "正在用微信":  156,
                                 "正在使用 NVIDIA Broadcast":  71,
                                 "正在使用 Dism++x64":  41
                             },
                   "date":  "2026-08-11"
               },
     "pc":  {
-               "detail":  "Cursor Agents",
-               "activity":  "正在使用 Cursor",
-               "updatedAt":  "2026-08-11T18:37:37+08:00",
+               "detail":  "哔哩哔哩 (゜-゜)つロ 干杯~-bilibili",
+               "activity":  "正在看视频",
+               "updatedAt":  "2026-08-11T18:38:41+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -44,11 +45,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "VS Code",
-                        "t":  "2026-08-11T14:27:30+08:00",
-                        "activity":  "正在写代码"
-                    },
                     {
                         "detail":  "Status 和另外 5 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-11T14:34:45+08:00",
@@ -343,6 +339,11 @@
                         "detail":  "Cursor Agents",
                         "t":  "2026-08-11T18:37:37+08:00",
                         "activity":  "正在使用 Cursor"
+                    },
+                    {
+                        "detail":  "哔哩哔哩 (゜-゜)つロ 干杯~-bilibili",
+                        "t":  "2026-08-11T18:38:41+08:00",
+                        "activity":  "正在看视频"
                     }
                 ]
 }
