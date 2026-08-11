@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-11T10:24:53+08:00",
+    "updatedAt":  "2026-08-11T10:27:06+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,16 +8,16 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  1314,
+                                "正在浏览网页":  1446,
                                 "正在使用 explorer":  43232,
                                 "离开电脑":  46
                             },
                   "date":  "2026-08-11"
               },
     "pc":  {
-               "detail":  "牛客tracker 和另外 1 个页面 - 个人 - Microsoft​ Edge",
+               "detail":  "Welcome to Hangzhou Dianzi University Online Judge 和另外 1 个页面…",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-11T10:24:53+08:00",
+               "updatedAt":  "2026-08-11T10:27:06+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
