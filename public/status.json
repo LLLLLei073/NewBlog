@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-11T15:46:59+08:00",
+    "updatedAt":  "2026-08-11T15:49:10+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -15,7 +15,7 @@
                                 "正在使用 OfficeClickToRun":  71,
                                 "正在使用 LockApp":  1220,
                                 "正在使用 clash-verge":  41,
-                                "正在写代码":  10519,
+                                "正在写代码":  10650,
                                 "离开电脑":  46,
                                 "正在使用 setup":  131,
                                 "正在处理文档":  213,
@@ -28,9 +28,9 @@
                   "date":  "2026-08-11"
               },
     "pc":  {
-               "detail":  "VS Code",
-               "activity":  "正在写代码",
-               "updatedAt":  "2026-08-11T15:46:59+08:00",
+               "detail":  "1012 今晚吃 TopTree 和另外 3 个页面 - 个人 - Microsoft​ Edge",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-11T15:49:10+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -42,11 +42,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "设置",
-                        "t":  "2026-08-11T10:35:30+08:00",
-                        "activity":  "正在使用 ApplicationFrameHost"
-                    },
                     {
                         "detail":  "‪准备卸载?‬",
                         "t":  "2026-08-11T10:36:11+08:00",
@@ -341,6 +336,11 @@
                         "detail":  "VS Code",
                         "t":  "2026-08-11T15:42:36+08:00",
                         "activity":  "正在写代码"
+                    },
+                    {
+                        "detail":  "1012 今晚吃 TopTree 和另外 3 个页面 - 个人 - Microsoft​ Edge",
+                        "t":  "2026-08-11T15:49:10+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
