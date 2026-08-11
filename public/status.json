@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-11T19:38:14+08:00",
+    "updatedAt":  "2026-08-11T19:40:17+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -16,18 +16,18 @@
                                 "正在使用 LockApp":  1220,
                                 "正在看视频":  495,
                                 "正在使用 Plain Craft Launcher 2":  40,
-                                "正在使用 java":  2832,
+                                "正在使用 java":  2955,
                                 "正在使用 clash-verge":  82,
                                 "正在写代码":  13475,
-                                "正在用微信":  156,
+                                "正在使用 Cursor":  63,
                                 "离开电脑":  223,
                                 "正在使用私密应用":  41,
                                 "正在使用 setup":  131,
-                                "正在使用 ApplicationFrameHost":  82,
                                 "正在处理文档":  213,
-                                "正在使用 Cursor":  63,
+                                "正在使用 ApplicationFrameHost":  82,
                                 "正在使用 explorer":  45580,
                                 "正在使用 OpenCode":  2107,
+                                "正在用微信":  156,
                                 "正在使用 NVIDIA Broadcast":  194,
                                 "正在使用 Dism++x64":  41
                             },
@@ -36,7 +36,7 @@
     "pc":  {
                "detail":  "你好，新蒸程！1.7",
                "activity":  "正在使用 java",
-               "updatedAt":  "2026-08-11T19:38:14+08:00",
+               "updatedAt":  "2026-08-11T19:40:17+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
