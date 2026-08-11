@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-11T10:49:57+08:00",
+    "updatedAt":  "2026-08-11T10:50:38+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -15,16 +15,16 @@
                                 "正在使用 ApplicationFrameHost":  82,
                                 "正在使用 explorer":  43396,
                                 "离开电脑":  46,
-                                "正在浏览网页":  2158,
+                                "正在浏览网页":  2199,
                                 "正在使用 clash-verge":  41,
                                 "正在使用 uninst":  41
                             },
                   "date":  "2026-08-11"
               },
     "pc":  {
-               "detail":  "NVIDIA Broadcast App: AI-Powered Voice and Video | NVIDIA 和另…",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-11T10:49:57+08:00",
+               "detail":  "NVIDIA 安装程序",
+               "activity":  "正在使用 setup",
+               "updatedAt":  "2026-08-11T10:50:38+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -36,11 +36,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "设置",
-                        "t":  "2026-08-10T20:11:16+08:00",
-                        "activity":  "正在使用 WeMeetApp"
-                    },
                     {
                         "detail":  "Cursor Agents",
                         "t":  "2026-08-10T20:17:04+08:00",
@@ -335,6 +330,11 @@
                         "detail":  "NVIDIA Broadcast App: AI-Powered Voice and Video | NVIDIA 和另…",
                         "t":  "2026-08-11T10:49:57+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "NVIDIA 安装程序",
+                        "t":  "2026-08-11T10:50:38+08:00",
+                        "activity":  "正在使用 setup"
                     }
                 ]
 }
