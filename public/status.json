@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-11T15:44:48+08:00",
+    "updatedAt":  "2026-08-11T15:46:59+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -15,7 +15,7 @@
                                 "正在使用 OfficeClickToRun":  71,
                                 "正在使用 LockApp":  1220,
                                 "正在使用 clash-verge":  41,
-                                "正在写代码":  10388,
+                                "正在写代码":  10519,
                                 "离开电脑":  46,
                                 "正在使用 setup":  131,
                                 "正在处理文档":  213,
@@ -30,7 +30,7 @@
     "pc":  {
                "detail":  "VS Code",
                "activity":  "正在写代码",
-               "updatedAt":  "2026-08-11T15:44:48+08:00",
+               "updatedAt":  "2026-08-11T15:46:59+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
