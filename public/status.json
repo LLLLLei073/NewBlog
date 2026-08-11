@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-11T20:57:02+08:00",
+    "updatedAt":  "2026-08-11T20:59:06+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,7 +8,7 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  10529,
+                                "正在浏览网页":  10652,
                                 "正在使用 HiBitUninstaller":  172,
                                 "正在玩游戏":  41,
                                 "正在使用 uninst":  41,
@@ -19,15 +19,15 @@
                                 "正在使用 java":  3048,
                                 "正在使用 clash-verge":  82,
                                 "正在写代码":  13475,
-                                "正在用微信":  190,
+                                "正在使用 Cursor":  63,
                                 "离开电脑":  2229,
                                 "正在使用私密应用":  41,
                                 "正在使用 setup":  131,
-                                "正在使用 ApplicationFrameHost":  82,
                                 "正在处理文档":  213,
-                                "正在使用 Cursor":  63,
+                                "正在使用 ApplicationFrameHost":  82,
                                 "正在使用 explorer":  47863,
                                 "正在使用 OpenCode":  2107,
+                                "正在用微信":  190,
                                 "正在使用 NVIDIA Broadcast":  194,
                                 "正在使用 Weixin":  33,
                                 "正在使用 Dism++x64":  41
@@ -37,7 +37,7 @@
     "pc":  {
                "detail":  "(1条未读私信) 牛客竞赛OJ_ACM/NOI/CSP/CCPC/ICPC_信息学编程算法训练平台 - 个人 - Mic…",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-11T20:57:02+08:00",
+               "updatedAt":  "2026-08-11T20:59:06+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
