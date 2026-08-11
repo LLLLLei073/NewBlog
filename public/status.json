@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-11T17:12:58+08:00",
+    "updatedAt":  "2026-08-11T17:15:10+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,7 +8,7 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  9492,
+                                "正在浏览网页":  9623,
                                 "正在使用 HiBitUninstaller":  172,
                                 "正在玩游戏":  41,
                                 "正在使用 uninst":  41,
@@ -16,6 +16,7 @@
                                 "正在使用 LockApp":  1220,
                                 "正在使用 clash-verge":  82,
                                 "正在写代码":  13475,
+                                "正在用微信":  123,
                                 "离开电脑":  147,
                                 "正在使用私密应用":  41,
                                 "正在使用 setup":  131,
@@ -23,16 +24,15 @@
                                 "正在使用 ApplicationFrameHost":  82,
                                 "正在使用 explorer":  43519,
                                 "正在使用 OpenCode":  41,
-                                "正在用微信":  123,
                                 "正在使用 NVIDIA Broadcast":  71,
                                 "正在使用 Dism++x64":  41
                             },
                   "date":  "2026-08-11"
               },
     "pc":  {
-               "detail":  "chatgpt.com 和另外 7 个页面 - 个人 - Microsoft​ Edge",
+               "detail":  "1012 今晚吃 TopTree 和另外 5 个页面 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-11T17:12:58+08:00",
+               "updatedAt":  "2026-08-11T17:15:10+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
