@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-11T10:46:23+08:00",
+    "updatedAt":  "2026-08-11T10:48:34+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -15,15 +15,15 @@
                                 "正在使用 ApplicationFrameHost":  82,
                                 "正在使用 explorer":  43396,
                                 "离开电脑":  46,
-                                "正在浏览网页":  1986,
+                                "正在浏览网页":  2117,
                                 "正在使用 uninst":  41
                             },
                   "date":  "2026-08-11"
               },
     "pc":  {
-               "detail":  "小红走象步_牛客题霸_牛客网 和另外 2 个页面 - 个人 - Microsoft​ Edge",
+               "detail":  "NVIDIA Broadcast App: AI-Powered Voice and Video | NVIDIA 和另…",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-11T10:46:23+08:00",
+               "updatedAt":  "2026-08-11T10:48:34+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
