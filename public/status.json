@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-11T13:59:48+08:00",
+    "updatedAt":  "2026-08-11T14:00:29+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -15,7 +15,7 @@
                                 "正在使用 OfficeClickToRun":  71,
                                 "正在使用 LockApp":  1220,
                                 "正在使用 clash-verge":  41,
-                                "正在写代码":  6100,
+                                "正在写代码":  6141,
                                 "离开电脑":  46,
                                 "正在使用 setup":  131,
                                 "正在处理文档":  172,
@@ -28,9 +28,9 @@
                   "date":  "2026-08-11"
               },
     "pc":  {
-               "detail":  "VS Code",
-               "activity":  "正在写代码",
-               "updatedAt":  "2026-08-11T13:59:48+08:00",
+               "detail":  "Submit #1682 和另外 5 个页面 - 个人 - Microsoft​ Edge",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-11T14:00:29+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -42,11 +42,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "设置 - Obsidian Vault - Obsidian 1.13.4",
-                        "t":  "2026-08-10T20:59:05+08:00",
-                        "activity":  "正在使用 Obsidian"
-                    },
                     {
                         "detail":  "个人知识库怎么搭？最简单Obsidian入门教程【保姆级教学】",
                         "t":  "2026-08-10T21:00:09+08:00",
@@ -341,6 +336,11 @@
                         "detail":  "VS Code",
                         "t":  "2026-08-11T13:31:21+08:00",
                         "activity":  "正在写代码"
+                    },
+                    {
+                        "detail":  "Submit #1682 和另外 5 个页面 - 个人 - Microsoft​ Edge",
+                        "t":  "2026-08-11T14:00:29+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
