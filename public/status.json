@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-12T16:28:49+08:00",
+    "updatedAt":  "2026-08-12T16:29:30+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -13,23 +13,23 @@
                                 "正在使用 Typora":  41,
                                 "正在使用 Photos":  41,
                                 "正在看视频":  39758,
-                                "正在写代码":  12486,
+                                "正在写代码":  12527,
                                 "正在使用 LockApp":  1750,
                                 "离开电脑":  789,
                                 "正在使用私密应用":  374,
                                 "正在使用 mspaint":  262,
-                                "正在用微信":  82,
                                 "正在使用 ApplicationFrameHost":  142,
                                 "正在使用 explorer":  82,
                                 "正在使用 crashpad_handler":  112,
+                                "正在用微信":  82,
                                 "正在使用 Dism++x64":  103
                             },
                   "date":  "2026-08-12"
               },
     "pc":  {
-               "detail":  "VS Code",
-               "activity":  "正在写代码",
-               "updatedAt":  "2026-08-12T16:28:49+08:00",
+               "detail":  "Control center",
+               "activity":  "正在使用 CC40",
+               "updatedAt":  "2026-08-12T16:29:30+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -41,11 +41,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Windows 默认锁屏界面",
-                        "t":  "2026-08-12T11:26:32+08:00",
-                        "activity":  "正在使用 LockApp"
-                    },
                     {
                         "detail":  "acm.zust.edu.cn 和另外 2 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-12T11:47:47+08:00",
@@ -340,6 +335,11 @@
                         "detail":  "VS Code",
                         "t":  "2026-08-12T16:26:38+08:00",
                         "activity":  "正在写代码"
+                    },
+                    {
+                        "detail":  "Control center",
+                        "t":  "2026-08-12T16:29:30+08:00",
+                        "activity":  "正在使用 CC40"
                     }
                 ]
 }
