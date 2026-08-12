@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-12T13:03:09+08:00",
+    "updatedAt":  "2026-08-12T13:05:20+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,7 +8,7 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  5034,
+                                "正在浏览网页":  5165,
                                 "正在处理文档":  2958,
                                 "正在使用 Typora":  41,
                                 "正在使用 Photos":  41,
@@ -25,9 +25,9 @@
                   "date":  "2026-08-12"
               },
     "pc":  {
-               "detail":  "G-Multiplication_2026牛客暑期多校训练营8 和另外 2 个页面 - 个人 - Microsoft​ …",
+               "detail":  "牛客竞赛_ACM/NOI/CSP/CCPC/ICPC算法编程高难度练习赛_牛客竞赛OJ 和另外 1 个页面 - 个人 -…",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-12T13:03:09+08:00",
+               "updatedAt":  "2026-08-12T13:05:20+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
