@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-12T16:45:46+08:00",
+    "updatedAt":  "2026-08-12T16:47:58+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,7 +8,7 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  5897,
+                                "正在浏览网页":  6028,
                                 "正在使用 CC40":  41,
                                 "正在处理文档":  3365,
                                 "正在使用 Typora":  41,
@@ -19,18 +19,18 @@
                                 "离开电脑":  789,
                                 "正在使用私密应用":  374,
                                 "正在使用 mspaint":  262,
+                                "正在用微信":  82,
                                 "正在使用 ApplicationFrameHost":  142,
                                 "正在使用 explorer":  82,
                                 "正在使用 crashpad_handler":  112,
-                                "正在用微信":  82,
                                 "正在使用 Dism++x64":  103
                             },
                   "date":  "2026-08-12"
               },
     "pc":  {
-               "detail":  "DeepSeek - 探索未至之境 和另外 4 个页面 - 个人 - Microsoft​ Edge",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-12T16:45:46+08:00",
+               "detail":  "VS Code",
+               "activity":  "正在写代码",
+               "updatedAt":  "2026-08-12T16:47:58+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -42,11 +42,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "牛客竞赛_ACM/NOI/CSP/CCPC/ICPC算法编程高难度练习赛_牛客竞赛OJ 和另外 1 个页面 - 个人 -…",
-                        "t":  "2026-08-12T11:58:29+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "",
                         "t":  "2026-08-12T12:00:41+08:00",
@@ -341,6 +336,11 @@
                         "detail":  "DeepSeek - 探索未至之境 和另外 4 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-12T16:45:46+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "VS Code",
+                        "t":  "2026-08-12T16:47:58+08:00",
+                        "activity":  "正在写代码"
                     }
                 ]
 }
