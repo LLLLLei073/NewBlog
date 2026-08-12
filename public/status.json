@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-12T16:18:00+08:00",
+    "updatedAt":  "2026-08-12T16:19:41+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -13,23 +13,23 @@
                                 "正在使用 Typora":  41,
                                 "正在使用 Photos":  41,
                                 "正在看视频":  39758,
-                                "正在写代码":  11951,
+                                "正在写代码":  12052,
                                 "正在使用 LockApp":  1750,
                                 "离开电脑":  789,
                                 "正在使用私密应用":  374,
                                 "正在使用 mspaint":  262,
+                                "正在用微信":  82,
                                 "正在使用 ApplicationFrameHost":  142,
                                 "正在使用 explorer":  82,
                                 "正在使用 crashpad_handler":  112,
-                                "正在用微信":  82,
                                 "正在使用 Dism++x64":  103
                             },
                   "date":  "2026-08-12"
               },
     "pc":  {
-               "detail":  "VS Code",
-               "activity":  "正在写代码",
-               "updatedAt":  "2026-08-12T16:18:00+08:00",
+               "detail":  "B-Deep Finesse_2026牛客暑期多校训练营8 和另外 2 个页面 - 个人 - Microsoft​ Ed…",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-12T16:19:41+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -41,11 +41,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "哔哩哔哩 (゜-゜)つロ 干杯~-bilibili",
-                        "t":  "2026-08-12T10:55:46+08:00",
-                        "activity":  "正在看视频"
-                    },
                     {
                         "detail":  "【模板】整数域二分_牛客题霸_牛客网 和另外 7 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-12T10:59:08+08:00",
@@ -340,6 +335,11 @@
                         "detail":  "VS Code",
                         "t":  "2026-08-12T15:58:16+08:00",
                         "activity":  "正在写代码"
+                    },
+                    {
+                        "detail":  "B-Deep Finesse_2026牛客暑期多校训练营8 和另外 2 个页面 - 个人 - Microsoft​ Ed…",
+                        "t":  "2026-08-12T16:19:41+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
