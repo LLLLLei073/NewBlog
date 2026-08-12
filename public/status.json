@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-12T19:48:05+08:00",
+    "updatedAt":  "2026-08-12T19:50:09+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -14,20 +14,20 @@
                                 "正在使用 Shark Cloud":  105,
                                 "正在使用 Typora":  41,
                                 "正在使用 msiexec":  41,
-                                "正在看视频":  39758,
+                                "正在看视频":  39881,
                                 "正在使用 Photos":  41,
                                 "正在使用 clash-verge":  112,
                                 "正在写代码":  13447,
                                 "正在使用 LockApp":  2471,
-                                "正在用微信":  123,
                                 "离开电脑":  924,
                                 "正在使用私密应用":  993,
                                 "正在使用 mspaint":  262,
                                 "正在处理文档":  3365,
                                 "正在使用 ApplicationFrameHost":  3627,
                                 "正在使用 explorer":  156,
-                                "正在使用 crashpad_handler":  112,
                                 "正在使用 OpenCode":  2481,
+                                "正在使用 crashpad_handler":  112,
+                                "正在用微信":  123,
                                 "正在使用 Dism++x64":  103
                             },
                   "date":  "2026-08-12"
@@ -35,7 +35,7 @@
     "pc":  {
                "detail":  "哔哩哔哩 (゜-゜)つロ 干杯~-bilibili",
                "activity":  "正在看视频",
-               "updatedAt":  "2026-08-12T19:48:05+08:00",
+               "updatedAt":  "2026-08-12T19:50:09+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
