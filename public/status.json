@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-12T17:18:40+08:00",
+    "updatedAt":  "2026-08-12T17:19:52+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -19,19 +19,19 @@
                                 "离开电脑":  789,
                                 "正在使用私密应用":  374,
                                 "正在使用 mspaint":  262,
+                                "正在用微信":  123,
                                 "正在使用 ApplicationFrameHost":  142,
                                 "正在使用 explorer":  123,
-                                "正在使用 OpenCode":  131,
                                 "正在使用 crashpad_handler":  112,
-                                "正在用微信":  123,
+                                "正在使用 OpenCode":  202,
                                 "正在使用 Dism++x64":  103
                             },
                   "date":  "2026-08-12"
               },
     "pc":  {
-               "detail":  "OpenCode",
-               "activity":  "正在使用 OpenCode",
-               "updatedAt":  "2026-08-12T17:18:40+08:00",
+               "detail":  "未检测到活动窗口",
+               "activity":  "离开电脑",
+               "updatedAt":  "2026-08-12T17:19:52+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -43,11 +43,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "VS Code",
-                        "t":  "2026-08-12T12:11:22+08:00",
-                        "activity":  "正在写代码"
-                    },
                     {
                         "detail":  "牛客竞赛_ACM/NOI/CSP/CCPC/ICPC算法编程高难度练习赛_牛客竞赛OJ 和另外 1 个页面 - 个人 -…",
                         "t":  "2026-08-12T12:15:15+08:00",
@@ -342,6 +337,11 @@
                         "detail":  "OpenCode",
                         "t":  "2026-08-12T17:16:29+08:00",
                         "activity":  "正在使用 OpenCode"
+                    },
+                    {
+                        "detail":  "未检测到活动窗口",
+                        "t":  "2026-08-12T17:19:52+08:00",
+                        "activity":  "离开电脑"
                     }
                 ]
 }
