@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-12T22:43:55+08:00",
+    "updatedAt":  "2026-08-12T22:45:59+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -24,7 +24,7 @@
                                 "正在使用 HiBitUninstaller":  164,
                                 "正在用微信":  1800,
                                 "正在使用 Dism++x64":  103,
-                                "正在浏览网页":  12805,
+                                "正在浏览网页":  12928,
                                 "正在使用 Taskmgr":  67,
                                 "正在使用 Shark Cloud":  221,
                                 "正在使用 oj_helper":  33,
@@ -40,7 +40,7 @@
     "pc":  {
                "detail":  "小红统计区间（easy）_牛客题霸_牛客网 和另外 5 个页面 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-12T22:43:55+08:00",
+               "updatedAt":  "2026-08-12T22:45:59+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
