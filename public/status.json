@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-12T18:09:30+08:00",
+    "updatedAt":  "2026-08-12T18:10:41+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,33 +8,33 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在使用 clash-verge":  71,
+                                "正在浏览网页":  7910,
                                 "正在使用 CC40":  41,
                                 "正在使用 Shark Cloud":  105,
                                 "正在使用 Typora":  41,
                                 "正在使用 msiexec":  41,
-                                "正在浏览网页":  7839,
-                                "正在使用 Photos":  41,
                                 "正在看视频":  39758,
+                                "正在使用 Photos":  41,
+                                "正在使用 clash-verge":  71,
                                 "正在写代码":  13447,
                                 "正在使用 LockApp":  1750,
-                                "正在用微信":  123,
                                 "离开电脑":  830,
                                 "正在使用私密应用":  374,
                                 "正在使用 mspaint":  262,
                                 "正在处理文档":  3365,
                                 "正在使用 ApplicationFrameHost":  142,
                                 "正在使用 explorer":  123,
-                                "正在使用 crashpad_handler":  112,
                                 "正在使用 OpenCode":  2481,
+                                "正在使用 crashpad_handler":  112,
+                                "正在用微信":  123,
                                 "正在使用 Dism++x64":  103
                             },
                   "date":  "2026-08-12"
               },
     "pc":  {
-               "detail":  "牛客竞赛_ACM/NOI/CSP/CCPC/ICPC算法编程高难度练习赛_牛客竞赛OJ 和另外 5 个页面 - 个人 -…",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-12T18:09:30+08:00",
+               "detail":  "卸载",
+               "activity":  "正在使用 HiBitUninstaller",
+               "updatedAt":  "2026-08-12T18:10:41+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -46,11 +46,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Office",
-                        "t":  "2026-08-12T13:08:43+08:00",
-                        "activity":  "正在处理文档"
-                    },
                     {
                         "detail":  "VS Code",
                         "t":  "2026-08-12T13:09:24+08:00",
@@ -345,6 +340,11 @@
                         "detail":  "牛客竞赛_ACM/NOI/CSP/CCPC/ICPC算法编程高难度练习赛_牛客竞赛OJ 和另外 5 个页面 - 个人 -…",
                         "t":  "2026-08-12T18:09:30+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "卸载",
+                        "t":  "2026-08-12T18:10:41+08:00",
+                        "activity":  "正在使用 HiBitUninstaller"
                     }
                 ]
 }
