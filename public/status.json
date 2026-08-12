@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-12T17:16:29+08:00",
+    "updatedAt":  "2026-08-12T17:18:40+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -19,10 +19,11 @@
                                 "离开电脑":  789,
                                 "正在使用私密应用":  374,
                                 "正在使用 mspaint":  262,
-                                "正在用微信":  123,
                                 "正在使用 ApplicationFrameHost":  142,
                                 "正在使用 explorer":  123,
+                                "正在使用 OpenCode":  131,
                                 "正在使用 crashpad_handler":  112,
+                                "正在用微信":  123,
                                 "正在使用 Dism++x64":  103
                             },
                   "date":  "2026-08-12"
@@ -30,7 +31,7 @@
     "pc":  {
                "detail":  "OpenCode",
                "activity":  "正在使用 OpenCode",
-               "updatedAt":  "2026-08-12T17:16:29+08:00",
+               "updatedAt":  "2026-08-12T17:18:40+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
