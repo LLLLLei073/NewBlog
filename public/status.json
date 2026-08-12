@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-12T18:29:58+08:00",
+    "updatedAt":  "2026-08-12T18:31:40+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -18,24 +18,24 @@
                                 "正在使用 Photos":  41,
                                 "正在使用 clash-verge":  71,
                                 "正在写代码":  13447,
-                                "正在使用 LockApp":  2143,
+                                "正在使用 LockApp":  2244,
+                                "正在用微信":  123,
                                 "离开电脑":  830,
                                 "正在使用私密应用":  952,
                                 "正在使用 mspaint":  262,
                                 "正在处理文档":  3365,
                                 "正在使用 ApplicationFrameHost":  142,
                                 "正在使用 explorer":  123,
-                                "正在使用 OpenCode":  2481,
                                 "正在使用 crashpad_handler":  112,
-                                "正在用微信":  123,
+                                "正在使用 OpenCode":  2481,
                                 "正在使用 Dism++x64":  103
                             },
                   "date":  "2026-08-12"
               },
     "pc":  {
-               "detail":  "Windows 默认锁屏界面",
-               "activity":  "正在使用 LockApp",
-               "updatedAt":  "2026-08-12T18:29:58+08:00",
+               "detail":  "",
+               "activity":  "正在使用私密应用",
+               "updatedAt":  "2026-08-12T18:31:40+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -47,11 +47,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "VS Code",
-                        "t":  "2026-08-12T14:16:38+08:00",
-                        "activity":  "正在写代码"
-                    },
                     {
                         "detail":  "Office",
                         "t":  "2026-08-12T14:29:16+08:00",
@@ -346,6 +341,11 @@
                         "detail":  "Windows 默认锁屏界面",
                         "t":  "2026-08-12T18:23:24+08:00",
                         "activity":  "正在使用 LockApp"
+                    },
+                    {
+                        "detail":  "",
+                        "t":  "2026-08-12T18:31:40+08:00",
+                        "activity":  "正在使用私密应用"
                     }
                 ]
 }
