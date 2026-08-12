@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-12T15:11:41+08:00",
+    "updatedAt":  "2026-08-12T15:12:22+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -14,7 +14,7 @@
                                 "正在使用 Photos":  41,
                                 "正在看视频":  39758,
                                 "正在写代码":  8240,
-                                "正在使用 LockApp":  1709,
+                                "正在使用 LockApp":  1750,
                                 "离开电脑":  789,
                                 "正在使用私密应用":  374,
                                 "正在使用 mspaint":  262,
@@ -25,9 +25,9 @@
                   "date":  "2026-08-12"
               },
     "pc":  {
-               "detail":  "Windows 默认锁屏界面",
-               "activity":  "正在使用 LockApp",
-               "updatedAt":  "2026-08-12T15:11:41+08:00",
+               "detail":  "VS Code",
+               "activity":  "正在写代码",
+               "updatedAt":  "2026-08-12T15:12:22+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -39,11 +39,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "VS Code",
-                        "t":  "2026-08-12T10:15:59+08:00",
-                        "activity":  "正在写代码"
-                    },
                     {
                         "detail":  "1012 今晚吃 TopTree 和另外 6 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-12T10:17:10+08:00",
@@ -338,6 +333,11 @@
                         "detail":  "Windows 默认锁屏界面",
                         "t":  "2026-08-12T15:09:30+08:00",
                         "activity":  "正在使用 LockApp"
+                    },
+                    {
+                        "detail":  "VS Code",
+                        "t":  "2026-08-12T15:12:22+08:00",
+                        "activity":  "正在写代码"
                     }
                 ]
 }
