@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-12T17:52:53+08:00",
+    "updatedAt":  "2026-08-12T17:53:35+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -14,24 +14,24 @@
                                 "正在使用 Typora":  41,
                                 "正在使用 Photos":  41,
                                 "正在看视频":  39758,
-                                "正在写代码":  13406,
+                                "正在写代码":  13447,
                                 "正在使用 LockApp":  1750,
                                 "离开电脑":  830,
                                 "正在使用私密应用":  374,
                                 "正在使用 mspaint":  262,
-                                "正在用微信":  123,
                                 "正在使用 ApplicationFrameHost":  142,
                                 "正在使用 explorer":  123,
-                                "正在使用 crashpad_handler":  112,
                                 "正在使用 OpenCode":  2137,
+                                "正在使用 crashpad_handler":  112,
+                                "正在用微信":  123,
                                 "正在使用 Dism++x64":  103
                             },
                   "date":  "2026-08-12"
               },
     "pc":  {
-               "detail":  "VS Code",
-               "activity":  "正在写代码",
-               "updatedAt":  "2026-08-12T17:52:53+08:00",
+               "detail":  "OpenCode",
+               "activity":  "正在使用 OpenCode",
+               "updatedAt":  "2026-08-12T17:53:35+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -43,11 +43,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "未检测到活动窗口",
-                        "t":  "2026-08-12T12:38:31+08:00",
-                        "activity":  "离开电脑"
-                    },
                     {
                         "detail":  "Office",
                         "t":  "2026-08-12T12:42:24+08:00",
@@ -342,6 +337,11 @@
                         "detail":  "VS Code",
                         "t":  "2026-08-12T17:52:53+08:00",
                         "activity":  "正在写代码"
+                    },
+                    {
+                        "detail":  "OpenCode",
+                        "t":  "2026-08-12T17:53:35+08:00",
+                        "activity":  "正在使用 OpenCode"
                     }
                 ]
 }
