@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-12T21:05:17+08:00",
+    "updatedAt":  "2026-08-12T21:05:48+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -13,33 +13,33 @@
                                 "正在使用 Taskmgr":  67,
                                 "正在使用 CC40":  41,
                                 "正在使用 Shark Cloud":  105,
-                                "正在使用 Typora":  41,
+                                "正在使用 LockApp":  2471,
                                 "正在使用 msiexec":  41,
-                                "正在使用 Photos":  41,
+                                "正在使用 Typora":  41,
+                                "正在用微信":  313,
                                 "正在看视频":  40075,
                                 "正在写代码":  13480,
-                                "正在使用 LockApp":  2471,
-                                "正在使用 OpenCode":  2481,
-                                "正在使用 clash-verge":  175,
+                                "正在使用 Photos":  41,
                                 "离开电脑":  2241,
                                 "正在使用私密应用":  993,
-                                "正在使用 ChatGPT":  509,
-                                "正在使用 mspaint":  262,
+                                "正在使用 ChatGPT":  539,
+                                "正在使用 clash-verge":  175,
                                 "正在处理文档":  3399,
                                 "正在使用 ApplicationFrameHost":  3819,
                                 "正在使用 explorer":  495,
-                                "正在敲命令":  117,
                                 "正在使用 crashpad_handler":  112,
-                                "正在用微信":  313,
+                                "正在敲命令":  117,
+                                "正在使用 mspaint":  262,
+                                "正在使用 OpenCode":  2481,
                                 "正在使用 ChatGPT Installer":  67,
                                 "正在使用 Dism++x64":  103
                             },
                   "date":  "2026-08-12"
               },
     "pc":  {
-               "detail":  "ChatGPT",
-               "activity":  "正在使用 ChatGPT",
-               "updatedAt":  "2026-08-12T21:05:17+08:00",
+               "detail":  "chatgpt.com 和另外 1 个页面 - 个人 - Microsoft​ Edge",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-12T21:05:48+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -51,11 +51,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Windows 默认锁屏界面",
-                        "t":  "2026-08-12T19:42:30+08:00",
-                        "activity":  "正在使用 LockApp"
-                    },
                     {
                         "detail":  "未检测到活动窗口",
                         "t":  "2026-08-12T19:46:19+08:00",
@@ -350,6 +345,11 @@
                         "detail":  "ChatGPT",
                         "t":  "2026-08-12T21:05:17+08:00",
                         "activity":  "正在使用 ChatGPT"
+                    },
+                    {
+                        "detail":  "chatgpt.com 和另外 1 个页面 - 个人 - Microsoft​ Edge",
+                        "t":  "2026-08-12T21:05:48+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
