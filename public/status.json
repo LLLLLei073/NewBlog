@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-12T18:34:44+08:00",
+    "updatedAt":  "2026-08-12T18:36:55+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,7 +8,7 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  8153,
+                                "正在浏览网页":  8284,
                                 "正在使用 HiBitUninstaller":  41,
                                 "正在使用 CC40":  41,
                                 "正在使用 Shark Cloud":  105,
@@ -19,23 +19,23 @@
                                 "正在使用 clash-verge":  71,
                                 "正在写代码":  13447,
                                 "正在使用 LockApp":  2244,
+                                "正在用微信":  123,
                                 "离开电脑":  871,
                                 "正在使用私密应用":  993,
                                 "正在使用 mspaint":  262,
                                 "正在处理文档":  3365,
                                 "正在使用 ApplicationFrameHost":  142,
                                 "正在使用 explorer":  123,
-                                "正在使用 OpenCode":  2481,
                                 "正在使用 crashpad_handler":  112,
-                                "正在用微信":  123,
+                                "正在使用 OpenCode":  2481,
                                 "正在使用 Dism++x64":  103
                             },
                   "date":  "2026-08-12"
               },
     "pc":  {
-               "detail":  "Microsoft Edge 加载项 和另外 2 个页面 - 个人 - Microsoft​ Edge",
+               "detail":  "WebRTC Protect :: WebExtension.ORG 和另外 4 个页面 - 个人 - Microsof…",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-12T18:34:44+08:00",
+               "updatedAt":  "2026-08-12T18:36:55+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
