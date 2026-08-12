@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-12T17:06:21+08:00",
+    "updatedAt":  "2026-08-12T17:08:32+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,7 +8,7 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  6885,
+                                "正在浏览网页":  7016,
                                 "正在使用 CC40":  41,
                                 "正在处理文档":  3365,
                                 "正在使用 Typora":  41,
@@ -19,18 +19,18 @@
                                 "离开电脑":  789,
                                 "正在使用私密应用":  374,
                                 "正在使用 mspaint":  262,
-                                "正在用微信":  123,
                                 "正在使用 ApplicationFrameHost":  142,
                                 "正在使用 explorer":  82,
                                 "正在使用 crashpad_handler":  112,
+                                "正在用微信":  123,
                                 "正在使用 Dism++x64":  103
                             },
                   "date":  "2026-08-12"
               },
     "pc":  {
-               "detail":  "Problem - B - Codeforces 和另外 9 个页面 - 个人 - Microsoft​ Edge",
+               "detail":  "牛客竞赛_ACM/NOI/CSP/CCPC/ICPC算法编程高难度练习赛_牛客竞赛OJ 和另外 9 个页面 - 个人 -…",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-12T17:06:21+08:00",
+               "updatedAt":  "2026-08-12T17:08:32+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
