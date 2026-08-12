@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-12T09:52:36+08:00",
+    "updatedAt":  "2026-08-12T09:54:48+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -11,16 +11,16 @@
                                 "正在处理文档":  396,
                                 "正在使用 explorer":  41,
                                 "离开电脑":  41,
-                                "正在浏览网页":  989,
+                                "正在浏览网页":  1121,
                                 "正在看视频":  39556,
                                 "正在使用 LockApp":  306
                             },
                   "date":  "2026-08-12"
               },
     "pc":  {
-               "detail":  "C++ 容器类 \u003cset\u003e | 菜鸟教程 和另外 6 个页面 - 个人 - Microsoft​ Edge",
+               "detail":  "C++二分查找函数 - DeepSeek 和另外 7 个页面 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-12T09:52:36+08:00",
+               "updatedAt":  "2026-08-12T09:54:48+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
