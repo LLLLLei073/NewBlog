@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-12T12:57:35+08:00",
+    "updatedAt":  "2026-08-12T12:58:46+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -18,16 +18,16 @@
                                 "离开电脑":  355,
                                 "正在使用私密应用":  374,
                                 "正在使用 mspaint":  262,
-                                "正在使用 ApplicationFrameHost":  71,
+                                "正在使用 ApplicationFrameHost":  142,
                                 "正在使用 explorer":  82,
                                 "正在用微信":  82
                             },
                   "date":  "2026-08-12"
               },
     "pc":  {
-               "detail":  "计算器",
-               "activity":  "正在使用 ApplicationFrameHost",
-               "updatedAt":  "2026-08-12T12:57:35+08:00",
+               "detail":  "VS Code",
+               "activity":  "正在写代码",
+               "updatedAt":  "2026-08-12T12:58:46+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -39,11 +39,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "微信",
-                        "t":  "2026-08-11T21:58:39+08:00",
-                        "activity":  "正在用微信"
-                    },
                     {
                         "detail":  "图片和视频",
                         "t":  "2026-08-11T21:59:12+08:00",
@@ -338,6 +333,11 @@
                         "detail":  "计算器",
                         "t":  "2026-08-12T12:57:35+08:00",
                         "activity":  "正在使用 ApplicationFrameHost"
+                    },
+                    {
+                        "detail":  "VS Code",
+                        "t":  "2026-08-12T12:58:46+08:00",
+                        "activity":  "正在写代码"
                     }
                 ]
 }
