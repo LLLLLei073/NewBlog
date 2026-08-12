@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-12T16:31:23+08:00",
+    "updatedAt":  "2026-08-12T16:32:34+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -14,23 +14,23 @@
                                 "正在使用 Typora":  41,
                                 "正在使用 Photos":  41,
                                 "正在看视频":  39758,
-                                "正在写代码":  12527,
+                                "正在写代码":  12598,
                                 "正在使用 LockApp":  1750,
                                 "离开电脑":  789,
                                 "正在使用私密应用":  374,
                                 "正在使用 mspaint":  262,
+                                "正在用微信":  82,
                                 "正在使用 ApplicationFrameHost":  142,
                                 "正在使用 explorer":  82,
                                 "正在使用 crashpad_handler":  112,
-                                "正在用微信":  82,
                                 "正在使用 Dism++x64":  103
                             },
                   "date":  "2026-08-12"
               },
     "pc":  {
-               "detail":  "VS Code",
-               "activity":  "正在写代码",
-               "updatedAt":  "2026-08-12T16:31:23+08:00",
+               "detail":  "牛客竞赛_ACM/NOI/CSP/CCPC/ICPC算法编程高难度练习赛_牛客竞赛OJ 和另外 1 个页面 - 个人 -…",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-12T16:32:34+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -42,11 +42,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Program Manager",
-                        "t":  "2026-08-12T11:49:40+08:00",
-                        "activity":  "正在使用 explorer"
-                    },
                     {
                         "detail":  "acm.zust.edu.cn 和另外 1 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-12T11:50:21+08:00",
@@ -341,6 +336,11 @@
                         "detail":  "VS Code",
                         "t":  "2026-08-12T16:31:23+08:00",
                         "activity":  "正在写代码"
+                    },
+                    {
+                        "detail":  "牛客竞赛_ACM/NOI/CSP/CCPC/ICPC算法编程高难度练习赛_牛客竞赛OJ 和另外 1 个页面 - 个人 -…",
+                        "t":  "2026-08-12T16:32:34+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
