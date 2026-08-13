@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-13T11:10:32+08:00",
+    "updatedAt":  "2026-08-13T11:11:36+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,7 +8,7 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  40039,
+                                "正在浏览网页":  40102,
                                 "正在使用 Taskmgr":  63,
                                 "正在使用 Shark Cloud":  213,
                                 "正在使用 LockApp":  73,
@@ -26,9 +26,9 @@
                   "date":  "2026-08-13"
               },
     "pc":  {
-               "detail":  "H-It\u0027s Magic, Not a Trick!_2026牛客暑期多校训练营8 和另外 4 个页面 - 个人 - M…",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-13T11:10:32+08:00",
+               "detail":  "Snipping Tool Overlay",
+               "activity":  "正在使用 SnippingTool",
+               "updatedAt":  "2026-08-13T11:11:36+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -40,11 +40,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "绝对值博弈_牛客题霸_牛客网 和另外 2 个页面 - 个人 - Microsoft​ Edge",
-                        "t":  "2026-08-13T09:42:52+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "ChatGPT",
                         "t":  "2026-08-13T09:45:04+08:00",
@@ -339,6 +334,11 @@
                         "detail":  "H-It\u0027s Magic, Not a Trick!_2026牛客暑期多校训练营8 和另外 4 个页面 - 个人 - M…",
                         "t":  "2026-08-13T11:10:32+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "Snipping Tool Overlay",
+                        "t":  "2026-08-13T11:11:36+08:00",
+                        "activity":  "正在使用 SnippingTool"
                     }
                 ]
 }
