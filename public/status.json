@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-13T09:45:46+08:00",
+    "updatedAt":  "2026-08-13T09:46:59+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,21 +8,21 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在使用 clash-verge":  41,
+                                "正在使用 HipsMain":  41,
                                 "正在使用 explorer":  41,
                                 "正在使用 Shark Cloud":  81,
-                                "正在浏览网页":  38622,
+                                "正在浏览网页":  38694,
                                 "正在使用 ChatGPT":  184,
-                                "正在使用 HipsMain":  41,
+                                "正在使用 clash-verge":  41,
                                 "正在使用 LockApp":  73,
                                 "离开电脑":  128
                             },
                   "date":  "2026-08-13"
               },
     "pc":  {
-               "detail":  "DeepSeek - 探索未至之境 和另外 4 个页面 - 个人 - Microsoft​ Edge",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-13T09:45:46+08:00",
+               "detail":  "CC Switch Setup",
+               "activity":  "正在使用 msiexec",
+               "updatedAt":  "2026-08-13T09:46:59+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -34,11 +34,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Microsoft Store",
-                        "t":  "2026-08-12T20:50:50+08:00",
-                        "activity":  "正在使用 ApplicationFrameHost"
-                    },
                     {
                         "detail":  "退出Codex接入脚本 - DeepSeek 和另外 4 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-12T20:51:53+08:00",
@@ -333,6 +328,11 @@
                         "detail":  "DeepSeek - 探索未至之境 和另外 4 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-13T09:45:46+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "CC Switch Setup",
+                        "t":  "2026-08-13T09:46:59+08:00",
+                        "activity":  "正在使用 msiexec"
                     }
                 ]
 }
