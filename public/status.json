@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-13T11:56:47+08:00",
+    "updatedAt":  "2026-08-13T11:58:48+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -11,26 +11,26 @@
                                 "正在浏览网页":  40498,
                                 "正在使用 Taskmgr":  63,
                                 "正在使用 Shark Cloud":  246,
+                                "正在使用 cc-switch":  259,
                                 "正在使用 LockApp":  73,
                                 "正在使用 msiexec":  71,
-                                "正在用微信":  30,
                                 "正在使用 clash-verge":  41,
                                 "正在写代码":  1809,
                                 "正在使用 ShellHost":  141,
                                 "离开电脑":  2010,
-                                "正在使用 ChatGPT":  972,
+                                "正在使用 ChatGPT":  1092,
                                 "正在使用 HipsMain":  41,
                                 "正在处理文档":  504,
                                 "正在使用 explorer":  214,
                                 "正在使用 SnippingTool":  33,
-                                "正在使用 cc-switch":  259
+                                "正在用微信":  30
                             },
                   "date":  "2026-08-13"
               },
     "pc":  {
                "detail":  "ChatGPT",
                "activity":  "正在使用 ChatGPT",
-               "updatedAt":  "2026-08-13T11:56:47+08:00",
+               "updatedAt":  "2026-08-13T11:58:48+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
