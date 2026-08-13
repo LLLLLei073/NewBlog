@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-13T09:30:57+08:00",
+    "updatedAt":  "2026-08-13T09:33:09+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,7 +8,7 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  38127,
+                                "正在浏览网页":  38258,
                                 "正在使用 clash-verge":  41,
                                 "正在使用 LockApp":  73,
                                 "离开电脑":  84
@@ -16,9 +16,9 @@
                   "date":  "2026-08-13"
               },
     "pc":  {
-               "detail":  "The ICPC International Collegiate Programming Contest 和另外 8 …",
+               "detail":  "LLM Leaderboard - Best Text \u0026 Chat AI Models Compared 和另外 6 …",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-13T09:30:57+08:00",
+               "updatedAt":  "2026-08-13T09:33:09+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
