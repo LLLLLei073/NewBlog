@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-13T11:07:17+08:00",
+    "updatedAt":  "2026-08-13T11:08:50+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,7 +8,7 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  39913,
+                                "正在浏览网页":  40006,
                                 "正在使用 Taskmgr":  63,
                                 "正在使用 Shark Cloud":  213,
                                 "正在使用 LockApp":  73,
@@ -26,9 +26,9 @@
                   "date":  "2026-08-13"
               },
     "pc":  {
-               "detail":  "魔力剩余最小值 - 个人 - Microsoft​ Edge",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-13T11:07:17+08:00",
+               "detail":  "VS Code",
+               "activity":  "正在写代码",
+               "updatedAt":  "2026-08-13T11:08:50+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -40,11 +40,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "火绒安全软件",
-                        "t":  "2026-08-13T09:38:54+08:00",
-                        "activity":  "正在使用 HipsMain"
-                    },
                     {
                         "detail":  "ChatGPT",
                         "t":  "2026-08-13T09:39:35+08:00",
@@ -339,6 +334,11 @@
                         "detail":  "魔力剩余最小值 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-13T11:07:17+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "VS Code",
+                        "t":  "2026-08-13T11:08:50+08:00",
+                        "activity":  "正在写代码"
                     }
                 ]
 }
