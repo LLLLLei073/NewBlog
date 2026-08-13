@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-13T21:55:19+08:00",
+    "updatedAt":  "2026-08-13T21:55:53+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -16,19 +16,19 @@
                                 "正在使用 msiexec":  71,
                                 "正在使用 ShellExperienceHost":  33,
                                 "正在使用 expressvpn-windows-x64-14.2.0.13656_release":  34,
+                                "正在用微信":  386,
                                 "正在使用 clash-verge":  41,
                                 "正在写代码":  13407,
-                                "正在使用 OpenCode":  96,
                                 "正在使用 ShellHost":  456,
                                 "离开电脑":  5128,
                                 "正在使用私密应用":  282,
                                 "正在使用 ChatGPT":  4787,
                                 "正在使用 HipsMain":  41,
                                 "正在使用 cc-switch":  259,
-                                "正在使用 explorer":  560,
+                                "正在使用 explorer":  593,
                                 "正在使用 SnippingTool":  33,
                                 "正在使用 FlClash":  129,
-                                "正在用微信":  386,
+                                "正在使用 OpenCode":  96,
                                 "正在处理文档":  825,
                                 "正在使用 Weixin":  380,
                                 "正在使用 Dism++x64":  30
@@ -36,9 +36,9 @@
                   "date":  "2026-08-13"
               },
     "pc":  {
-               "detail":  "此电脑 - 文件资源管理器",
-               "activity":  "正在使用 explorer",
-               "updatedAt":  "2026-08-13T21:55:19+08:00",
+               "detail":  "朋友圈",
+               "activity":  "正在使用 Weixin",
+               "updatedAt":  "2026-08-13T21:55:53+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -50,11 +50,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Surfshark靠谱吗？说说我的亲身使用经历！【Surfshake下载不能用太正常了】 - 知乎 和另外 2 个页面 …",
-                        "t":  "2026-08-13T19:17:06+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "未检测到活动窗口",
                         "t":  "2026-08-13T19:21:13+08:00",
@@ -349,6 +344,11 @@
                         "detail":  "此电脑 - 文件资源管理器",
                         "t":  "2026-08-13T21:55:19+08:00",
                         "activity":  "正在使用 explorer"
+                    },
+                    {
+                        "detail":  "朋友圈",
+                        "t":  "2026-08-13T21:55:53+08:00",
+                        "activity":  "正在使用 Weixin"
                     }
                 ]
 }
