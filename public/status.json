@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-13T11:51:12+08:00",
+    "updatedAt":  "2026-08-13T11:51:43+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -14,7 +14,7 @@
                                 "正在使用 LockApp":  73,
                                 "正在使用 msiexec":  71,
                                 "正在使用 clash-verge":  41,
-                                "正在写代码":  1779,
+                                "正在写代码":  1809,
                                 "正在使用 ShellHost":  141,
                                 "离开电脑":  2010,
                                 "正在使用 ChatGPT":  912,
@@ -27,9 +27,9 @@
                   "date":  "2026-08-13"
               },
     "pc":  {
-               "detail":  "VS Code",
-               "activity":  "正在写代码",
-               "updatedAt":  "2026-08-13T11:51:12+08:00",
+               "detail":  "Welcome to Hangzhou Dianzi University Online Judge 和另外 1 个页面…",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-13T11:51:43+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -41,11 +41,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "CC Switch",
-                        "t":  "2026-08-13T09:54:50+08:00",
-                        "activity":  "正在使用 cc-switch"
-                    },
                     {
                         "detail":  "ChatGPT 中的 Codex | 专为软件工程打造的 AI 编程智能体 和另外 2 个页面 - 个人 - Micro…",
                         "t":  "2026-08-13T09:55:54+08:00",
@@ -340,6 +335,11 @@
                         "detail":  "VS Code",
                         "t":  "2026-08-13T11:51:12+08:00",
                         "activity":  "正在写代码"
+                    },
+                    {
+                        "detail":  "Welcome to Hangzhou Dianzi University Online Judge 和另外 1 个页面…",
+                        "t":  "2026-08-13T11:51:43+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
