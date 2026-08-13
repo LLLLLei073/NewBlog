@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-13T11:51:43+08:00",
+    "updatedAt":  "2026-08-13T11:53:14+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,7 +8,7 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  40288,
+                                "正在浏览网页":  40378,
                                 "正在使用 Taskmgr":  63,
                                 "正在使用 Shark Cloud":  246,
                                 "正在使用 LockApp":  73,
@@ -27,9 +27,9 @@
                   "date":  "2026-08-13"
               },
     "pc":  {
-               "detail":  "Welcome to Hangzhou Dianzi University Online Judge 和另外 1 个页面…",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-13T11:51:43+08:00",
+               "detail":  "微信",
+               "activity":  "正在用微信",
+               "updatedAt":  "2026-08-13T11:53:14+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -41,11 +41,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "ChatGPT 中的 Codex | 专为软件工程打造的 AI 编程智能体 和另外 2 个页面 - 个人 - Micro…",
-                        "t":  "2026-08-13T09:55:54+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "CC Switch",
                         "t":  "2026-08-13T09:56:28+08:00",
@@ -340,6 +335,11 @@
                         "detail":  "Welcome to Hangzhou Dianzi University Online Judge 和另外 1 个页面…",
                         "t":  "2026-08-13T11:51:43+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "微信",
+                        "t":  "2026-08-13T11:53:14+08:00",
+                        "activity":  "正在用微信"
                     }
                 ]
 }
