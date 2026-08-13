@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-13T23:25:39+08:00",
+    "updatedAt":  "2026-08-13T23:26:43+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -16,9 +16,9 @@
                                 "正在使用 msiexec":  71,
                                 "正在使用 ShellExperienceHost":  33,
                                 "正在使用 expressvpn-windows-x64-14.2.0.13656_release":  34,
+                                "正在用微信":  485,
                                 "正在使用 clash-verge":  41,
                                 "正在写代码":  15782,
-                                "正在使用 OpenCode":  226,
                                 "正在使用 ShellHost":  456,
                                 "离开电脑":  5224,
                                 "正在使用私密应用":  316,
@@ -28,7 +28,7 @@
                                 "正在使用 explorer":  695,
                                 "正在使用 SnippingTool":  33,
                                 "正在使用 FlClash":  162,
-                                "正在用微信":  485,
+                                "正在使用 OpenCode":  290,
                                 "正在处理文档":  952,
                                 "正在使用 Weixin":  476,
                                 "正在使用 Dism++x64":  30
@@ -36,9 +36,9 @@
                   "date":  "2026-08-13"
               },
     "pc":  {
-               "detail":  "OpenCode",
-               "activity":  "正在使用 OpenCode",
-               "updatedAt":  "2026-08-13T23:25:39+08:00",
+               "detail":  "Problems 和另外 1 个页面 - 个人 - Microsoft​ Edge",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-13T23:26:43+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -50,11 +50,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "ChatGPT",
-                        "t":  "2026-08-13T21:06:50+08:00",
-                        "activity":  "正在使用 ChatGPT"
-                    },
                     {
                         "detail":  "新建标签页 和另外 3 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-13T21:09:57+08:00",
@@ -349,6 +344,11 @@
                         "detail":  "OpenCode",
                         "t":  "2026-08-13T23:25:39+08:00",
                         "activity":  "正在使用 OpenCode"
+                    },
+                    {
+                        "detail":  "Problems 和另外 1 个页面 - 个人 - Microsoft​ Edge",
+                        "t":  "2026-08-13T23:26:43+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
