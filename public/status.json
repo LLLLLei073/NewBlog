@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-13T10:16:55+08:00",
+    "updatedAt":  "2026-08-13T10:17:29+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,24 +8,24 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在使用 HipsMain":  41,
-                                "正在使用 explorer":  115,
+                                "正在使用 clash-verge":  41,
                                 "正在使用 ShellHost":  30,
                                 "正在使用 msiexec":  71,
                                 "正在使用 cc-switch":  259,
                                 "正在使用 Shark Cloud":  81,
                                 "正在浏览网页":  39409,
-                                "正在使用 ChatGPT":  779,
-                                "正在使用 clash-verge":  41,
+                                "正在使用 ChatGPT":  812,
+                                "离开电脑":  163,
+                                "正在使用 HipsMain":  41,
                                 "正在使用 LockApp":  73,
-                                "离开电脑":  163
+                                "正在使用 explorer":  115
                             },
                   "date":  "2026-08-13"
               },
     "pc":  {
-               "detail":  "ChatGPT",
-               "activity":  "正在使用 ChatGPT",
-               "updatedAt":  "2026-08-13T10:16:55+08:00",
+               "detail":  "绝对值博弈_牛客题霸_牛客网 和另外 2 个页面 - 个人 - Microsoft​ Edge",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-13T10:17:29+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -37,11 +37,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Shark Cloud",
-                        "t":  "2026-08-12T21:07:22+08:00",
-                        "activity":  "正在使用 Shark Cloud"
-                    },
                     {
                         "detail":  "Windows 默认锁屏界面",
                         "t":  "2026-08-12T21:08:45+08:00",
@@ -336,6 +331,11 @@
                         "detail":  "ChatGPT",
                         "t":  "2026-08-13T10:16:55+08:00",
                         "activity":  "正在使用 ChatGPT"
+                    },
+                    {
+                        "detail":  "绝对值博弈_牛客题霸_牛客网 和另外 2 个页面 - 个人 - Microsoft​ Edge",
+                        "t":  "2026-08-13T10:17:29+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
