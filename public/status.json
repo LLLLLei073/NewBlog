@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-13T23:00:25+08:00",
+    "updatedAt":  "2026-08-13T23:01:28+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -16,19 +16,19 @@
                                 "正在使用 msiexec":  71,
                                 "正在使用 ShellExperienceHost":  33,
                                 "正在使用 expressvpn-windows-x64-14.2.0.13656_release":  34,
-                                "正在用微信":  452,
                                 "正在使用 clash-verge":  41,
                                 "正在写代码":  15062,
+                                "正在使用 OpenCode":  129,
                                 "正在使用 ShellHost":  456,
                                 "离开电脑":  5128,
                                 "正在使用私密应用":  282,
-                                "正在使用 ChatGPT":  6367,
+                                "正在使用 ChatGPT":  6430,
                                 "正在使用 HipsMain":  41,
                                 "正在使用 cc-switch":  259,
                                 "正在使用 explorer":  695,
                                 "正在使用 SnippingTool":  33,
                                 "正在使用 FlClash":  129,
-                                "正在使用 OpenCode":  129,
+                                "正在用微信":  452,
                                 "正在处理文档":  952,
                                 "正在使用 Weixin":  476,
                                 "正在使用 Dism++x64":  30
@@ -36,9 +36,9 @@
                   "date":  "2026-08-13"
               },
     "pc":  {
-               "detail":  "ChatGPT",
-               "activity":  "正在使用 ChatGPT",
-               "updatedAt":  "2026-08-13T23:00:25+08:00",
+               "detail":  "VS Code",
+               "activity":  "正在写代码",
+               "updatedAt":  "2026-08-13T23:01:28+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -50,11 +50,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "图片和视频",
-                        "t":  "2026-08-13T19:43:25+08:00",
-                        "activity":  "正在使用 Weixin"
-                    },
                     {
                         "detail":  "ICPC | Dashboard - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-13T19:43:59+08:00",
@@ -349,6 +344,11 @@
                         "detail":  "ChatGPT",
                         "t":  "2026-08-13T23:00:25+08:00",
                         "activity":  "正在使用 ChatGPT"
+                    },
+                    {
+                        "detail":  "VS Code",
+                        "t":  "2026-08-13T23:01:28+08:00",
+                        "activity":  "正在写代码"
                     }
                 ]
 }
