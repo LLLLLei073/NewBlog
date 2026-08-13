@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-13T09:49:21+08:00",
+    "updatedAt":  "2026-08-13T09:50:58+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,39 +8,35 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在使用 clash-verge":  41,
+                                "正在使用 HipsMain":  41,
                                 "正在使用 ShellHost":  30,
                                 "正在使用 msiexec":  71,
+                                "正在使用 cc-switch":  97,
                                 "正在使用 explorer":  82,
                                 "正在使用 Shark Cloud":  81,
                                 "正在浏览网页":  38694,
                                 "正在使用 ChatGPT":  184,
-                                "正在使用 HipsMain":  41,
+                                "正在使用 clash-verge":  41,
                                 "正在使用 LockApp":  73,
                                 "离开电脑":  128
                             },
                   "date":  "2026-08-13"
               },
     "pc":  {
-               "detail":  "CC Switch",
-               "activity":  "正在使用 cc-switch",
-               "updatedAt":  "2026-08-13T09:49:21+08:00",
+               "detail":  "未检测到活动窗口",
+               "activity":  "离开电脑",
+               "updatedAt":  "2026-08-13T09:50:58+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
                                "host":  "徐磊",
-                               "gpu":  "GameViewer Virtual Display Adapter",
+                               "gpu":  "Intel(R) Graphics",
                                "os":  "Microsoft Windows 11 家庭版 10.0.26200",
                                "ram":  "31.4 GB",
                                "cpu":  "Intel(R) Core(TM) Ultra 9 275HX"
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Microsoft Store",
-                        "t":  "2026-08-12T20:55:48+08:00",
-                        "activity":  "正在使用 ChatGPT Installer"
-                    },
                     {
                         "detail":  "ChatGPT",
                         "t":  "2026-08-12T20:56:22+08:00",
@@ -335,6 +331,11 @@
                         "detail":  "CC Switch",
                         "t":  "2026-08-13T09:49:21+08:00",
                         "activity":  "正在使用 cc-switch"
+                    },
+                    {
+                        "detail":  "未检测到活动窗口",
+                        "t":  "2026-08-13T09:50:58+08:00",
+                        "activity":  "离开电脑"
                     }
                 ]
 }
