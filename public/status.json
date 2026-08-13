@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-13T17:12:32+08:00",
+    "updatedAt":  "2026-08-13T17:14:35+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,12 +8,12 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  46775,
+                                "正在浏览网页":  46898,
                                 "正在使用 Taskmgr":  63,
                                 "正在使用 Shark Cloud":  246,
+                                "正在使用 cc-switch":  259,
                                 "正在使用 LockApp":  73,
                                 "正在使用 msiexec":  71,
-                                "正在用微信":  156,
                                 "正在使用 clash-verge":  41,
                                 "正在写代码":  12904,
                                 "正在使用 ShellHost":  208,
@@ -23,16 +23,16 @@
                                 "正在处理文档":  504,
                                 "正在使用 explorer":  494,
                                 "正在使用 SnippingTool":  33,
-                                "正在使用 cc-switch":  259,
+                                "正在用微信":  156,
                                 "正在使用 Weixin":  160,
                                 "正在使用 Dism++x64":  30
                             },
                   "date":  "2026-08-13"
               },
     "pc":  {
-               "detail":  "CodeForces评测基准：大模型排名与测试结果 | DataLearnerAI 和另外 8 个页面 - 个人 - M…",
+               "detail":  "DeepSeek V4代码能力实测：Codeforces 3206分到底什么水平？_ai代码开发这几个大模型哪个好用 d…",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-13T17:12:32+08:00",
+               "updatedAt":  "2026-08-13T17:14:35+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
