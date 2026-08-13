@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-13T09:54:16+08:00",
+    "updatedAt":  "2026-08-13T09:54:50+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,24 +8,24 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在使用 HipsMain":  41,
-                                "正在使用 explorer":  82,
+                                "正在使用 clash-verge":  41,
                                 "正在使用 ShellHost":  30,
                                 "正在使用 msiexec":  71,
                                 "正在使用 cc-switch":  130,
                                 "正在使用 Shark Cloud":  81,
                                 "正在浏览网页":  38727,
-                                "正在使用 ChatGPT":  278,
-                                "正在使用 clash-verge":  41,
+                                "正在使用 ChatGPT":  311,
+                                "离开电脑":  163,
+                                "正在使用 HipsMain":  41,
                                 "正在使用 LockApp":  73,
-                                "离开电脑":  163
+                                "正在使用 explorer":  82
                             },
                   "date":  "2026-08-13"
               },
     "pc":  {
-               "detail":  "ChatGPT",
-               "activity":  "正在使用 ChatGPT",
-               "updatedAt":  "2026-08-13T09:54:16+08:00",
+               "detail":  "CC Switch",
+               "activity":  "正在使用 cc-switch",
+               "updatedAt":  "2026-08-13T09:54:50+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -37,11 +37,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Acer (C:) - 文件资源管理器",
-                        "t":  "2026-08-12T20:59:08+08:00",
-                        "activity":  "正在使用 explorer"
-                    },
                     {
                         "detail":  "微信",
                         "t":  "2026-08-12T20:59:42+08:00",
@@ -336,6 +331,11 @@
                         "detail":  "ChatGPT",
                         "t":  "2026-08-13T09:54:16+08:00",
                         "activity":  "正在使用 ChatGPT"
+                    },
+                    {
+                        "detail":  "CC Switch",
+                        "t":  "2026-08-13T09:54:50+08:00",
+                        "activity":  "正在使用 cc-switch"
                     }
                 ]
 }
