@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-13T19:52:28+08:00",
+    "updatedAt":  "2026-08-13T19:53:02+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -11,34 +11,34 @@
                                 "正在浏览网页":  51869,
                                 "正在使用 HiBitUninstaller":  36,
                                 "正在使用 Taskmgr":  63,
+                                "正在用微信":  320,
                                 "正在使用 Shark Cloud":  428,
-                                "正在使用 HipsMain":  41,
                                 "正在使用 LockApp":  73,
                                 "正在使用 msiexec":  71,
                                 "正在使用 ShellExperienceHost":  33,
                                 "正在使用 expressvpn-windows-x64-14.2.0.13656_release":  34,
+                                "正在使用 clash-verge":  41,
                                 "正在处理文档":  825,
                                 "正在写代码":  13373,
-                                "正在使用 OpenCode":  63,
                                 "正在使用 ShellHost":  456,
                                 "离开电脑":  5095,
                                 "正在使用私密应用":  33,
                                 "正在使用 ChatGPT":  1389,
-                                "正在使用 FlClash":  96,
+                                "正在使用 HipsMain":  41,
                                 "正在使用 cc-switch":  259,
                                 "正在使用 explorer":  527,
                                 "正在使用 SnippingTool":  33,
-                                "正在使用 clash-verge":  41,
-                                "正在用微信":  286,
+                                "正在使用 FlClash":  96,
+                                "正在使用 OpenCode":  63,
                                 "正在使用 Weixin":  194,
                                 "正在使用 Dism++x64":  30
                             },
                   "date":  "2026-08-13"
               },
     "pc":  {
-               "detail":  "微信",
-               "activity":  "正在用微信",
-               "updatedAt":  "2026-08-13T19:52:28+08:00",
+               "detail":  "ChatGPT - 个人 - Microsoft​ Edge",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-13T19:53:02+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -50,11 +50,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "快速设置",
-                        "t":  "2026-08-13T17:56:53+08:00",
-                        "activity":  "正在使用 ShellHost"
-                    },
                     {
                         "detail":  "1003 太近就不合法了 和另外 1 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-13T17:57:27+08:00",
@@ -349,6 +344,11 @@
                         "detail":  "微信",
                         "t":  "2026-08-13T19:52:28+08:00",
                         "activity":  "正在用微信"
+                    },
+                    {
+                        "detail":  "ChatGPT - 个人 - Microsoft​ Edge",
+                        "t":  "2026-08-13T19:53:02+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
