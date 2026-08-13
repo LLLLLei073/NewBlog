@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-13T09:40:46+08:00",
+    "updatedAt":  "2026-08-13T09:42:07+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,20 +8,21 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在使用 clash-verge":  41,
+                                "正在使用 HipsMain":  41,
+                                "正在使用 Shark Cloud":  81,
                                 "正在使用 explorer":  41,
                                 "离开电脑":  84,
                                 "正在浏览网页":  38490,
                                 "正在使用 ChatGPT":  142,
-                                "正在使用 HipsMain":  41,
+                                "正在使用 clash-verge":  41,
                                 "正在使用 LockApp":  73
                             },
                   "date":  "2026-08-13"
               },
     "pc":  {
-               "detail":  "Shark Cloud",
-               "activity":  "正在使用 Shark Cloud",
-               "updatedAt":  "2026-08-13T09:40:46+08:00",
+               "detail":  "未检测到活动窗口",
+               "activity":  "离开电脑",
+               "updatedAt":  "2026-08-13T09:42:07+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -33,11 +34,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "ChatGPT",
-                        "t":  "2026-08-12T20:47:34+08:00",
-                        "activity":  "正在使用 ChatGPT"
-                    },
                     {
                         "detail":  "设置",
                         "t":  "2026-08-12T20:49:08+08:00",
@@ -332,6 +328,11 @@
                         "detail":  "Shark Cloud",
                         "t":  "2026-08-13T09:40:46+08:00",
                         "activity":  "正在使用 Shark Cloud"
+                    },
+                    {
+                        "detail":  "未检测到活动窗口",
+                        "t":  "2026-08-13T09:42:07+08:00",
+                        "activity":  "离开电脑"
                     }
                 ]
 }
