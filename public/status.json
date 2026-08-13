@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-13T10:24:55+08:00",
+    "updatedAt":  "2026-08-13T10:25:29+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -19,14 +19,14 @@
                                 "正在使用 ChatGPT":  845,
                                 "正在使用 HipsMain":  41,
                                 "正在使用 cc-switch":  259,
-                                "正在使用 explorer":  148
+                                "正在使用 explorer":  181
                             },
                   "date":  "2026-08-13"
               },
     "pc":  {
-               "detail":  "最小能量剩余计算",
-               "activity":  "正在使用 explorer",
-               "updatedAt":  "2026-08-13T10:24:55+08:00",
+               "detail":  "任务管理器",
+               "activity":  "正在使用 Taskmgr",
+               "updatedAt":  "2026-08-13T10:25:29+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -38,11 +38,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "The ICPC International Collegiate Programming Contest 和另外 2 …",
-                        "t":  "2026-08-12T21:14:43+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "微信",
                         "t":  "2026-08-12T21:24:34+08:00",
@@ -337,6 +332,11 @@
                         "detail":  "最小能量剩余计算",
                         "t":  "2026-08-13T10:24:55+08:00",
                         "activity":  "正在使用 explorer"
+                    },
+                    {
+                        "detail":  "任务管理器",
+                        "t":  "2026-08-13T10:25:29+08:00",
+                        "activity":  "正在使用 Taskmgr"
                     }
                 ]
 }
