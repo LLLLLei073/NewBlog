@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-13T09:28:46+08:00",
+    "updatedAt":  "2026-08-13T09:30:57+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,7 +8,7 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  37996,
+                                "正在浏览网页":  38127,
                                 "正在使用 clash-verge":  41,
                                 "正在使用 LockApp":  73,
                                 "离开电脑":  84
@@ -16,9 +16,9 @@
                   "date":  "2026-08-13"
               },
     "pc":  {
-               "detail":  "arena - 搜索 和另外 5 个页面 - 个人 - Microsoft​ Edge",
+               "detail":  "The ICPC International Collegiate Programming Contest 和另外 8 …",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-13T09:28:46+08:00",
+               "updatedAt":  "2026-08-13T09:30:57+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
