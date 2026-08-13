@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-13T19:49:51+08:00",
+    "updatedAt":  "2026-08-13T19:51:54+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,18 +8,18 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  51713,
+                                "正在浏览网页":  51836,
                                 "正在使用 HiBitUninstaller":  36,
                                 "正在使用 Taskmgr":  63,
-                                "正在使用 Dism++x64":  30,
+                                "正在使用 FlClash":  96,
                                 "正在使用 Shark Cloud":  428,
                                 "正在使用 LockApp":  73,
                                 "正在使用 msiexec":  71,
                                 "正在使用 ShellExperienceHost":  33,
                                 "正在使用 expressvpn-windows-x64-14.2.0.13656_release":  34,
+                                "正在用微信":  286,
                                 "正在处理文档":  825,
                                 "正在写代码":  13373,
-                                "正在使用 OpenCode":  63,
                                 "正在使用 ShellHost":  456,
                                 "离开电脑":  5095,
                                 "正在使用私密应用":  33,
@@ -29,16 +29,16 @@
                                 "正在使用 explorer":  527,
                                 "正在使用 SnippingTool":  33,
                                 "正在使用 clash-verge":  41,
-                                "正在用微信":  286,
+                                "正在使用 OpenCode":  63,
                                 "正在使用 Weixin":  194,
-                                "正在使用 FlClash":  96
+                                "正在使用 Dism++x64":  30
                             },
                   "date":  "2026-08-13"
               },
     "pc":  {
-               "detail":  "队员 - ICPC 报名 和另外 2 个页面 - 个人 - Microsoft​ Edge",
+               "detail":  "个人信息 和另外 2 个页面 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-13T19:49:51+08:00",
+               "updatedAt":  "2026-08-13T19:51:54+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
