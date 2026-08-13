@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-13T11:12:44+08:00",
+    "updatedAt":  "2026-08-13T11:13:22+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -14,7 +14,7 @@
                                 "正在使用 LockApp":  73,
                                 "正在使用 msiexec":  71,
                                 "正在使用 clash-verge":  41,
-                                "正在写代码":  1585,
+                                "正在写代码":  1623,
                                 "正在使用 ShellHost":  99,
                                 "离开电脑":  163,
                                 "正在使用 ChatGPT":  912,
@@ -27,9 +27,9 @@
                   "date":  "2026-08-13"
               },
     "pc":  {
-               "detail":  "VS Code",
-               "activity":  "正在写代码",
-               "updatedAt":  "2026-08-13T11:12:44+08:00",
+               "detail":  "魔力剩余最小值 - 个人 - Microsoft​ Edge",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-13T11:13:22+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -41,11 +41,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "CC Switch Setup",
-                        "t":  "2026-08-13T09:46:59+08:00",
-                        "activity":  "正在使用 msiexec"
-                    },
                     {
                         "detail":  "下载 - 文件资源管理器",
                         "t":  "2026-08-13T09:48:10+08:00",
@@ -340,6 +335,11 @@
                         "detail":  "VS Code",
                         "t":  "2026-08-13T11:12:44+08:00",
                         "activity":  "正在写代码"
+                    },
+                    {
+                        "detail":  "魔力剩余最小值 - 个人 - Microsoft​ Edge",
+                        "t":  "2026-08-13T11:13:22+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
