@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-13T15:49:00+08:00",
+    "updatedAt":  "2026-08-13T15:51:04+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,12 +8,12 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  43717,
+                                "正在浏览网页":  43840,
                                 "正在使用 Taskmgr":  63,
                                 "正在使用 Shark Cloud":  246,
+                                "正在使用 cc-switch":  259,
                                 "正在使用 LockApp":  73,
                                 "正在使用 msiexec":  71,
-                                "正在用微信":  90,
                                 "正在使用 clash-verge":  41,
                                 "正在写代码":  11540,
                                 "正在使用 ShellHost":  171,
@@ -23,15 +23,15 @@
                                 "正在处理文档":  504,
                                 "正在使用 explorer":  461,
                                 "正在使用 SnippingTool":  33,
-                                "正在使用 cc-switch":  259,
+                                "正在用微信":  90,
                                 "正在使用 Dism++x64":  30
                             },
                   "date":  "2026-08-13"
               },
     "pc":  {
-               "detail":  "代码优化建议 - 个人 - Microsoft​ Edge",
+               "detail":  "新标签页",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-13T15:49:00+08:00",
+               "updatedAt":  "2026-08-13T15:51:04+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
