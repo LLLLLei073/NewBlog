@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-13T11:11:36+08:00",
+    "updatedAt":  "2026-08-13T11:12:10+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -21,14 +21,15 @@
                                 "正在使用 HipsMain":  41,
                                 "正在处理文档":  504,
                                 "正在使用 explorer":  181,
+                                "正在使用 SnippingTool":  33,
                                 "正在使用 cc-switch":  259
                             },
                   "date":  "2026-08-13"
               },
     "pc":  {
-               "detail":  "Snipping Tool Overlay",
-               "activity":  "正在使用 SnippingTool",
-               "updatedAt":  "2026-08-13T11:11:36+08:00",
+               "detail":  "Shark Cloud",
+               "activity":  "正在使用 Shark Cloud",
+               "updatedAt":  "2026-08-13T11:12:10+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -40,11 +41,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "ChatGPT",
-                        "t":  "2026-08-13T09:45:04+08:00",
-                        "activity":  "正在使用 ChatGPT"
-                    },
                     {
                         "detail":  "DeepSeek - 探索未至之境 和另外 4 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-13T09:45:46+08:00",
@@ -339,6 +335,11 @@
                         "detail":  "Snipping Tool Overlay",
                         "t":  "2026-08-13T11:11:36+08:00",
                         "activity":  "正在使用 SnippingTool"
+                    },
+                    {
+                        "detail":  "Shark Cloud",
+                        "t":  "2026-08-13T11:12:10+08:00",
+                        "activity":  "正在使用 Shark Cloud"
                     }
                 ]
 }
