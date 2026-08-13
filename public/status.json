@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-13T22:01:49+08:00",
+    "updatedAt":  "2026-08-13T22:02:22+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -16,9 +16,9 @@
                                 "正在使用 msiexec":  71,
                                 "正在使用 ShellExperienceHost":  33,
                                 "正在使用 expressvpn-windows-x64-14.2.0.13656_release":  34,
+                                "正在用微信":  386,
                                 "正在使用 clash-verge":  41,
                                 "正在写代码":  13407,
-                                "正在使用 OpenCode":  129,
                                 "正在使用 ShellHost":  456,
                                 "离开电脑":  5128,
                                 "正在使用私密应用":  282,
@@ -28,17 +28,17 @@
                                 "正在使用 explorer":  660,
                                 "正在使用 SnippingTool":  33,
                                 "正在使用 FlClash":  129,
-                                "正在用微信":  386,
+                                "正在使用 OpenCode":  129,
                                 "正在处理文档":  888,
-                                "正在使用 Weixin":  443,
+                                "正在使用 Weixin":  476,
                                 "正在使用 Dism++x64":  30
                             },
                   "date":  "2026-08-13"
               },
     "pc":  {
-               "detail":  "朋友圈",
-               "activity":  "正在使用 Weixin",
-               "updatedAt":  "2026-08-13T22:01:49+08:00",
+               "detail":  "新建标签页 和另外 5 个页面 - 个人 - Microsoft​ Edge",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-13T22:02:22+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -50,11 +50,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Office",
-                        "t":  "2026-08-13T19:32:03+08:00",
-                        "activity":  "正在处理文档"
-                    },
                     {
                         "detail":  "ICPC注册信息 和另外 1 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-13T19:32:37+08:00",
@@ -349,6 +344,11 @@
                         "detail":  "朋友圈",
                         "t":  "2026-08-13T22:01:49+08:00",
                         "activity":  "正在使用 Weixin"
+                    },
+                    {
+                        "detail":  "新建标签页 和另外 5 个页面 - 个人 - Microsoft​ Edge",
+                        "t":  "2026-08-13T22:02:22+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
