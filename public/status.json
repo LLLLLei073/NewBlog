@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-13T09:33:09+08:00",
+    "updatedAt":  "2026-08-13T09:34:50+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,7 +8,7 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  38258,
+                                "正在浏览网页":  38359,
                                 "正在使用 clash-verge":  41,
                                 "正在使用 LockApp":  73,
                                 "离开电脑":  84
@@ -16,9 +16,9 @@
                   "date":  "2026-08-13"
               },
     "pc":  {
-               "detail":  "LLM Leaderboard - Best Text \u0026 Chat AI Models Compared 和另外 6 …",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-13T09:33:09+08:00",
+               "detail":  "ChatGPT",
+               "activity":  "正在使用 ChatGPT",
+               "updatedAt":  "2026-08-13T09:34:50+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -30,11 +30,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "退出Codex接入脚本 - DeepSeek 和另外 1 个页面 - 个人 - Microsoft​ Edge",
-                        "t":  "2026-08-12T20:42:42+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  ".codex - 文件资源管理器",
                         "t":  "2026-08-12T20:43:45+08:00",
@@ -329,6 +324,11 @@
                         "detail":  "arena - 搜索 和另外 5 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-13T09:28:46+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "ChatGPT",
+                        "t":  "2026-08-13T09:34:50+08:00",
+                        "activity":  "正在使用 ChatGPT"
                     }
                 ]
 }
