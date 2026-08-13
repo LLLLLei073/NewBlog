@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-13T15:38:06+08:00",
+    "updatedAt":  "2026-08-13T15:40:12+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,22 +8,22 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  43140,
-                                "正在处理文档":  504,
+                                "正在浏览网页":  43266,
                                 "正在使用 Taskmgr":  63,
                                 "正在使用 Shark Cloud":  246,
                                 "正在使用 LockApp":  73,
                                 "正在使用 msiexec":  71,
+                                "正在用微信":  90,
                                 "正在使用 clash-verge":  41,
                                 "正在写代码":  11502,
                                 "正在使用 ShellHost":  171,
                                 "离开电脑":  2251,
                                 "正在使用 ChatGPT":  1242,
                                 "正在使用 HipsMain":  41,
-                                "正在使用 cc-switch":  259,
+                                "正在处理文档":  504,
                                 "正在使用 explorer":  424,
                                 "正在使用 SnippingTool":  33,
-                                "正在用微信":  90,
+                                "正在使用 cc-switch":  259,
                                 "正在使用 Dism++x64":  30
                             },
                   "date":  "2026-08-13"
@@ -31,7 +31,7 @@
     "pc":  {
                "detail":  "Submit #4518 和另外 2 个页面 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-13T15:38:06+08:00",
+               "updatedAt":  "2026-08-13T15:40:12+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
