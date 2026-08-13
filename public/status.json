@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-13T21:41:02+08:00",
+    "updatedAt":  "2026-08-13T21:41:36+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -16,19 +16,19 @@
                                 "正在使用 msiexec":  71,
                                 "正在使用 ShellExperienceHost":  33,
                                 "正在使用 expressvpn-windows-x64-14.2.0.13656_release":  34,
+                                "正在用微信":  386,
                                 "正在使用 clash-verge":  41,
                                 "正在写代码":  13373,
-                                "正在使用 OpenCode":  96,
                                 "正在使用 ShellHost":  456,
                                 "离开电脑":  5128,
                                 "正在使用私密应用":  282,
-                                "正在使用 ChatGPT":  4319,
+                                "正在使用 ChatGPT":  4352,
                                 "正在使用 HipsMain":  41,
                                 "正在使用 cc-switch":  259,
                                 "正在使用 explorer":  527,
                                 "正在使用 SnippingTool":  33,
                                 "正在使用 FlClash":  129,
-                                "正在用微信":  386,
+                                "正在使用 OpenCode":  96,
                                 "正在处理文档":  825,
                                 "正在使用 Weixin":  380,
                                 "正在使用 Dism++x64":  30
@@ -36,9 +36,9 @@
                   "date":  "2026-08-13"
               },
     "pc":  {
-               "detail":  "ChatGPT",
-               "activity":  "正在使用 ChatGPT",
-               "updatedAt":  "2026-08-13T21:41:02+08:00",
+               "detail":  "Status 和另外 4 个页面 - 个人 - Microsoft​ Edge",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-13T21:41:36+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -50,11 +50,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "ChatGPT",
-                        "t":  "2026-08-13T19:06:45+08:00",
-                        "activity":  "正在使用 ChatGPT"
-                    },
                     {
                         "detail":  "chatgpt.com 和另外 3 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-13T19:07:19+08:00",
@@ -349,6 +344,11 @@
                         "detail":  "ChatGPT",
                         "t":  "2026-08-13T21:38:58+08:00",
                         "activity":  "正在使用 ChatGPT"
+                    },
+                    {
+                        "detail":  "Status 和另外 4 个页面 - 个人 - Microsoft​ Edge",
+                        "t":  "2026-08-13T21:41:36+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
