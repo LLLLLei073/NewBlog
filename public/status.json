@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-13T23:05:48+08:00",
+    "updatedAt":  "2026-08-13T23:07:52+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -16,9 +16,9 @@
                                 "正在使用 msiexec":  71,
                                 "正在使用 ShellExperienceHost":  33,
                                 "正在使用 expressvpn-windows-x64-14.2.0.13656_release":  34,
-                                "正在用微信":  452,
                                 "正在使用 clash-verge":  41,
-                                "正在写代码":  15219,
+                                "正在写代码":  15342,
+                                "正在使用 OpenCode":  129,
                                 "正在使用 ShellHost":  456,
                                 "离开电脑":  5128,
                                 "正在使用私密应用":  282,
@@ -28,7 +28,7 @@
                                 "正在使用 explorer":  695,
                                 "正在使用 SnippingTool":  33,
                                 "正在使用 FlClash":  129,
-                                "正在使用 OpenCode":  129,
+                                "正在用微信":  452,
                                 "正在处理文档":  952,
                                 "正在使用 Weixin":  476,
                                 "正在使用 Dism++x64":  30
@@ -38,7 +38,7 @@
     "pc":  {
                "detail":  "VS Code",
                "activity":  "正在写代码",
-               "updatedAt":  "2026-08-13T23:05:48+08:00",
+               "updatedAt":  "2026-08-13T23:07:52+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
