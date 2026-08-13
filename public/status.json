@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-13T10:54:12+08:00",
+    "updatedAt":  "2026-08-13T10:56:16+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -14,7 +14,7 @@
                                 "正在使用 LockApp":  73,
                                 "正在使用 msiexec":  71,
                                 "正在使用 clash-verge":  41,
-                                "正在写代码":  1201,
+                                "正在写代码":  1324,
                                 "正在使用 ShellHost":  30,
                                 "离开电脑":  163,
                                 "正在使用 ChatGPT":  912,
@@ -28,7 +28,7 @@
     "pc":  {
                "detail":  "VS Code",
                "activity":  "正在写代码",
-               "updatedAt":  "2026-08-13T10:54:12+08:00",
+               "updatedAt":  "2026-08-13T10:56:16+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
