@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-13T09:34:50+08:00",
+    "updatedAt":  "2026-08-13T09:36:01+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -11,14 +11,15 @@
                                 "正在浏览网页":  38359,
                                 "正在使用 clash-verge":  41,
                                 "正在使用 LockApp":  73,
-                                "离开电脑":  84
+                                "离开电脑":  84,
+                                "正在使用 ChatGPT":  71
                             },
                   "date":  "2026-08-13"
               },
     "pc":  {
-               "detail":  "ChatGPT",
-               "activity":  "正在使用 ChatGPT",
-               "updatedAt":  "2026-08-13T09:34:50+08:00",
+               "detail":  "Program Manager",
+               "activity":  "正在使用 explorer",
+               "updatedAt":  "2026-08-13T09:36:01+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -30,11 +31,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  ".codex - 文件资源管理器",
-                        "t":  "2026-08-12T20:43:45+08:00",
-                        "activity":  "正在使用 explorer"
-                    },
                     {
                         "detail":  "微信",
                         "t":  "2026-08-12T20:44:19+08:00",
@@ -329,6 +325,11 @@
                         "detail":  "ChatGPT",
                         "t":  "2026-08-13T09:34:50+08:00",
                         "activity":  "正在使用 ChatGPT"
+                    },
+                    {
+                        "detail":  "Program Manager",
+                        "t":  "2026-08-13T09:36:01+08:00",
+                        "activity":  "正在使用 explorer"
                     }
                 ]
 }
