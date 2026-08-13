@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-13T11:17:00+08:00",
+    "updatedAt":  "2026-08-13T11:17:34+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -20,16 +20,16 @@
                                 "正在使用 ChatGPT":  912,
                                 "正在使用 HipsMain":  41,
                                 "正在处理文档":  504,
-                                "正在使用 explorer":  181,
+                                "正在使用 explorer":  214,
                                 "正在使用 SnippingTool":  33,
                                 "正在使用 cc-switch":  259
                             },
                   "date":  "2026-08-13"
               },
     "pc":  {
-               "detail":  "主文件夹 - 文件资源管理器",
-               "activity":  "正在使用 explorer",
-               "updatedAt":  "2026-08-13T11:17:00+08:00",
+               "detail":  "VS Code",
+               "activity":  "正在写代码",
+               "updatedAt":  "2026-08-13T11:17:34+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -41,11 +41,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "CC Switch",
-                        "t":  "2026-08-13T09:49:21+08:00",
-                        "activity":  "正在使用 cc-switch"
-                    },
                     {
                         "detail":  "未检测到活动窗口",
                         "t":  "2026-08-13T09:50:58+08:00",
@@ -340,6 +335,11 @@
                         "detail":  "主文件夹 - 文件资源管理器",
                         "t":  "2026-08-13T11:17:00+08:00",
                         "activity":  "正在使用 explorer"
+                    },
+                    {
+                        "detail":  "VS Code",
+                        "t":  "2026-08-13T11:17:34+08:00",
+                        "activity":  "正在写代码"
                     }
                 ]
 }
