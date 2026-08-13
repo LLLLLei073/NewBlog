@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-13T11:14:56+08:00",
+    "updatedAt":  "2026-08-13T11:17:00+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -14,7 +14,7 @@
                                 "正在使用 LockApp":  73,
                                 "正在使用 msiexec":  71,
                                 "正在使用 clash-verge":  41,
-                                "正在写代码":  1623,
+                                "正在写代码":  1746,
                                 "正在使用 ShellHost":  99,
                                 "离开电脑":  163,
                                 "正在使用 ChatGPT":  912,
@@ -27,9 +27,9 @@
                   "date":  "2026-08-13"
               },
     "pc":  {
-               "detail":  "VS Code",
-               "activity":  "正在写代码",
-               "updatedAt":  "2026-08-13T11:14:56+08:00",
+               "detail":  "主文件夹 - 文件资源管理器",
+               "activity":  "正在使用 explorer",
+               "updatedAt":  "2026-08-13T11:17:00+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -41,11 +41,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "快速设置",
-                        "t":  "2026-08-13T09:48:51+08:00",
-                        "activity":  "正在使用 ShellHost"
-                    },
                     {
                         "detail":  "CC Switch",
                         "t":  "2026-08-13T09:49:21+08:00",
@@ -340,6 +335,11 @@
                         "detail":  "VS Code",
                         "t":  "2026-08-13T11:14:56+08:00",
                         "activity":  "正在写代码"
+                    },
+                    {
+                        "detail":  "主文件夹 - 文件资源管理器",
+                        "t":  "2026-08-13T11:17:00+08:00",
+                        "activity":  "正在使用 explorer"
                     }
                 ]
 }
