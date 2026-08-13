@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-13T12:46:40+08:00",
+    "updatedAt":  "2026-08-13T12:48:41+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -11,11 +11,11 @@
                                 "正在浏览网页":  41248,
                                 "正在使用 Taskmgr":  63,
                                 "正在使用 Shark Cloud":  246,
+                                "正在使用 cc-switch":  259,
                                 "正在使用 LockApp":  73,
                                 "正在使用 msiexec":  71,
-                                "正在用微信":  60,
                                 "正在使用 clash-verge":  41,
-                                "正在写代码":  3639,
+                                "正在写代码":  3759,
                                 "正在使用 ShellHost":  141,
                                 "离开电脑":  2010,
                                 "正在使用 ChatGPT":  1182,
@@ -23,14 +23,14 @@
                                 "正在处理文档":  504,
                                 "正在使用 explorer":  364,
                                 "正在使用 SnippingTool":  33,
-                                "正在使用 cc-switch":  259
+                                "正在用微信":  60
                             },
                   "date":  "2026-08-13"
               },
     "pc":  {
                "detail":  "VS Code",
                "activity":  "正在写代码",
-               "updatedAt":  "2026-08-13T12:46:40+08:00",
+               "updatedAt":  "2026-08-13T12:48:41+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
