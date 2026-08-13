@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-13T23:28:56+08:00",
+    "updatedAt":  "2026-08-13T23:29:30+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,39 +8,39 @@
               },
     "daily":  {
                   "stats":  {
+                                "正在使用 clash-verge":  41,
+                                "正在使用 HipsMain":  41,
+                                "正在使用 ChatGPT":  6718,
+                                "正在写代码":  15782,
                                 "正在浏览网页":  55475,
-                                "正在使用 HiBitUninstaller":  36,
-                                "正在使用 Taskmgr":  63,
+                                "正在用微信":  485,
+                                "正在使用 FlClash":  162,
+                                "离开电脑":  5224,
                                 "正在使用 Shark Cloud":  428,
-                                "正在使用 LockApp":  73,
-                                "正在使用 msiexec":  71,
+                                "正在使用 opencode-desktop-win-x64":  34,
+                                "正在使用私密应用":  316,
+                                "正在使用 HiBitUninstaller":  36,
+                                "正在使用 ShellHost":  456,
+                                "正在使用 Dism++x64":  30,
+                                "正在使用 SnippingTool":  33,
+                                "正在使用 Taskmgr":  63,
+                                "正在使用 Weixin":  476,
+                                "正在处理文档":  986,
                                 "正在使用 ShellExperienceHost":  33,
                                 "正在使用 expressvpn-windows-x64-14.2.0.13656_release":  34,
-                                "正在使用 ShellHost":  456,
-                                "正在使用 clash-verge":  41,
-                                "正在写代码":  15782,
-                                "正在使用 OpenCode":  290,
-                                "正在使用 opencode-desktop-win-x64":  34,
-                                "离开电脑":  5224,
-                                "正在使用私密应用":  316,
-                                "正在使用 图吧工具箱2025":  35,
-                                "正在使用 ChatGPT":  6718,
-                                "正在使用 HipsMain":  41,
+                                "正在使用 msiexec":  71,
                                 "正在使用 cc-switch":  259,
                                 "正在使用 explorer":  695,
-                                "正在使用 SnippingTool":  33,
-                                "正在使用 FlClash":  162,
-                                "正在用微信":  485,
-                                "正在处理文档":  952,
-                                "正在使用 Weixin":  476,
-                                "正在使用 Dism++x64":  30
+                                "正在使用 OpenCode":  290,
+                                "正在使用 图吧工具箱2025":  35,
+                                "正在使用 LockApp":  73
                             },
                   "date":  "2026-08-13"
               },
     "pc":  {
-               "detail":  "Office",
-               "activity":  "正在处理文档",
-               "updatedAt":  "2026-08-13T23:28:56+08:00",
+               "detail":  "Dism++x64 10.1.1002.1 UEFI Firmware",
+               "activity":  "正在使用 Dism++x64",
+               "updatedAt":  "2026-08-13T23:29:30+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -52,11 +52,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "1003 太近就不合法了 和另外 4 个页面 - 个人 - Microsoft​ Edge",
-                        "t":  "2026-08-13T21:14:43+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "ChatGPT",
                         "t":  "2026-08-13T21:38:58+08:00",
@@ -351,6 +346,11 @@
                         "detail":  "Office",
                         "t":  "2026-08-13T23:28:56+08:00",
                         "activity":  "正在处理文档"
+                    },
+                    {
+                        "detail":  "Dism++x64 10.1.1002.1 UEFI Firmware",
+                        "t":  "2026-08-13T23:29:30+08:00",
+                        "activity":  "正在使用 Dism++x64"
                     }
                 ]
 }
