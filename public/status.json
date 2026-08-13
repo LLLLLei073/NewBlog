@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-13T19:06:12+08:00",
+    "updatedAt":  "2026-08-13T19:06:45+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -9,31 +9,31 @@
     "daily":  {
                   "stats":  {
                                 "正在浏览网页":  50353,
+                                "正在处理文档":  504,
                                 "正在使用 Taskmgr":  63,
-                                "正在使用 Shark Cloud":  395,
-                                "正在使用 cc-switch":  259,
+                                "正在使用 Shark Cloud":  428,
                                 "正在使用 LockApp":  73,
                                 "正在使用 msiexec":  71,
+                                "正在用微信":  186,
                                 "正在使用 clash-verge":  41,
                                 "正在写代码":  13373,
                                 "正在使用 ShellHost":  304,
                                 "离开电脑":  4765,
                                 "正在使用 ChatGPT":  1356,
                                 "正在使用 HipsMain":  41,
-                                "正在处理文档":  504,
+                                "正在使用 cc-switch":  259,
                                 "正在使用 explorer":  527,
                                 "正在使用 SnippingTool":  33,
                                 "正在使用 OpenCode":  63,
-                                "正在用微信":  186,
                                 "正在使用 Weixin":  160,
                                 "正在使用 Dism++x64":  30
                             },
                   "date":  "2026-08-13"
               },
     "pc":  {
-               "detail":  "Shark Cloud",
-               "activity":  "正在使用 Shark Cloud",
-               "updatedAt":  "2026-08-13T19:06:12+08:00",
+               "detail":  "ChatGPT",
+               "activity":  "正在使用 ChatGPT",
+               "updatedAt":  "2026-08-13T19:06:45+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -45,11 +45,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "VS Code",
-                        "t":  "2026-08-13T15:52:12+08:00",
-                        "activity":  "正在写代码"
-                    },
                     {
                         "detail":  "Clarifications 和另外 1 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-13T15:52:46+08:00",
@@ -344,6 +339,11 @@
                         "detail":  "Shark Cloud",
                         "t":  "2026-08-13T19:06:12+08:00",
                         "activity":  "正在使用 Shark Cloud"
+                    },
+                    {
+                        "detail":  "ChatGPT",
+                        "t":  "2026-08-13T19:06:45+08:00",
+                        "activity":  "正在使用 ChatGPT"
                     }
                 ]
 }
