@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-14T11:42:56+08:00",
+    "updatedAt":  "2026-08-14T11:44:26+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -10,7 +10,7 @@
                   "stats":  {
                                 "正在浏览网页":  8564,
                                 "正在处理文档":  32016,
-                                "正在使用 LockApp":  1687,
+                                "正在使用 LockApp":  1777,
                                 "正在使用 ShellHost":  61,
                                 "离开电脑":  440,
                                 "正在使用私密应用":  186,
@@ -24,9 +24,9 @@
                   "date":  "2026-08-14"
               },
     "pc":  {
-               "detail":  "Windows 默认锁屏界面",
-               "activity":  "正在使用 LockApp",
-               "updatedAt":  "2026-08-14T11:42:56+08:00",
+               "detail":  "快速设置",
+               "activity":  "正在使用 ShellHost",
+               "updatedAt":  "2026-08-14T11:44:26+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -38,11 +38,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "VS Code",
-                        "t":  "2026-08-13T23:14:19+08:00",
-                        "activity":  "正在写代码"
-                    },
                     {
                         "detail":  "ChatGPT",
                         "t":  "2026-08-13T23:15:23+08:00",
@@ -337,6 +332,11 @@
                         "detail":  "Windows 默认锁屏界面",
                         "t":  "2026-08-14T11:14:45+08:00",
                         "activity":  "正在使用 LockApp"
+                    },
+                    {
+                        "detail":  "快速设置",
+                        "t":  "2026-08-14T11:44:26+08:00",
+                        "activity":  "正在使用 ShellHost"
                     }
                 ]
 }
