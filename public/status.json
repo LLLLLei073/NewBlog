@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-14T10:43:57+08:00",
+    "updatedAt":  "2026-08-14T10:46:01+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -10,6 +10,7 @@
                   "stats":  {
                                 "正在使用 WindowsTerminal":  63,
                                 "正在用微信":  33,
+                                "正在使用私密应用":  123,
                                 "正在使用 ShellHost":  61,
                                 "正在处理文档":  32016,
                                 "正在使用 explorer":  126,
@@ -24,7 +25,7 @@
     "pc":  {
                "detail":  "",
                "activity":  "正在使用私密应用",
-               "updatedAt":  "2026-08-14T10:43:57+08:00",
+               "updatedAt":  "2026-08-14T10:46:01+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
