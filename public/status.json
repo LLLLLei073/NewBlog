@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-14T10:13:36+08:00",
+    "updatedAt":  "2026-08-14T10:14:10+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -9,6 +9,7 @@
     "daily":  {
                   "stats":  {
                                 "正在使用 WindowsTerminal":  63,
+                                "正在用微信":  33,
                                 "正在使用 ShellHost":  61,
                                 "正在处理文档":  32016,
                                 "正在使用 explorer":  126,
@@ -21,9 +22,9 @@
                   "date":  "2026-08-14"
               },
     "pc":  {
-               "detail":  "微信",
-               "activity":  "正在用微信",
-               "updatedAt":  "2026-08-14T10:13:36+08:00",
+               "detail":  "ChatGPT",
+               "activity":  "正在使用 ChatGPT",
+               "updatedAt":  "2026-08-14T10:14:10+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -35,11 +36,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "ChatGPT",
-                        "t":  "2026-08-13T22:06:08+08:00",
-                        "activity":  "正在使用 ChatGPT"
-                    },
                     {
                         "detail":  "VS Code",
                         "t":  "2026-08-13T22:29:55+08:00",
@@ -334,6 +330,11 @@
                         "detail":  "微信",
                         "t":  "2026-08-14T10:13:36+08:00",
                         "activity":  "正在用微信"
+                    },
+                    {
+                        "detail":  "ChatGPT",
+                        "t":  "2026-08-14T10:14:10+08:00",
+                        "activity":  "正在使用 ChatGPT"
                     }
                 ]
 }
