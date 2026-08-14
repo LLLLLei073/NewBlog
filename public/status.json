@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-14T18:59:07+08:00",
+    "updatedAt":  "2026-08-14T18:59:57+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -16,7 +16,7 @@
                                 "正在使用 ShellHost":  211,
                                 "离开电脑":  2968,
                                 "正在使用私密应用":  352,
-                                "正在使用 ChatGPT":  3764,
+                                "正在使用 ChatGPT":  3813,
                                 "正在使用 FlClash":  208,
                                 "正在使用 WindowsTerminal":  63,
                                 "正在使用 explorer":  290,
@@ -27,9 +27,9 @@
                   "date":  "2026-08-14"
               },
     "pc":  {
-               "detail":  "ChatGPT",
-               "activity":  "正在使用 ChatGPT",
-               "updatedAt":  "2026-08-14T18:59:07+08:00",
+               "detail":  "快速设置",
+               "activity":  "正在使用 ShellHost",
+               "updatedAt":  "2026-08-14T18:59:57+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -41,11 +41,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Office",
-                        "t":  "2026-08-14T15:31:54+08:00",
-                        "activity":  "正在处理文档"
-                    },
                     {
                         "detail":  "VS Code",
                         "t":  "2026-08-14T15:32:30+08:00",
@@ -340,6 +335,11 @@
                         "detail":  "ChatGPT",
                         "t":  "2026-08-14T18:59:07+08:00",
                         "activity":  "正在使用 ChatGPT"
+                    },
+                    {
+                        "detail":  "快速设置",
+                        "t":  "2026-08-14T18:59:57+08:00",
+                        "activity":  "正在使用 ShellHost"
                     }
                 ]
 }
