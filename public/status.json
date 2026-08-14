@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-14T18:55:37+08:00",
+    "updatedAt":  "2026-08-14T18:56:27+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -16,7 +16,7 @@
                                 "正在使用 ShellHost":  211,
                                 "离开电脑":  2918,
                                 "正在使用私密应用":  352,
-                                "正在使用 ChatGPT":  3715,
+                                "正在使用 ChatGPT":  3764,
                                 "正在使用 FlClash":  98,
                                 "正在使用 WindowsTerminal":  63,
                                 "正在使用 explorer":  290,
@@ -27,9 +27,9 @@
                   "date":  "2026-08-14"
               },
     "pc":  {
-               "detail":  "ChatGPT",
-               "activity":  "正在使用 ChatGPT",
-               "updatedAt":  "2026-08-14T18:55:37+08:00",
+               "detail":  "FlClash",
+               "activity":  "正在使用 FlClash",
+               "updatedAt":  "2026-08-14T18:56:27+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -41,11 +41,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "牛客竞赛_ACM/NOI/CSP/CCPC/ICPC算法编程高难度练习赛_牛客竞赛OJ 和另外 3 个页面 - 个人 -…",
-                        "t":  "2026-08-14T15:29:11+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "VS Code",
                         "t":  "2026-08-14T15:29:47+08:00",
@@ -340,6 +335,11 @@
                         "detail":  "ChatGPT",
                         "t":  "2026-08-14T18:55:37+08:00",
                         "activity":  "正在使用 ChatGPT"
+                    },
+                    {
+                        "detail":  "FlClash",
+                        "t":  "2026-08-14T18:56:27+08:00",
+                        "activity":  "正在使用 FlClash"
                     }
                 ]
 }
