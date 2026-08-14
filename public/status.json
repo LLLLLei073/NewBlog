@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-14T23:42:09+08:00",
+    "updatedAt":  "2026-08-14T23:43:13+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,7 +8,7 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  18036,
+                                "正在浏览网页":  18099,
                                 "正在使用 Notepad":  66,
                                 "正在处理文档":  35697,
                                 "正在使用 LockApp":  1777,
@@ -30,9 +30,9 @@
                   "date":  "2026-08-14"
               },
     "pc":  {
-               "detail":  "码蹄集OJ-补给 和另外 2 个页面 - 个人 - Microsoft​ Edge",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-14T23:42:09+08:00",
+               "detail":  "开始",
+               "activity":  "正在使用 StartMenuExperienceHost",
+               "updatedAt":  "2026-08-14T23:43:13+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -44,11 +44,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "",
-                        "t":  "2026-08-14T19:53:46+08:00",
-                        "activity":  "正在使用私密应用"
-                    },
                     {
                         "detail":  "www.rainyun.com 和另外 3 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-14T19:55:20+08:00",
@@ -343,6 +338,11 @@
                         "detail":  "码蹄集OJ-补给 和另外 2 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-14T23:42:09+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "开始",
+                        "t":  "2026-08-14T23:43:13+08:00",
+                        "activity":  "正在使用 StartMenuExperienceHost"
                     }
                 ]
 }
