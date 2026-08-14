@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-14T09:44:25+08:00",
+    "updatedAt":  "2026-08-14T09:46:29+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -13,16 +13,16 @@
                                 "正在处理文档":  32016,
                                 "正在使用 explorer":  93,
                                 "正在使用 FlClash":  35,
-                                "正在浏览网页":  4182,
+                                "正在浏览网页":  4306,
                                 "正在使用 ChatGPT":  123,
                                 "离开电脑":  216
                             },
                   "date":  "2026-08-14"
               },
     "pc":  {
-               "detail":  "新建标签页 - 个人 - Microsoft​ Edge",
+               "detail":  "猫猫与数列_牛客题霸_牛客网 和另外 2 个页面 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-14T09:44:25+08:00",
+               "updatedAt":  "2026-08-14T09:46:29+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
