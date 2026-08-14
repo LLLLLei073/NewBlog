@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-14T20:19:07+08:00",
+    "updatedAt":  "2026-08-14T20:19:41+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -9,6 +9,7 @@
     "daily":  {
                   "stats":  {
                                 "正在浏览网页":  13860,
+                                "正在使用 Notepad":  33,
                                 "正在处理文档":  35697,
                                 "正在使用 LockApp":  1777,
                                 "正在看视频":  159,
@@ -29,9 +30,9 @@
                   "date":  "2026-08-14"
               },
     "pc":  {
-               "detail":  "*新建 Text Document.txt - Notepad",
-               "activity":  "正在使用 Notepad",
-               "updatedAt":  "2026-08-14T20:19:07+08:00",
+               "detail":  "Codeforces Training Console 和另外 4 个页面 - 个人 - Microsoft​ Edge…",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-14T20:19:41+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -43,11 +44,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "ChatGPT",
-                        "t":  "2026-08-14T17:32:22+08:00",
-                        "activity":  "正在使用 ChatGPT"
-                    },
                     {
                         "detail":  "牛客竞赛_ACM/NOI/CSP/CCPC/ICPC算法编程高难度练习赛_牛客竞赛OJ 和另外 3 个页面 - 个人 -…",
                         "t":  "2026-08-14T17:34:35+08:00",
@@ -342,6 +338,11 @@
                         "detail":  "*新建 Text Document.txt - Notepad",
                         "t":  "2026-08-14T20:19:07+08:00",
                         "activity":  "正在使用 Notepad"
+                    },
+                    {
+                        "detail":  "Codeforces Training Console 和另外 4 个页面 - 个人 - Microsoft​ Edge…",
+                        "t":  "2026-08-14T20:19:41+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
