@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-14T19:00:27+08:00",
+    "updatedAt":  "2026-08-14T19:02:47+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -17,7 +17,7 @@
                                 "离开电脑":  2968,
                                 "正在使用私密应用":  352,
                                 "正在使用 ChatGPT":  3813,
-                                "正在使用 FlClash":  208,
+                                "正在使用 FlClash":  348,
                                 "正在使用 WindowsTerminal":  63,
                                 "正在使用 explorer":  290,
                                 "正在使用 SnippingTool":  66,
@@ -29,7 +29,7 @@
     "pc":  {
                "detail":  "FlClash",
                "activity":  "正在使用 FlClash",
-               "updatedAt":  "2026-08-14T19:00:27+08:00",
+               "updatedAt":  "2026-08-14T19:02:47+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
