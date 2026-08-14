@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-14T10:55:43+08:00",
+    "updatedAt":  "2026-08-14T10:56:47+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -14,7 +14,7 @@
                                 "正在处理文档":  32016,
                                 "正在使用私密应用":  186,
                                 "正在使用 FlClash":  35,
-                                "正在浏览网页":  7599,
+                                "正在浏览网页":  7662,
                                 "正在使用 ChatGPT":  448,
                                 "离开电脑":  405,
                                 "正在使用 Weixin":  64,
@@ -23,9 +23,9 @@
                   "date":  "2026-08-14"
               },
     "pc":  {
-               "detail":  "管理云服务器 | 雨云 和另外 4 个页面 - 个人 - Microsoft​ Edge",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-14T10:55:43+08:00",
+               "detail":  "ChatGPT",
+               "activity":  "正在使用 ChatGPT",
+               "updatedAt":  "2026-08-14T10:56:47+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -37,11 +37,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "VS Code",
-                        "t":  "2026-08-13T23:03:45+08:00",
-                        "activity":  "正在写代码"
-                    },
                     {
                         "detail":  "ChatGPT",
                         "t":  "2026-08-13T23:09:26+08:00",
@@ -336,6 +331,11 @@
                         "detail":  "AstrBot - 仪表盘 和另外 3 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-14T10:51:36+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "ChatGPT",
+                        "t":  "2026-08-14T10:56:47+08:00",
+                        "activity":  "正在使用 ChatGPT"
                     }
                 ]
 }
