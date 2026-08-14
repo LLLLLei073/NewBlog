@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-14T17:08:35+08:00",
+    "updatedAt":  "2026-08-14T17:10:39+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,7 +8,7 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  11098,
+                                "正在浏览网页":  11221,
                                 "正在处理文档":  35541,
                                 "正在使用 LockApp":  1777,
                                 "正在看视频":  63,
@@ -26,9 +26,9 @@
                   "date":  "2026-08-14"
               },
     "pc":  {
-               "detail":  "I-Slay the Spire_2026牛客暑期多校训练营9 和另外 11 个页面 - 个人 - Microsoft​…",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-14T17:08:35+08:00",
+               "detail":  "ChatGPT",
+               "activity":  "正在使用 ChatGPT",
+               "updatedAt":  "2026-08-14T17:10:39+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -40,11 +40,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "AstrBot - 仪表盘 和另外 4 个页面 - 个人 - Microsoft​ Edge",
-                        "t":  "2026-08-14T11:09:32+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "未检测到活动窗口",
                         "t":  "2026-08-14T11:14:09+08:00",
@@ -339,6 +334,11 @@
                         "detail":  "I-Slay the Spire_2026牛客暑期多校训练营9 和另外 11 个页面 - 个人 - Microsoft​…",
                         "t":  "2026-08-14T17:08:35+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "ChatGPT",
+                        "t":  "2026-08-14T17:10:39+08:00",
+                        "activity":  "正在使用 ChatGPT"
                     }
                 ]
 }
