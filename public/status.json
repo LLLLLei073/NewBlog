@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-14T23:23:54+08:00",
+    "updatedAt":  "2026-08-14T23:25:58+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,7 +8,7 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  17661,
+                                "正在浏览网页":  17784,
                                 "正在使用 Notepad":  66,
                                 "正在处理文档":  35697,
                                 "正在使用 LockApp":  1777,
@@ -30,9 +30,9 @@
                   "date":  "2026-08-14"
               },
     "pc":  {
-               "detail":  "P1395 会议 - 洛谷 - 个人 - Microsoft​ Edge",
+               "detail":  "码蹄集 和另外 2 个页面 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-14T23:23:54+08:00",
+               "updatedAt":  "2026-08-14T23:25:58+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
