@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-14T08:24:47+08:00",
+    "updatedAt":  "2026-08-14T08:25:22+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,14 +8,15 @@
               },
     "daily":  {
                   "stats":  {
+                                "正在使用 FlClash":  35,
                                 "正在处理文档":  32016
                             },
                   "date":  "2026-08-14"
               },
     "pc":  {
-               "detail":  "FlClash",
-               "activity":  "正在使用 FlClash",
-               "updatedAt":  "2026-08-14T08:24:47+08:00",
+               "detail":  "deepseek-ai/deepseek-harness: DeepSeek Harness: Everything i…",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-14T08:25:22+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -27,11 +28,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "VS Code",
-                        "t":  "2026-08-13T21:43:17+08:00",
-                        "activity":  "正在写代码"
-                    },
                     {
                         "detail":  "1009 价值总是越大越好 和另外 4 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-13T21:43:52+08:00",
@@ -326,6 +322,11 @@
                         "detail":  "FlClash",
                         "t":  "2026-08-14T08:24:47+08:00",
                         "activity":  "正在使用 FlClash"
+                    },
+                    {
+                        "detail":  "deepseek-ai/deepseek-harness: DeepSeek Harness: Everything i…",
+                        "t":  "2026-08-14T08:25:22+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
