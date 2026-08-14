@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-14T11:14:09+08:00",
+    "updatedAt":  "2026-08-14T11:14:45+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -16,16 +16,16 @@
                                 "正在使用 FlClash":  98,
                                 "正在浏览网页":  8564,
                                 "正在使用 ChatGPT":  481,
-                                "离开电脑":  405,
+                                "离开电脑":  440,
                                 "正在使用 Weixin":  64,
                                 "正在使用 explorer":  162
                             },
                   "date":  "2026-08-14"
               },
     "pc":  {
-               "detail":  "未检测到活动窗口",
-               "activity":  "离开电脑",
-               "updatedAt":  "2026-08-14T11:14:09+08:00",
+               "detail":  "Windows 默认锁屏界面",
+               "activity":  "正在使用 LockApp",
+               "updatedAt":  "2026-08-14T11:14:45+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -37,11 +37,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "ChatGPT",
-                        "t":  "2026-08-13T23:12:45+08:00",
-                        "activity":  "正在使用 ChatGPT"
-                    },
                     {
                         "detail":  "VS Code",
                         "t":  "2026-08-13T23:14:19+08:00",
@@ -336,6 +331,11 @@
                         "detail":  "未检测到活动窗口",
                         "t":  "2026-08-14T11:14:09+08:00",
                         "activity":  "离开电脑"
+                    },
+                    {
+                        "detail":  "Windows 默认锁屏界面",
+                        "t":  "2026-08-14T11:14:45+08:00",
+                        "activity":  "正在使用 LockApp"
                     }
                 ]
 }
