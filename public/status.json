@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-14T10:19:25+08:00",
+    "updatedAt":  "2026-08-14T10:21:29+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -14,7 +14,7 @@
                                 "正在处理文档":  32016,
                                 "正在使用 explorer":  126,
                                 "正在使用 FlClash":  35,
-                                "正在浏览网页":  5758,
+                                "正在浏览网页":  5881,
                                 "正在使用 ChatGPT":  345,
                                 "离开电脑":  372,
                                 "正在使用 Weixin":  64
@@ -22,9 +22,9 @@
                   "date":  "2026-08-14"
               },
     "pc":  {
-               "detail":  "QQ开放平台 和另外 4 个页面 - 个人 - Microsoft​ Edge",
+               "detail":  "管理云服务器 | 雨云 和另外 7 个页面 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-14T10:19:25+08:00",
+               "updatedAt":  "2026-08-14T10:21:29+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
