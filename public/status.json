@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-14T22:41:28+08:00",
+    "updatedAt":  "2026-08-14T22:42:02+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -25,14 +25,14 @@
                                 "正在使用 SnippingTool":  66,
                                 "正在使用 FlClash":  432,
                                 "正在用微信":  66,
-                                "正在使用 Weixin":  97
+                                "正在使用 Weixin":  131
                             },
                   "date":  "2026-08-14"
               },
     "pc":  {
-               "detail":  "Weixin",
-               "activity":  "正在使用 Weixin",
-               "updatedAt":  "2026-08-14T22:41:28+08:00",
+               "detail":  "ChatGPT",
+               "activity":  "正在使用 ChatGPT",
+               "updatedAt":  "2026-08-14T22:42:02+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -44,11 +44,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "ChatGPT",
-                        "t":  "2026-08-14T18:55:37+08:00",
-                        "activity":  "正在使用 ChatGPT"
-                    },
                     {
                         "detail":  "FlClash",
                         "t":  "2026-08-14T18:56:27+08:00",
@@ -343,6 +338,11 @@
                         "detail":  "Weixin",
                         "t":  "2026-08-14T22:41:28+08:00",
                         "activity":  "正在使用 Weixin"
+                    },
+                    {
+                        "detail":  "ChatGPT",
+                        "t":  "2026-08-14T22:42:02+08:00",
+                        "activity":  "正在使用 ChatGPT"
                     }
                 ]
 }
