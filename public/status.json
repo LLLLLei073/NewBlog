@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-14T10:12:02+08:00",
+    "updatedAt":  "2026-08-14T10:13:36+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -14,16 +14,16 @@
                                 "正在使用 explorer":  126,
                                 "正在使用 FlClash":  35,
                                 "正在浏览网页":  5542,
-                                "正在使用 ChatGPT":  156,
+                                "正在使用 ChatGPT":  249,
                                 "离开电脑":  372,
                                 "正在使用 Weixin":  64
                             },
                   "date":  "2026-08-14"
               },
     "pc":  {
-               "detail":  "ChatGPT",
-               "activity":  "正在使用 ChatGPT",
-               "updatedAt":  "2026-08-14T10:12:02+08:00",
+               "detail":  "微信",
+               "activity":  "正在用微信",
+               "updatedAt":  "2026-08-14T10:13:36+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -35,11 +35,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Office",
-                        "t":  "2026-08-13T22:05:04+08:00",
-                        "activity":  "正在处理文档"
-                    },
                     {
                         "detail":  "ChatGPT",
                         "t":  "2026-08-13T22:06:08+08:00",
@@ -334,6 +329,11 @@
                         "detail":  "ChatGPT",
                         "t":  "2026-08-14T10:12:02+08:00",
                         "activity":  "正在使用 ChatGPT"
+                    },
+                    {
+                        "detail":  "微信",
+                        "t":  "2026-08-14T10:13:36+08:00",
+                        "activity":  "正在用微信"
                     }
                 ]
 }
