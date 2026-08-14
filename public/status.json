@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-14T20:10:37+08:00",
+    "updatedAt":  "2026-08-14T20:11:11+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,7 +8,7 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  13485,
+                                "正在浏览网页":  13518,
                                 "正在处理文档":  35697,
                                 "正在使用 LockApp":  1777,
                                 "正在看视频":  159,
@@ -29,9 +29,9 @@
                   "date":  "2026-08-14"
               },
     "pc":  {
-               "detail":  "宝塔Linux面板 和另外 5 个页面 - 个人 - Microsoft​ Edge",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-14T20:10:37+08:00",
+               "detail":  "",
+               "activity":  "正在使用私密应用",
+               "updatedAt":  "2026-08-14T20:11:11+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -43,11 +43,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Snipping Tool Overlay",
-                        "t":  "2026-08-14T17:19:40+08:00",
-                        "activity":  "正在使用 SnippingTool"
-                    },
                     {
                         "detail":  "ChatGPT",
                         "t":  "2026-08-14T17:20:14+08:00",
@@ -342,6 +337,11 @@
                         "detail":  "宝塔Linux面板 和另外 5 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-14T20:10:37+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "",
+                        "t":  "2026-08-14T20:11:11+08:00",
+                        "activity":  "正在使用私密应用"
                     }
                 ]
 }
