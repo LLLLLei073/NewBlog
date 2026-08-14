@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-14T19:03:37+08:00",
+    "updatedAt":  "2026-08-14T19:04:21+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -11,6 +11,7 @@
                                 "正在浏览网页":  12294,
                                 "正在处理文档":  35697,
                                 "正在使用 LockApp":  1777,
+                                "正在使用 clash-verge":  43,
                                 "正在看视频":  159,
                                 "正在写代码":  11885,
                                 "正在使用 ShellHost":  241,
@@ -27,9 +28,9 @@
                   "date":  "2026-08-14"
               },
     "pc":  {
-               "detail":  "Clash Verge",
-               "activity":  "正在使用 clash-verge",
-               "updatedAt":  "2026-08-14T19:03:37+08:00",
+               "detail":  "未检测到活动窗口",
+               "activity":  "离开电脑",
+               "updatedAt":  "2026-08-14T19:04:21+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -41,11 +42,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Office",
-                        "t":  "2026-08-14T15:40:28+08:00",
-                        "activity":  "正在处理文档"
-                    },
                     {
                         "detail":  "VS Code",
                         "t":  "2026-08-14T15:41:02+08:00",
@@ -340,6 +336,11 @@
                         "detail":  "Clash Verge",
                         "t":  "2026-08-14T19:03:37+08:00",
                         "activity":  "正在使用 clash-verge"
+                    },
+                    {
+                        "detail":  "未检测到活动窗口",
+                        "t":  "2026-08-14T19:04:21+08:00",
+                        "activity":  "离开电脑"
                     }
                 ]
 }
