@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-14T22:53:56+08:00",
+    "updatedAt":  "2026-08-14T22:55:29+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -14,7 +14,7 @@
                                 "正在使用 LockApp":  1777,
                                 "正在看视频":  282,
                                 "正在使用 clash-verge":  43,
-                                "正在写代码":  14413,
+                                "正在写代码":  14506,
                                 "正在使用 ShellHost":  274,
                                 "离开电脑":  3190,
                                 "正在使用私密应用":  1084,
@@ -30,9 +30,9 @@
                   "date":  "2026-08-14"
               },
     "pc":  {
-               "detail":  "VS Code",
-               "activity":  "正在写代码",
-               "updatedAt":  "2026-08-14T22:53:56+08:00",
+               "detail":  "ChatGPT",
+               "activity":  "正在使用 ChatGPT",
+               "updatedAt":  "2026-08-14T22:55:29+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -44,11 +44,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "快速设置",
-                        "t":  "2026-08-14T18:59:57+08:00",
-                        "activity":  "正在使用 ShellHost"
-                    },
                     {
                         "detail":  "FlClash",
                         "t":  "2026-08-14T19:00:27+08:00",
@@ -343,6 +338,11 @@
                         "detail":  "VS Code",
                         "t":  "2026-08-14T22:51:52+08:00",
                         "activity":  "正在写代码"
+                    },
+                    {
+                        "detail":  "ChatGPT",
+                        "t":  "2026-08-14T22:55:29+08:00",
+                        "activity":  "正在使用 ChatGPT"
                     }
                 ]
 }
