@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-14T08:31:07+08:00",
+    "updatedAt":  "2026-08-14T08:32:41+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,18 +8,18 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在浏览网页":  156,
+                                "正在使用 WindowsTerminal":  63,
                                 "正在使用 FlClash":  35,
                                 "正在处理文档":  32016,
-                                "离开电脑":  123,
-                                "正在使用 WindowsTerminal":  63
+                                "离开电脑":  216,
+                                "正在浏览网页":  156
                             },
                   "date":  "2026-08-14"
               },
     "pc":  {
-               "detail":  "未检测到活动窗口",
-               "activity":  "离开电脑",
-               "updatedAt":  "2026-08-14T08:31:07+08:00",
+               "detail":  "Program Manager",
+               "activity":  "正在使用 explorer",
+               "updatedAt":  "2026-08-14T08:32:41+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -31,11 +31,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "此电脑 - 文件资源管理器",
-                        "t":  "2026-08-13T21:55:19+08:00",
-                        "activity":  "正在使用 explorer"
-                    },
                     {
                         "detail":  "朋友圈",
                         "t":  "2026-08-13T21:55:53+08:00",
@@ -330,6 +325,11 @@
                         "detail":  "未检测到活动窗口",
                         "t":  "2026-08-14T08:29:03+08:00",
                         "activity":  "离开电脑"
+                    },
+                    {
+                        "detail":  "Program Manager",
+                        "t":  "2026-08-14T08:32:41+08:00",
+                        "activity":  "正在使用 explorer"
                     }
                 ]
 }
