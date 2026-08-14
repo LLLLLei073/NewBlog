@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-14T18:18:58+08:00",
+    "updatedAt":  "2026-08-14T18:19:34+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -16,7 +16,7 @@
                                 "正在使用 ShellHost":  211,
                                 "离开电脑":  2918,
                                 "正在使用私密应用":  352,
-                                "正在使用 ChatGPT":  2164,
+                                "正在使用 ChatGPT":  2199,
                                 "正在使用 FlClash":  98,
                                 "正在使用 WindowsTerminal":  63,
                                 "正在使用 explorer":  195,
@@ -27,9 +27,9 @@
                   "date":  "2026-08-14"
               },
     "pc":  {
-               "detail":  "ChatGPT",
-               "activity":  "正在使用 ChatGPT",
-               "updatedAt":  "2026-08-14T18:18:58+08:00",
+               "detail":  "DeepSeek v4 Pro发布之际，蒸馏悬案出现关键物证！",
+               "activity":  "正在看视频",
+               "updatedAt":  "2026-08-14T18:19:34+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -41,11 +41,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Office",
-                        "t":  "2026-08-14T12:09:59+08:00",
-                        "activity":  "正在处理文档"
-                    },
                     {
                         "detail":  "代码查看 和另外 2 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-14T12:15:49+08:00",
@@ -340,6 +335,11 @@
                         "detail":  "ChatGPT",
                         "t":  "2026-08-14T18:18:58+08:00",
                         "activity":  "正在使用 ChatGPT"
+                    },
+                    {
+                        "detail":  "DeepSeek v4 Pro发布之际，蒸馏悬案出现关键物证！",
+                        "t":  "2026-08-14T18:19:34+08:00",
+                        "activity":  "正在看视频"
                     }
                 ]
 }
