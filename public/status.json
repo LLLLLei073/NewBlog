@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-14T11:14:45+08:00",
+    "updatedAt":  "2026-08-14T11:16:53+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -18,6 +18,7 @@
                                 "正在使用 ChatGPT":  481,
                                 "离开电脑":  440,
                                 "正在使用 Weixin":  64,
+                                "正在使用 LockApp":  127,
                                 "正在使用 explorer":  162
                             },
                   "date":  "2026-08-14"
@@ -25,7 +26,7 @@
     "pc":  {
                "detail":  "Windows 默认锁屏界面",
                "activity":  "正在使用 LockApp",
-               "updatedAt":  "2026-08-14T11:14:45+08:00",
+               "updatedAt":  "2026-08-14T11:16:53+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
