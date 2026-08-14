@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-14T10:16:17+08:00",
+    "updatedAt":  "2026-08-14T10:17:21+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -15,16 +15,16 @@
                                 "正在使用 explorer":  126,
                                 "正在使用 FlClash":  35,
                                 "正在浏览网页":  5635,
-                                "正在使用 ChatGPT":  282,
+                                "正在使用 ChatGPT":  345,
                                 "离开电脑":  372,
                                 "正在使用 Weixin":  64
                             },
                   "date":  "2026-08-14"
               },
     "pc":  {
-               "detail":  "ChatGPT",
-               "activity":  "正在使用 ChatGPT",
-               "updatedAt":  "2026-08-14T10:16:17+08:00",
+               "detail":  "bing.com/ck/a?!\u0026\u0026p=35935dbaa4941a3925f28539c8a4c7fcdad217ea5…",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-14T10:17:21+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -36,11 +36,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "VS Code",
-                        "t":  "2026-08-13T22:31:02+08:00",
-                        "activity":  "正在写代码"
-                    },
                     {
                         "detail":  "26暑假集训 - 文件资源管理器",
                         "t":  "2026-08-13T22:33:06+08:00",
@@ -335,6 +330,11 @@
                         "detail":  "ChatGPT",
                         "t":  "2026-08-14T10:16:17+08:00",
                         "activity":  "正在使用 ChatGPT"
+                    },
+                    {
+                        "detail":  "bing.com/ck/a?!\u0026\u0026p=35935dbaa4941a3925f28539c8a4c7fcdad217ea5…",
+                        "t":  "2026-08-14T10:17:21+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
