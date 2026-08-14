@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-14T20:58:10+08:00",
+    "updatedAt":  "2026-08-14T21:00:15+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -18,7 +18,7 @@
                                 "正在使用 ShellHost":  274,
                                 "离开电脑":  3190,
                                 "正在使用私密应用":  1084,
-                                "正在使用 ChatGPT":  5569,
+                                "正在使用 ChatGPT":  5693,
                                 "正在使用 FlClash-0.8.95-windows-amd64-setup.tmp":  33,
                                 "正在使用 WindowsTerminal":  63,
                                 "正在使用 explorer":  290,
@@ -32,7 +32,7 @@
     "pc":  {
                "detail":  "ChatGPT",
                "activity":  "正在使用 ChatGPT",
-               "updatedAt":  "2026-08-14T20:58:10+08:00",
+               "updatedAt":  "2026-08-14T21:00:15+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
