@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-14T14:12:29+08:00",
+    "updatedAt":  "2026-08-14T14:13:29+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -11,7 +11,7 @@
                                 "正在浏览网页":  10270,
                                 "正在处理文档":  35440,
                                 "正在使用 LockApp":  1777,
-                                "正在写代码":  3472,
+                                "正在写代码":  3532,
                                 "正在使用 ShellHost":  91,
                                 "离开电脑":  475,
                                 "正在使用私密应用":  352,
@@ -25,9 +25,9 @@
                   "date":  "2026-08-14"
               },
     "pc":  {
-               "detail":  "VS Code",
-               "activity":  "正在写代码",
-               "updatedAt":  "2026-08-14T14:12:29+08:00",
+               "detail":  "快速设置",
+               "activity":  "正在使用 ShellHost",
+               "updatedAt":  "2026-08-14T14:13:29+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -39,11 +39,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "FlClash",
-                        "t":  "2026-08-14T08:24:47+08:00",
-                        "activity":  "正在使用 FlClash"
-                    },
                     {
                         "detail":  "deepseek-ai/deepseek-harness: DeepSeek Harness: Everything i…",
                         "t":  "2026-08-14T08:25:22+08:00",
@@ -338,6 +333,11 @@
                         "detail":  "VS Code",
                         "t":  "2026-08-14T13:45:33+08:00",
                         "activity":  "正在写代码"
+                    },
+                    {
+                        "detail":  "快速设置",
+                        "t":  "2026-08-14T14:13:29+08:00",
+                        "activity":  "正在使用 ShellHost"
                     }
                 ]
 }
