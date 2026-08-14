@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-14T11:02:35+08:00",
+    "updatedAt":  "2026-08-14T11:04:42+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -14,7 +14,7 @@
                                 "正在处理文档":  32016,
                                 "正在使用私密应用":  186,
                                 "正在使用 FlClash":  98,
-                                "正在浏览网页":  7911,
+                                "正在浏览网页":  8037,
                                 "正在使用 ChatGPT":  481,
                                 "离开电脑":  405,
                                 "正在使用 Weixin":  64,
@@ -23,9 +23,9 @@
                   "date":  "2026-08-14"
               },
     "pc":  {
-               "detail":  "AstrBot - 仪表盘 和另外 6 个页面 - 个人 - Microsoft​ Edge",
+               "detail":  "AstrBot - 仪表盘 和另外 4 个页面 - 个人 - Microsoft​ Edge",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-14T11:02:35+08:00",
+               "updatedAt":  "2026-08-14T11:04:42+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
