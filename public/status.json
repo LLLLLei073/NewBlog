@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-15T09:22:57+08:00",
+    "updatedAt":  "2026-08-15T09:23:30+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -12,7 +12,7 @@
                                 "正在使用 DeepSeek Harness":  33,
                                 "正在使用 explorer":  133,
                                 "离开电脑":  131,
-                                "正在浏览网页":  562,
+                                "正在浏览网页":  595,
                                 "正在使用 ChatGPT":  99,
                                 "正在使用 Photos":  33,
                                 "正在使用 StartMenuExperienceHost":  33684,
@@ -21,9 +21,9 @@
                   "date":  "2026-08-15"
               },
     "pc":  {
-               "detail":  "D-Escape Root_2026牛客暑期多校训练营9 和另外 6 个页面 - 个人 - Microsoft​ Edg…",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-15T09:22:57+08:00",
+               "detail":  "Data (D:) - 文件资源管理器",
+               "activity":  "正在使用 explorer",
+               "updatedAt":  "2026-08-15T09:23:30+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -35,11 +35,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Codeforces Training Console 和另外 4 个页面 - 个人 - Microsoft​ Edge…",
-                        "t":  "2026-08-14T20:21:18+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "",
                         "t":  "2026-08-14T20:23:55+08:00",
@@ -334,6 +329,11 @@
                         "detail":  "D-Escape Root_2026牛客暑期多校训练营9 和另外 6 个页面 - 个人 - Microsoft​ Edg…",
                         "t":  "2026-08-15T09:22:57+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "Data (D:) - 文件资源管理器",
+                        "t":  "2026-08-15T09:23:30+08:00",
+                        "activity":  "正在使用 explorer"
                     }
                 ]
 }
