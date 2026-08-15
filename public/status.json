@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-15T09:04:37+08:00",
+    "updatedAt":  "2026-08-15T09:05:43+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,14 +8,15 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在使用 StartMenuExperienceHost":  33684
+                                "正在使用 StartMenuExperienceHost":  33684,
+                                "离开电脑":  65
                             },
                   "date":  "2026-08-15"
               },
     "pc":  {
-               "detail":  "未检测到活动窗口",
-               "activity":  "离开电脑",
-               "updatedAt":  "2026-08-15T09:04:37+08:00",
+               "detail":  "HiBit Uninstaller 4.0.10",
+               "activity":  "正在使用 HiBitUninstaller",
+               "updatedAt":  "2026-08-15T09:05:43+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -27,11 +28,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "",
-                        "t":  "2026-08-14T19:58:27+08:00",
-                        "activity":  "正在使用私密应用"
-                    },
                     {
                         "detail":  "AstrBot - 仪表盘 和另外 4 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-14T19:59:00+08:00",
@@ -326,6 +322,11 @@
                         "detail":  "未检测到活动窗口",
                         "t":  "2026-08-15T09:04:37+08:00",
                         "activity":  "离开电脑"
+                    },
+                    {
+                        "detail":  "HiBit Uninstaller 4.0.10",
+                        "t":  "2026-08-15T09:05:43+08:00",
+                        "activity":  "正在使用 HiBitUninstaller"
                     }
                 ]
 }
