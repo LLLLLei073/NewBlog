@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-15T09:26:15+08:00",
+    "updatedAt":  "2026-08-15T09:28:19+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -11,7 +11,7 @@
                                 "正在使用 HiBitUninstaller":  63,
                                 "正在使用 DeepSeek Harness":  33,
                                 "正在使用 explorer":  199,
-                                "离开电脑":  131,
+                                "离开电脑":  255,
                                 "正在浏览网页":  691,
                                 "正在使用 ChatGPT":  99,
                                 "正在使用 Photos":  33,
@@ -23,7 +23,7 @@
     "pc":  {
                "detail":  "未检测到活动窗口",
                "activity":  "离开电脑",
-               "updatedAt":  "2026-08-15T09:26:15+08:00",
+               "updatedAt":  "2026-08-15T09:28:19+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
