@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-15T09:31:35+08:00",
+    "updatedAt":  "2026-08-15T09:32:09+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -10,7 +10,7 @@
                   "stats":  {
                                 "正在使用 HiBitUninstaller":  63,
                                 "正在使用 DeepSeek Harness":  33,
-                                "正在使用 explorer":  233,
+                                "正在使用 explorer":  266,
                                 "离开电脑":  348,
                                 "正在浏览网页":  757,
                                 "正在使用 ChatGPT":  99,
@@ -21,9 +21,9 @@
                   "date":  "2026-08-15"
               },
     "pc":  {
-               "detail":  "下载 - 文件资源管理器",
-               "activity":  "正在使用 explorer",
-               "updatedAt":  "2026-08-15T09:31:35+08:00",
+               "detail":  "Qwen Studio 和另外 2 个页面 - 个人 - Microsoft​ Edge",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-15T09:32:09+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -35,11 +35,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "VS Code",
-                        "t":  "2026-08-14T22:30:00+08:00",
-                        "activity":  "正在写代码"
-                    },
                     {
                         "detail":  "P1395 会议 - 洛谷 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-14T22:37:16+08:00",
@@ -334,6 +329,11 @@
                         "detail":  "下载 - 文件资源管理器",
                         "t":  "2026-08-15T09:31:35+08:00",
                         "activity":  "正在使用 explorer"
+                    },
+                    {
+                        "detail":  "Qwen Studio 和另外 2 个页面 - 个人 - Microsoft​ Edge",
+                        "t":  "2026-08-15T09:32:09+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
