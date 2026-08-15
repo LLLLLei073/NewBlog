@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-15T09:07:20+08:00",
+    "updatedAt":  "2026-08-15T09:08:54+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,6 +8,7 @@
               },
     "daily":  {
                   "stats":  {
+                                "正在浏览网页":  93,
                                 "正在使用 HiBitUninstaller":  63,
                                 "离开电脑":  98,
                                 "正在使用 StartMenuExperienceHost":  33684
@@ -15,9 +16,9 @@
                   "date":  "2026-08-15"
               },
     "pc":  {
-               "detail":  "豆包 - 字节跳动旗下 AI 智能助手 和另外 2 个页面 - 个人 - Microsoft​ Edge",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-15T09:07:20+08:00",
+               "detail":  "此电脑 - 文件资源管理器",
+               "activity":  "正在使用 explorer",
+               "updatedAt":  "2026-08-15T09:08:54+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -29,11 +30,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "宝塔Linux面板 和另外 5 个页面 - 个人 - Microsoft​ Edge",
-                        "t":  "2026-08-14T20:05:45+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "",
                         "t":  "2026-08-14T20:06:19+08:00",
@@ -328,6 +324,11 @@
                         "detail":  "豆包 - 字节跳动旗下 AI 智能助手 和另外 2 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-15T09:07:20+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "此电脑 - 文件资源管理器",
+                        "t":  "2026-08-15T09:08:54+08:00",
+                        "activity":  "正在使用 explorer"
                     }
                 ]
 }
