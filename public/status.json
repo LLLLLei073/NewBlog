@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-15T09:33:13+08:00",
+    "updatedAt":  "2026-08-15T09:33:47+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,6 +8,7 @@
               },
     "daily":  {
                   "stats":  {
+                                "正在用微信":  34,
                                 "正在使用 HiBitUninstaller":  63,
                                 "正在使用 DeepSeek Harness":  33,
                                 "正在使用 explorer":  266,
@@ -21,9 +22,9 @@
                   "date":  "2026-08-15"
               },
     "pc":  {
-               "detail":  "微信",
-               "activity":  "正在用微信",
-               "updatedAt":  "2026-08-15T09:33:13+08:00",
+               "detail":  "Qwen Studio 和另外 2 个页面 - 个人 - Microsoft​ Edge",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-15T09:33:47+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -35,11 +36,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "ChatGPT",
-                        "t":  "2026-08-14T22:38:50+08:00",
-                        "activity":  "正在使用 ChatGPT"
-                    },
                     {
                         "detail":  "微信",
                         "t":  "2026-08-14T22:40:54+08:00",
@@ -334,6 +330,11 @@
                         "detail":  "微信",
                         "t":  "2026-08-15T09:33:13+08:00",
                         "activity":  "正在用微信"
+                    },
+                    {
+                        "detail":  "Qwen Studio 和另外 2 个页面 - 个人 - Microsoft​ Edge",
+                        "t":  "2026-08-15T09:33:47+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
