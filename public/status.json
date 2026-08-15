@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-15T09:16:50+08:00",
+    "updatedAt":  "2026-08-15T09:17:24+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -12,15 +12,16 @@
                                 "正在使用 explorer":  66,
                                 "离开电脑":  98,
                                 "正在浏览网页":  466,
+                                "正在使用 DeepSeek-Harness-0.1.0":  33,
                                 "正在使用 Photos":  33,
                                 "正在使用 StartMenuExperienceHost":  33684
                             },
                   "date":  "2026-08-15"
               },
     "pc":  {
-               "detail":  "DeepSeek Harness 安装",
-               "activity":  "正在使用 DeepSeek-Harness-0.1.0",
-               "updatedAt":  "2026-08-15T09:16:50+08:00",
+               "detail":  "未检测到活动窗口",
+               "activity":  "离开电脑",
+               "updatedAt":  "2026-08-15T09:17:24+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -32,11 +33,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "宝塔Linux面板 和另外 5 个页面 - 个人 - Microsoft​ Edge",
-                        "t":  "2026-08-14T20:10:37+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "",
                         "t":  "2026-08-14T20:11:11+08:00",
@@ -331,6 +327,11 @@
                         "detail":  "DeepSeek Harness 安装",
                         "t":  "2026-08-15T09:16:50+08:00",
                         "activity":  "正在使用 DeepSeek-Harness-0.1.0"
+                    },
+                    {
+                        "detail":  "未检测到活动窗口",
+                        "t":  "2026-08-15T09:17:24+08:00",
+                        "activity":  "离开电脑"
                     }
                 ]
 }
