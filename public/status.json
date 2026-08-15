@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-15T09:21:19+08:00",
+    "updatedAt":  "2026-08-15T09:22:23+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -12,7 +12,7 @@
                                 "正在使用 DeepSeek Harness":  33,
                                 "正在使用 explorer":  133,
                                 "离开电脑":  131,
-                                "正在浏览网页":  499,
+                                "正在浏览网页":  562,
                                 "正在使用 ChatGPT":  66,
                                 "正在使用 Photos":  33,
                                 "正在使用 StartMenuExperienceHost":  33684,
@@ -21,9 +21,9 @@
                   "date":  "2026-08-15"
               },
     "pc":  {
-               "detail":  "(1条未读私信) 牛客竞赛OJ_ACM/NOI/CSP/CCPC/ICPC_信息学编程算法训练平台 和另外 6 个页面 …",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-15T09:21:19+08:00",
+               "detail":  "ChatGPT",
+               "activity":  "正在使用 ChatGPT",
+               "updatedAt":  "2026-08-15T09:22:23+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -35,11 +35,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "Codeforces Training Console 和另外 4 个页面 - 个人 - Microsoft​ Edge…",
-                        "t":  "2026-08-14T20:19:41+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "*新建 Text Document.txt - Notepad",
                         "t":  "2026-08-14T20:20:44+08:00",
@@ -334,6 +329,11 @@
                         "detail":  "(1条未读私信) 牛客竞赛OJ_ACM/NOI/CSP/CCPC/ICPC_信息学编程算法训练平台 和另外 6 个页面 …",
                         "t":  "2026-08-15T09:21:19+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "ChatGPT",
+                        "t":  "2026-08-15T09:22:23+08:00",
+                        "activity":  "正在使用 ChatGPT"
                     }
                 ]
 }
