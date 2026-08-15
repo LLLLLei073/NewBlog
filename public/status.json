@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-15T09:40:43+08:00",
+    "updatedAt":  "2026-08-15T09:41:16+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,6 +8,7 @@
               },
     "daily":  {
                   "stats":  {
+                                "正在敲命令":  33,
                                 "正在用微信":  34,
                                 "正在使用 HiBitUninstaller":  63,
                                 "正在使用 DeepSeek Harness":  33,
@@ -22,9 +23,9 @@
                   "date":  "2026-08-15"
               },
     "pc":  {
-               "detail":  "终端",
-               "activity":  "正在敲命令",
-               "updatedAt":  "2026-08-15T09:40:43+08:00",
+               "detail":  "数智党校 · 管理后台 和另外 2 个页面 - 个人 - Microsoft​ Edge",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-15T09:41:16+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -36,11 +37,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "ChatGPT",
-                        "t":  "2026-08-14T22:55:29+08:00",
-                        "activity":  "正在使用 ChatGPT"
-                    },
                     {
                         "detail":  "",
                         "t":  "2026-08-14T22:56:03+08:00",
@@ -335,6 +331,11 @@
                         "detail":  "终端",
                         "t":  "2026-08-15T09:40:43+08:00",
                         "activity":  "正在敲命令"
+                    },
+                    {
+                        "detail":  "数智党校 · 管理后台 和另外 2 个页面 - 个人 - Microsoft​ Edge",
+                        "t":  "2026-08-15T09:41:16+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
