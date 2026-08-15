@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-15T09:18:31+08:00",
+    "updatedAt":  "2026-08-15T09:19:04+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -8,21 +8,21 @@
               },
     "daily":  {
                   "stats":  {
-                                "正在使用 ChatGPT":  33,
                                 "正在使用 HiBitUninstaller":  63,
                                 "正在使用 explorer":  66,
                                 "离开电脑":  131,
-                                "正在浏览网页":  466,
-                                "正在使用 DeepSeek-Harness-0.1.0":  33,
+                                "正在浏览网页":  499,
+                                "正在使用 ChatGPT":  33,
                                 "正在使用 Photos":  33,
+                                "正在使用 DeepSeek-Harness-0.1.0":  33,
                                 "正在使用 StartMenuExperienceHost":  33684
                             },
                   "date":  "2026-08-15"
               },
     "pc":  {
-               "detail":  "dsh-plugin · GitHub Topics 和另外 5 个页面 - 个人 - Microsoft​ Edge",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-15T09:18:31+08:00",
+               "detail":  "ChatGPT",
+               "activity":  "正在使用 ChatGPT",
+               "updatedAt":  "2026-08-15T09:19:04+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -34,11 +34,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "",
-                        "t":  "2026-08-14T20:12:49+08:00",
-                        "activity":  "正在使用私密应用"
-                    },
                     {
                         "detail":  "AstrBot - 仪表盘 和另外 6 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-14T20:13:22+08:00",
@@ -333,6 +328,11 @@
                         "detail":  "dsh-plugin · GitHub Topics 和另外 5 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-15T09:18:31+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "ChatGPT",
+                        "t":  "2026-08-15T09:19:04+08:00",
+                        "activity":  "正在使用 ChatGPT"
                     }
                 ]
 }
