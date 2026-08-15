@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-15T09:06:46+08:00",
+    "updatedAt":  "2026-08-15T09:07:20+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -9,15 +9,15 @@
     "daily":  {
                   "stats":  {
                                 "正在使用 HiBitUninstaller":  63,
-                                "离开电脑":  65,
+                                "离开电脑":  98,
                                 "正在使用 StartMenuExperienceHost":  33684
                             },
                   "date":  "2026-08-15"
               },
     "pc":  {
-               "detail":  "未检测到活动窗口",
-               "activity":  "离开电脑",
-               "updatedAt":  "2026-08-15T09:06:46+08:00",
+               "detail":  "豆包 - 字节跳动旗下 AI 智能助手 和另外 2 个页面 - 个人 - Microsoft​ Edge",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-15T09:07:20+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -29,11 +29,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "",
-                        "t":  "2026-08-14T20:04:11+08:00",
-                        "activity":  "正在使用私密应用"
-                    },
                     {
                         "detail":  "宝塔Linux面板 和另外 5 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-14T20:05:45+08:00",
@@ -328,6 +323,11 @@
                         "detail":  "未检测到活动窗口",
                         "t":  "2026-08-15T09:06:46+08:00",
                         "activity":  "离开电脑"
+                    },
+                    {
+                        "detail":  "豆包 - 字节跳动旗下 AI 智能助手 和另外 2 个页面 - 个人 - Microsoft​ Edge",
+                        "t":  "2026-08-15T09:07:20+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
