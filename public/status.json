@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-15T09:39:05+08:00",
+    "updatedAt":  "2026-08-15T09:40:09+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -14,7 +14,7 @@
                                 "正在使用 explorer":  299,
                                 "离开电脑":  348,
                                 "正在浏览网页":  1071,
-                                "正在使用 ChatGPT":  99,
+                                "正在使用 ChatGPT":  162,
                                 "正在使用 Photos":  66,
                                 "正在使用 StartMenuExperienceHost":  33684,
                                 "正在使用 DeepSeek-Harness-0.1.0":  33
@@ -22,9 +22,9 @@
                   "date":  "2026-08-15"
               },
     "pc":  {
-               "detail":  "Select Project Root",
-               "activity":  "正在使用 ChatGPT",
-               "updatedAt":  "2026-08-15T09:39:05+08:00",
+               "detail":  "未检测到活动窗口",
+               "activity":  "离开电脑",
+               "updatedAt":  "2026-08-15T09:40:09+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -36,11 +36,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "哔哩哔哩 (゜-゜)つロ 干杯~-bilibili",
-                        "t":  "2026-08-14T22:49:48+08:00",
-                        "activity":  "正在看视频"
-                    },
                     {
                         "detail":  "VS Code",
                         "t":  "2026-08-14T22:51:52+08:00",
@@ -335,6 +330,11 @@
                         "detail":  "Select Project Root",
                         "t":  "2026-08-15T09:39:05+08:00",
                         "activity":  "正在使用 ChatGPT"
+                    },
+                    {
+                        "detail":  "未检测到活动窗口",
+                        "t":  "2026-08-15T09:40:09+08:00",
+                        "activity":  "离开电脑"
                     }
                 ]
 }
