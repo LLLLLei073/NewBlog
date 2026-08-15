@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-15T09:35:25+08:00",
+    "updatedAt":  "2026-08-15T09:35:58+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -11,7 +11,7 @@
                                 "正在用微信":  34,
                                 "正在使用 HiBitUninstaller":  63,
                                 "正在使用 DeepSeek Harness":  33,
-                                "正在使用 explorer":  266,
+                                "正在使用 explorer":  299,
                                 "离开电脑":  348,
                                 "正在浏览网页":  885,
                                 "正在使用 ChatGPT":  99,
@@ -22,9 +22,9 @@
                   "date":  "2026-08-15"
               },
     "pc":  {
-               "detail":  "下载 - 文件资源管理器",
-               "activity":  "正在使用 explorer",
-               "updatedAt":  "2026-08-15T09:35:25+08:00",
+               "detail":  "打开",
+               "activity":  "正在浏览网页",
+               "updatedAt":  "2026-08-15T09:35:58+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -36,11 +36,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "ChatGPT",
-                        "t":  "2026-08-14T22:42:02+08:00",
-                        "activity":  "正在使用 ChatGPT"
-                    },
                     {
                         "detail":  "VS Code",
                         "t":  "2026-08-14T22:48:14+08:00",
@@ -335,6 +330,11 @@
                         "detail":  "下载 - 文件资源管理器",
                         "t":  "2026-08-15T09:35:25+08:00",
                         "activity":  "正在使用 explorer"
+                    },
+                    {
+                        "detail":  "打开",
+                        "t":  "2026-08-15T09:35:58+08:00",
+                        "activity":  "正在浏览网页"
                     }
                 ]
 }
