@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-15T09:11:08+08:00",
+    "updatedAt":  "2026-08-15T09:13:13+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -11,16 +11,16 @@
                                 "正在使用 HiBitUninstaller":  63,
                                 "正在使用 explorer":  66,
                                 "离开电脑":  98,
-                                "正在浏览网页":  126,
+                                "正在浏览网页":  250,
                                 "正在使用 Photos":  33,
                                 "正在使用 StartMenuExperienceHost":  33684
                             },
                   "date":  "2026-08-15"
               },
     "pc":  {
-               "detail":  "Qwen Studio 和另外 4 个页面 - 个人 - Microsoft​ Edge",
+               "detail":  "DeepSeek Harness 开发者预览版：一切皆插件 和另外 7 个页面 - 个人 - Microsoft​ Ed…",
                "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-15T09:11:08+08:00",
+               "updatedAt":  "2026-08-15T09:13:13+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
