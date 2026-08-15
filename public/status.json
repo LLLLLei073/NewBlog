@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-15T09:10:01+08:00",
+    "updatedAt":  "2026-08-15T09:10:34+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -11,16 +11,16 @@
                                 "正在使用 HiBitUninstaller":  63,
                                 "正在使用 explorer":  33,
                                 "离开电脑":  98,
-                                "正在浏览网页":  93,
+                                "正在浏览网页":  126,
                                 "正在使用 Photos":  33,
                                 "正在使用 StartMenuExperienceHost":  33684
                             },
                   "date":  "2026-08-15"
               },
     "pc":  {
-               "detail":  "doubao - 搜索 和另外 1 个页面 - 个人 - Microsoft​ Edge",
-               "activity":  "正在浏览网页",
-               "updatedAt":  "2026-08-15T09:10:01+08:00",
+               "detail":  "屏幕截图 - 文件资源管理器",
+               "activity":  "正在使用 explorer",
+               "updatedAt":  "2026-08-15T09:10:34+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -32,11 +32,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "",
-                        "t":  "2026-08-14T20:08:56+08:00",
-                        "activity":  "正在使用私密应用"
-                    },
                     {
                         "detail":  "宝塔Linux面板 和另外 5 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-14T20:09:30+08:00",
@@ -331,6 +326,11 @@
                         "detail":  "doubao - 搜索 和另外 1 个页面 - 个人 - Microsoft​ Edge",
                         "t":  "2026-08-15T09:10:01+08:00",
                         "activity":  "正在浏览网页"
+                    },
+                    {
+                        "detail":  "屏幕截图 - 文件资源管理器",
+                        "t":  "2026-08-15T09:10:34+08:00",
+                        "activity":  "正在使用 explorer"
                     }
                 ]
 }
