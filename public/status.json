@@ -1,5 +1,5 @@
 {
-    "updatedAt":  "2026-08-15T09:20:12+08:00",
+    "updatedAt":  "2026-08-15T09:20:46+08:00",
     "phone":  {
                   "detail":  "",
                   "activity":  "离线",
@@ -9,6 +9,7 @@
     "daily":  {
                   "stats":  {
                                 "正在使用 HiBitUninstaller":  63,
+                                "正在使用 DeepSeek Harness":  33,
                                 "正在使用 explorer":  100,
                                 "离开电脑":  131,
                                 "正在浏览网页":  499,
@@ -20,9 +21,9 @@
                   "date":  "2026-08-15"
               },
     "pc":  {
-               "detail":  "DeepSeek Harness",
-               "activity":  "正在使用 DeepSeek Harness",
-               "updatedAt":  "2026-08-15T09:20:12+08:00",
+               "detail":  "Program Manager",
+               "activity":  "正在使用 explorer",
+               "updatedAt":  "2026-08-15T09:20:46+08:00",
                "online":  true,
                "sysinfo":  {
                                "uptime":  "0小时",
@@ -34,11 +35,6 @@
                            }
            },
     "history":  [
-                    {
-                        "detail":  "AstrBot - 仪表盘 和另外 4 个页面 - 个人 - Microsoft​ Edge",
-                        "t":  "2026-08-14T20:18:03+08:00",
-                        "activity":  "正在浏览网页"
-                    },
                     {
                         "detail":  "*新建 Text Document.txt - Notepad",
                         "t":  "2026-08-14T20:19:07+08:00",
@@ -333,6 +329,11 @@
                         "detail":  "DeepSeek Harness",
                         "t":  "2026-08-15T09:20:12+08:00",
                         "activity":  "正在使用 DeepSeek Harness"
+                    },
+                    {
+                        "detail":  "Program Manager",
+                        "t":  "2026-08-15T09:20:46+08:00",
+                        "activity":  "正在使用 explorer"
                     }
                 ]
 }
