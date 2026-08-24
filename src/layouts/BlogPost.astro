@@ -54,7 +54,14 @@ const allPosts = (await getCollection('blog'))
 const currentPath = Astro.url.pathname;
 ---
 
-<BaseLayout title={title} description={description} image={heroImage}>
+<BaseLayout
+  title={title}
+  description={description}
+  image={heroImage}
+  type="article"
+  publishedTime={pubDate}
+  modifiedTime={updatedDate}
+>
   <div class="reading-progress" aria-hidden="true">
     <div class="reading-progress-bar" id="reading-progress-bar"></div>
   </div>
@@ -540,7 +547,7 @@ const currentPath = Astro.url.pathname;
   }
 
   /* ===== 图片灯箱 ===== */
-  .lightbox {
+  :global(.lightbox) {
     position: fixed;
     inset: 0;
     z-index: 200;
@@ -554,12 +561,16 @@ const currentPath = Astro.url.pathname;
     transition: opacity 0.22s ease;
   }
 
-  .lightbox.open {
+  :global(.lightbox.open) {
     opacity: 1;
     pointer-events: auto;
   }
 
-  .lightbox img {
+  :global(.lightbox[aria-hidden='true']) {
+    visibility: hidden;
+  }
+
+  :global(.lightbox img) {
     max-width: 92vw;
     max-height: 88vh;
     border-radius: var(--radius);
@@ -567,7 +578,7 @@ const currentPath = Astro.url.pathname;
     cursor: zoom-out;
   }
 
-  .lightbox-close {
+  :global(.lightbox-close) {
     position: absolute;
     top: 1.25rem;
     right: 1.25rem;
@@ -585,12 +596,17 @@ const currentPath = Astro.url.pathname;
     transition: background 0.15s ease;
   }
 
-  .lightbox-close:hover {
+  :global(.lightbox-close:hover) {
     background: rgba(255, 255, 255, 0.22);
   }
 
   .prose img {
     cursor: zoom-in;
+  }
+
+  .prose img:focus-visible {
+    outline: 3px solid var(--ring);
+    outline-offset: 4px;
   }
 
   @media (max-width: 640px) {
@@ -688,7 +704,7 @@ const currentPath = Astro.url.pathname;
   }
 
   /* ===== 返回顶部 ===== */
-  .back-to-top {
+  :global(.back-to-top) {
     position: fixed;
     right: 1rem;
     bottom: calc(1rem + env(safe-area-inset-bottom));
@@ -714,23 +730,23 @@ const currentPath = Astro.url.pathname;
     -webkit-backdrop-filter: blur(14px) saturate(140%);
   }
 
-  .back-to-top:hover {
+  :global(.back-to-top:hover) {
     color: var(--primary);
     border-color: var(--brand-300);
   }
 
-  .back-to-top:active {
+  :global(.back-to-top:active) {
     transform: translateY(0) scale(0.92);
   }
 
-  .back-to-top.visible {
+  :global(.back-to-top.visible) {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
   }
 
   /* 有 FAB 时（窄屏）——返回顶部抬高到 FAB 上方 */
-  :global(body:has(.fab)) .back-to-top {
+  :global(body:has(.fab) .back-to-top) {
     bottom: calc(4.75rem + env(safe-area-inset-bottom));
   }
 
@@ -1085,32 +1101,65 @@ const currentPath = Astro.url.pathname;
 
   // 图片灯箱：点击文章图片全屏预览
   function initLightbox() {
-    const imgs = Array.from(document.querySelectorAll('.prose img'));
+    const imgs = Array.from(document.querySelectorAll<HTMLImageElement>('.prose img'));
     if (!imgs.length) return;
 
-    let lb = document.querySelector('.lightbox') as HTMLElement | null;
+    type LightboxElement = HTMLElement & { activeTrigger?: HTMLElement };
+    let lb = document.querySelector('.lightbox') as LightboxElement | null;
     if (!lb) {
       lb = document.createElement('div');
       lb.className = 'lightbox';
-      lb.innerHTML = `<button class="lightbox-close" aria-label="关闭">×</button><img alt="" />`;
+      lb.setAttribute('role', 'dialog');
+      lb.setAttribute('aria-modal', 'true');
+      lb.setAttribute('aria-label', '图片预览');
+      lb.setAttribute('aria-hidden', 'true');
+      lb.innerHTML = `<button class="lightbox-close" type="button" aria-label="关闭图片预览">×</button><img alt="" />`;
       document.body.appendChild(lb);
     }
     const imgEl = lb.querySelector('img') as HTMLImageElement;
-    const close = () => lb!.classList.remove('open');
-    (lb.querySelector('.lightbox-close') as HTMLElement).addEventListener('click', close);
-    lb.addEventListener('click', (e) => {
-      if (e.target === lb || (e.target as HTMLElement).tagName === 'IMG') close();
-    });
-    document.addEventListener('keydown', (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && lb!.classList.contains('open')) close();
-    });
+    const closeBtn = lb.querySelector('.lightbox-close') as HTMLButtonElement;
+    const close = () => {
+      if (!lb?.classList.contains('open')) return;
+      lb.classList.remove('open');
+      lb.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      lb.activeTrigger?.focus();
+      lb.activeTrigger = undefined;
+    };
+
+    if (lb.dataset.lightboxBound !== 'true') {
+      lb.dataset.lightboxBound = 'true';
+      closeBtn.addEventListener('click', close);
+      lb.addEventListener('click', (event) => {
+        if (event.target === lb || (event.target as HTMLElement).tagName === 'IMG') close();
+      });
+      document.addEventListener('keydown', (event: KeyboardEvent) => {
+        if (event.key === 'Escape' && lb?.classList.contains('open')) close();
+      });
+    }
+
+    const open = (img: HTMLImageElement) => {
+      if (!img.src || !lb) return;
+      lb.activeTrigger = img;
+      imgEl.src = img.src;
+      imgEl.alt = img.alt || '文章图片大图';
+      lb.classList.add('open');
+      lb.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      closeBtn.focus();
+    };
 
     imgs.forEach((img) => {
-      img.addEventListener('click', () => {
-        if (!img.src) return;
-        imgEl.src = img.src;
-        imgEl.alt = img.alt || '';
-        lb!.classList.add('open');
+      if (img.dataset.lightboxInit === 'true') return;
+      img.dataset.lightboxInit = 'true';
+      img.tabIndex = 0;
+      img.setAttribute('role', 'button');
+      img.setAttribute('aria-label', img.alt ? `查看大图：${img.alt}` : '查看文章图片大图');
+      img.addEventListener('click', () => open(img));
+      img.addEventListener('keydown', (event: KeyboardEvent) => {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        event.preventDefault();
+        open(img);
       });
     });
   }

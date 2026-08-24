@@ -1,41 +1,12 @@
 /* ============================================================
-   Emerald Design System — Modern Documentation Blog
-   Clean, flat, mint-green accent. Reading-first.
+   Field Notes — personal editorial blog
+   Warm orange, deep-space dark mode, reading-first typography.
    ============================================================ */
 
 /* ---- KaTeX 数学公式样式（math 专栏渲染 LaTeX）---- */
 @import 'katex/dist/katex.min.css';
 
-/* ---- Fonts: 自托管（本地 woff2，零外网依赖，国内秒开）
-   Inter（UI/英文数字）+ JetBrains Mono（代码）+ 系统中文（苹方/雅黑） ---- */
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('/fonts/Inter-400.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url('/fonts/Inter-500.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url('/fonts/Inter-600.woff2') format('woff2');
-}
-@font-face {
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url('/fonts/Inter-700.woff2') format('woff2');
-}
+/* ---- Fonts: 标题优先使用中文衬线，正文使用本机人文无衬线；代码字体自托管。 ---- */
 @font-face {
   font-family: 'JetBrains Mono';
   font-style: normal;
@@ -112,9 +83,9 @@
   --header-bg: color-mix(in srgb, var(--background) 92%, transparent);
 
   /* ===== Non-color tokens ===== */
-  --font-sans: 'Inter', 'PingFang SC', 'Microsoft YaHei', ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-display: 'Inter', 'PingFang SC', 'Microsoft YaHei', ui-sans-serif, system-ui, sans-serif;
-  --font-serif: 'Inter', 'PingFang SC', 'Microsoft YaHei', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Aptos', 'HarmonyOS Sans SC', 'MiSans', 'PingFang SC', 'Microsoft YaHei', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Noto Serif CJK SC', 'Source Han Serif SC', 'Songti SC', 'STSong', ui-serif, serif;
+  --font-serif: 'Noto Serif CJK SC', 'Source Han Serif SC', 'Songti SC', 'STSong', ui-serif, serif;
   --font-mono: 'JetBrains Mono', ui-monospace, 'Geist Mono', monospace;
 
   --spacing: 0.25rem;
@@ -384,6 +355,11 @@ a {
 
 a:hover {
   color: var(--brand-600);
+}
+
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
 }
 
 img {
@@ -762,4 +738,24 @@ button:active,
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-400);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
 }

@@ -1,76 +1,106 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { CATEGORIES } from '../utils/categories.ts';
 ---
 
-<BaseLayout title="关于" description="关于我和这个博客">
-  <section class="container about">
-    <div class="page-head">
-      <p class="eyebrow">关于</p>
-      <h1>关于</h1>
-    </div>
-
-    <!-- 我的设备：实时状态 -->
-    <div class="block devices">
-      <div class="block-title">
-        <h2 class="block-h">我的设备</h2>
-        <span class="live-badge"><span class="live-dot"></span>实时</span>
-      </div>
-      <p class="block-sub">电脑和手机的实时状态，由本机脚本自动上报。</p>
-
-      <div class="device-grid">
-        <div class="device-card" data-device="pc">
-          <div class="device-head">
-            <span class="device-icon">💻</span>
-            <span class="device-name">电脑</span>
-            <span class="device-status" data-status-dot></span>
-          </div>
-          <p class="device-activity" data-activity>连接中…</p>
-          <p class="device-detail" data-detail></p>
-          <p class="device-updated" data-updated></p>
-          <button class="manual-btn" data-manual>设为离开</button>
-          <div class="device-info" data-info hidden>
-            <div class="info-row"><span class="info-k">主机</span><span class="info-v" data-info-host></span></div>
-            <div class="info-row"><span class="info-k">系统</span><span class="info-v" data-info-os></span></div>
-            <div class="info-row"><span class="info-k">CPU</span><span class="info-v" data-info-cpu></span></div>
-            <div class="info-row"><span class="info-k">GPU</span><span class="info-v" data-info-gpu></span></div>
-            <div class="info-row"><span class="info-k">内存</span><span class="info-v" data-info-ram></span></div>
-            <div class="info-row"><span class="info-k">运行时长</span><span class="info-v" data-info-uptime></span></div>
-          </div>
+<BaseLayout
+  title="关于"
+  description="关于徐磊（LLLLei）：记录算法、开发与兴趣，也记录理解世界的方法。"
+  image="/avatar-xulei.jpg"
+>
+  <section class="about container-wide">
+    <header class="about-hero">
+      <p class="folio">ABOUT / 002</p>
+      <div class="hero-grid">
+        <div class="identity">
+          <h1>你好，<br />我是 <em>徐磊</em>。</h1>
+          <p class="hero-summary">一个持续学习、喜欢把问题拆开研究的人。网络上使用 <strong>LLLLei</strong> 这个名字写作。</p>
+          <span class="identity-meta">XU LEI · BASED IN CHINA · WRITING ON THE WEB</span>
         </div>
-
-        <div class="device-card" data-device="phone">
-          <div class="device-head">
-            <span class="device-icon">📱</span>
-            <span class="device-name">手机</span>
-            <span class="device-status" data-status-dot></span>
+        <figure class="portrait">
+          <div class="portrait-frame">
+            <img
+              src="/avatar-xulei.jpg"
+              width="1080"
+              height="1080"
+              alt="徐磊的手绘头像"
+              decoding="async"
+            />
           </div>
-          <p class="device-activity" data-activity>连接中…</p>
-          <p class="device-detail" data-detail></p>
-          <p class="device-updated" data-updated></p>
-        </div>
+          <figcaption><span>SELF PORTRAIT / 2026</span><span>徐磊 · LLLLei</span></figcaption>
+        </figure>
       </div>
-    </div>
+    </header>
 
-    <!-- 今日活动时间轴 -->
-    <div class="block timeline">
-      <div class="block-title">
-        <h2 class="block-h">今日时间轴</h2>
-        <span class="live-badge"><span class="live-dot"></span>实时</span>
-      </div>
-      <p class="block-sub">今天每个时间段在做什么。</p>
-      <div class="timeline-list" data-timeline>
-        <p class="timeline-empty">暂无记录</p>
-      </div>
-    </div>
+    <div class="about-grid">
+      <aside class="about-index" aria-label="本页目录">
+        <p>ON THIS PAGE</p>
+        <ol>
+          <li><a href="#intro">自我介绍</a></li>
+          <li><a href="#topics">写作主题</a></li>
+          <li><a href="#blog">关于博客</a></li>
+          <li><a href="#contact">保持联系</a></li>
+        </ol>
+      </aside>
 
-    <!-- 今日统计 -->
-    <div class="block stats">
-      <div class="block-title">
-        <h2 class="block-h">今日统计</h2>
-      </div>
-      <p class="block-sub">今天的活动时长分布。</p>
-      <div class="stats-list" data-stats>
-        <p class="stats-empty">暂无数据</p>
+      <div class="about-content">
+        <section id="intro" class="chapter intro">
+          <p class="chapter-number">01</p>
+          <div>
+            <h2>在学习与创造之间，留下可复用的理解。</h2>
+            <p class="intro-lead">我叫徐磊，网络上常用 LLLLei。我关注算法与程序设计，也对数学、音乐和游戏保持好奇。这个博客用来记录做项目时遇到的问题、竞赛中的思考，以及那些值得从“知道”走到“理解”的知识。</p>
+            <p>我更在意一篇文章是否讲清了来龙去脉，而不是更新得有多快。如果这里的一张图、一段代码或一个解释帮你少走了一点弯路，它就完成了使命。</p>
+          </div>
+        </section>
+
+        <section id="topics" class="chapter topics">
+          <p class="chapter-number">02</p>
+          <div>
+            <h2>我在写什么</h2>
+            <ol class="topic-list">
+              {CATEGORIES.map((category, index) => (
+                <li>
+                  <a href={category.path}>
+                    <span>{String(index + 1).padStart(2, '0')}</span>
+                    <strong>{category.label}</strong>
+                    <small>{category.description}</small>
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        <section id="blog" class="chapter">
+          <p class="chapter-number">03</p>
+          <div>
+            <h2>关于这个博客</h2>
+            <p>站点使用 Astro 构建并部署在 GitHub Pages。它保持静态、轻量和可迁移：正文属于 Markdown，链接可以长期存在，阅读不依赖账号或复杂脚本。</p>
+            <blockquote>
+              <p>先理解，再表达；先对内容负责，再考虑发布频率。</p>
+            </blockquote>
+            <dl class="site-facts">
+              <div><dt>作者</dt><dd>徐磊 · LLLLei</dd></div>
+              <div><dt>始于</dt><dd>2026</dd></div>
+              <div><dt>内容</dt><dd>原创笔记与项目记录</dd></div>
+              <div><dt>技术</dt><dd>Astro · Markdown · GitHub Pages</dd></div>
+              <div><dt>隐私</dt><dd>不公开设备与活动遥测</dd></div>
+            </dl>
+          </div>
+        </section>
+
+        <section id="contact" class="chapter contact">
+          <p class="chapter-number">04</p>
+          <div>
+            <h2>保持联系</h2>
+            <p>如果你想讨论文章、项目或交换友链，可以从下面这些公开入口找到我。</p>
+            <div class="contact-links">
+              <a href="https://github.com/LLLLLei073" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+              <a href="/rss.xml">RSS 订阅 <span aria-hidden="true">→</span></a>
+              <a href="/friends">友情链接 <span aria-hidden="true">→</span></a>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   </section>
@@ -78,455 +108,328 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <style>
   .about {
-    padding-top: 2.5rem;
-    padding-bottom: 4rem;
-    max-width: 760px;
+    padding-top: clamp(3.5rem, 8vw, 7rem);
+    padding-bottom: clamp(4rem, 8vw, 7rem);
   }
 
-  .page-head {
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 2rem;
-    padding-bottom: 1.25rem;
+  .about-hero {
+    padding-bottom: clamp(3.5rem, 7vw, 6rem);
+    border-bottom: 1px solid var(--card-foreground);
   }
 
-  .eyebrow {
-    font-family: var(--font-sans);
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--primary);
-    margin: 0 0 0.5rem;
-  }
-
-  .page-head h1 {
-    font-size: 2rem;
+  .folio,
+  .about-index > p,
+  .chapter-number {
     margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    color: var(--primary);
   }
 
-  /* ===== 我的设备 ===== */
-  .block {
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.65fr);
+    gap: clamp(3rem, 8vw, 7rem);
+    align-items: end;
     margin-top: 2.5rem;
   }
 
-  .block-title {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    margin: 0 0 0.25rem;
+  .identity {
+    padding-bottom: 0.25rem;
   }
 
-  .block-h {
-    font-size: 1.2rem;
+  .hero-grid h1 {
     margin: 0;
+    font-size: clamp(3.2rem, 7vw, 7.25rem);
+    line-height: 0.98;
+    font-weight: 600;
+    letter-spacing: -0.06em;
   }
 
-  .live-badge {
+  .hero-grid h1 em {
+    color: var(--primary);
+    font-style: normal;
+  }
+
+  .hero-summary {
+    max-width: 620px;
+    margin: clamp(2rem, 4vw, 3.5rem) 0 1.5rem;
+    color: var(--muted-foreground);
+    font-size: clamp(0.98rem, 1.45vw, 1.12rem);
+    line-height: 1.9;
+  }
+
+  .hero-summary strong {
+    color: var(--foreground);
+    font-weight: 600;
+  }
+
+  .identity-meta {
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.08em;
+    color: var(--muted-foreground);
+  }
+
+  .portrait {
+    width: min(100%, 380px);
+    margin: 0;
+    justify-self: end;
+  }
+
+  .portrait-frame {
+    position: relative;
+    padding: clamp(0.65rem, 1.4vw, 0.95rem);
+    background: #f8f6f2;
+    border: 1px solid var(--card-foreground);
+    box-shadow: 12px 12px 0 var(--accent);
+  }
+
+  .portrait-frame::after {
+    content: '';
+    position: absolute;
+    right: -1px;
+    bottom: -1px;
+    width: 28%;
+    height: 4px;
+    background: var(--primary);
+  }
+
+  .portrait img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 2px;
+  }
+
+  .portrait figcaption {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 0.85rem;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.05em;
+    color: var(--muted-foreground);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 220px minmax(0, 820px);
+    justify-content: space-between;
+    gap: clamp(3rem, 8vw, 8rem);
+    padding-top: clamp(3rem, 6vw, 5rem);
+  }
+
+  .about-index {
+    position: sticky;
+    top: calc(var(--header-height) + 2rem);
+    align-self: start;
+  }
+
+  .about-index ol {
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: section;
+  }
+
+  .about-index a {
+    display: block;
+    padding: 0.55rem 0;
+    color: var(--muted-foreground);
+    font-size: 0.82rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .about-index a:hover {
+    color: var(--primary);
+  }
+
+  .chapter {
+    display: grid;
+    grid-template-columns: 3rem minmax(0, 1fr);
+    gap: 1.5rem;
+    padding: 0 0 clamp(3.5rem, 7vw, 6rem);
+    scroll-margin-top: calc(var(--header-height) + 2rem);
+  }
+
+  .chapter + .chapter {
+    padding-top: clamp(3rem, 6vw, 5rem);
+    border-top: 1px solid var(--border);
+  }
+
+  .chapter h2 {
+    max-width: 680px;
+    margin: 0 0 1.4rem;
+    font-size: clamp(1.75rem, 3vw, 2.65rem);
+    font-weight: 500;
+    line-height: 1.25;
+  }
+
+  .chapter p {
+    margin: 0 0 1.15rem;
+    color: var(--muted-foreground);
+    line-height: 1.9;
+  }
+
+  .chapter .intro-lead {
+    color: var(--foreground);
+    font-family: var(--font-serif);
+    font-size: clamp(1.16rem, 2vw, 1.4rem);
+    line-height: 1.9;
+  }
+
+  .topic-list {
+    margin: 2rem 0 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--card-foreground);
+  }
+
+  .topic-list li {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .topic-list a {
+    display: grid;
+    grid-template-columns: 2rem minmax(90px, 0.3fr) 1fr;
+    gap: 1rem;
+    align-items: baseline;
+    padding: 1rem 0;
+  }
+
+  .topic-list span,
+  .topic-list small {
+    font-size: 0.72rem;
+    color: var(--muted-foreground);
+  }
+
+  .topic-list span {
+    font-family: var(--font-mono);
+  }
+
+  .topic-list strong {
+    font-family: var(--font-display);
+    color: var(--card-foreground);
+  }
+
+  .chapter blockquote {
+    margin: 2rem 0;
+    padding: 1.4rem 1.6rem;
+    border-left-width: 2px;
+  }
+
+  .chapter blockquote p {
+    margin: 0;
+    color: var(--foreground);
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+  }
+
+  .site-facts {
+    margin: 2rem 0 0;
+    border-top: 1px solid var(--card-foreground);
+  }
+
+  .site-facts div {
+    display: grid;
+    grid-template-columns: 6rem 1fr;
+    gap: 1rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .site-facts dt {
+    color: var(--muted-foreground);
+    font-size: 0.78rem;
+  }
+
+  .site-facts dd {
+    margin: 0;
+    font-size: 0.82rem;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.75rem;
+  }
+
+  .contact-links a {
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    font-weight: 600;
-    color: var(--primary);
-    background: var(--brand-100);
-    padding: 0.15rem 0.55rem;
-    border-radius: var(--radius-full);
-  }
-
-  .live-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #22c55e;
-    animation: live-pulse 1.6s ease-in-out infinite;
-  }
-
-  @keyframes live-pulse {
-    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5); }
-    50% { opacity: 0.7; box-shadow: 0 0 0 4px rgba(34, 197, 94, 0); }
-  }
-
-  .block-sub {
-    font-size: 0.85rem;
-    color: var(--muted-foreground);
-    margin: 0 0 1.25rem;
-  }
-
-  .device-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1rem;
-  }
-
-  .device-card {
-    padding: 1.1rem 1.2rem;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
-  }
-
-  .device-card:hover {
-    border-color: var(--brand-300);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-  }
-
-  .device-head {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 0.6rem;
-  }
-
-  .device-icon {
-    font-size: 1.4rem;
-    line-height: 1;
-  }
-
-  .device-name {
-    font-family: var(--font-sans);
-    font-weight: 600;
-    font-size: 1rem;
-  }
-
-  .device-status {
-    margin-left: auto;
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: var(--muted-foreground);
-    opacity: 0.4;
-    transition: background-color 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .device-card.online .device-status {
-    background: #22c55e;
-    opacity: 1;
-    box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.18);
-  }
-
-  .device-activity {
-    font-size: 0.95rem;
-    font-weight: 500;
-    margin: 0 0 0.2rem;
-    min-height: 1.4em;
-  }
-
-  .device-detail {
+    justify-content: space-between;
+    gap: 2rem;
+    min-width: 160px;
+    min-height: 48px;
+    padding: 0 0.9rem;
+    color: var(--foreground);
+    border-top: 1px solid var(--card-foreground);
+    border-bottom: 1px solid var(--border);
     font-size: 0.82rem;
-    color: var(--muted-foreground);
-    margin: 0 0 0.5rem;
-    min-height: 1.2em;
   }
 
-  .device-updated {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    color: var(--muted-foreground);
-    opacity: 0.75;
-    margin: 0;
-  }
-
-  .device-info {
-    margin-top: 0.75rem;
-    padding-top: 0.75rem;
-    border-top: 1px dashed var(--border);
-    display: grid;
-    gap: 0.3rem;
-  }
-
-  .info-row {
-    display: flex;
-    align-items: baseline;
-    gap: 0.5rem;
-    font-size: 0.75rem;
-    line-height: 1.4;
-  }
-
-  .info-k {
-    flex-shrink: 0;
-    width: 3.5em;
-    color: var(--muted-foreground);
-    font-family: var(--font-sans);
-  }
-
-  .info-v {
-    color: var(--foreground);
-    font-family: var(--font-mono);
-    word-break: break-all;
-    opacity: 0.85;
-  }
-
-  .manual-btn {
-    margin-top: 0.6rem;
-    padding: 0.25rem 0.7rem;
-    font-size: 0.72rem;
-    font-family: var(--font-sans);
-    color: var(--muted-foreground);
-    background: transparent;
-    border: 1px dashed var(--border);
-    border-radius: var(--radius-full);
-    cursor: pointer;
-    transition: color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
-  }
-
-  .manual-btn:hover {
+  .contact-links a:hover {
     color: var(--primary);
-    border-color: var(--brand-300);
-    transform: translateY(-1px);
+    background: var(--accent);
   }
 
-  .manual-btn:active {
-    transform: scale(0.96);
-  }
+  @media (max-width: 860px) {
+    .hero-grid,
+    .about-grid {
+      grid-template-columns: 1fr;
+    }
 
-  /* ===== 今日时间轴 ===== */
-  .timeline-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    position: relative;
-  }
+    .portrait {
+      width: min(100%, 320px);
+      justify-self: start;
+    }
 
-  .timeline-item {
-    display: flex;
-    align-items: baseline;
-    gap: 0.6rem;
-    padding: 0.35rem 0;
-    position: relative;
-  }
+    .about-index {
+      position: static;
+      display: none;
+    }
 
-  .timeline-time {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    color: var(--muted-foreground);
-    flex-shrink: 0;
-    width: 3.4em;
-  }
-
-  .timeline-dot {
-    flex-shrink: 0;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--brand-400);
-    margin-top: 0.35em;
-  }
-
-  .timeline-activity {
-    font-size: 0.85rem;
-    color: var(--foreground);
-  }
-
-  .timeline-detail {
-    font-size: 0.75rem;
-    color: var(--muted-foreground);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    max-width: 55%;
-  }
-
-  .timeline-empty,
-  .stats-empty {
-    font-size: 0.85rem;
-    color: var(--muted-foreground);
-    opacity: 0.7;
-    margin: 0.25rem 0;
-  }
-
-  /* ===== 今日统计 ===== */
-  .stats-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.55rem;
-  }
-
-  .stat-row {
-    display: grid;
-    grid-template-columns: 6.5em 1fr 5.5em;
-    align-items: center;
-    gap: 0.6rem;
-    font-size: 0.8rem;
-  }
-
-  .stat-name {
-    color: var(--foreground);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .stat-bar {
-    height: 7px;
-    background: var(--brand-100);
-    border-radius: var(--radius-full);
-    overflow: hidden;
-  }
-
-  .stat-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--brand-400), var(--primary));
-    border-radius: var(--radius-full);
-    transition: width 0.6s ease;
-  }
-
-  .stat-dur {
-    font-family: var(--font-mono);
-    color: var(--muted-foreground);
-    text-align: right;
+    .about-content {
+      max-width: 760px;
+    }
   }
 
   @media (max-width: 640px) {
     .about {
-      padding-top: 1.75rem;
+      padding: 3rem 1rem 4rem;
     }
 
-    .page-head h1 {
-      font-size: 1.6rem;
+    .hero-grid {
+      margin-top: 1.8rem;
+    }
+
+    .portrait {
+      width: min(78vw, 280px);
+      justify-self: end;
+      margin-top: 0.75rem;
+    }
+
+    .portrait figcaption {
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .chapter {
+      grid-template-columns: 1fr;
+      gap: 0.7rem;
+    }
+
+    .topic-list a {
+      grid-template-columns: 2rem 1fr;
+    }
+
+    .topic-list small {
+      grid-column: 2;
     }
   }
 </style>
-
-<script>
-  /* 设备实时状态：轮询 /status.json，30 秒刷新一次 */
-  function initDevices() {
-    const cards = Array.from(document.querySelectorAll('[data-device]'));
-    const timelineEl = document.querySelector('[data-timeline]');
-    const statsEl = document.querySelector('[data-stats]');
-    const manualBtn = document.querySelector('[data-manual]');
-
-    const escapeHtml = (s: string) =>
-      String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] as string));
-
-    const fmtTime = (iso: string) => {
-      if (!iso) return '';
-      const d = new Date(iso);
-      const now = Date.now();
-      const diff = Math.max(0, Math.round((now - d.getTime()) / 60000));
-      if (diff < 1) return '刚刚';
-      if (diff < 60) return `${diff} 分钟前`;
-      return d.toLocaleString('zh-CN', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
-    };
-
-    const fmtHM = (iso: string) =>
-      new Date(iso).toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
-
-    const fmtDur = (sec: number) => {
-      const m = Math.floor(sec / 60);
-      if (m < 60) return `${m} 分钟`;
-      return `${Math.floor(m / 60)} 小时 ${m % 60} 分`;
-    };
-
-    /* 手动状态覆盖（localStorage，30 分钟自动恢复） */
-    const getManual = () => {
-      try {
-        const raw = localStorage.getItem('manual-status');
-        if (!raw) return null;
-        const m = JSON.parse(raw);
-        if (m.until > Date.now()) return m;
-        localStorage.removeItem('manual-status');
-      } catch {}
-      return null;
-    };
-
-    manualBtn?.addEventListener('click', () => {
-      const until = Date.now() + 30 * 60 * 1000;
-      localStorage.setItem('manual-status', JSON.stringify({ activity: '离开', until }));
-      manualBtn.textContent = '已设为离开（30 分钟）';
-      refresh();
-      setTimeout(() => { manualBtn.textContent = '设为离开'; refresh(); }, 2500);
-    });
-
-    const render = (data: any) => {
-      const manual = getManual();
-      cards.forEach((card) => {
-        const key = card.getAttribute('data-device');
-        const dev = data?.[key];
-        const dot = card.querySelector('[data-status-dot]') as HTMLElement;
-        const act = card.querySelector('[data-activity]') as HTMLElement;
-        const det = card.querySelector('[data-detail]') as HTMLElement;
-        const upd = card.querySelector('[data-updated]') as HTMLElement;
-
-        const online = dev?.online === true;
-        card.classList.toggle('online', online);
-        act.textContent = dev?.activity || (online ? '在线' : '离线');
-        det.textContent = dev?.detail || '';
-        upd.textContent = dev?.updatedAt ? `更新于 ${fmtTime(dev.updatedAt)}` : '';
-
-        if (key === 'pc' && manual) {
-          act.textContent = `${manual.activity}（手动）`;
-          det.textContent = '手动设置，30 分钟后自动恢复';
-          card.classList.add('online');
-        }
-
-        // 电脑信息：仅在线时显示
-        if (key === 'pc' && online && dev.sysinfo) {
-          const info = card.querySelector('[data-info]') as HTMLElement;
-          (card.querySelector('[data-info-host]') as HTMLElement).textContent = dev.sysinfo.host || '';
-          (card.querySelector('[data-info-os]') as HTMLElement).textContent = dev.sysinfo.os || '';
-          (card.querySelector('[data-info-cpu]') as HTMLElement).textContent = dev.sysinfo.cpu || '';
-          (card.querySelector('[data-info-gpu]') as HTMLElement).textContent = dev.sysinfo.gpu || '';
-          (card.querySelector('[data-info-ram]') as HTMLElement).textContent = dev.sysinfo.ram || '';
-          (card.querySelector('[data-info-uptime]') as HTMLElement).textContent = dev.sysinfo.uptime || '';
-          info.hidden = false;
-        } else if (key === 'pc') {
-          (card.querySelector('[data-info]') as HTMLElement).hidden = true;
-        }
-      });
-
-      // 今日时间轴
-      if (timelineEl) {
-        const history = Array.isArray(data?.history) ? data.history : [];
-        const today = new Date().toLocaleDateString('zh-CN');
-        const items = history.filter((h: any) => h.t && new Date(h.t).toLocaleDateString('zh-CN') === today).slice(-30);
-        timelineEl.innerHTML = items.length
-          ? items.map((h: any) => `
-              <div class="timeline-item">
-                <span class="timeline-time">${fmtHM(h.t)}</span>
-                <span class="timeline-dot"></span>
-                <span class="timeline-activity">${escapeHtml(h.activity)}</span>
-                ${h.detail ? `<span class="timeline-detail">${escapeHtml(h.detail)}</span>` : ''}
-              </div>`).join('')
-          : '<p class="timeline-empty">暂无记录</p>';
-      }
-
-      // 今日统计
-      if (statsEl) {
-        const stats = data?.daily?.stats;
-        const entries = stats ? Object.entries(stats).filter(([, v]) => (v as number) > 0).sort((a, b) => (b[1] as number) - (a[1] as number)) : [];
-        const total = entries.reduce((s, [, v]) => s + (v as number), 0);
-        statsEl.innerHTML = entries.length
-          ? entries.map(([k, v]) => `
-              <div class="stat-row">
-                <span class="stat-name">${escapeHtml(k)}</span>
-                <div class="stat-bar"><div class="stat-fill" style="width:${Math.round(((v as number) / total) * 100)}%"></div></div>
-                <span class="stat-dur">${fmtDur(v as number)}</span>
-              </div>`).join('')
-          : '<p class="stats-empty">暂无数据</p>';
-      }
-    };
-
-    const refresh = async () => {
-      try {
-        // 加时间戳 query 绕过 GitHub Pages 强制的 10min CDN 缓存
-        const res = await fetch('/status.json?_=' + Date.now(), { cache: 'no-store' });
-        if (!res.ok) throw new Error(res.status + '');
-        render(await res.json());
-      } catch {
-        cards.forEach((card) => {
-          card.classList.remove('online');
-          (card.querySelector('[data-activity]') as HTMLElement).textContent = '状态获取失败';
-        });
-      }
-    };
-
-    refresh();
-    setInterval(refresh, 30000);
-  }
-
-  document.addEventListener('astro:after-swap', initDevices);
-  initDevices();
-</script>

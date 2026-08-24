@@ -1,5 +1,5 @@
 /* Service Worker：离线缓存 + 静态资源缓存 */
-const CACHE = 'newblog-v1';
+const CACHE = 'lllllei-v2';
 const CORE = [
   '/',
   '/manifest.webmanifest',
@@ -22,8 +22,8 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-/* 策略：同源请求走缓存优先 + 后台更新（stale-while-revalidate）
-   跨域请求（如 giscus）不拦截 */
+/* 页面导航网络优先，确保部署后立即看到新内容；静态资源使用
+   stale-while-revalidate。跨域请求（如 giscus）不拦截。 */
 self.addEventListener('fetch', (event) => {
   const req = event.request;
   if (req.method !== 'GET') return;
@@ -31,6 +31,21 @@ self.addEventListener('fetch', (event) => {
   if (url.origin !== location.origin) return;
   // 状态接口永不缓存（实时性）
   if (url.pathname.includes('status.json')) return;
+
+  if (req.mode === 'navigate') {
+    event.respondWith(
+      fetch(req)
+        .then((res) => {
+          if (res.ok) {
+            const copy = res.clone();
+            caches.open(CACHE).then((cache) => cache.put(req, copy));
+          }
+          return res;
+        })
+        .catch(() => caches.match(req).then((cached) => cached || caches.match('/')))
+    );
+    return;
+  }
 
   event.respondWith(
     caches.match(req).then((cached) => {

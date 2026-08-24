@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="页面不存在">
+<BaseLayout title="页面不存在" description="你访问的页面不存在或已经移动。" noindex>
   <section class="notfound container">
     <p class="nf-code">404</p>
     <h1 class="nf-title">页面走丢了</h1>
@@ -30,10 +30,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     font-weight: 700;
     line-height: 1;
     margin: 0 0 0.5rem;
-    background: linear-gradient(120deg, var(--brand-400), var(--primary));
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--primary);
   }
 
   .nf-title {

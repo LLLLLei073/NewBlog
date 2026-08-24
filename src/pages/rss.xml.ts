@@ -4,7 +4,9 @@ import { SITE_TITLE, SITE_DESCRIPTION, SITE_URL } from '../consts';
 import type { APIContext } from 'astro';
 
 export async function GET(context: APIContext) {
-  const posts = await getCollection('blog');
+  const posts = (await getCollection('blog'))
+    .filter((post) => !post.data.draft)
+    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
   return rss({
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
