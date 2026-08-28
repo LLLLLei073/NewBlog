@@ -29,8 +29,6 @@ self.addEventListener('fetch', (event) => {
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
   if (url.origin !== location.origin) return;
-  // 状态接口永不缓存（实时性）
-  if (url.pathname.includes('status.json')) return;
 
   if (req.mode === 'navigate') {
     event.respondWith(

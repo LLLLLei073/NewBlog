@@ -26,7 +26,10 @@ const navItems = [
       <div class="nav-links">
         {
           navItems.map((item) => (
-            <a href={item.href} class:list={[isActive(item.href) ? 'active' : '']}>
+            <a
+              href={item.href}
+              class:list={[isActive(item.href) ? 'active' : '']}
+            >
               {item.label}
             </a>
           ))
@@ -60,7 +63,10 @@ const navItems = [
             <li>
               <a
                 href={item.href}
-                class:list={['mobile-link', isActive(item.href) ? 'active' : '']}
+                class:list={[
+                  'mobile-link',
+                  isActive(item.href) ? 'active' : '',
+                ]}
               >
                 {item.label}
               </a>
@@ -129,7 +135,10 @@ const navItems = [
     color: var(--muted-foreground);
     padding: 0.3rem 0.65rem;
     border-radius: var(--radius-sm);
-    transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease,
+      transform 0.15s ease;
   }
 
   .nav-links a:hover {
@@ -161,7 +170,10 @@ const navItems = [
     color: var(--muted-foreground);
     padding: 0.3rem 0.65rem;
     border-radius: var(--radius-sm);
-    transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease,
+      transform 0.15s ease;
   }
 
   .rss-link:hover {
@@ -184,7 +196,9 @@ const navItems = [
     border-radius: var(--radius-sm);
     background: var(--popover);
     cursor: pointer;
-    transition: background-color 0.15s ease, transform 0.15s ease;
+    transition:
+      background-color 0.15s ease,
+      transform 0.15s ease;
   }
 
   .menu-toggle:hover {
@@ -197,7 +211,9 @@ const navItems = [
     height: 2px;
     border-radius: 2px;
     background: var(--muted-foreground);
-    transition: transform 0.2s ease, opacity 0.2s ease;
+    transition:
+      transform 0.2s ease,
+      opacity 0.2s ease;
   }
 
   /* 打开态：三条线变 X */
@@ -248,7 +264,10 @@ const navItems = [
       transform: translateY(-8px);
       opacity: 0;
       visibility: hidden;
-      transition: transform 0.2s ease, opacity 0.2s ease, visibility 0.2s;
+      transition:
+        transform 0.2s ease,
+        opacity 0.2s ease,
+        visibility 0.2s;
     }
 
     :global(html[data-theme='dark']) .mobile-menu {
@@ -286,7 +305,10 @@ const navItems = [
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
       background: var(--card);
-      transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+      transition:
+        background-color 0.15s ease,
+        color 0.15s ease,
+        border-color 0.15s ease;
     }
 
     .mobile-link:hover {
@@ -315,7 +337,9 @@ const navItems = [
       color: var(--muted-foreground);
       padding: 0.55rem 0.9rem;
       border-radius: var(--radius-md);
-      transition: background-color 0.15s ease, color 0.15s ease;
+      transition:
+        background-color 0.15s ease,
+        color 0.15s ease;
     }
 
     .mobile-rss:hover {
@@ -373,7 +397,8 @@ const navItems = [
 
     // ESC 关闭
     document.addEventListener('keydown', (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') setOpen(false, true);
+      if (e.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true')
+        setOpen(false, true);
     });
 
     // 视口从移动端变宽时复位
@@ -383,7 +408,5 @@ const navItems = [
     });
   }
 
-  // 支持页面导航后重新绑定（Astro View Transitions）
-  document.addEventListener('astro:after-swap', initMobileMenu);
   initMobileMenu();
 </script>

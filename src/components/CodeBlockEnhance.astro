@@ -12,7 +12,9 @@
       if (!code) return;
 
       // 语言标签
-      const langClass = [...code.classList].find((c) => c.startsWith('language-'));
+      const langClass = [...code.classList].find((c) =>
+        c.startsWith('language-'),
+      );
       const lang = langClass ? langClass.replace('language-', '') : '';
 
       const wrapper = document.createElement('div');
@@ -67,7 +69,11 @@
         ta.style.pointerEvents = 'none';
         document.body.appendChild(ta);
         ta.select();
-        try { document.execCommand('copy'); } catch { /* ignore */ }
+        try {
+          document.execCommand('copy');
+        } catch {
+          /* ignore */
+        }
         document.body.removeChild(ta);
       };
 
@@ -93,6 +99,4 @@
   }
 
   enhanceCodeBlocks();
-  // Astro View Transitions：每次页面切换后重新增强新页面的代码块
-  document.addEventListener('astro:after-swap', enhanceCodeBlocks);
 </script>

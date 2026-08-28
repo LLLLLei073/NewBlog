@@ -24,9 +24,20 @@ const allPosts = (await getCollection('blog'))
 ---
 
 <div class="post-search" data-post-search>
-  <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-    <circle cx="11" cy="11" r="8"/>
-    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+  <svg
+    class="search-icon"
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
   </svg>
   <input
     type="search"
@@ -42,11 +53,15 @@ const allPosts = (await getCollection('blog'))
     <p class="search-empty-title">没有匹配的文章</p>
     <p class="search-empty-sub">换个关键词试试，或者看看下面的推荐 👇</p>
     <ul class="search-suggest">
-      {allPosts.map((p) => (
-        <li>
-          <a href={p.href} class="search-suggest-link">{p.title}</a>
-        </li>
-      ))}
+      {
+        allPosts.map((p) => (
+          <li>
+            <a href={p.href} class="search-suggest-link">
+              {p.title}
+            </a>
+          </li>
+        ))
+      }
     </ul>
   </div>
 </div>
@@ -78,7 +93,9 @@ const allPosts = (await getCollection('blog'))
     padding: 0.65rem 5rem 0.65rem 2.4rem; /* 右侧留出快捷键/计数位置 */
     color: var(--foreground);
     outline: none;
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease;
   }
 
   .post-search input::placeholder {
@@ -99,8 +116,10 @@ const allPosts = (await getCollection('blog'))
     margin-left: 0.25rem;
     cursor: pointer;
     background: var(--muted-foreground);
-    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round'%3E%3Cline x1='18' y1='6' x2='6' y2='18'/%3E%3Cline x1='6' y1='6' x2='18' y2='18'/%3E%3C/svg%3E") center / contain no-repeat;
-    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round'%3E%3Cline x1='18' y1='6' x2='6' y2='18'/%3E%3Cline x1='6' y1='6' x2='18' y2='18'/%3E%3C/svg%3E") center / contain no-repeat;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round'%3E%3Cline x1='18' y1='6' x2='6' y2='18'/%3E%3Cline x1='6' y1='6' x2='18' y2='18'/%3E%3C/svg%3E")
+      center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round'%3E%3Cline x1='18' y1='6' x2='6' y2='18'/%3E%3Cline x1='6' y1='6' x2='18' y2='18'/%3E%3C/svg%3E")
+      center / contain no-repeat;
   }
 
   .search-hint {
@@ -169,7 +188,10 @@ const allPosts = (await getCollection('blog'))
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+    transition:
+      border-color 0.15s ease,
+      color 0.15s ease,
+      background 0.15s ease;
   }
 
   .search-suggest-link:hover {
@@ -198,7 +220,9 @@ const allPosts = (await getCollection('blog'))
     const input = root.querySelector('[data-search-input]') as HTMLInputElement;
     const count = root.querySelector('[data-search-count]') as HTMLElement;
     const empty = root.querySelector('[data-search-empty]') as HTMLElement;
-    const items = Array.from(document.querySelectorAll('[data-search-item]')) as HTMLElement[];
+    const items = Array.from(
+      document.querySelectorAll('[data-search-item]'),
+    ) as HTMLElement[];
 
     const total = items.length;
     const normalize = (s: string) => s.toLowerCase();
@@ -216,29 +240,42 @@ const allPosts = (await getCollection('blog'))
 
     const highlight = (el: HTMLElement | null, terms: string[]) => {
       if (!el) return;
-      const original = originals.get(el.closest('[data-search-item]') as HTMLElement);
+      const original = originals.get(
+        el.closest('[data-search-item]') as HTMLElement,
+      );
       if (!original) return;
-      const text = el.getAttribute('data-search-text') === 'title' ? original.title : original.desc;
+      const text =
+        el.getAttribute('data-search-text') === 'title'
+          ? original.title
+          : original.desc;
       if (terms.length === 0) {
         el.textContent = text;
         return;
       }
       // 全部术语拼成正则，忽略大小写
-      const escaped = terms.map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+      const escaped = terms.map((t) =>
+        t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'),
+      );
       const re = new RegExp(`(${escaped.join('|')})`, 'gi');
       const parts = text.split(re);
       el.innerHTML = parts
-        .map((p) =>
-          re.test(p) ? `<mark>${p}</mark>` : escapeHtml(p)
-        )
+        .map((p) => (re.test(p) ? `<mark>${p}</mark>` : escapeHtml(p)))
         .join('');
       // 上面 test() 会带 lastIndex 副作用，置零
       re.lastIndex = 0;
     };
 
     const escapeHtml = (s: string) =>
-      s.replace(/[&<>"']/g, (c) =>
-        ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] as string)
+      s.replace(
+        /[&<>"']/g,
+        (c) =>
+          ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;',
+          })[c] as string,
       );
 
     const filter = () => {
@@ -247,15 +284,19 @@ const allPosts = (await getCollection('blog'))
 
       for (const item of items) {
         const haystack = normalize(
-          `${item.getAttribute('data-title') ?? ''} ${item.getAttribute('data-desc') ?? ''}`
+          `${item.getAttribute('data-title') ?? ''} ${item.getAttribute('data-desc') ?? ''}`,
         );
         const match = terms.every((t) => haystack.includes(t));
         item.classList.toggle('hidden', !match);
 
         // 高亮（隐藏的不渲染高亮，节省一点）
         if (match || terms.length === 0) {
-          const titleEl = item.querySelector('[data-search-text="title"]') as HTMLElement;
-          const descEl = item.querySelector('[data-search-text="desc"]') as HTMLElement;
+          const titleEl = item.querySelector(
+            '[data-search-text="title"]',
+          ) as HTMLElement;
+          const descEl = item.querySelector(
+            '[data-search-text="desc"]',
+          ) as HTMLElement;
           highlight(titleEl, terms);
           highlight(descEl, terms);
         }
@@ -293,8 +334,6 @@ const allPosts = (await getCollection('blog'))
     });
   }
 
-  // 支持页面导航后重新绑定（Astro View Transitions）
-  document.addEventListener('astro:after-swap', initPostSearch);
   initPostSearch();
 </script>
 

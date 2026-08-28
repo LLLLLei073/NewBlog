@@ -6,7 +6,7 @@
 <script>
   function enhanceMermaid() {
     const blocks = Array.from(
-      document.querySelectorAll('pre code.language-mermaid')
+      document.querySelectorAll('pre code.language-mermaid'),
     );
     if (!blocks.length) return;
 
@@ -24,7 +24,10 @@
       mermaid.initialize({
         startOnLoad: false,
         securityLevel: 'loose',
-        theme: document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'neutral',
+        theme:
+          document.documentElement.getAttribute('data-theme') === 'dark'
+            ? 'dark'
+            : 'neutral',
         fontFamily: 'PingFang SC, Microsoft YaHei, sans-serif',
       });
       blocks.forEach((code, i) => {
@@ -48,5 +51,4 @@
   }
 
   enhanceMermaid();
-  document.addEventListener('astro:after-swap', enhanceMermaid);
 </script>
