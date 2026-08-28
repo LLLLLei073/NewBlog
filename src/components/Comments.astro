@@ -3,7 +3,6 @@
    前置条件：仓库已启用 Discussions，且已安装 giscus App（https://github.com/apps/giscus）。 */
 
 const lightTheme = new URL('/giscus/light.css', Astro.site).href;
-const darkTheme = new URL('/giscus/dark.css', Astro.site).href;
 ---
 
 <section class="comments" aria-label="评论区">
@@ -53,66 +52,3 @@ const darkTheme = new URL('/giscus/dark.css', Astro.site).href;
     color: #5b6172;
   }
 </style>
-
-<script define:vars={{ lightTheme, darkTheme }}>
-  function initCommentsThemeSync() {
-    const giscusOrigin = 'https://giscus.app';
-
-    const currentTheme = () => {
-      // 评论区卡片固定白色，giscus 恒用浅色主题，不随页面亮暗切换
-      return lightTheme;
-    };
-
-    // 向 giscus iframe 发送主题切换指令
-    const syncTheme = () => {
-      const iframe = document.querySelector('iframe.giscus-frame');
-      if (!iframe || !iframe.contentWindow) return false;
-      iframe.contentWindow.postMessage(
-        { giscus: { setConfig: { theme: currentTheme() } } },
-        giscusOrigin,
-      );
-      return true;
-    };
-
-    // widget 活跃信号：收到 giscus 消息后补发几次（widget 的 message 监听器
-    // 在 useEffect 里注册，晚于它发出首条消息，所以收到消息≠监听器已就绪）
-    let widgetActive = false;
-
-    // 主动轮询：iframe 懒加载出现后反复下发主题。
-    // setConfig 幂等，widget 监听器注册后的任意一次都会生效。
-    // 窗口 90s 兜底：widget 加载（JS bundle + GitHub API）可能很慢。
-    const trySync = (attempt = 0) => {
-      if (syncTheme()) {
-        if (attempt < 90) setTimeout(() => trySync(attempt + 1), 1000);
-      } else if (attempt < 90) {
-        // iframe 还没出现（懒加载），继续等
-        setTimeout(() => trySync(attempt + 1), 1000);
-      }
-    };
-
-    // 1) 立即尝试（覆盖首次加载即深色的场景）
-    trySync();
-
-    // 2) giscus iframe 发来消息 = widget 活跃：补发 5 次确保监听器就绪后必达
-    window.addEventListener('message', (e: MessageEvent) => {
-      if (e.origin !== giscusOrigin) return;
-      const data = e.data as { giscus?: unknown };
-      if (data && data.giscus && !widgetActive) {
-        widgetActive = true;
-        for (let i = 0; i < 5; i++) {
-          setTimeout(syncTheme, 500 * (i + 1));
-        }
-      }
-    });
-
-    // 3) 博客主题切换时跟随（MutationObserver 比监听按钮点击更可靠）
-    const observer = new MutationObserver(() => syncTheme());
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['data-theme'],
-    });
-  }
-
-  document.addEventListener('astro:after-swap', initCommentsThemeSync);
-  initCommentsThemeSync();
-</script>

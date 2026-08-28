@@ -87,3 +87,8 @@ npm run dev
 🔗 <https://github.com/LLLLLei073/cf-friend-tracker>
 
 如果你也在刷 Codeforces，欢迎 Star / 提 Issue 反馈想法。之后我可能会写几篇开发过程中的技术细节（比如 CF API 的限流处理、Recharts 热力图的实现），欢迎关注。
+
+##### 写在最后
+
+其实最开始只是想视奸一下队友的情况，后面队长给我提了建议才加上那么一堆乱七八糟的ai功能，如果不喜欢那就受着😡
+

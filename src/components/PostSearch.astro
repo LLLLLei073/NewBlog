@@ -308,7 +308,7 @@ const allPosts = (await getCollection('blog'))
     font-weight: 500;
   }
 
-  :global(html[data-theme='dark']) [data-search-item] mark {
+  html[data-theme='dark'] [data-search-item] mark {
     background: var(--brand-100);
     color: var(--brand-300);
   }

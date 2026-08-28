@@ -1,19 +1,9 @@
 {
-  "showDetail": true,
-  "privateApps": ["微信", "WeChat", "QQ", "Telegram", "Discord", "钉钉"],
-  "quietHours": { "enabled": false, "start": "23:00", "end": "07:00" },
-  "historyLimit": 60,
-  "rules": [
-    { "pattern": "Visual Studio Code|vscode|Code -", "activity": "正在写代码", "detail": "VS Code" },
-    { "pattern": "WebStorm|IntelliJ|PyCharm|IDEA", "activity": "正在写代码", "detail": "JetBrains IDE" },
-    { "pattern": "Chrome|Edge|Firefox|Brave", "activity": "正在浏览网页", "detail": "@title" },
-    { "pattern": "微信|WeChat", "activity": "正在用微信", "detail": "微信" },
-    { "pattern": "QQ", "activity": "正在用 QQ", "detail": "QQ" },
-    { "pattern": "哔哩哔哩|bilibili|Bilibili", "activity": "正在看视频", "detail": "@title" },
-    { "pattern": "PotPlayer|mpv|VLC|爱奇艺|优酷|腾讯视频", "activity": "正在看视频", "detail": "播放器" },
-    { "pattern": "网易云音乐|QQ音乐|Spotify|酷狗", "activity": "正在听音乐", "detail": "音乐" },
-    { "pattern": "Word|WPS|Excel|PowerPoint|OneNote", "activity": "正在处理文档", "detail": "Office" },
-    { "pattern": "Windows Terminal|cmd|PowerShell|MobaXterm", "activity": "正在敲命令", "detail": "终端" },
-    { "pattern": "Steam|英雄联盟|原神|游戏", "activity": "正在玩游戏", "detail": "游戏" }
-  ]
+  "enabled": false,
+  "privacyMode": "coarse-presence-only",
+  "collectWindowTitles": false,
+  "collectProcesses": false,
+  "collectHardware": false,
+  "autoCommit": false,
+  "autoPush": false
 }

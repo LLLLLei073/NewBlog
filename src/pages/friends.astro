@@ -1,171 +1,138 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-
-// 友情链接：在此处添加朋友（name / desc / url / avatar 可选）
-const friends = [
-  {
-    name: '示例友链',
-    desc: '这里放你朋友的博客简介，一行即可。',
-    url: 'https://example.com',
-    avatar: '',
-  },
-];
 ---
 
-<BaseLayout title="友情链接" description="朋友们">
-  <section class="container">
-    <div class="page-head">
-      <p class="eyebrow">友情链接</p>
-      <h1>友情链接</h1>
-      <p class="lead">交换友链请留言或联系我。</p>
+<BaseLayout title="友情链接" description="与认真写作的人交换链接。">
+  <section class="friends container">
+    <p class="folio">FRIENDS / 003</p>
+    <h1>友情链接</h1>
+    <p class="lead">这里会收录长期写作、内容原创且可以正常访问的个人站点。列表正在整理中，宁可暂时留白，也不放占位链接。</p>
+
+    <div class="empty-state">
+      <span aria-hidden="true">00</span>
+      <div>
+        <h2>等待第一位邻居</h2>
+        <p>如果你也在维护个人博客，欢迎附上站点名称、地址和一句简介，通过 GitHub 与我联系。</p>
+        <a href="https://github.com/LLLLLei073" target="_blank" rel="noopener">前往 GitHub <span aria-hidden="true">↗</span></a>
+      </div>
     </div>
 
-    <div class="friend-grid">
-      {
-        friends.map((f) => (
-          <a href={f.url} target="_blank" rel="noopener" class="friend-card">
-            <div class="friend-avatar">
-              {f.avatar ? (
-                <img src={f.avatar} alt="" loading="lazy" />
-              ) : (
-                <span class="friend-fallback">{f.name.slice(0, 1)}</span>
-              )}
-            </div>
-            <div class="friend-body">
-              <h2 class="friend-name">{f.name}</h2>
-              <p class="friend-desc">{f.desc}</p>
-            </div>
-            <span class="friend-arrow" aria-hidden="true">→</span>
-          </a>
-        ))
-      }
-    </div>
-
-    <p class="friend-empty">共 {friends.length} 位朋友。</p>
+    <section class="rules" aria-labelledby="rules-title">
+      <h2 id="rules-title">交换原则</h2>
+      <ol>
+        <li><span>01</span>站点可以稳定访问，并支持 HTTPS。</li>
+        <li><span>02</span>主要内容由作者本人创作，而非批量转载。</li>
+        <li><span>03</span>不包含恶意下载、诱导广告或明显侵权内容。</li>
+      </ol>
+    </section>
   </section>
 </BaseLayout>
 
 <style>
-  .page-head {
-    padding: 2.5rem 0 1.75rem;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 2rem;
+  .friends {
+    padding-top: clamp(3.5rem, 8vw, 7rem);
+    padding-bottom: clamp(4rem, 8vw, 7rem);
   }
 
-  .eyebrow {
-    font-family: var(--font-sans);
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+  .folio {
+    margin: 0 0 2rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
     color: var(--primary);
-    margin: 0 0 0.65rem;
   }
 
-  .page-head h1 {
-    font-size: 2rem;
-    margin: 0 0 0.4rem;
+  h1 {
+    margin: 0;
+    font-size: clamp(3rem, 7vw, 6rem);
+    line-height: 1;
+    letter-spacing: -0.055em;
   }
 
   .lead {
-    font-family: var(--font-sans);
-    font-size: 0.95rem;
+    max-width: 620px;
+    margin: 2rem 0 3.5rem;
     color: var(--muted-foreground);
-    margin: 0;
+    font-size: 1rem;
+    line-height: 1.9;
   }
 
-  .friend-grid {
+  .empty-state {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1rem;
-    padding-bottom: 2rem;
+    grid-template-columns: minmax(100px, 0.35fr) 1fr;
+    gap: 2rem;
+    padding: clamp(2rem, 5vw, 4rem) 0;
+    border-top: 1px solid var(--card-foreground);
+    border-bottom: 1px solid var(--border);
   }
 
-  .friend-card {
-    display: flex;
-    align-items: center;
-    gap: 0.85rem;
-    padding: 1.1rem;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    text-decoration: none;
-    transition: border-color 0.15s ease, transform 0.2s ease, box-shadow 0.15s ease;
+  .empty-state > span {
+    font-family: var(--font-serif);
+    font-size: clamp(4rem, 9vw, 7rem);
+    line-height: 0.85;
+    color: var(--border-400);
   }
 
-  .friend-card:hover {
-    border-color: var(--brand-300);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
+  .empty-state h2 {
+    margin: 0 0 0.8rem;
+    font-size: clamp(1.6rem, 3vw, 2.35rem);
+    font-weight: 500;
   }
 
-  .friend-avatar {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    overflow: hidden;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--brand-100);
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--primary);
-  }
-
-  .friend-avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .friend-body {
-    min-width: 0;
-    flex: 1;
-  }
-
-  .friend-name {
-    font-size: 0.98rem;
-    margin: 0 0 0.2rem;
-    color: var(--foreground);
-  }
-
-  .friend-desc {
-    margin: 0;
-    font-size: 0.78rem;
+  .empty-state p {
+    max-width: 500px;
     color: var(--muted-foreground);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    line-height: 1.8;
   }
 
-  .friend-arrow {
-    color: var(--muted-foreground);
-    opacity: 0;
-    transform: translateX(-4px);
-    transition: opacity 0.15s ease, transform 0.15s ease;
-    flex-shrink: 0;
-  }
-
-  .friend-card:hover .friend-arrow {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  .friend-empty {
+  .empty-state a {
+    display: inline-flex;
+    gap: 0.6rem;
+    min-height: 44px;
+    align-items: center;
     font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .rules {
+    margin-top: 4rem;
+  }
+
+  .rules h2 {
+    margin: 0 0 1rem;
+    font-size: 1.25rem;
+  }
+
+  .rules ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--border);
+  }
+
+  .rules li {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: 1rem;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--border);
     color: var(--muted-foreground);
-    opacity: 0.7;
+    font-size: 0.85rem;
+  }
+
+  .rules li span {
+    font-family: var(--font-mono);
+    color: var(--primary);
+    font-size: 0.7rem;
   }
 
   @media (max-width: 640px) {
-    .page-head {
-      padding: 1.75rem 0 1.25rem;
-      margin-bottom: 1.5rem;
+    .friends {
+      padding: 3rem 1rem 4rem;
     }
-    .page-head h1 {
-      font-size: 1.6rem;
+
+    .empty-state {
+      grid-template-columns: 1fr;
     }
   }
 </style>
