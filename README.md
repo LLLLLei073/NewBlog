@@ -15,11 +15,11 @@
 ## 本地开发
 
 ```bash
-npm install --legacy-peer-deps
+npm install
 npm run dev
 ```
 
-然后打开 <http://localhost:4321/NewBlog/>。
+然后打开 <http://localhost:4321/>。
 
 ## 写作
 
@@ -30,11 +30,12 @@ npm run dev
 title: '文章标题'
 description: '文章描述'
 pubDate: '2025-08-01'
-category: 'algorithm'   # 可选：algorithm | math | music | game，不填归入「其他」
+category: 'algorithm' # 可选：algorithm | math | music | game，不填归入「其他」
 ---
 ```
 
 正文内容……
+
 ```
 
 ## 专栏
@@ -50,33 +51,36 @@ category: 'algorithm'   # 可选：algorithm | math | music | game，不填归�
 | （不填） | 其他 | `/categories/others/` |
 ## 部署
 
-1. 在 GitHub 创建仓库 `yourusername/NewBlog`。
-2. 修改 `astro.config.mjs` 中的 `site` 为你的 GitHub Pages 域名：
-   ```js
-   site: 'https://yourusername.github.io',
-   base: '/NewBlog',
-   ```
-   如果仓库名为 `yourusername.github.io`，则删除 `base: '/NewBlog'` 这一行。
-3. 推送代码到 `main` 分支，GitHub Actions 会自动构建并部署。
-4. 在仓库 **Settings → Pages → Build and deployment** 中选择 **GitHub Actions**。
+站点通过 GitHub Pages 部署，并绑定自定义域名 `blog-lllllei.favorys.top`：
+
+1. 在仓库 **Settings → Pages → Build and deployment** 中选择 **GitHub Actions**。
+2. 在 **Settings → Pages → Custom domain** 填入自定义域名，并在域名服务商处
+   添加 CNAME 记录指向 `<username>.github.io`（仓库内的 `public/CNAME`
+   会在每次部署时保留该域名）。
+3. 推送代码到 `main` 分支，GitHub Actions 会自动构建并部署
+   （工作流见 `.github/workflows/deploy.yml`）。
+4. 站点地址在 `astro.config.mjs` 的 `site` 中维护，部署在根路径
+   （`base: '/'`），无需子路径配置。
 
 ## 项目结构
 
 ```
+
 .
-├── .github/workflows/deploy.yml  # 自动部署工作流
-├── public/                       # 静态资源
+├── .github/workflows/deploy.yml # 自动部署工作流
+├── public/ # 静态资源
 ├── src/
-│   ├── components/               # 可复用组件
-│   ├── content/blog/             # 博客文章
-│   ├── layouts/                  # 页面布局
-│   ├── pages/                    # 路由页面
-│   ├── consts.ts                 # 站点常量
-│   └── styles/global.css         # 全局样式
+│ ├── components/ # 可复用组件
+│ ├── content/blog/ # 博客文章
+│ ├── layouts/ # 页面布局
+│ ├── pages/ # 路由页面
+│ ├── consts.ts # 站点常量
+│ └── styles/global.css # 全局样式
 ├── astro.config.mjs
 ├── package.json
 ├── tsconfig.json
 └── README.md
+
 ```
 
 ## 自定义
@@ -88,3 +92,4 @@ category: 'algorithm'   # 可选：algorithm | math | music | game，不填归�
 ## 许可
 
 MIT
+```
