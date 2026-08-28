@@ -4,7 +4,13 @@ import BlogPost from '../../layouts/BlogPost.astro';
 import { SITE_AUTHOR, SITE_AUTHOR_IMAGE, SITE_URL } from '../../consts.ts';
 
 type Nav = { slug: string; title: string };
-type Related = { slug: string; title: string; description: string; pubDate: Date; category: string | null };
+type Related = {
+  slug: string;
+  title: string;
+  description: string;
+  pubDate: Date;
+  category: string | null;
+};
 type SeriesPost = { slug: string; title: string };
 
 export async function getStaticPaths() {
@@ -20,15 +26,19 @@ export async function getStaticPaths() {
     const seriesPosts = post.data.series
       ? allPosts
           .filter((p) => p.id !== post.id && p.data.series === post.data.series)
-          .map((p) => ({ slug: p.id, title: p.data.title } as SeriesPost))
+          .map((p) => ({ slug: p.id, title: p.data.title }) as SeriesPost)
       : [];
 
     // 推荐阅读：先同专栏近邻 3 篇，不够用最近的其他文章补齐
     const sameCat = allPosts.filter(
-      (p) => p.id !== post.id && (p.data.category ?? null) === (post.data.category ?? null)
+      (p) =>
+        p.id !== post.id &&
+        (p.data.category ?? null) === (post.data.category ?? null),
     );
     const otherCat = allPosts.filter(
-      (p) => p.id !== post.id && (p.data.category ?? null) !== (post.data.category ?? null)
+      (p) =>
+        p.id !== post.id &&
+        (p.data.category ?? null) !== (post.data.category ?? null),
     );
     const related = [...sameCat, ...otherCat].slice(0, 3).map(
       (p) =>
@@ -38,15 +48,19 @@ export async function getStaticPaths() {
           description: p.data.description,
           pubDate: p.data.pubDate,
           category: p.data.category ?? null,
-        } as Related)
+        }) as Related,
     );
 
     return {
       params: { slug: post.id },
       props: {
         post,
-        newer: newer ? ({ slug: newer.id, title: newer.data.title } as Nav) : null,
-        older: older ? ({ slug: older.id, title: older.data.title } as Nav) : null,
+        newer: newer
+          ? ({ slug: newer.id, title: newer.data.title } as Nav)
+          : null,
+        older: older
+          ? ({ slug: older.id, title: older.data.title } as Nav)
+          : null,
         related,
         seriesPosts,
         seriesName: post.data.series ?? null,
@@ -67,7 +81,8 @@ interface Props {
 const { post, newer, older, related, seriesPosts, seriesName } = Astro.props;
 const { Content, headings } = await render(post);
 const rawBody = typeof post.body === 'string' ? post.body : '';
-const { title, description, pubDate, updatedDate, heroImage, category } = post.data;
+const { title, description, pubDate, updatedDate, heroImage, category } =
+  post.data;
 
 // Article 结构化数据（SEO）
 const jsonLd = {
@@ -90,7 +105,20 @@ const jsonLd = {
 };
 ---
 
-<BlogPost {...post.data} headings={headings} newer={newer} older={older} related={related} rawBody={rawBody} seriesPosts={seriesPosts} seriesName={seriesName}>
-  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+<BlogPost
+  {...post.data}
+  headings={headings}
+  newer={newer}
+  older={older}
+  related={related}
+  rawBody={rawBody}
+  seriesPosts={seriesPosts}
+  seriesName={seriesName}
+>
+  <script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(jsonLd)}
+  />
   <Content />
 </BlogPost>

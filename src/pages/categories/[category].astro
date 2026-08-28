@@ -41,33 +41,37 @@ const allPosts = (await getCollection('blog'))
       <a href="/" class="back">&larr; 返回首页</a>
     </div>
 
-    {allPosts.length > 0 ? (
-      <>
-        <PostSearch
-          total={allPosts.length}
-          placeholder={`搜索${category.label}专栏的文章...`}
-        />
-        <div class="post-list">
-          {allPosts.map((post) => (
-            <a
-              href={`/blog/${post.id}/`}
-              class="post-card"
-              data-search-item
-              data-title={post.data.title}
-              data-desc={post.data.description}
-            >
-              <div class="post-meta">
-                <FormattedDate date={post.data.pubDate} />
-              </div>
-              <h2 data-search-text="title">{post.data.title}</h2>
-              <p class="desc" data-search-text="desc">{post.data.description}</p>
-            </a>
-          ))}
-        </div>
-      </>
-    ) : (
-      <p class="empty">这个专栏还没有文章，敬请期待。</p>
-    )}
+    {
+      allPosts.length > 0 ? (
+        <>
+          <PostSearch
+            total={allPosts.length}
+            placeholder={`搜索${category.label}专栏的文章...`}
+          />
+          <div class="post-list">
+            {allPosts.map((post) => (
+              <a
+                href={`/blog/${post.id}/`}
+                class="post-card"
+                data-search-item
+                data-title={post.data.title}
+                data-desc={post.data.description}
+              >
+                <div class="post-meta">
+                  <FormattedDate date={post.data.pubDate} />
+                </div>
+                <h2 data-search-text="title">{post.data.title}</h2>
+                <p class="desc" data-search-text="desc">
+                  {post.data.description}
+                </p>
+              </a>
+            ))}
+          </div>
+        </>
+      ) : (
+        <p class="empty">这个专栏还没有文章，敬请期待。</p>
+      )
+    }
   </section>
 </BaseLayout>
 
@@ -134,7 +138,10 @@ const allPosts = (await getCollection('blog'))
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.2s ease;
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease,
+      transform 0.2s ease;
   }
 
   .post-card:hover {

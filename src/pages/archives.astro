@@ -10,14 +10,20 @@ const posts = (await getCollection('blog'))
 // 按「年-月」分组（降序）
 const groups = new Map<string, typeof posts>();
 for (const post of posts) {
-  const key = post.data.pubDate.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long' });
+  const key = post.data.pubDate.toLocaleDateString('zh-CN', {
+    year: 'numeric',
+    month: 'long',
+  });
   if (!groups.has(key)) groups.set(key, []);
   groups.get(key)!.push(post);
 }
 const archiveGroups = Array.from(groups.entries());
 ---
 
-<BaseLayout title="归档" description="按发布时间浏览 LLLLei 的全部文章与写作记录。">
+<BaseLayout
+  title="归档"
+  description="按发布时间浏览 LLLLei 的全部文章与写作记录。"
+>
   <section class="container">
     <div class="page-head">
       <p class="eyebrow">归档</p>
@@ -29,7 +35,8 @@ const archiveGroups = Array.from(groups.entries());
       {
         archiveGroups.map(([month, monthPosts]) => (
           <section class="archive-group">
-            <h2 class="archive-month">{month}
+            <h2 class="archive-month">
+              {month}
               <span class="archive-count">{monthPosts.length} 篇</span>
             </h2>
             <ul class="archive-list">
@@ -40,7 +47,9 @@ const archiveGroups = Array.from(groups.entries());
                       <FormattedDate date={post.data.pubDate} />
                     </span>
                     <span class="archive-title">{post.data.title}</span>
-                    {post.data.category && <span class="archive-cat">{post.data.category}</span>}
+                    {post.data.category && (
+                      <span class="archive-cat">{post.data.category}</span>
+                    )}
                   </a>
                 </li>
               ))}
@@ -123,7 +132,9 @@ const archiveGroups = Array.from(groups.entries());
     padding: 0.55rem 0;
     border-bottom: 1px dashed var(--border);
     text-decoration: none;
-    transition: color 0.15s ease, padding-left 0.15s ease;
+    transition:
+      color 0.15s ease,
+      padding-left 0.15s ease;
   }
 
   .archive-item:hover {

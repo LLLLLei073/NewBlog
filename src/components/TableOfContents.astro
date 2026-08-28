@@ -12,18 +12,22 @@ interface Props {
 const { toc } = Astro.props;
 ---
 
-{toc.length > 1 && (
-  <nav class="toc" aria-label="文章目录">
-    <p class="toc-title">目录</p>
-    <ul>
-      {toc.map((h) => (
-        <li class:list={['toc-item', `depth-${h.depth}`]}>
-          <a href={`#${h.slug}`} data-toc-target={h.slug}>{h.text}</a>
-        </li>
-      ))}
-    </ul>
-  </nav>
-)}
+{
+  toc.length > 1 && (
+    <nav class="toc" aria-label="文章目录">
+      <p class="toc-title">目录</p>
+      <ul>
+        {toc.map((h) => (
+          <li class:list={['toc-item', `depth-${h.depth}`]}>
+            <a href={`#${h.slug}`} data-toc-target={h.slug}>
+              {h.text}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}
 
 <style>
   .toc {
@@ -58,7 +62,9 @@ const { toc } = Astro.props;
     padding: 0.28rem 0 0.28rem 0.75rem;
     margin-left: -1px;
     border-left: 2px solid transparent;
-    transition: color 0.15s ease, border-color 0.15s ease;
+    transition:
+      color 0.15s ease,
+      border-color 0.15s ease;
   }
 
   .toc-item a:hover {
@@ -82,7 +88,9 @@ const { toc } = Astro.props;
   function initTOC() {
     const nav = document.querySelector('.toc');
     if (!nav) return;
-    const links = Array.from(nav.querySelectorAll<HTMLAnchorElement>('a[data-toc-target]'));
+    const links = Array.from(
+      nav.querySelectorAll<HTMLAnchorElement>('a[data-toc-target]'),
+    );
     if (links.length === 0) return;
 
     const targets = new Map<Element, HTMLAnchorElement>();
@@ -106,7 +114,7 @@ const { toc } = Astro.props;
           }
         });
       },
-      { rootMargin: '0px 0px -70% 0px', threshold: 0 }
+      { rootMargin: '0px 0px -70% 0px', threshold: 0 },
     );
 
     targets.forEach((_, el) => observer.observe(el));

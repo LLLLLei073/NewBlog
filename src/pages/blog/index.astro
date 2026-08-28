@@ -9,7 +9,10 @@ const posts = (await getCollection('blog'))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
-<BaseLayout title="文章" description="浏览 LLLLei 关于算法、开发、数学、音乐与游戏的全部文章。">
+<BaseLayout
+  title="文章"
+  description="浏览 LLLLei 关于算法、开发、数学、音乐与游戏的全部文章。"
+>
   <section class="container">
     <div class="page-head">
       <p class="eyebrow">文章</p>
@@ -29,10 +32,14 @@ const posts = (await getCollection('blog'))
           >
             <div class="post-meta">
               <FormattedDate date={post.data.pubDate} />
-              {post.data.category && <span class="post-cat">{post.data.category}</span>}
+              {post.data.category && (
+                <span class="post-cat">{post.data.category}</span>
+              )}
             </div>
             <h2 data-search-text="title">{post.data.title}</h2>
-            <p class="desc" data-search-text="desc">{post.data.description}</p>
+            <p class="desc" data-search-text="desc">
+              {post.data.description}
+            </p>
           </a>
         ))
       }
@@ -84,7 +91,10 @@ const posts = (await getCollection('blog'))
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.2s ease;
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease,
+      transform 0.2s ease;
   }
 
   .post-card:hover {

@@ -2,7 +2,11 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="页面不存在" description="你访问的页面不存在或已经移动。" noindex>
+<BaseLayout
+  title="页面不存在"
+  description="你访问的页面不存在或已经移动。"
+  noindex
+>
   <section class="notfound container">
     <p class="nf-code">404</p>
     <h1 class="nf-title">页面走丢了</h1>
@@ -54,7 +58,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     font-size: 0.88rem;
     border-radius: var(--radius-full);
     text-decoration: none;
-    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    transition:
+      transform 0.15s ease,
+      box-shadow 0.15s ease,
+      border-color 0.15s ease;
   }
 
   .btn:active {

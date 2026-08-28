@@ -62,14 +62,14 @@ pubDate: '2026-08-01'
 
 ## 技术栈
 
-| 层 | 技术 |
-|---|---|
-| 框架 | Electron 31 + electron-vite |
-| 前端 | React 18 + TypeScript 5 |
-| 路由 | React Router |
-| 图表 | Recharts |
+| 层   | 技术                         |
+| ---- | ---------------------------- |
+| 框架 | Electron 31 + electron-vite  |
+| 前端 | React 18 + TypeScript 5      |
+| 路由 | React Router                 |
+| 图表 | Recharts                     |
 | 存储 | electron-store（本地持久化） |
-| 测试 | Vitest |
+| 测试 | Vitest                       |
 
 ## 使用
 
@@ -91,4 +91,3 @@ npm run dev
 ##### 写在最后
 
 其实最开始只是想视奸一下队友的情况，后面队长给我提了建议才加上那么一堆乱七八糟的ai功能，如果不喜欢那就受着😡
-

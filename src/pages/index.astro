@@ -3,16 +3,23 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import { SITE_DESCRIPTION } from '../consts.ts';
-import { CATEGORIES, getPostCategory, groupPostsByCategory } from '../utils/categories.ts';
+import {
+  CATEGORIES,
+  getPostCategory,
+  groupPostsByCategory,
+} from '../utils/categories.ts';
 
 const posts = (await getCollection('blog'))
   .filter((post) => !post.data.draft)
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 const groups = await groupPostsByCategory();
-const featured = posts.find((post) => post.id === 'cf-friend-tracker') ?? posts[0];
+const featured =
+  posts.find((post) => post.id === 'cf-friend-tracker') ?? posts[0];
 const recent = posts.filter((post) => post.id !== featured?.id).slice(0, 4);
 const featuredCategory = featured ? getPostCategory(featured.data) : null;
-const activeCategories = CATEGORIES.filter((category) => (groups.get(category)?.length ?? 0) > 0).length;
+const activeCategories = CATEGORIES.filter(
+  (category) => (groups.get(category)?.length ?? 0) > 0,
+).length;
 ---
 
 <BaseLayout description={SITE_DESCRIPTION}>
@@ -23,9 +30,13 @@ const activeCategories = CATEGORIES.filter((category) => (groups.get(category)?.
         <span>EST. 2026</span>
       </div>
       <h1>把算法、代码与灵感，<br /><em>写成可反复<br />翻阅的笔记。</em></h1>
-      <p class="lead">{SITE_DESCRIPTION} 这里不追逐信息流，只留下经过理解、实践和整理的内容。</p>
+      <p class="lead">
+        {SITE_DESCRIPTION} 这里不追逐信息流，只留下经过理解、实践和整理的内容。
+      </p>
       <div class="actions">
-        <a href="/blog" class="text-link">开始阅读 <span aria-hidden="true">→</span></a>
+        <a href="/blog" class="text-link"
+          >开始阅读 <span aria-hidden="true">→</span></a
+        >
         <a href="/about" class="quiet-link">认识作者</a>
       </div>
     </div>
@@ -34,10 +45,18 @@ const activeCategories = CATEGORIES.filter((category) => (groups.get(category)?.
       <p class="index-label">INDEX / 001</p>
       <dl>
         <div><dt>文章</dt><dd>{String(posts.length).padStart(2, '0')}</dd></div>
-        <div><dt>活跃主题</dt><dd>{String(activeCategories).padStart(2, '0')}</dd></div>
-        <div><dt>最近更新</dt><dd>{posts[0] ? <FormattedDate date={posts[0].data.pubDate} /> : '—'}</dd></div>
+        <div>
+          <dt>活跃主题</dt><dd>{String(activeCategories).padStart(2, '0')}</dd>
+        </div>
+        <div>
+          <dt>最近更新</dt><dd>
+            {posts[0] ? <FormattedDate date={posts[0].data.pubDate} /> : '—'}
+          </dd>
+        </div>
       </dl>
-      <p class="index-note">慢慢写，持续更新。<br />对内容负责，也对读者的时间负责。</p>
+      <p class="index-note">
+        慢慢写，持续更新。<br />对内容负责，也对读者的时间负责。
+      </p>
     </aside>
   </section>
 
@@ -51,14 +70,24 @@ const activeCategories = CATEGORIES.filter((category) => (groups.get(category)?.
       {
         featured && (
           <article class="feature-story">
-            <div class="story-number" aria-hidden="true">01</div>
-            <div class="story-meta">
-              {featuredCategory && <a href={featuredCategory.path}>{featuredCategory.label}</a>}
-              <span><FormattedDate date={featured.data.pubDate} /></span>
+            <div class="story-number" aria-hidden="true">
+              01
             </div>
-            <h3><a href={`/blog/${featured.id}/`}>{featured.data.title}</a></h3>
+            <div class="story-meta">
+              {featuredCategory && (
+                <a href={featuredCategory.path}>{featuredCategory.label}</a>
+              )}
+              <span>
+                <FormattedDate date={featured.data.pubDate} />
+              </span>
+            </div>
+            <h3>
+              <a href={`/blog/${featured.id}/`}>{featured.data.title}</a>
+            </h3>
             <p>{featured.data.description}</p>
-            <a class="read-story" href={`/blog/${featured.id}/`}>阅读重点文章 <span aria-hidden="true">↗</span></a>
+            <a class="read-story" href={`/blog/${featured.id}/`}>
+              阅读重点文章 <span aria-hidden="true">↗</span>
+            </a>
           </article>
         )
       }
@@ -70,13 +99,20 @@ const activeCategories = CATEGORIES.filter((category) => (groups.get(category)?.
             return (
               <li>
                 <a href={`/blog/${post.id}/`} class="recent-item">
-                  <span class="recent-number">{String(index + 2).padStart(2, '0')}</span>
+                  <span class="recent-number">
+                    {String(index + 2).padStart(2, '0')}
+                  </span>
                   <span class="recent-copy">
-                    <span class="recent-meta">{category.label} · <FormattedDate date={post.data.pubDate} /></span>
+                    <span class="recent-meta">
+                      {category.label} ·{' '}
+                      <FormattedDate date={post.data.pubDate} />
+                    </span>
                     <strong>{post.data.title}</strong>
                     <span class="recent-desc">{post.data.description}</span>
                   </span>
-                  <span class="recent-arrow" aria-hidden="true">→</span>
+                  <span class="recent-arrow" aria-hidden="true">
+                    →
+                  </span>
                 </a>
               </li>
             );
@@ -98,7 +134,9 @@ const activeCategories = CATEGORIES.filter((category) => (groups.get(category)?.
           return (
             <li>
               <a href={category.path}>
-                <span class="topic-number">{String(index + 1).padStart(2, '0')}</span>
+                <span class="topic-number">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
                 <strong>{category.label}</strong>
                 <span class="topic-desc">{category.description}</span>
                 <span class="topic-count">{count} 篇</span>
@@ -346,7 +384,9 @@ const activeCategories = CATEGORIES.filter((category) => (groups.get(category)?.
     min-height: 115px;
     padding: 1.35rem 0 1.35rem 1.6rem;
     color: var(--foreground);
-    transition: background-color 0.18s ease, padding 0.18s ease;
+    transition:
+      background-color 0.18s ease,
+      padding 0.18s ease;
   }
 
   .recent-item:hover {

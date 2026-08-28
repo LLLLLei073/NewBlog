@@ -14,7 +14,9 @@ import { CATEGORIES } from '../utils/categories.ts';
       <div class="hero-grid">
         <div class="identity">
           <h1>你好，<br />我是 <em>徐磊</em>。</h1>
-          <p class="hero-summary">我是一名大学生，平时喜欢写代码，也会把学习和做项目时遇到的东西记在这里。</p>
+          <p class="hero-summary">
+            我是一名大学生，平时喜欢写代码，也会把学习和做项目时遇到的东西记在这里。
+          </p>
           <span class="identity-meta">大学生 · LLLLei</span>
         </div>
         <figure class="portrait">
@@ -27,7 +29,9 @@ import { CATEGORIES } from '../utils/categories.ts';
               decoding="async"
             />
           </div>
-          <figcaption><span>我的头像</span><span>徐磊 · LLLLei</span></figcaption>
+          <figcaption>
+            <span>我的头像</span><span>徐磊 · LLLLei</span>
+          </figcaption>
         </figure>
       </div>
     </header>
@@ -48,8 +52,13 @@ import { CATEGORIES } from '../utils/categories.ts';
           <p class="chapter-number">01</p>
           <div>
             <h2>我是一名大学生</h2>
-            <p class="intro-lead">我叫徐磊，是一名大学生，网络上常用 LLLLei。平时主要学习计算机和编程，也喜欢数学、音乐和游戏。这个博客用来记笔记、分享做过的项目，也会写一些自己的想法。</p>
-            <p>文章可能更新得不快，我会尽量把自己学到的东西说清楚，也方便以后回来查看。</p>
+            <p class="intro-lead">
+              我叫徐磊，是一名大学生，网络上常用
+              LLLLei。平时主要学习计算机和编程，也喜欢数学、音乐和游戏。这个博客用来记笔记、分享做过的项目，也会写一些自己的想法。
+            </p>
+            <p>
+              文章可能更新得不快，我会尽量把自己学到的东西说清楚，也方便以后回来查看。
+            </p>
           </div>
         </section>
 
@@ -58,15 +67,17 @@ import { CATEGORIES } from '../utils/categories.ts';
           <div>
             <h2>我在写什么</h2>
             <ol class="topic-list">
-              {CATEGORIES.map((category, index) => (
-                <li>
-                  <a href={category.path}>
-                    <span>{String(index + 1).padStart(2, '0')}</span>
-                    <strong>{category.label}</strong>
-                    <small>{category.description}</small>
-                  </a>
-                </li>
-              ))}
+              {
+                CATEGORIES.map((category, index) => (
+                  <li>
+                    <a href={category.path}>
+                      <span>{String(index + 1).padStart(2, '0')}</span>
+                      <strong>{category.label}</strong>
+                      <small>{category.description}</small>
+                    </a>
+                  </li>
+                ))
+              }
             </ol>
           </div>
         </section>
@@ -75,7 +86,10 @@ import { CATEGORIES } from '../utils/categories.ts';
           <p class="chapter-number">03</p>
           <div>
             <h2>关于这个博客</h2>
-            <p>这个博客使用 Astro 构建，部署在 GitHub Pages。这里主要放我的学习笔记、项目记录和感兴趣的内容。</p>
+            <p>
+              这个博客使用 Astro 构建，部署在 GitHub
+              Pages。这里主要放我的学习笔记、项目记录和感兴趣的内容。
+            </p>
             <blockquote>
               <p>认真学习，随手记录，慢慢进步。</p>
             </blockquote>
@@ -94,9 +108,15 @@ import { CATEGORIES } from '../utils/categories.ts';
           <p class="chapter-number">04</p>
           <div>
             <h2>保持联系</h2>
-            <p>如果你想聊聊文章、项目或者交换友链，可以从下面这些地方找到我。</p>
+            <p>
+              如果你想聊聊文章、项目或者交换友链，可以从下面这些地方找到我。
+            </p>
             <div class="contact-links">
-              <a href="https://github.com/LLLLLei073" target="_blank" rel="noopener">GitHub <span aria-hidden="true">↗</span></a>
+              <a
+                href="https://github.com/LLLLLei073"
+                target="_blank"
+                rel="noopener">GitHub <span aria-hidden="true">↗</span></a
+              >
               <a href="/rss.xml">RSS 订阅 <span aria-hidden="true">→</span></a>
               <a href="/friends">友情链接 <span aria-hidden="true">→</span></a>
             </div>
