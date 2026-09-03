@@ -4,11 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "test:room": "node --test tests/room.test.ts",
+    "test:assistant": "node --test tests/assistant.test.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "astro": "astro"
   },
   "keywords": [],
@@ -23,10 +27,14 @@
     "katex": "^0.18.1",
     "mermaid": "^11.16.0",
     "rehype-katex": "^7.0.1",
-    "remark-math": "^6.0.0"
+    "remark-math": "^6.0.0",
+    "three": "^0.185.1"
   },
   "devDependencies": {
     "@types/node": "^26.1.2",
+    "@types/three": "^0.185.4",
+    "prettier": "^3.9.6",
+    "prettier-plugin-astro": "^0.14.1",
     "typescript": "^7.0.2"
   }
 }

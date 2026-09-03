@@ -1,0 +1,224 @@
+---
+import { ROOM_LINKS } from './config';
+import { SITE_AUTHOR_IMAGE } from '../../consts';
+import Assistant from '../assistant/Assistant.astro';
+---
+
+<section
+  class="room"
+  aria-label="房间导航"
+  data-room
+  data-avatar={SITE_AUTHOR_IMAGE}
+>
+  <div
+    class="room-stage"
+    data-room-stage
+    aria-label="黑白线框房间；也可以使用下方的栏目链接"
+  >
+    <div class="room-placeholder" data-room-placeholder>
+      <svg
+        viewBox="0 0 800 530"
+        role="img"
+        aria-label="小房间的线稿：书桌、书架和一扇门"
+      >
+        <g
+          fill="var(--room-paper)"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linejoin="round"
+        >
+          <path d="M90 205 400 65 710 205 400 380Z"></path>
+          <path d="M90 205V355L400 510V380M710 205V355L400 510M400 65V220"
+          ></path>
+          <path
+            d="M90 205 400 350 710 205M400 350V510"
+            stroke-dasharray="4 7"
+            opacity=".2"></path>
+          <path d="m140 273 125-56 110 52-125 61Zm0 0v82m235-86v81m-125-20v82"
+          ></path>
+          <path d="m185 262 57-25v-50l-57 25Zm0 0 30 14 57-25-30-14"></path>
+          <path d="m510 195 80-38 0 137-80 40Zm0 40 80-38m-80 82 80-38"></path>
+          <path d="m325 189 0-77 50-23v123Zm40-24v10"></path>
+        </g>
+      </svg>
+      <p>也可以从下面的栏目直接进入 ↓</p>
+    </div>
+    <div class="room-canvas" data-room-canvas aria-hidden="true"></div>
+    <span class="room-tooltip" data-room-tooltip hidden></span>
+  </div>
+  <div class="room-caption">
+    <p data-room-status role="status">
+      电脑看算法，课本看数学。下面也有所有入口。
+    </p>
+    <button type="button" data-room-lamp hidden>台灯 · 切换明暗</button>
+  </div>
+  <Assistant />
+  <nav class="room-links" aria-label="普通栏目链接">
+    {
+      ROOM_LINKS.map((item) => (
+        <a href={item.href} data-room-link={item.id}>
+          <>
+            <span>{item.label}</span>
+            <small>{item.object}</small>
+          </>
+        </a>
+      ))
+    }
+  </nav>
+  <p class="room-credit">
+    房间改编自 <a
+      href="https://github.com/Animnia/pure-line-room"
+      target="_blank"
+      rel="noopener noreferrer">pure-line-room</a
+    > · <a href="/licenses/pure-line-room.txt">来源与许可</a>
+  </p>
+</section>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-room]');
+  if (root) {
+    import('./interaction')
+      .then(({ mountRoom }) => mountRoom(root))
+      .catch(() => {
+        const status = root.querySelector('[data-room-status]');
+        if (status)
+          status.textContent = '房间暂时没加载出来，下面的栏目和文章照常可用。';
+      });
+  }
+</script>
+
+<style>
+  .room {
+    position: relative;
+  }
+  .room-stage {
+    position: relative;
+    width: 100%;
+    height: clamp(360px, 51vw, 620px);
+    margin-top: 8px;
+    touch-action: pan-y pinch-zoom;
+  }
+  .room-placeholder,
+  .room-canvas {
+    position: absolute;
+    inset: 0;
+  }
+  .room-placeholder svg {
+    width: 100%;
+    height: calc(100% - 36px);
+    opacity: 0.65;
+  }
+  .room-placeholder p {
+    text-align: center;
+    font-size: 12px;
+    color: var(--room-muted);
+    margin: 0;
+  }
+  .room-canvas :global(canvas) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    touch-action: pan-y pinch-zoom;
+  }
+  .room-tooltip {
+    position: absolute;
+    z-index: 2;
+    pointer-events: none;
+    padding: 7px 12px;
+    color: var(--room-paper);
+    background: var(--room-ink);
+    border-radius: 3px;
+    font-size: 12px;
+    white-space: nowrap;
+    transform: translate(-50%, -100%);
+  }
+  .room-caption {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+    max-width: 900px;
+    margin: 4px auto 22px;
+    color: var(--room-muted);
+    font-size: 12px;
+  }
+  .room-caption p {
+    margin: 0;
+  }
+  .room-caption button {
+    flex-shrink: 0;
+    background: none;
+    border: 0;
+    border-bottom: 1px solid currentColor;
+    color: var(--room-ink);
+    font: inherit;
+    min-height: 44px;
+    padding: 0 4px;
+    cursor: pointer;
+  }
+  .room-links {
+    max-width: 900px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(9, minmax(0, 1fr));
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .room-links a {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 77px;
+  }
+  .room-links a:hover,
+  .room-links a:focus-visible {
+    background: var(--room-ink);
+    color: var(--room-paper);
+  }
+  .room-links span {
+    font-size: 13px;
+  }
+  .room-links small {
+    font-size: 10px;
+    opacity: 0.6;
+  }
+  .room-credit {
+    text-align: right;
+    max-width: 900px;
+    margin: 12px auto 0;
+    color: var(--room-muted);
+    font-size: 10px;
+  }
+  .room-credit a {
+    text-underline-offset: 3px;
+  }
+  @media (max-width: 700px) {
+    .room-links {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+    .room-links a {
+      min-height: 68px;
+    }
+    .room-caption {
+      align-items: flex-start;
+    }
+    .room-caption p {
+      max-width: 185px;
+      line-height: 1.8;
+    }
+  }
+  @media (max-width: 400px) {
+    .room-stage {
+      height: 340px;
+    }
+    .room-links {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .room-caption {
+      font-size: 11px;
+    }
+  }
+</style>

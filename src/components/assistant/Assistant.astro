@@ -1,0 +1,362 @@
+---
+import { getCollection } from 'astro:content';
+import { CATEGORIES } from '../../utils/categories';
+import { ROOM_LINKS } from '../room/config';
+import { buildAssistantIndex, serializeIndex } from './search';
+import Coal from './Coal.astro';
+const posts = buildAssistantIndex(
+  await getCollection('blog'),
+  Object.fromEntries(CATEGORIES.map((c) => [c.id, c.label])),
+);
+---
+
+<room-assistant>
+  <div class="coal-position" data-coal-position>
+    <div data-coal-static role="img" aria-label="戴手绘眼镜的小煤球">
+      <Coal />
+    </div>
+    <button
+      type="button"
+      class="coal-button"
+      data-coal-toggle
+      aria-label="小煤球：找笔记和栏目"
+      aria-expanded="false"
+      aria-controls="coal-panel"
+      title="小煤球 · 找笔记"
+      hidden><Coal /></button
+    >
+    <span class="coal-hint" aria-hidden="true">找笔记？点我</span>
+  </div>
+  <div class="coal-controls" data-coal-controls hidden>
+    <span data-coal-note>房间里的小帮手</span>
+    <button type="button" data-coal-rest>让它休息</button>
+  </div>
+  <section
+    class="coal-panel"
+    id="coal-panel"
+    aria-labelledby="coal-title"
+    hidden
+  >
+    <header class="coal-panel-head">
+      <div><p>小煤球帮你找</p><h2 id="coal-title">想找哪方面的笔记？</h2></div>
+      <button
+        type="button"
+        class="coal-close"
+        data-coal-close
+        aria-label="收起小煤球面板"
+        >收起 <span aria-hidden="true">×</span></button
+      >
+    </header>
+    <label class="coal-search-label" for="coal-search">找笔记</label>
+    <div class="coal-search-row">
+      <input
+        id="coal-search"
+        data-coal-search
+        type="search"
+        autocomplete="off"
+        placeholder="输入标题、关键词或栏目名"
+        aria-describedby="coal-search-help"
+      />
+      <button type="button" data-coal-random disabled={posts.length === 0}
+        >随便读一篇 ↗</button
+      >
+    </div>
+    <p class="coal-help" id="coal-search-help">
+      只在本站的标题、摘要和栏目里找，不会上传搜索内容。
+    </p>
+    <nav class="coal-categories" aria-label="小煤球栏目导航">
+      {ROOM_LINKS.map((item) => <a href={item.href}>{item.label}</a>)}
+    </nav>
+    <div class="coal-results-head">
+      <h3 data-coal-results-heading>最近的笔记</h3><p
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+        data-coal-status
+      >
+      </p>
+    </div>
+    <ol class="coal-results" data-coal-results></ol>
+    <button type="button" class="coal-more" data-coal-more hidden
+      >显示全部结果</button
+    >
+  </section>
+  <script
+    type="application/json"
+    is:inline
+    data-coal-index
+    set:html={serializeIndex(posts)}
+  />
+</room-assistant>
+
+<script>
+  import { mountAssistant } from './controller';
+  class RoomAssistant extends HTMLElement {
+    cleanup?: () => void;
+    connectedCallback() {
+      this.cleanup = mountAssistant(this);
+    }
+    disconnectedCallback() {
+      this.cleanup?.();
+    }
+  }
+  if (!customElements.get('room-assistant'))
+    customElements.define('room-assistant', RoomAssistant);
+</script>
+
+<style>
+  room-assistant {
+    display: block;
+    color: var(--room-ink);
+  }
+  [hidden] {
+    display: none !important;
+  }
+  .coal-position {
+    position: absolute;
+    width: var(--coal-size, 64px);
+    height: var(--coal-size, 64px);
+    left: var(--coal-left, 77%);
+    top: var(--coal-top, 270px);
+    transform: translate(-50%, -100%);
+    z-index: 3;
+  }
+  .coal-button {
+    display: block;
+    border: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+    touch-action: pan-y pinch-zoom;
+    -webkit-tap-highlight-color: transparent;
+    border-radius: 50%;
+  }
+  .coal-hint {
+    display: none;
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 5px);
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-size: 11px;
+    background: var(--room-paper);
+    border: 1px solid var(--border);
+    padding: 4px 7px;
+    border-radius: 4px;
+    pointer-events: none;
+  }
+  .coal-button:hover ~ .coal-hint,
+  .coal-button:focus-visible ~ .coal-hint {
+    display: block;
+  }
+  :global(html[data-theme='dark']) room-assistant {
+    --coal-outline: #c9c7be;
+  }
+  .coal-controls {
+    max-width: 900px;
+    margin: 0 auto 12px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    font-size: 11px;
+    color: var(--room-muted);
+  }
+  .coal-controls button {
+    padding: 4px 0 4px 8px;
+    min-height: 44px;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  .coal-panel {
+    scroll-margin-top: 76px;
+    max-width: 900px;
+    margin: 0 auto 24px;
+    padding: 24px;
+    border: 1px solid var(--room-ink);
+    border-radius: 4px 16px 4px 4px;
+    background: var(--room-paper);
+  }
+  .coal-panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+  .coal-panel-head p {
+    font-size: 11px;
+    margin: 0 0 6px;
+    color: var(--room-muted);
+  }
+  .coal-panel-head h2 {
+    font-size: 22px;
+    margin: 0;
+    font-weight: 500;
+    color: var(--room-ink);
+  }
+  .coal-panel button {
+    font: inherit;
+    cursor: pointer;
+    color: var(--room-ink);
+    min-height: 44px;
+  }
+  .coal-close {
+    flex-shrink: 0;
+    border: 0;
+    background: none;
+    padding: 4px;
+    font-size: 12px !important;
+  }
+  .coal-close span {
+    font-size: 20px;
+    margin-left: 8px;
+  }
+  .coal-search-label {
+    display: block;
+    font-size: 12px;
+    margin-bottom: 8px;
+  }
+  .coal-search-row {
+    display: flex;
+    gap: 10px;
+  }
+  .coal-search-row input {
+    width: 100%;
+    min-width: 0;
+    padding: 12px 14px;
+    font: inherit;
+    font-size: 16px;
+    border: 1px solid var(--border);
+    color: var(--room-ink);
+    background: var(--room-paper);
+    border-radius: 3px;
+  }
+  .coal-search-row button {
+    flex-shrink: 0;
+    background: var(--room-ink);
+    color: var(--room-paper);
+    padding: 8px 14px;
+    border: 0;
+    border-radius: 3px;
+    font-size: 13px;
+  }
+  .coal-search-row input:focus-visible {
+    outline: 2px solid var(--room-ink);
+    outline-offset: 3px;
+    box-shadow: none;
+    border-color: var(--room-ink);
+  }
+  .coal-search-row button:disabled {
+    opacity: 0.45;
+    cursor: default;
+  }
+  .coal-help {
+    font-size: 11px;
+    color: var(--room-muted);
+    line-height: 1.7;
+    margin: 8px 0 14px;
+  }
+  .coal-categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 18px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .coal-categories a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    font-size: 13px;
+    text-underline-offset: 4px;
+  }
+  .coal-results-head {
+    margin-top: 20px;
+  }
+  .coal-results-head h3 {
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0 0 5px;
+    color: var(--room-ink);
+  }
+  .coal-results-head p {
+    font-size: 12px;
+    color: var(--room-muted);
+    margin: 0;
+  }
+  .coal-results {
+    list-style: none;
+    margin: 8px 0 0;
+    padding: 0;
+  }
+  .coal-results :global(li + li) {
+    border-top: 1px solid var(--border);
+  }
+  .coal-results :global(a) {
+    display: block;
+    min-height: 44px;
+    padding: 14px 0;
+    text-decoration: none;
+  }
+  .coal-results :global(a:hover strong) {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  .coal-results :global(strong) {
+    display: block;
+    font-size: 16px;
+    font-weight: 500;
+    overflow-wrap: anywhere;
+  }
+  .coal-results :global(small) {
+    display: block;
+    color: var(--room-muted);
+    font-size: 11px;
+    margin-bottom: 4px;
+  }
+  .coal-results :global(p) {
+    font-size: 12px;
+    color: var(--room-muted);
+    margin: 6px 0 0;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+  }
+  .coal-more {
+    border: 1px solid var(--border);
+    background: none;
+    padding: 8px 14px;
+    border-radius: 3px;
+    margin-top: 12px;
+    font-size: 12px !important;
+  }
+  @media (max-width: 600px) {
+    .coal-position {
+      width: var(--coal-size, 44px);
+      height: var(--coal-size, 44px);
+    }
+    .coal-panel {
+      padding: 16px;
+    }
+    .coal-panel-head h2 {
+      font-size: 18px;
+    }
+    .coal-search-row {
+      flex-direction: column;
+    }
+    .coal-search-row button {
+      align-self: flex-start;
+    }
+    .coal-controls {
+      justify-content: space-between;
+    }
+  }
+</style>

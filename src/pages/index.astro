@@ -1,528 +1,195 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Room from '../components/room/Room.astro';
 import FormattedDate from '../components/FormattedDate.astro';
-import { SITE_DESCRIPTION } from '../consts.ts';
-import { CATEGORIES, getPostCategory, groupPostsByCategory } from '../utils/categories.ts';
+import { getPostCategory } from '../utils/categories';
 
-const posts = (await getCollection('blog'))
+const recent = (await getCollection('blog'))
   .filter((post) => !post.data.draft)
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-const groups = await groupPostsByCategory();
-const featured = posts.find((post) => post.id === 'cf-friend-tracker') ?? posts[0];
-const recent = posts.filter((post) => post.id !== featured?.id).slice(0, 4);
-const featuredCategory = featured ? getPostCategory(featured.data) : null;
-const activeCategories = CATEGORIES.filter((category) => (groups.get(category)?.length ?? 0) > 0).length;
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
 ---
 
-<BaseLayout description={SITE_DESCRIPTION}>
-  <section class="hero container-wide">
-    <div class="hero-copy">
-      <div class="mastline" aria-label="站点信息">
-        <span>LLLLEI / FIELD NOTES</span>
-        <span>EST. 2026</span>
-      </div>
-      <h1>把算法、代码与灵感，<br /><em>写成可反复<br />翻阅的笔记。</em></h1>
-      <p class="lead">{SITE_DESCRIPTION} 这里不追逐信息流，只留下经过理解、实践和整理的内容。</p>
-      <div class="actions">
-        <a href="/blog" class="text-link">开始阅读 <span aria-hidden="true">→</span></a>
-        <a href="/about" class="quiet-link">认识作者</a>
-      </div>
-    </div>
-
-    <aside class="hero-index" aria-label="博客概览">
-      <p class="index-label">INDEX / 001</p>
-      <dl>
-        <div><dt>文章</dt><dd>{String(posts.length).padStart(2, '0')}</dd></div>
-        <div><dt>活跃主题</dt><dd>{String(activeCategories).padStart(2, '0')}</dd></div>
-        <div><dt>最近更新</dt><dd>{posts[0] ? <FormattedDate date={posts[0].data.pubDate} /> : '—'}</dd></div>
-      </dl>
-      <p class="index-note">慢慢写，持续更新。<br />对内容负责，也对读者的时间负责。</p>
-    </aside>
-  </section>
-
-  <section class="journal container-wide" aria-labelledby="journal-title">
-    <header class="section-head">
-      <p>SELECTED & RECENT</p>
-      <h2 id="journal-title">最近写下的内容</h2>
+<BaseLayout
+  room
+  title="徐磊的小房间"
+  description="我是徐磊，一名大学生。这里放着我的学习笔记，还有数学、音乐和游戏。"
+>
+  <div class="room-home">
+    <header class="room-heading">
+      <p class="welcome">欢迎来坐坐</p>
+      <h1>徐磊的小房间<span aria-hidden="true">。</span></h1>
+      <p>点点房间里的东西，看看我写的笔记</p>
     </header>
-
-    <div class="journal-grid">
-      {
-        featured && (
-          <article class="feature-story">
-            <div class="story-number" aria-hidden="true">01</div>
-            <div class="story-meta">
-              {featuredCategory && <a href={featuredCategory.path}>{featuredCategory.label}</a>}
-              <span><FormattedDate date={featured.data.pubDate} /></span>
-            </div>
-            <h3><a href={`/blog/${featured.id}/`}>{featured.data.title}</a></h3>
-            <p>{featured.data.description}</p>
-            <a class="read-story" href={`/blog/${featured.id}/`}>阅读重点文章 <span aria-hidden="true">↗</span></a>
-          </article>
-        )
-      }
-
-      <ol class="recent-list" start="2">
+    <Room />
+    <section class="recent-notes" aria-labelledby="recent-title">
+      <header>
+        <h2 id="recent-title">最近写的</h2><a href="/blog/">全部文章 ↗</a>
+      </header>
+      <ol>
         {
-          recent.map((post, index) => {
-            const category = getPostCategory(post.data);
-            return (
-              <li>
-                <a href={`/blog/${post.id}/`} class="recent-item">
-                  <span class="recent-number">{String(index + 2).padStart(2, '0')}</span>
-                  <span class="recent-copy">
-                    <span class="recent-meta">{category.label} · <FormattedDate date={post.data.pubDate} /></span>
-                    <strong>{post.data.title}</strong>
-                    <span class="recent-desc">{post.data.description}</span>
-                  </span>
-                  <span class="recent-arrow" aria-hidden="true">→</span>
-                </a>
-              </li>
-            );
-          })
+          recent.map((post, index) => (
+            <li>
+              <span class="note-number" aria-hidden="true">
+                0{index + 1}
+              </span>
+              <div>
+                <p class="note-meta">
+                  {getPostCategory(post.data).label} ·{' '}
+                  <FormattedDate date={post.data.pubDate} />
+                </p>
+                <h3>
+                  <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+                </h3>
+                <p class="note-description">{post.data.description}</p>
+              </div>
+              <span class="note-arrow" aria-hidden="true">
+                ↗
+              </span>
+            </li>
+          ))
         }
       </ol>
-    </div>
-  </section>
-
-  <section class="topic-index container-wide" aria-labelledby="topic-title">
-    <header class="topic-head">
-      <p>TOPIC INDEX</p>
-      <h2 id="topic-title">沿着主题继续探索</h2>
-    </header>
-    <ol class="topic-list">
-      {
-        CATEGORIES.map((category, index) => {
-          const count = groups.get(category)?.length ?? 0;
-          return (
-            <li>
-              <a href={category.path}>
-                <span class="topic-number">{String(index + 1).padStart(2, '0')}</span>
-                <strong>{category.label}</strong>
-                <span class="topic-desc">{category.description}</span>
-                <span class="topic-count">{count} 篇</span>
-              </a>
-            </li>
-          );
-        })
-      }
-    </ol>
-  </section>
+      {recent.length === 0 && <p>还没有笔记，过阵子再来看看。</p>}
+    </section>
+  </div>
 </BaseLayout>
 
-<style>
-  .hero {
-    display: grid;
-    grid-template-columns: minmax(0, 1.65fr) minmax(260px, 0.65fr);
-    gap: clamp(3rem, 8vw, 8rem);
-    padding-top: clamp(4rem, 8vw, 7.5rem);
-    padding-bottom: clamp(4rem, 7vw, 6.5rem);
-    border-bottom: 1px solid var(--border);
+<style is:global>
+  body[data-room-home] {
+    --room-paper: #faf9f6;
+    --room-ink: #292927;
+    --room-muted: #77766f;
+    background: var(--room-paper) !important;
+    color: var(--room-ink);
   }
-
-  .mastline {
-    display: flex;
-    justify-content: space-between;
-    max-width: 660px;
-    margin-bottom: clamp(2.5rem, 5vw, 4.75rem);
-    font-family: var(--font-mono);
-    font-size: 0.67rem;
-    letter-spacing: 0.12em;
-    color: var(--muted-foreground);
+  html[data-theme='dark'] body[data-room-home] {
+    --room-paper: #191a1c;
+    --room-ink: #e3e1d9;
+    --room-muted: #a7a69f;
   }
-
-  .hero h1 {
-    max-width: 850px;
+  body[data-room-home]::before,
+  body[data-room-home]::after {
+    display: none !important;
+    animation: none !important;
+  }
+  body[data-room-home] #dark-variant-toggle {
+    display: none;
+  }
+  .room-home {
+    width: min(1120px, calc(100% - 48px));
+    margin: auto;
+  }
+  .room-home a {
+    color: inherit;
+  }
+  .room-home a:focus-visible,
+  .room-home button:focus-visible {
+    outline: 2px solid var(--room-ink);
+    outline-offset: 5px;
+  }
+  .room-heading {
+    padding: 48px 0 0;
+    text-align: center;
+  }
+  .room-heading .welcome {
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    margin: 0 0 12px;
+    color: var(--room-muted);
+  }
+  .room-heading h1 {
+    font-size: clamp(29px, 4vw, 46px);
+    font-weight: 500;
+    letter-spacing: 0.025em;
+    margin: 0 0 12px;
+  }
+  .room-heading h1 span {
+    margin-left: -0.2em;
+  }
+  .room-heading > p:last-child {
+    color: var(--room-muted);
+    font-size: 14px;
     margin: 0;
-    font-size: clamp(2.65rem, 5.8vw, 5.9rem);
-    font-weight: 600;
-    line-height: 1.08;
-    letter-spacing: -0.055em;
-    text-wrap: balance;
   }
-
-  .hero h1 em {
-    color: var(--primary);
-    font-style: normal;
+  .recent-notes {
+    max-width: 900px;
+    margin: 56px auto 80px;
   }
-
-  .lead {
-    max-width: 660px;
-    margin: 2rem 0 0;
-    font-size: clamp(1rem, 1.4vw, 1.16rem);
-    line-height: 1.85;
-    color: var(--muted-foreground);
-  }
-
-  .actions {
+  .recent-notes > header {
     display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    margin-top: 2.25rem;
-  }
-
-  .text-link,
-  .quiet-link {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
-    font-size: 0.9rem;
-    font-weight: 600;
-  }
-
-  .text-link {
-    gap: 0.65rem;
-    color: var(--card-foreground);
-    border-bottom: 1px solid var(--primary);
-  }
-
-  .text-link span {
-    color: var(--primary);
-    transition: transform 0.18s ease;
-  }
-
-  .text-link:hover span {
-    transform: translateX(4px);
-  }
-
-  .quiet-link {
-    color: var(--muted-foreground);
-  }
-
-  .hero-index {
-    align-self: end;
-    padding: 1.4rem 0 0 1.5rem;
-    border-top: 2px solid var(--card-foreground);
-    border-left: 1px solid var(--border);
-  }
-
-  .index-label,
-  .section-head p,
-  .topic-head p {
-    margin: 0;
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.14em;
-    color: var(--primary);
-  }
-
-  .hero-index dl {
-    margin: 1.25rem 0 1.75rem;
-  }
-
-  .hero-index dl div {
-    display: flex;
-    justify-content: space-between;
     align-items: baseline;
-    gap: 1rem;
-    padding: 0.72rem 0;
-    border-bottom: 1px solid var(--border);
+    justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--room-ink);
   }
-
-  .hero-index dt {
-    color: var(--muted-foreground);
-    font-size: 0.78rem;
-  }
-
-  .hero-index dd {
-    margin: 0;
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    color: var(--card-foreground);
-  }
-
-  .index-note {
-    margin: 0;
-    color: var(--muted-foreground);
-    font-size: 0.78rem;
-    line-height: 1.7;
-  }
-
-  .journal,
-  .topic-index {
-    padding-top: clamp(3.5rem, 7vw, 6rem);
-    padding-bottom: clamp(3.5rem, 7vw, 6rem);
-  }
-
-  .section-head,
-  .topic-head {
-    display: grid;
-    grid-template-columns: minmax(160px, 0.42fr) 1fr;
-    align-items: end;
-    gap: 2rem;
-    margin-bottom: 2rem;
-  }
-
-  .section-head h2,
-  .topic-head h2 {
-    margin: 0;
-    font-size: clamp(1.75rem, 3vw, 2.8rem);
+  .recent-notes h2 {
+    font-size: 23px;
     font-weight: 500;
+    margin: 0;
   }
-
-  .journal-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1.12fr) minmax(320px, 0.88fr);
-    border-top: 1px solid var(--card-foreground);
-    border-bottom: 1px solid var(--border);
+  .recent-notes header a {
+    font-size: 13px;
   }
-
-  .feature-story {
-    position: relative;
-    min-height: 460px;
-    padding: clamp(2rem, 4vw, 4rem);
-    padding-left: 0;
-    border-right: 1px solid var(--border);
-  }
-
-  .story-number {
-    position: absolute;
-    right: 2.5rem;
-    top: 1.2rem;
-    font-family: var(--font-serif);
-    font-size: clamp(4rem, 8vw, 7rem);
-    line-height: 1;
-    color: var(--border-400);
-    opacity: 0.55;
-  }
-
-  .story-meta {
-    display: flex;
-    gap: 0.7rem;
-    margin-bottom: clamp(6rem, 12vw, 9rem);
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    color: var(--muted-foreground);
-  }
-
-  .story-meta a {
-    color: var(--primary);
-  }
-
-  .feature-story h3 {
-    max-width: 680px;
-    margin: 0 0 1rem;
-    font-size: clamp(1.75rem, 3.4vw, 3.25rem);
-    font-weight: 500;
-    line-height: 1.18;
-  }
-
-  .feature-story h3 a {
-    color: var(--card-foreground);
-  }
-
-  .feature-story h3 a:hover {
-    color: var(--primary);
-  }
-
-  .feature-story > p {
-    max-width: 610px;
-    margin: 0 0 1.7rem;
-    color: var(--muted-foreground);
-    line-height: 1.8;
-  }
-
-  .read-story {
-    font-size: 0.85rem;
-    font-weight: 600;
-  }
-
-  .recent-list,
-  .topic-list {
+  .recent-notes ol {
+    list-style: none;
     margin: 0;
     padding: 0;
-    list-style: none;
   }
-
-  .recent-list li + li {
-    border-top: 1px solid var(--border);
-  }
-
-  .recent-item {
+  .recent-notes li {
     display: grid;
-    grid-template-columns: 2.25rem minmax(0, 1fr) auto;
-    gap: 1rem;
-    min-height: 115px;
-    padding: 1.35rem 0 1.35rem 1.6rem;
-    color: var(--foreground);
-    transition: background-color 0.18s ease, padding 0.18s ease;
-  }
-
-  .recent-item:hover {
-    padding-left: 2rem;
-    background: var(--accent);
-  }
-
-  .recent-number,
-  .recent-meta,
-  .topic-number,
-  .topic-count {
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    color: var(--muted-foreground);
-  }
-
-  .recent-copy {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-  }
-
-  .recent-copy strong {
-    margin: 0.25rem 0;
-    font-family: var(--font-display);
-    font-size: 1.06rem;
-    font-weight: 600;
-    color: var(--card-foreground);
-  }
-
-  .recent-desc {
-    overflow: hidden;
-    color: var(--muted-foreground);
-    font-size: 0.76rem;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .recent-arrow {
-    align-self: center;
-    color: var(--primary);
-  }
-
-  .topic-index {
-    border-top: 1px solid var(--border);
-  }
-
-  .topic-list {
-    border-top: 1px solid var(--card-foreground);
-  }
-
-  .topic-list li {
+    grid-template-columns: 40px minmax(0, 1fr) 20px;
+    gap: 12px;
+    padding: 24px 0;
     border-bottom: 1px solid var(--border);
   }
-
-  .topic-list a {
-    display: grid;
-    grid-template-columns: 4rem minmax(110px, 0.3fr) 1fr auto;
-    align-items: center;
-    gap: 1.25rem;
-    min-height: 86px;
-    color: var(--foreground);
+  .note-number,
+  .note-meta {
+    font-size: 12px;
+    color: var(--room-muted);
+    margin: 0 0 7px;
   }
-
-  .topic-list a:hover {
-    color: var(--primary);
+  .note-number {
+    font-family: var(--font-mono);
+    padding-top: 3px;
   }
-
-  .topic-list strong {
-    font-family: var(--font-display);
-    font-size: 1.25rem;
-    color: var(--card-foreground);
+  .recent-notes h3 {
+    margin: 0;
+    font-size: 20px;
+    line-height: 1.5;
+    font-weight: 500;
+    overflow-wrap: anywhere;
   }
-
-  .topic-desc {
-    font-size: 0.82rem;
-    color: var(--muted-foreground);
+  .note-description {
+    color: var(--room-muted);
+    font-size: 13px;
+    line-height: 1.8;
+    margin: 8px 0 0;
   }
-
-  @media (max-width: 860px) {
-    .hero,
-    .journal-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .hero {
-      gap: 3rem;
-    }
-
-    .hero-index {
-      max-width: 520px;
-    }
-
-    .feature-story {
-      min-height: auto;
-      padding-right: 0;
-      border-right: 0;
-      border-bottom: 1px solid var(--card-foreground);
-    }
-
-    .recent-item {
-      padding-left: 0;
-    }
-
-    .recent-item:hover {
-      padding-left: 0.6rem;
-    }
+  .note-arrow {
+    align-self: center;
   }
-
-  @media (max-width: 640px) {
-    .hero,
-    .journal,
-    .topic-index {
-      padding-left: 1rem;
-      padding-right: 1rem;
+  @media (max-width: 600px) {
+    .room-home {
+      width: calc(100% - 32px);
     }
-
-    .hero {
-      padding-top: 3rem;
-      padding-bottom: 3rem;
+    .room-heading {
+      padding-top: 32px;
     }
-
-    .mastline {
-      margin-bottom: 2.75rem;
+    .room-heading > p:last-child {
+      font-size: 12px;
     }
-
-    .hero h1 br {
-      display: none;
+    .recent-notes {
+      margin-top: 36px;
     }
-
-    .section-head,
-    .topic-head {
-      grid-template-columns: 1fr;
-      gap: 0.65rem;
+    .recent-notes li {
+      grid-template-columns: 24px minmax(0, 1fr) 16px;
+      gap: 8px;
     }
-
-    .story-number {
-      right: 0;
-    }
-
-    .story-meta {
-      margin-bottom: 5rem;
-    }
-
-    .recent-item {
-      grid-template-columns: 1.8rem minmax(0, 1fr) auto;
-      gap: 0.65rem;
-    }
-
-    .topic-list a {
-      grid-template-columns: 2rem minmax(0, 1fr) auto;
-      gap: 0.75rem;
-      padding: 1rem 0;
-    }
-
-    .topic-desc {
-      grid-column: 2 / -1;
-      margin-top: -0.5rem;
-    }
-  }
-
-  @media (max-width: 380px) {
-    .hero h1 {
-      font-size: 2.2rem;
-      letter-spacing: -0.04em;
-    }
-
-    .actions {
-      gap: 1rem;
-    }
-
-    .recent-desc {
-      white-space: normal;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
+    .recent-notes h3 {
+      font-size: 18px;
     }
   }
 </style>
