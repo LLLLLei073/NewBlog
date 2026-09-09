@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:room": "node --test tests/room.test.ts",
+    "test": "npm run build && npm run test:room",
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
@@ -25,10 +26,12 @@
     "katex": "^0.18.1",
     "mermaid": "^11.16.0",
     "rehype-katex": "^7.0.1",
-    "remark-math": "^6.0.0"
+    "remark-math": "^6.0.0",
+    "three": "^0.185.1"
   },
   "devDependencies": {
     "@types/node": "^26.1.2",
+    "@types/three": "^0.185.4",
     "prettier": "^3.9.6",
     "prettier-plugin-astro": "^0.14.1",
     "typescript": "^7.0.2"

@@ -1,9 +1,5 @@
 ---
-/* 主题切换按钮 — 纯客户端交互
-   行为：
-   - 单击主题按钮 → 浅色 ↔ 暗色（圆形扩散动画）
-   - 暗色模式下，旁边出现"星星"小按钮 → 切换星空背景 / 极简纯色
-   - 偏好（主题 + 暗色变体）写入 localStorage */
+
 ---
 
 <div class="theme-controls">
@@ -54,7 +50,6 @@
     class="dark-variant"
     aria-label="切换暗色变体"
     title="切换暗色变体（星空 / 极简）"
-    hidden
   >
     <svg
       width="16"
@@ -98,6 +93,14 @@
     -webkit-tap-highlight-color: transparent;
   }
 
+  .dark-variant {
+    display: none;
+  }
+
+  :global(html[data-theme='dark']) .dark-variant {
+    display: inline-flex;
+  }
+
   #theme-toggle:hover,
   .dark-variant:hover {
     background: var(--muted);
@@ -139,6 +142,7 @@
 </style>
 
 <script>
+  import { setSiteTheme } from '../utils/theme';
   function initThemeToggle() {
     const btn = document.getElementById('theme-toggle');
     const variantBtn = document.getElementById('dark-variant-toggle');
@@ -146,24 +150,21 @@
 
     const root = document.documentElement;
 
-    function syncVariantVisibility() {
-      const isDark = root.getAttribute('data-theme') === 'dark';
-      variantBtn!.hidden = !isDark;
-    }
-
     function apply(theme: 'light' | 'dark', x?: number, y?: number) {
-      const set = () => {
-        root.setAttribute('data-theme', theme);
-        localStorage.setItem('theme', theme);
-        syncVariantVisibility();
-      };
+      const update = () => setSiteTheme(theme);
 
-      if (document.startViewTransition && x !== undefined && y !== undefined) {
+      if (
+        document.startViewTransition &&
+        !document.body.hasAttribute('data-room-home') &&
+        !matchMedia('(prefers-reduced-motion: reduce)').matches &&
+        x !== undefined &&
+        y !== undefined
+      ) {
         root.style.setProperty('--vt-x', `${x}px`);
         root.style.setProperty('--vt-y', `${y}px`);
-        document.startViewTransition(set);
+        document.startViewTransition(update);
       } else {
-        set();
+        update();
       }
     }
 
@@ -181,11 +182,10 @@
       const cur = root.getAttribute('data-dark-variant') || 'starfield';
       const next = cur === 'starfield' ? 'minimal' : 'starfield';
       root.setAttribute('data-dark-variant', next);
-      localStorage.setItem('dark-variant', next);
+      try {
+        localStorage.setItem('dark-variant', next);
+      } catch {}
     });
-
-    // 初始化：让服务器渲的 hidden 状态跟实际主题保持一致
-    syncVariantVisibility();
   }
 
   initThemeToggle();
