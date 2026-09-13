@@ -10,7 +10,7 @@ const chapterCopy: Record<(typeof CATEGORIES)[number]['id'], string> = {
 };
 ---
 
-<div class="home-journey" data-home-journey>
+<div class="home-journey">
   <section class="home-hero" aria-labelledby="home-title">
     <div class="hero-copy">
       <p class="hero-kicker">欢迎来坐坐</p>
@@ -29,7 +29,6 @@ const chapterCopy: Record<(typeof CATEGORIES)[number]['id'], string> = {
       CATEGORIES.map((category, index) => (
         <section
           class:list={['home-chapter', `chapter-${category.id}`]}
-          data-reveal
           data-home-chapter={category.id}
         >
           <div class="chapter-number">{String(index + 1).padStart(2, '0')}</div>
@@ -226,19 +225,6 @@ const chapterCopy: Record<(typeof CATEGORIES)[number]['id'], string> = {
     opacity: 0.75;
   }
 
-  :global(html[data-home-enhanced='true']) [data-reveal] {
-    opacity: 0;
-    transform: translateY(42px);
-    transition:
-      opacity 0.8s ease,
-      transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
-  }
-
-  :global(html[data-home-enhanced='true']) [data-reveal].is-visible {
-    opacity: 1;
-    transform: none;
-  }
-
   @keyframes draw-line {
     to {
       stroke-dashoffset: 0;
@@ -301,45 +287,5 @@ const chapterCopy: Record<(typeof CATEGORIES)[number]['id'], string> = {
       animation: none;
       stroke-dashoffset: 0;
     }
-
-    :global(html[data-home-enhanced='true']) [data-reveal] {
-      opacity: 1;
-      transform: none;
-      transition: none;
-    }
   }
 </style>
-
-<script>
-  function initHomeJourney() {
-    const root = document.querySelector('[data-home-journey]');
-    if (!root) return;
-    document.documentElement.dataset.homeEnhanced = 'true';
-    const sections = Array.from(root.querySelectorAll('[data-reveal]'));
-    if (!('IntersectionObserver' in window)) {
-      sections.forEach((section) => section.classList.add('is-visible'));
-      return;
-    }
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
-        });
-      },
-      { rootMargin: '0px 0px -12% 0px', threshold: 0.12 },
-    );
-    sections.forEach((section) => observer.observe(section));
-    window.addEventListener(
-      'pagehide',
-      () => {
-        observer.disconnect();
-        sections.forEach((section) => section.classList.add('is-visible'));
-      },
-      { once: true },
-    );
-  }
-
-  initHomeJourney();
-</script>

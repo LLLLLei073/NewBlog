@@ -37,10 +37,8 @@ const posts = (await getCollection('blog'))
                 <span class="post-cat">{getPostCategory(post.data).label}</span>
               )}
             </div>
-            <h2 data-search-text="title">{post.data.title}</h2>
-            <p class="desc" data-search-text="desc">
-              {post.data.description}
-            </p>
+            <h2>{post.data.title}</h2>
+            <p class="desc">{post.data.description}</p>
           </a>
         ))
       }
