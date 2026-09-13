@@ -1,0 +1,580 @@
+---
+import { getCollection } from 'astro:content';
+import { getPostCategory } from '../../utils/categories.ts';
+import { ROOM_LINKS } from './config.ts';
+
+const notes = (await getCollection('blog'))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .map((post) => ({
+    title: post.data.title,
+    description: post.data.description,
+    category: getPostCategory(post.data).label,
+    href: `/blog/${post.id}/`,
+    pubDate: post.data.pubDate.toISOString(),
+  }));
+---
+
+<div class="coal-anchor" data-coal-root data-index={JSON.stringify(notes)}>
+  <div class="coal-static" aria-label="小煤球，房间里的小帮手">
+    <svg viewBox="0 0 130 104" role="img" aria-hidden="true">
+      <path
+        class="coal-body"
+        d="M19 55c-2-25 17-45 43-47 28-3 51 12 55 37 4 24-9 48-34 55-27 8-61-8-64-45Z"
+      ></path>
+      <g class="coal-glasses">
+        <path
+          d="M29 43c12-9 29-8 38 1v25c-11 9-29 8-37-2Zm39 1c11-9 29-8 37 2l-1 24c-11 8-28 7-36-2Zm-1 7h3M29 49 17 45m88 5 12-4"
+        ></path>
+        <ellipse cx="49" cy="56" rx="7" ry="10"></ellipse>
+        <ellipse cx="87" cy="56" rx="7" ry="10"></ellipse>
+      </g>
+      <path class="coal-smile" d="M58 82c7 4 14 4 21-1"></path>
+    </svg>
+  </div>
+  <button
+    class="coal-toggle"
+    type="button"
+    data-coal-toggle
+    hidden
+    aria-expanded="false"
+    aria-controls="coal-panel"
+    aria-label="小煤球：找笔记和栏目"
+  >
+    <svg viewBox="0 0 130 104" aria-hidden="true">
+      <path
+        class="coal-body"
+        d="M19 55c-2-25 17-45 43-47 28-3 51 12 55 37 4 24-9 48-34 55-27 8-61-8-64-45Z"
+      ></path>
+      <g class="coal-glasses">
+        <path
+          d="M29 43c12-9 29-8 38 1v25c-11 9-29 8-37-2Zm39 1c11-9 29-8 37 2l-1 24c-11 8-28 7-36-2Zm-1 7h3M29 49 17 45m88 5 12-4"
+        ></path>
+        <ellipse class="coal-eye eye-left" cx="49" cy="56" rx="7" ry="10"
+        ></ellipse>
+        <ellipse class="coal-eye eye-right" cx="87" cy="56" rx="7" ry="10"
+        ></ellipse>
+      </g>
+      <path class="coal-smile" d="M58 82c7 4 14 4 21-1"></path>
+    </svg>
+  </button>
+</div>
+
+<section
+  class="coal-panel"
+  id="coal-panel"
+  data-coal-panel
+  hidden
+  aria-labelledby="coal-title"
+>
+  <header>
+    <div>
+      <p class="coal-label">小煤球</p>
+      <h3 id="coal-title">想找哪方面的笔记？</h3>
+    </div>
+    <button
+      type="button"
+      class="coal-close"
+      data-coal-close
+      aria-label="收起小煤球面板">×</button
+    >
+  </header>
+  <div class="coal-search">
+    <label for="coal-query">找笔记</label>
+    <input
+      id="coal-query"
+      type="search"
+      data-coal-input
+      placeholder="例如：算法 数组"
+      autocomplete="off"
+    />
+  </div>
+  <p class="coal-result-status" data-coal-status role="status">最近写的三篇</p>
+  <ol class="coal-results" data-coal-results></ol>
+  <button type="button" class="coal-more" data-coal-more hidden>展开全部</button
+  >
+  <div class="coal-actions">
+    <button type="button" data-coal-random disabled>随便读一篇</button>
+    <button type="button" data-coal-rest>让它休息</button>
+  </div>
+  <nav class="coal-nav" aria-label="小煤球栏目导航">
+    {ROOM_LINKS.map((item) => <a href={item.href}>{item.label}</a>)}
+  </nav>
+</section>
+
+<style>
+  .coal-anchor {
+    --look-x: 0px;
+    --look-y: 0px;
+    position: absolute;
+    z-index: 4;
+    top: calc(clamp(360px, 51vw, 620px) - 108px);
+    left: 50%;
+    width: 112px;
+    height: 90px;
+    transform: translateX(-50%);
+  }
+
+  .coal-static,
+  .coal-toggle {
+    width: 100%;
+    height: 100%;
+  }
+
+  .coal-static[hidden] {
+    display: none;
+  }
+
+  .coal-toggle {
+    display: block;
+    padding: 0;
+    color: var(--room-ink);
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    touch-action: pan-y pinch-zoom;
+    -webkit-tap-highlight-color: transparent;
+    animation: coal-float 4.8s ease-in-out infinite;
+  }
+
+  .coal-toggle[hidden] {
+    display: none;
+  }
+
+  .coal-toggle:focus-visible {
+    outline: 2px solid var(--room-ink);
+    outline-offset: 5px;
+    border-radius: 48%;
+  }
+
+  .coal-anchor.is-resting .coal-toggle {
+    opacity: 0.58;
+    animation: none;
+    transform: scale(0.88);
+  }
+
+  .coal-anchor.is-paused .coal-toggle,
+  .coal-anchor.is-paused .coal-eye {
+    animation-play-state: paused;
+  }
+
+  .coal-body {
+    fill: #151515;
+    stroke: var(--room-ink);
+    stroke-width: 2;
+  }
+
+  .coal-glasses,
+  .coal-smile {
+    fill: none;
+    stroke: #f5f4ed;
+    stroke-width: 3.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .coal-static ellipse {
+    fill: #f5f4ed;
+    stroke: none;
+  }
+
+  .coal-eye {
+    fill: #f5f4ed;
+    stroke: none;
+    transform: translate(var(--look-x), var(--look-y));
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: coal-blink 6.2s infinite;
+  }
+
+  .coal-panel {
+    position: relative;
+    z-index: 5;
+    max-width: 760px;
+    margin: 0 auto 1.5rem;
+    padding: clamp(1rem, 3vw, 1.6rem);
+    color: var(--foreground);
+    background: color-mix(in srgb, var(--background) 88%, transparent);
+    border: 1px solid color-mix(in srgb, var(--foreground) 28%, transparent);
+    backdrop-filter: blur(18px) saturate(120%);
+    box-shadow: 10px 10px 0
+      color-mix(in srgb, var(--foreground) 10%, transparent);
+  }
+
+  .coal-panel[hidden] {
+    display: none;
+  }
+
+  .coal-panel header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: start;
+    margin-bottom: 1rem;
+  }
+
+  .coal-label {
+    margin: 0 0 0.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    color: var(--primary);
+  }
+
+  .coal-panel h3 {
+    margin: 0;
+    font-size: clamp(1.35rem, 3vw, 2rem);
+    font-weight: 500;
+  }
+
+  .coal-close,
+  .coal-actions button,
+  .coal-more {
+    min-width: 44px;
+    min-height: 44px;
+    color: inherit;
+    background: transparent;
+    border: 1px solid var(--border);
+    cursor: pointer;
+  }
+
+  .coal-close {
+    font-size: 1.5rem;
+  }
+
+  .coal-search label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-size: 0.75rem;
+    color: var(--muted-foreground);
+  }
+
+  .coal-search input {
+    width: 100%;
+    min-height: 48px;
+    padding: 0 0.85rem;
+    color: inherit;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 0;
+  }
+
+  .coal-result-status {
+    margin: 1rem 0 0.6rem;
+    font-size: 0.75rem;
+    color: var(--muted-foreground);
+  }
+
+  .coal-results {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--border);
+  }
+
+  .coal-results a {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 1rem;
+    min-height: 48px;
+    align-items: center;
+    padding: 0.65rem 0;
+    color: inherit;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .coal-results small {
+    color: var(--muted-foreground);
+  }
+
+  .coal-more {
+    width: 100%;
+    margin-top: 0.75rem;
+  }
+
+  .coal-actions {
+    display: flex;
+    gap: 0.6rem;
+    margin-top: 1rem;
+  }
+
+  .coal-actions button {
+    flex: 1;
+    padding: 0.55rem 0.8rem;
+  }
+
+  .coal-actions button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  .coal-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem 0.9rem;
+    margin-top: 1.1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .coal-nav a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    color: var(--muted-foreground);
+    font-size: 0.82rem;
+  }
+
+  @keyframes coal-float {
+    50% {
+      transform: translateY(-4px);
+    }
+  }
+
+  @keyframes coal-blink {
+    0%,
+    45%,
+    48%,
+    100% {
+      scale: 1 1;
+    }
+    46.5% {
+      scale: 1 0.08;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .coal-anchor {
+      top: 245px;
+      width: 98px;
+      height: 80px;
+    }
+
+    .coal-panel {
+      margin-top: 0.5rem;
+    }
+
+    .coal-results a {
+      grid-template-columns: 1fr;
+      gap: 0.1rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .coal-toggle,
+    .coal-eye {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  import {
+    randomAssistantNote,
+    searchAssistantNotes,
+    type AssistantNote,
+  } from './assistant';
+
+  function initCoalAssistant() {
+    const root = document.querySelector<HTMLElement>('[data-coal-root]');
+    const panel = document.querySelector<HTMLElement>('[data-coal-panel]');
+    if (!root || !panel) return;
+    const toggle = root.querySelector<HTMLButtonElement>('[data-coal-toggle]')!;
+    const staticCoal = root.querySelector<HTMLElement>('.coal-static')!;
+    const close = panel.querySelector<HTMLButtonElement>('[data-coal-close]')!;
+    const input = panel.querySelector<HTMLInputElement>('[data-coal-input]')!;
+    const results = panel.querySelector<HTMLOListElement>(
+      '[data-coal-results]',
+    )!;
+    const status = panel.querySelector<HTMLElement>('[data-coal-status]')!;
+    const more = panel.querySelector<HTMLButtonElement>('[data-coal-more]')!;
+    const random =
+      panel.querySelector<HTMLButtonElement>('[data-coal-random]')!;
+    const rest = panel.querySelector<HTMLButtonElement>('[data-coal-rest]')!;
+    const notes = JSON.parse(root.dataset.index || '[]') as AssistantNote[];
+    const events = new AbortController();
+    const { signal } = events;
+    let expanded = false;
+    let resting = false;
+    let down: { x: number; y: number; scrollY: number; time: number } | null =
+      null;
+
+    const render = () => {
+      const found = searchAssistantNotes(notes, input.value);
+      const fallback =
+        input.value.trim() && !found.length ? notes.slice(0, 3) : found;
+      const visible = expanded ? fallback : fallback.slice(0, 6);
+      results.replaceChildren(
+        ...visible.map((note) => {
+          const item = document.createElement('li');
+          const link = document.createElement('a');
+          link.href = note.href;
+          const title = document.createElement('span');
+          title.textContent = note.title;
+          const category = document.createElement('small');
+          category.textContent = note.category;
+          link.append(title, category);
+          item.append(link);
+          return item;
+        }),
+      );
+      if (!input.value.trim()) status.textContent = '最近写的三篇';
+      else if (found.length) status.textContent = `找到 ${found.length} 篇`;
+      else status.textContent = '没找到，换个关键词试试';
+      more.hidden = found.length <= 6 || expanded;
+      random.disabled = notes.length === 0;
+    };
+
+    const setOpen = (open: boolean, restoreFocus = false) => {
+      if (resting && open) return;
+      panel.hidden = !open;
+      toggle.setAttribute('aria-expanded', String(open));
+      if (open) {
+        expanded = false;
+        render();
+        input.focus();
+      } else if (restoreFocus) toggle.focus();
+    };
+
+    staticCoal.hidden = true;
+    toggle.hidden = false;
+    render();
+
+    const activate = () => {
+      if (resting) {
+        resting = false;
+        root.classList.remove('is-resting');
+        toggle.setAttribute('aria-label', '小煤球：找笔记和栏目');
+        rest.textContent = '让它休息';
+      } else {
+        setOpen(panel.hidden);
+      }
+    };
+
+    toggle.addEventListener(
+      'pointerdown',
+      (event) => {
+        if (!event.isPrimary) return;
+        down = {
+          x: event.clientX,
+          y: event.clientY,
+          scrollY,
+          time: performance.now(),
+        };
+      },
+      { signal },
+    );
+    toggle.addEventListener(
+      'pointercancel',
+      () => {
+        down = null;
+      },
+      { signal },
+    );
+    toggle.addEventListener(
+      'pointerup',
+      (event) => {
+        if (!down || !event.isPrimary) return;
+        const tapped =
+          Math.hypot(event.clientX - down.x, event.clientY - down.y) < 9 &&
+          Math.abs(scrollY - down.scrollY) < 4 &&
+          performance.now() - down.time < 650;
+        down = null;
+        if (!tapped) return;
+        activate();
+      },
+      { signal },
+    );
+    toggle.addEventListener(
+      'click',
+      (event) => {
+        if (event.detail === 0) activate();
+      },
+      { signal },
+    );
+
+    close.addEventListener('click', () => setOpen(false, true), { signal });
+    input.addEventListener(
+      'input',
+      () => {
+        expanded = false;
+        render();
+      },
+      { signal },
+    );
+    more.addEventListener(
+      'click',
+      () => {
+        expanded = true;
+        render();
+      },
+      { signal },
+    );
+    random.addEventListener(
+      'click',
+      () => {
+        const note = randomAssistantNote(notes);
+        if (note) window.location.assign(note.href);
+      },
+      { signal },
+    );
+    rest.addEventListener(
+      'click',
+      () => {
+        resting = true;
+        root.classList.add('is-resting');
+        toggle.setAttribute('aria-label', '叫醒小煤球');
+        rest.textContent = '叫醒小煤球';
+        setOpen(false, true);
+      },
+      { signal },
+    );
+    document.addEventListener(
+      'keydown',
+      (event) => {
+        if (event.key === 'Escape' && !panel.hidden) setOpen(false, true);
+      },
+      { signal },
+    );
+
+    const stage = root
+      .closest('[data-room]')
+      ?.querySelector<HTMLElement>('[data-room-stage]');
+    stage?.addEventListener(
+      'pointermove',
+      (event) => {
+        if (resting || matchMedia('(prefers-reduced-motion: reduce)').matches)
+          return;
+        const rect = root.getBoundingClientRect();
+        const x = Math.max(
+          -3,
+          Math.min(3, (event.clientX - (rect.left + rect.width / 2)) / 45),
+        );
+        const y = Math.max(
+          -2,
+          Math.min(2, (event.clientY - (rect.top + rect.height / 2)) / 45),
+        );
+        root.style.setProperty('--look-x', `${x}px`);
+        root.style.setProperty('--look-y', `${y}px`);
+      },
+      { signal },
+    );
+    document.addEventListener(
+      'visibilitychange',
+      () => {
+        root.classList.toggle('is-paused', document.hidden);
+      },
+      { signal },
+    );
+    window.addEventListener('pagehide', () => events.abort(), {
+      signal,
+      once: true,
+    });
+    document.addEventListener('astro:before-swap', () => events.abort(), {
+      signal,
+      once: true,
+    });
+  }
+
+  initCoalAssistant();
+</script>

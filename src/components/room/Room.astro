@@ -1,6 +1,7 @@
 ---
 import { ROOM_LINKS } from './config';
 import { SITE_AUTHOR_IMAGE } from '../../consts';
+import CoalAssistant from './CoalAssistant.astro';
 ---
 
 <section
@@ -12,7 +13,7 @@ import { SITE_AUTHOR_IMAGE } from '../../consts';
   <div
     class="room-stage"
     data-room-stage
-    aria-label="黑白线框房间；也可以使用下方的栏目链接"
+    aria-label="黑白线框房间，可点击物品或使用键盘访问栏目"
   >
     <div class="room-placeholder" data-room-placeholder>
       <svg
@@ -40,18 +41,19 @@ import { SITE_AUTHOR_IMAGE } from '../../consts';
           <path d="m325 189 0-77 50-23v123Zm40-24v10"></path>
         </g>
       </svg>
-      <p>也可以从下面的栏目直接进入 ↓</p>
+      <p>房间加载后，可以点里面的物品。</p>
     </div>
     <div class="room-canvas" data-room-canvas aria-hidden="true"></div>
     <span class="room-tooltip" data-room-tooltip hidden></span>
   </div>
+  <CoalAssistant />
   <div class="room-caption">
     <p data-room-status role="status">
-      电脑看算法，课本看数学。下面也有所有入口。
+      移动鼠标或使用键盘，可以查看每件物品通向哪里。
     </p>
     <button type="button" data-room-lamp hidden>台灯 · 切换明暗</button>
   </div>
-  <nav class="room-links" aria-label="普通栏目链接">
+  <nav class="room-links" aria-label="房间的备用栏目入口">
     {
       ROOM_LINKS.map((item) => (
         <a href={item.href} data-room-link={item.id}>
@@ -75,13 +77,33 @@ import { SITE_AUTHOR_IMAGE } from '../../consts';
 <script>
   const root = document.querySelector<HTMLElement>('[data-room]');
   if (root) {
-    import('./interaction')
-      .then(({ mountRoom }) => mountRoom(root))
-      .catch(() => {
-        const status = root.querySelector('[data-room-status]');
-        if (status)
-          status.textContent = '房间暂时没加载出来，下面的栏目和文章照常可用。';
-      });
+    let started = false;
+    let observer: IntersectionObserver | undefined;
+    const start = () => {
+      if (started) return;
+      started = true;
+      observer?.disconnect();
+      import('./interaction')
+        .then(({ mountRoom }) => mountRoom(root))
+        .catch(() => {
+          root.dataset.roomReady = 'false';
+          const status = root.querySelector('[data-room-status]');
+          if (status)
+            status.textContent = '房间暂时没加载出来，可以使用备用栏目入口。';
+        });
+    };
+    if ('IntersectionObserver' in window) {
+      observer = new IntersectionObserver(
+        (entries) => entries.some((entry) => entry.isIntersecting) && start(),
+        { rootMargin: '100% 0px' },
+      );
+      observer.observe(root);
+    } else {
+      start();
+    }
+    window.addEventListener('pagehide', () => observer?.disconnect(), {
+      once: true,
+    });
   }
 </script>
 
@@ -182,6 +204,17 @@ import { SITE_AUTHOR_IMAGE } from '../../consts';
   .room-links small {
     font-size: 10px;
     opacity: 0.6;
+  }
+  .room[data-room-ready='true'] .room-links:not(:focus-within) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
   .room-credit {
     text-align: right;

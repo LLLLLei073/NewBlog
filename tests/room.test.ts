@@ -95,11 +95,11 @@ test('single tap enters, movement/scroll/cancel/multi-touch/long press do not', 
   assert.equal(isRoomTap({ ...start, moved: true }, end), false);
 });
 
-test('static HTML keeps room fallback navigation without the assistant', () => {
+test('static HTML keeps room fallback navigation at the end of the journey', () => {
   const html = readFileSync('dist/index.html', 'utf8');
   assert.equal((html.match(/data-room-link=/g) || []).length, 9);
   assert.ok(html.includes('小房间的线稿'));
-  assert.equal((html.match(/class="note-number"/g) || []).length, 3);
+  assert.ok(!html.includes('recent-notes'));
   assert.ok(html.includes('data-room-placeholder'));
   assert.ok(!html.includes('<audio'));
   assert.ok(!html.includes('<room-assistant'));

@@ -54,9 +54,10 @@ export function mountRoom(root: HTMLElement) {
   try {
     renderer = new WebGLRenderer({
       antialias: true,
-      alpha: false,
+      alpha: true,
       powerPreference: 'low-power',
     });
+    renderer.setClearColor(0x000000, 0);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     room = createRoomScene();
     host.append(renderer.domElement);

@@ -376,7 +376,7 @@ export function createRoomScene() {
   function theme(dark: boolean) {
     const paper = dark ? 0x191a1c : 0xfaf9f6,
       color = dark ? 0xe3e1d9 : 0x292927;
-    scene.background = new THREE.Color(paper);
+    scene.background = null;
     fill.color.setHex(paper);
     ink.color.setHex(color);
     bold.color.setHex(color);
