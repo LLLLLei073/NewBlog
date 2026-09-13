@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import { getCollection } from 'astro:content';
+import { getPostCategory } from '../utils/categories.ts';
 
 const posts = (await getCollection('blog'))
   .filter((p) => !p.data.draft)
@@ -48,7 +49,9 @@ const archiveGroups = Array.from(groups.entries());
                     </span>
                     <span class="archive-title">{post.data.title}</span>
                     {post.data.category && (
-                      <span class="archive-cat">{post.data.category}</span>
+                      <span class="archive-cat">
+                        {getPostCategory(post.data).label}
+                      </span>
                     )}
                   </a>
                 </li>

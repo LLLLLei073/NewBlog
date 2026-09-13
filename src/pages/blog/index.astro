@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import PostSearch from '../../components/PostSearch.astro';
 import { getCollection } from 'astro:content';
+import { getPostCategory } from '../../utils/categories.ts';
 
 const posts = (await getCollection('blog'))
   .filter((post) => !post.data.draft)
@@ -33,7 +34,7 @@ const posts = (await getCollection('blog'))
             <div class="post-meta">
               <FormattedDate date={post.data.pubDate} />
               {post.data.category && (
-                <span class="post-cat">{post.data.category}</span>
+                <span class="post-cat">{getPostCategory(post.data).label}</span>
               )}
             </div>
             <h2 data-search-text="title">{post.data.title}</h2>

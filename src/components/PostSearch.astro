@@ -18,6 +18,7 @@ const { total, placeholder = '搜索当前专栏的文章...' } = Astro.props;
 
 // 推荐阅读：从全站博客里取最多 3 篇最近发布的，作为空结果兜底
 const allPosts = (await getCollection('blog'))
+  .filter((p) => !p.data.draft)
   .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
   .slice(0, 3)
   .map((p) => ({ title: p.data.title, href: `/blog/${p.id}/` }));
