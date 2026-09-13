@@ -3,9 +3,6 @@
    Warm orange, deep-space dark mode, reading-first typography.
    ============================================================ */
 
-/* ---- KaTeX 数学公式样式（math 专栏渲染 LaTeX）---- */
-@import 'katex/dist/katex.min.css';
-
 /* ---- Fonts: 标题优先使用中文衬线，正文使用本机人文无衬线；代码字体自托管。 ---- */
 @font-face {
   font-family: 'JetBrains Mono';
@@ -243,6 +240,23 @@ body {
   flex-direction: column;
   background: var(--background);
   padding-bottom: env(safe-area-inset-bottom); /* iPhone 底部安全区 */
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 1000;
+  padding: 0.65rem 0.9rem;
+  color: var(--primary-foreground);
+  background: var(--primary);
+  border-radius: var(--radius-sm);
+  transform: translateY(-160%);
+  transition: transform 0.15s ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
 }
 
 /* ===== Starfield (dark mode only) =====
@@ -704,12 +718,12 @@ tr:last-child td {
 
 /* ===== 暗色变体：极简模式（关闭星空/星云，保留纯深色背景） =====
    默认暗色是 starfield（星空），通过 ThemeToggle 切到 minimal */
-:where(:root[data-theme='dark'][data-dark-variant='minimal']) body {
+:root[data-theme='dark'][data-dark-variant='minimal'] body {
   background: #0b0d1a;
   background-image: none;
 }
 
-:where(:root[data-theme='dark'][data-dark-variant='minimal']) body::before {
+:root[data-theme='dark'][data-dark-variant='minimal'] body::before {
   display: none;
 }
 

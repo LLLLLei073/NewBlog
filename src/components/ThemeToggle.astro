@@ -77,8 +77,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
+    width: 44px;
+    height: 44px;
     padding: 0;
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
@@ -150,6 +150,16 @@
 
     const root = document.documentElement;
 
+    const syncVariantLabel = () => {
+      const minimal = root.getAttribute('data-dark-variant') === 'minimal';
+      variantBtn.setAttribute(
+        'aria-label',
+        minimal
+          ? '当前为极简暗色，点击切换星空暗色'
+          : '当前为星空暗色，点击切换极简暗色',
+      );
+    };
+
     function apply(theme: 'light' | 'dark', x?: number, y?: number) {
       const update = () => setSiteTheme(theme);
 
@@ -182,10 +192,12 @@
       const cur = root.getAttribute('data-dark-variant') || 'starfield';
       const next = cur === 'starfield' ? 'minimal' : 'starfield';
       root.setAttribute('data-dark-variant', next);
+      syncVariantLabel();
       try {
         localStorage.setItem('dark-variant', next);
       } catch {}
     });
+    syncVariantLabel();
   }
 
   initThemeToggle();

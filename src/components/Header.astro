@@ -3,6 +3,12 @@ import { SITE_TITLE } from '../consts.ts';
 import ThemeToggle from './ThemeToggle.astro';
 import { CATEGORIES } from '../utils/categories.ts';
 
+interface Props {
+  immersiveHome?: boolean;
+}
+
+const { immersiveHome = false } = Astro.props;
+
 const pathname = Astro.url.pathname;
 const isActive = (href: string) => {
   if (href === '/') return pathname === '/';
@@ -19,65 +25,82 @@ const navItems = [
 ];
 ---
 
-<header>
+<header class:list={{ immersive: immersiveHome }}>
   <nav class="header-inner container-wide" aria-label="主导航">
     <div class="left">
       <a href="/" class="brand">{SITE_TITLE}</a>
-      <div class="nav-links">
-        {
-          navItems.map((item) => (
-            <a
-              href={item.href}
-              class:list={[isActive(item.href) ? 'active' : '']}
-            >
-              {item.label}
-            </a>
-          ))
-        }
-      </div>
-    </div>
-    <div class="right">
-      <a href="/rss.xml" class="rss-link" title="RSS">RSS</a>
-      <ThemeToggle />
-      <button
-        id="menu-toggle"
-        type="button"
-        class="menu-toggle"
-        aria-label="打开菜单"
-        aria-expanded="false"
-        aria-controls="mobile-menu"
-      >
-        <span class="menu-bar"></span>
-        <span class="menu-bar"></span>
-        <span class="menu-bar"></span>
-      </button>
-    </div>
-  </nav>
-
-  <!-- 移动端抽屉菜单 -->
-  <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
-    <div class="mobile-menu-inner container-wide">
-      <ul class="mobile-nav">
-        {
-          navItems.map((item) => (
-            <li>
+      {
+        !immersiveHome && (
+          <div class="nav-links">
+            {navItems.map((item) => (
               <a
                 href={item.href}
-                class:list={[
-                  'mobile-link',
-                  isActive(item.href) ? 'active' : '',
-                ]}
+                class:list={[isActive(item.href) ? 'active' : '']}
               >
                 {item.label}
               </a>
-            </li>
-          ))
-        }
-      </ul>
-      <a href="/rss.xml" class="mobile-rss">RSS 订阅</a>
+            ))}
+          </div>
+        )
+      }
     </div>
-  </div>
-  <div id="menu-overlay" class="menu-overlay" hidden></div>
+    <div class="right">
+      {
+        !immersiveHome && (
+          <a href="/rss.xml" class="rss-link" title="RSS">
+            RSS
+          </a>
+        )
+      }
+      <ThemeToggle />
+      {
+        !immersiveHome && (
+          <button
+            id="menu-toggle"
+            type="button"
+            class="menu-toggle"
+            aria-label="打开菜单"
+            aria-expanded="false"
+            aria-controls="mobile-menu"
+          >
+            <span class="menu-bar" />
+            <span class="menu-bar" />
+            <span class="menu-bar" />
+          </button>
+        )
+      }
+    </div>
+  </nav>
+
+  {
+    !immersiveHome && (
+      <>
+        <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
+          <div class="mobile-menu-inner container-wide">
+            <ul class="mobile-nav">
+              {navItems.map((item) => (
+                <li>
+                  <a
+                    href={item.href}
+                    class:list={[
+                      'mobile-link',
+                      isActive(item.href) ? 'active' : '',
+                    ]}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <a href="/rss.xml" class="mobile-rss">
+              RSS 订阅
+            </a>
+          </div>
+        </div>
+        <div id="menu-overlay" class="menu-overlay" hidden />
+      </>
+    )
+  }
 </header>
 
 <style>
@@ -189,8 +212,8 @@ const navItems = [
     justify-content: center;
     align-items: center;
     gap: 4px;
-    width: 36px;
-    height: 36px;
+    width: 44px;
+    height: 44px;
     padding: 0;
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
@@ -380,6 +403,13 @@ const navItems = [
       menu.classList.toggle('open', open);
       menu.setAttribute('aria-hidden', String(!open));
       document.body.style.overflow = open ? 'hidden' : '';
+      document.querySelector('main')?.toggleAttribute('inert', open);
+      document.querySelector('footer')?.toggleAttribute('inert', open);
+      if (open) {
+        requestAnimationFrame(() =>
+          menu.querySelector<HTMLAnchorElement>('a')?.focus(),
+        );
+      }
       if (!open && restoreFocus) {
         btn.focus();
       }
@@ -395,10 +425,27 @@ const navItems = [
       if (target.closest('a')) setOpen(false);
     });
 
-    // ESC 关闭
+    // ESC 关闭，并把 Tab 保持在打开的菜单中。
     document.addEventListener('keydown', (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true')
+      if (btn.getAttribute('aria-expanded') !== 'true') return;
+      if (e.key === 'Escape') {
         setOpen(false, true);
+        return;
+      }
+      if (e.key !== 'Tab') return;
+      const focusable = Array.from(
+        menu.querySelectorAll<HTMLAnchorElement>('a[href]'),
+      );
+      if (!focusable.length) return;
+      const first = focusable[0]!;
+      const last = focusable[focusable.length - 1]!;
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     });
 
     // 视口从移动端变宽时复位
