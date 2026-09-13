@@ -2,6 +2,7 @@
 title: '音乐专栏 · 与声音有关的碎碎念'
 description: '音乐专栏即将上线：乐理、编曲、乐器、赏析，用耳朵感受音乐。'
 pubDate: '2026-08-01'
+noindex: true
 category: 'music'
 ---
 

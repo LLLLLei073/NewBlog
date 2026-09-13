@@ -14,6 +14,8 @@ const blog = defineCollection({
     /** 文章系列名：同名的文章会在底部显示「本系列」导航。 */
     series: z.string().optional(),
     draft: z.boolean().default(false),
+    /** 页面保留公开访问，但暂不建议搜索引擎收录。 */
+    noindex: z.boolean().default(false),
   }),
 });
 

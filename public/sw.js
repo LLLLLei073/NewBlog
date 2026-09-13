@@ -1,62 +1,17 @@
-/* Service Worker：离线缓存 + 静态资源缓存 */
-const CACHE = 'lllllei-v2';
-const CORE = [
-  '/',
-  '/manifest.webmanifest',
-  '/icon-192.png',
-  '/icon-512.png',
-  '/favicon.svg',
-];
-
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE).then((cache) => cache.addAll(CORE)).then(() => self.skipWaiting())
-  );
-});
+/* 过渡用退役 Worker：旧页面再次请求 /sw.js 时也会主动清理。 */
+self.addEventListener('install', () => self.skipWaiting());
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys()
-      .then((keys) => Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k))))
-      .then(() => self.clients.claim())
-  );
-});
-
-/* 页面导航网络优先，确保部署后立即看到新内容；静态资源使用
-   stale-while-revalidate。跨域请求（如 giscus）不拦截。 */
-self.addEventListener('fetch', (event) => {
-  const req = event.request;
-  if (req.method !== 'GET') return;
-  const url = new URL(req.url);
-  if (url.origin !== location.origin) return;
-
-  if (req.mode === 'navigate') {
-    event.respondWith(
-      fetch(req)
-        .then((res) => {
-          if (res.ok) {
-            const copy = res.clone();
-            caches.open(CACHE).then((cache) => cache.put(req, copy));
-          }
-          return res;
-        })
-        .catch(() => caches.match(req).then((cached) => cached || caches.match('/')))
-    );
-    return;
-  }
-
-  event.respondWith(
-    caches.match(req).then((cached) => {
-      const network = fetch(req)
-        .then((res) => {
-          if (res.ok) {
-            const copy = res.clone();
-            caches.open(CACHE).then((cache) => cache.put(req, copy));
-          }
-          return res;
-        })
-        .catch(() => cached);
-      return cached || network;
-    })
+    caches
+      .keys()
+      .then((keys) =>
+        Promise.all(
+          keys
+            .filter((key) => key.startsWith('lllllei-'))
+            .map((key) => caches.delete(key)),
+        ),
+      )
+      .then(() => self.registration.unregister()),
   );
 });

@@ -23,7 +23,7 @@
     loadMermaid().then((mermaid: any) => {
       mermaid.initialize({
         startOnLoad: false,
-        securityLevel: 'loose',
+        securityLevel: 'strict',
         theme:
           document.documentElement.getAttribute('data-theme') === 'dark'
             ? 'dark'
@@ -44,7 +44,14 @@
             wrap.innerHTML = svg;
           })
           .catch(() => {
-            wrap.innerHTML = `<div class="mermaid-error">图表渲染失败：请检查语法</div>`;
+            const error = document.createElement('div');
+            error.className = 'mermaid-error';
+            error.textContent = '图表渲染失败，下面保留原始内容。';
+            const fallback = document.createElement('pre');
+            const fallbackCode = document.createElement('code');
+            fallbackCode.textContent = source;
+            fallback.append(fallbackCode);
+            wrap.replaceChildren(error, fallback);
           });
       });
     });

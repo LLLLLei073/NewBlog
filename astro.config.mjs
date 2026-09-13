@@ -5,11 +5,25 @@ import { unified } from '@astrojs/markdown-remark';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 
+const temporarilyNoindex = [
+  '/blog/first-post/',
+  '/blog/second-post/',
+  '/blog/algorithm-column-intro/',
+  '/blog/math-column-intro/',
+  '/blog/music-column-intro/',
+  '/blog/game-column-intro/',
+];
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://blog-lllllei.favorys.top',
   base: '/',
-  integrations: [mdx(), sitemap()],
+  integrations: [
+    mdx(),
+    sitemap({
+      filter: (page) => !temporarilyNoindex.some((path) => page.endsWith(path)),
+    }),
+  ],
   markdown: {
     processor: unified({
       remarkPlugins: [remarkMath],

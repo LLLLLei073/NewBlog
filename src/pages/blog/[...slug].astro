@@ -2,6 +2,7 @@
 import { type CollectionEntry, getCollection, render } from 'astro:content';
 import BlogPost from '../../layouts/BlogPost.astro';
 import { SITE_AUTHOR, SITE_AUTHOR_IMAGE, SITE_URL } from '../../consts.ts';
+import { getPostCategory } from '../../utils/categories.ts';
 
 type Nav = { slug: string; title: string };
 type Related = {
@@ -47,7 +48,7 @@ export async function getStaticPaths() {
           title: p.data.title,
           description: p.data.description,
           pubDate: p.data.pubDate,
-          category: p.data.category ?? null,
+          category: getPostCategory(p.data).label,
         }) as Related,
     );
 
@@ -81,8 +82,9 @@ interface Props {
 const { post, newer, older, related, seriesPosts, seriesName } = Astro.props;
 const { Content, headings } = await render(post);
 const rawBody = typeof post.body === 'string' ? post.body : '';
-const { title, description, pubDate, updatedDate, heroImage, category } =
+const { title, description, pubDate, updatedDate, heroImage, noindex } =
   post.data;
+const categoryLabel = getPostCategory(post.data).label;
 
 // Article 结构化数据（SEO）
 const jsonLd = {
@@ -99,7 +101,7 @@ const jsonLd = {
     image: new URL(SITE_AUTHOR_IMAGE, SITE_URL).toString(),
   },
   publisher: { '@type': 'Person', name: SITE_AUTHOR, url: SITE_URL },
-  ...(category ? { articleSection: category } : {}),
+  articleSection: categoryLabel,
   mainEntityOfPage: `${SITE_URL}/blog/${post.id}/`,
   ...(heroImage ? { image: new URL(heroImage, SITE_URL).toString() } : {}),
 };
@@ -114,11 +116,9 @@ const jsonLd = {
   rawBody={rawBody}
   seriesPosts={seriesPosts}
   seriesName={seriesName}
+  category={categoryLabel}
+  noindex={noindex}
+  structuredData={jsonLd}
 >
-  <script
-    is:inline
-    type="application/ld+json"
-    set:html={JSON.stringify(jsonLd)}
-  />
   <Content />
 </BlogPost>

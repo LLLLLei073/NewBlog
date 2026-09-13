@@ -2,6 +2,7 @@
 title: '算法专栏 · 欢迎来到算法世界'
 description: '算法专栏即将上线：数据结构、刷题技巧、竞赛思路，从这里开始。'
 pubDate: '2026-08-01'
+noindex: true
 category: 'algorithm'
 ---
 

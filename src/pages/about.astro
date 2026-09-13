@@ -1,12 +1,30 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { CATEGORIES } from '../utils/categories.ts';
+import { SITE_AUTHOR_IMAGE, SITE_URL } from '../consts.ts';
+
+const profileJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  mainEntity: {
+    '@type': 'Person',
+    name: '徐磊',
+    alternateName: 'LLLLei',
+    url: `${SITE_URL}/about/`,
+    image: new URL(SITE_AUTHOR_IMAGE, SITE_URL).toString(),
+    sameAs: ['https://github.com/LLLLLei073'],
+  },
+};
 ---
 
 <BaseLayout
   title="关于"
   description="徐磊（LLLLei）的个人博客，记录大学学习、编程、项目和兴趣。"
   image="/avatar-xulei.jpg"
+  imageWidth={1080}
+  imageHeight={1080}
+  imageAlt="徐磊的手绘头像"
+  structuredData={profileJsonLd}
 >
   <section class="about container-wide">
     <header class="about-hero">

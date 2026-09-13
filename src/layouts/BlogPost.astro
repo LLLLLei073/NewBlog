@@ -5,6 +5,9 @@ import TableOfContents from '../components/TableOfContents.astro';
 import Comments from '../components/Comments.astro';
 import { getCollection } from 'astro:content';
 import { readingTime, wordCount } from '../utils/reading';
+import { getPostCategory } from '../utils/categories.ts';
+import { SITE_AUTHOR } from '../consts.ts';
+import 'katex/dist/katex.min.css';
 
 type Heading = { depth: number; slug: string; text: string };
 type Nav = { slug: string; title: string } | null;
@@ -30,6 +33,9 @@ interface Props {
   rawBody?: string;
   seriesPosts?: SeriesPost[];
   seriesName?: string | null;
+  category: string;
+  noindex?: boolean;
+  structuredData?: Record<string, unknown>;
 }
 
 const {
@@ -45,6 +51,9 @@ const {
   rawBody = '',
   seriesPosts = [],
   seriesName = null,
+  category,
+  noindex = false,
+  structuredData,
 } = Astro.props;
 
 const toc = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
@@ -55,7 +64,9 @@ const words = wordCount(rawBody);
 // 构建文章列表用于左侧导航
 const allPosts = (await getCollection('blog'))
   .filter((p) => !p.data.draft)
+  .filter((p) => getPostCategory(p.data).label === category)
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const sidebarPosts = allPosts.slice(0, 8);
 
 const currentPath = Astro.url.pathname;
 ---
@@ -67,6 +78,8 @@ const currentPath = Astro.url.pathname;
   type="article"
   publishedTime={pubDate}
   modifiedTime={updatedDate}
+  noindex={noindex}
+  structuredData={structuredData}
 >
   <div class="reading-progress" aria-hidden="true">
     <div class="reading-progress-bar" id="reading-progress-bar"></div>
@@ -76,10 +89,10 @@ const currentPath = Astro.url.pathname;
     <!-- 左侧边栏:文章导航 -->
     <aside class="sidebar-left">
       <nav class="article-nav" aria-label="文章导航">
-        <p class="sidebar-title">文章列表</p>
+        <p class="sidebar-title">{category}专栏</p>
         <ul>
           {
-            allPosts.map((post) => {
+            sidebarPosts.map((post) => {
               const isActive = currentPath === `/blog/${post.id}/`;
               return (
                 <li class:list={['nav-item', { active: isActive }]}>
@@ -104,6 +117,8 @@ const currentPath = Astro.url.pathname;
       <header class="article-head">
         <h1>{title}</h1>
         <div class="meta">
+          <span class="meta-item">{SITE_AUTHOR}</span>
+          <span class="meta-sep">·</span>
           <span class="meta-item"><FormattedDate date={pubDate} /></span>
           <span class="meta-sep">·</span>
           <span class="meta-item">{readMinutes} 分钟阅读</span>
@@ -1039,6 +1054,7 @@ const currentPath = Astro.url.pathname;
   @media (max-width: 640px) {
     .post-layout {
       padding: 1.25rem 1rem 1rem;
+      padding-right: 3.75rem;
       gap: 1.5rem;
     }
 
@@ -1125,6 +1141,15 @@ const currentPath = Astro.url.pathname;
     panel.addEventListener('click', (e: Event) => {
       const target = e.target as HTMLElement;
       if (target.closest('a')) setOpen(false);
+    });
+
+    document.addEventListener('pointerdown', (e: PointerEvent) => {
+      if (
+        fab.getAttribute('aria-expanded') === 'true' &&
+        !panel.contains(e.target as Node) &&
+        !fab.contains(e.target as Node)
+      )
+        setOpen(false);
     });
 
     // Tab 切换：目录 / 文章
