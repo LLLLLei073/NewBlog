@@ -7,14 +7,15 @@
     "test:room": "node --test tests/room.test.ts",
     "test:assistant": "node --test tests/assistant.test.ts",
     "test:site": "node --test tests/site.test.ts",
-    "test": "npm run build && npm run test:site && npm run test:room && npm run test:assistant",
+    "test": "npm run build && npm run test:site && npm run test:room && npm run test:assistant && npm run test:illustration",
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "astro": "astro"
+    "astro": "astro",
+    "test:illustration": "node --test tests/illustration.test.ts"
   },
   "keywords": [],
   "author": "",

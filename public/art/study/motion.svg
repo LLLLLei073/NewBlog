@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1536" height="1024" viewBox="0 0 1536 1024">
+  <!-- Data texture: red = hair tips, green = breathing sweater. Fixed face/hand stay black. -->
+  <defs><filter id="soft"><feGaussianBlur stdDeviation="9"/></filter></defs>
+  <path fill="#000" d="M0 0h1536v1024H0z"/>
+  <g filter="url(#soft)">
+    <path fill="#00b000" d="M929 479Q976 459 1000 528L1016 643 1080 694 1010 713 806 755 850 645Z"/>
+    <path fill="#dd0000" d="M1023 405Q972 477 924 578L902 604 873 614Q867 570 919 511L975 420ZM1037 484Q1050 586 1036 661L1061 644 1084 610 1094 513ZM1242 402Q1241 426 1222 445L1239 464 1260 438Z"/>
+  </g>
+</svg>

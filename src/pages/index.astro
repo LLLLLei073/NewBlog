@@ -1,77 +1,16 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import HomeJourney from '../components/home/HomeJourney.astro';
-import Room from '../components/room/Room.astro';
+import IllustratedHome from '../components/home/IllustratedHome.astro';
 ---
 
 <BaseLayout
-  immersiveHome
+  illustratedHome
   title="徐磊的小主页"
   description="我是徐磊，一名大学生。这里记录学习、写代码，还有数学、音乐和游戏。"
+  image="/art/study/base.webp"
+  imageWidth={1536}
+  imageHeight={1024}
+  imageAlt="窗边的书桌、书本与一位安静的动漫女生"
 >
-  <HomeJourney />
-  <section class="room-ending" aria-labelledby="room-ending-title">
-    <header class="room-ending-head">
-      <p>最后一站</p>
-      <h2 id="room-ending-title">来我的小房间坐坐。</h2>
-      <p>点点房间里的东西，就能去对应的栏目。</p>
-    </header>
-    <Room />
-  </section>
+  <IllustratedHome />
 </BaseLayout>
-
-<style is:global>
-  body[data-room-home] {
-    --room-paper: #faf9f6;
-    --room-ink: #292927;
-    --room-muted: #77766f;
-  }
-
-  html[data-theme='dark'] body[data-room-home] {
-    --room-paper: #191a1c;
-    --room-ink: #e3e1d9;
-    --room-muted: #a7a69f;
-  }
-
-  .room-ending {
-    width: min(1120px, calc(100% - 3rem));
-    margin: 0 auto;
-    padding: clamp(6rem, 12vw, 10rem) 0 2rem;
-  }
-
-  .room-ending-head {
-    max-width: 760px;
-    margin-bottom: clamp(2rem, 5vw, 4rem);
-  }
-
-  .room-ending-head > p:first-child {
-    margin: 0 0 1rem;
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.16em;
-    color: var(--primary);
-  }
-
-  .room-ending-head h2 {
-    margin: 0;
-    font-size: clamp(2.8rem, 7vw, 6.5rem);
-    font-weight: 500;
-    line-height: 1;
-    letter-spacing: -0.055em;
-  }
-
-  .room-ending-head > p:last-child {
-    margin: 1.5rem 0 0;
-    color: var(--muted-foreground);
-  }
-
-  body[data-room-home] .room-credit {
-    margin-bottom: 0;
-  }
-
-  @media (max-width: 760px) {
-    .room-ending {
-      width: calc(100% - 2rem);
-    }
-  }
-</style>

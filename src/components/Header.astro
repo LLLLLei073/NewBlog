@@ -19,6 +19,7 @@ const navItems = [
   { href: '/', label: '首页' },
   ...CATEGORIES.map((c) => ({ href: c.path, label: c.label })),
   { href: '/blog', label: '文章' },
+  { href: '/room/', label: '小房间' },
   { href: '/archives', label: '归档' },
   { href: '/about', label: '关于' },
   { href: '/friends', label: '友链' },
@@ -52,7 +53,7 @@ const navItems = [
           </a>
         )
       }
-      <ThemeToggle />
+      {!immersiveHome && <ThemeToggle />}
       {
         !immersiveHome && (
           <button

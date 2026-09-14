@@ -1,4 +1,4 @@
-/** Shared by the room's raycast targets and its ordinary HTML navigation. */
+/** Shared by the illustrated room and its ordinary HTML navigation. */
 export const ROOM_LINKS = [
   {
     id: 'computer',
@@ -19,10 +19,4 @@ export const ROOM_LINKS = [
   { id: 'portrait', object: '头像相框', label: '关于我', href: '/about/' },
   { id: 'calendar', object: '挂历', label: '归档', href: '/archives/' },
   { id: 'door', object: '房门', label: '友情链接', href: '/friends/' },
-] as const;
-
-export type RoomId = (typeof ROOM_LINKS)[number]['id'] | 'lamp';
-export const ROOM_ITEMS = [
-  ...ROOM_LINKS,
-  { id: 'lamp', object: '台灯', label: '切换明暗', href: null },
 ] as const;

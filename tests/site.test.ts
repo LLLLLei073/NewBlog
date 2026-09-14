@@ -16,7 +16,7 @@ const htmlFiles = () => walk(dist).filter((path) => path.endsWith('.html'));
 
 test('all public pages have basic search metadata', () => {
   const files = htmlFiles();
-  assert.equal(files.length, 18);
+  assert.equal(files.length, 19);
   for (const file of files) {
     const html = readFileSync(file, 'utf8');
     assert.equal(
@@ -49,25 +49,27 @@ test('built internal links resolve to a file or route', () => {
   assert.deepEqual([...missing], []);
 });
 
-test('homepage is a five chapter journey ending in the room', () => {
+test('illustrated homepage links to the separate room and keeps static navigation', () => {
   const html = readFileSync(join(dist, 'index.html'), 'utf8');
   assert.equal((html.match(/<h1/g) ?? []).length, 1);
-  assert.equal((html.match(/data-home-chapter=/g) ?? []).length, 5);
-  assert.ok(html.includes('你好，'));
-  assert.ok(html.includes('我是徐磊。'));
-  assert.ok(html.includes('来我的小房间坐坐'));
-  assert.ok(!html.includes('recent-notes'));
-  assert.ok(
-    html.indexOf('data-home-chapter') < html.indexOf('data-room-stage'),
-  );
-  assert.ok(!html.includes('class="nav-links"'));
-  assert.ok(!html.includes('id="mobile-menu"'));
-  assert.ok(!html.includes('class="rss-link"'));
-  assert.ok(!html.includes('<footer'));
-
+  assert.ok(html.includes('徐磊'));
+  assert.ok(html.includes('data-illustration'));
+  assert.ok(html.includes('/art/study/base.webp'));
+  assert.ok(html.includes('href="/room/"'));
+  assert.ok(!html.includes('data-room-stage'));
+  assert.ok(!html.includes('data-coal-root'));
+  assert.ok(!html.includes('data-home-chapter'));
+  assert.ok(!html.includes('id="theme-toggle"'));
+  for (const category of ['algorithm', 'math', 'music', 'game', 'others']) {
+    assert.ok(html.includes('href="/categories/' + category + '/"'));
+  }
+  const room = readFileSync(join(dist, 'room', 'index.html'), 'utf8');
+  assert.ok(room.includes('data-room-stage'));
+  assert.ok(room.includes('data-coal-root'));
+  assert.ok(room.includes('href="/"'));
   const about = readFileSync(join(dist, 'about', 'index.html'), 'utf8');
   assert.ok(about.includes('class="nav-links"'));
-  assert.ok(about.includes('id="mobile-menu"'));
+  assert.ok(about.includes('href="/room/"'));
   assert.ok(about.includes('<footer'));
 });
 

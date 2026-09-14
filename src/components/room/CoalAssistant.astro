@@ -108,11 +108,11 @@ const notes = (await getCollection('blog'))
     --look-y: 0px;
     position: absolute;
     z-index: 4;
-    top: calc(clamp(360px, 51vw, 620px) - 108px);
-    left: 50%;
-    width: 112px;
-    height: 90px;
-    transform: translateX(-50%);
+    top: 0;
+    left: 0;
+    width: 44px;
+    height: 44px;
+    transform: translate(-50%, -100%);
   }
 
   .coal-static,
@@ -134,11 +134,17 @@ const notes = (await getCollection('blog'))
     cursor: pointer;
     touch-action: pan-y pinch-zoom;
     -webkit-tap-highlight-color: transparent;
-    animation: coal-float 4.8s ease-in-out infinite;
+    display: grid;
+    place-items: center;
   }
 
   .coal-toggle[hidden] {
     display: none;
+  }
+  .coal-toggle svg,
+  .coal-static svg {
+    width: 40px;
+    height: 34px;
   }
 
   .coal-toggle:focus-visible {
@@ -222,6 +228,7 @@ const notes = (await getCollection('blog'))
   }
 
   .coal-panel h3 {
+    color: inherit;
     margin: 0;
     font-size: clamp(1.35rem, 3vw, 2rem);
     font-weight: 500;
@@ -344,10 +351,10 @@ const notes = (await getCollection('blog'))
   }
 
   @media (max-width: 400px) {
-    .coal-anchor {
-      top: 245px;
-      width: 98px;
-      height: 80px;
+    .coal-toggle svg,
+    .coal-static svg {
+      width: 32px;
+      height: 28px;
     }
 
     .coal-panel {
@@ -391,6 +398,8 @@ const notes = (await getCollection('blog'))
     const random =
       panel.querySelector<HTMLButtonElement>('[data-coal-random]')!;
     const rest = panel.querySelector<HTMLButtonElement>('[data-coal-rest]')!;
+    const fixed = document.querySelector<HTMLButtonElement>('[data-coal-open]');
+    let returnFocus: HTMLElement = toggle;
     const notes = JSON.parse(root.dataset.index || '[]') as AssistantNote[];
     const events = new AbortController();
     const { signal } = events;
@@ -429,11 +438,13 @@ const notes = (await getCollection('blog'))
       if (resting && open) return;
       panel.hidden = !open;
       toggle.setAttribute('aria-expanded', String(open));
+      fixed?.setAttribute('aria-expanded', String(open));
+      root.dataset.open = String(open);
       if (open) {
         expanded = false;
         render();
         input.focus();
-      } else if (restoreFocus) toggle.focus();
+      } else if (restoreFocus) returnFocus.focus();
     };
 
     staticCoal.hidden = true;
@@ -441,6 +452,7 @@ const notes = (await getCollection('blog'))
     render();
 
     const activate = () => {
+      returnFocus = toggle;
       if (resting) {
         resting = false;
         root.classList.remove('is-resting');
@@ -450,6 +462,18 @@ const notes = (await getCollection('blog'))
         setOpen(panel.hidden);
       }
     };
+    fixed?.addEventListener(
+      'click',
+      () => {
+        returnFocus = fixed;
+        resting = false;
+        root.classList.remove('is-resting');
+        toggle.setAttribute('aria-label', '小煤球：找笔记和栏目');
+        rest.textContent = '让它休息';
+        setOpen(panel.hidden);
+      },
+      { signal },
+    );
 
     toggle.addEventListener(
       'pointerdown',
@@ -537,39 +561,15 @@ const notes = (await getCollection('blog'))
       { signal },
     );
 
-    const stage = root
-      .closest('[data-room]')
-      ?.querySelector<HTMLElement>('[data-room-stage]');
-    stage?.addEventListener(
-      'pointermove',
+    window.addEventListener(
+      'pagehide',
       (event) => {
-        if (resting || matchMedia('(prefers-reduced-motion: reduce)').matches)
-          return;
-        const rect = root.getBoundingClientRect();
-        const x = Math.max(
-          -3,
-          Math.min(3, (event.clientX - (rect.left + rect.width / 2)) / 45),
-        );
-        const y = Math.max(
-          -2,
-          Math.min(2, (event.clientY - (rect.top + rect.height / 2)) / 45),
-        );
-        root.style.setProperty('--look-x', `${x}px`);
-        root.style.setProperty('--look-y', `${y}px`);
+        if (!event.persisted) events.abort();
       },
-      { signal },
-    );
-    document.addEventListener(
-      'visibilitychange',
-      () => {
-        root.classList.toggle('is-paused', document.hidden);
+      {
+        signal,
       },
-      { signal },
     );
-    window.addEventListener('pagehide', () => events.abort(), {
-      signal,
-      once: true,
-    });
     document.addEventListener('astro:before-swap', () => events.abort(), {
       signal,
       once: true,

@@ -1,0 +1,435 @@
+---
+import { CATEGORIES } from '../../utils/categories';
+---
+
+<section
+  class="illustrated-home"
+  data-illustration
+  aria-labelledby="home-title"
+>
+  <div class="study-art" aria-hidden="true">
+    <img
+      src="/art/study/base.webp"
+      width="1536"
+      height="1024"
+      alt=""
+      fetchpriority="high"
+      decoding="async"
+    />
+    <canvas data-study-canvas hidden></canvas>
+  </div>
+  <div class="study-shade" aria-hidden="true"></div>
+  <div class="home-top">
+    <a class="home-wordmark" href="/" aria-label="LLLLei 首页"
+      >LLLLei<span aria-hidden="true">.</span></a
+    >
+    <div class="home-clock" data-home-clock hidden>
+      <time data-clock-time></time><span data-clock-date></span>
+    </div>
+  </div>
+  <div class="home-intro">
+    <p class="home-greeting">你好，欢迎来坐坐。</p>
+    <h1 id="home-title">徐磊<span aria-hidden="true">。</span></h1>
+    <p class="home-description">
+      一名大学生，在这里记录学习、写代码，<br
+        class="desktop-break"
+      />还有数学、音乐和游戏。
+    </p>
+    <nav class="home-nav" aria-label="博客导航">
+      <a class="read-link" href="/blog/"
+        >文章 <span aria-hidden="true">↗</span></a
+      >
+      <details class="home-categories" data-home-categories>
+        <summary aria-controls="home-category-links"
+          >栏目 <span aria-hidden="true">+</span></summary
+        >
+        <div class="category-links" id="home-category-links">
+          {
+            CATEGORIES.map((category) => (
+              <a href={category.path}>
+                {category.label}
+                <span>{category.description}</span>
+              </a>
+            ))
+          }
+        </div>
+      </details>
+      <a href="/room/">小房间</a><a href="/about/">关于</a>
+    </nav>
+  </div>
+  <div class="home-bottom">
+    <p class="scene-caption">
+      <span class="light-dot" aria-hidden="true"></span><span data-light-label
+        >窗边，片刻安静</span
+      >
+    </p>
+    <button
+      class="motion-toggle"
+      type="button"
+      data-motion-toggle
+      aria-pressed="false"
+      hidden
+    >
+      <span data-motion-icon aria-hidden="true">Ⅱ</span><span data-motion-label
+        >暂停动效</span
+      >
+    </button>
+  </div>
+  <p class="scene-status" data-scene-status role="status"></p>
+</section>
+
+<style is:global>
+  body[data-illustrated-home] {
+    background: #242d2c !important;
+    color: #faf7eb;
+  }
+  body[data-illustrated-home]::before,
+  body[data-illustrated-home]::after {
+    display: none !important;
+  }
+  body[data-illustrated-home] main {
+    min-height: 100svh;
+    padding: 0;
+    margin: 0;
+  }
+</style>
+
+<style>
+  .illustrated-home {
+    --home-white: #faf7eb;
+    --home-muted: #dfdfd1;
+    position: relative;
+    isolation: isolate;
+    min-height: max(680px, 100svh);
+    display: flex;
+    flex-direction: column;
+    padding: clamp(1.5rem, 3vw, 3rem) clamp(1.5rem, 5.5vw, 6rem);
+    color: var(--home-white);
+    overflow: clip;
+  }
+  .study-art,
+  .study-shade {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+  }
+  .study-art img,
+  .study-art canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 60% 50%;
+  }
+  .study-art canvas[hidden] {
+    display: none;
+  }
+  .study-shade {
+    z-index: -1;
+    background:
+      linear-gradient(
+        90deg,
+        rgba(16, 29, 29, 0.76),
+        rgba(19, 30, 29, 0.57) 30%,
+        rgba(22, 31, 29, 0.12) 58%,
+        transparent 82%
+      ),
+      linear-gradient(
+        0deg,
+        rgba(14, 23, 24, 0.66),
+        transparent 22%,
+        transparent 82%,
+        rgba(20, 28, 29, 0.23)
+      );
+  }
+  .home-top,
+  .home-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+  .home-top {
+    align-items: start;
+  }
+  .home-wordmark {
+    color: inherit;
+    font: 500 1.15rem var(--font-display);
+    letter-spacing: 0.035em;
+    padding: 0.4rem 0;
+  }
+  .home-wordmark span {
+    color: #d9c58d;
+  }
+  .home-clock {
+    text-align: right;
+    color: #fffef5;
+    text-shadow: 0 1px 14px #223035;
+  }
+  .home-clock[hidden] {
+    display: none;
+  }
+  .home-clock time {
+    display: block;
+    font-size: clamp(2rem, 3vw, 2.75rem);
+    font-weight: 300;
+    line-height: 1.15;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.035em;
+  }
+  .home-clock > span {
+    display: block;
+    font-size: 0.7rem;
+    letter-spacing: 0.07em;
+    margin-top: 0.4rem;
+  }
+  .home-intro {
+    margin: auto 0;
+    padding: 5.5rem 0 6rem;
+    max-width: 580px;
+  }
+  .home-greeting {
+    color: var(--home-muted);
+    font-size: 0.85rem;
+    letter-spacing: 0.13em;
+    margin: 0 0 1.4rem;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(4.5rem, 8.3vw, 7.8rem);
+    line-height: 1.2;
+    letter-spacing: 0.06em;
+    margin: 0 0 1.6rem;
+    color: inherit;
+  }
+  h1 span {
+    color: #d9cba2;
+  }
+  .home-description {
+    margin: 0;
+    color: var(--home-muted);
+    font-size: 0.95rem;
+    line-height: 2.1;
+    letter-spacing: 0.035em;
+  }
+  .home-nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 1.8rem;
+    margin-top: 2.5rem;
+  }
+  .home-nav > a,
+  summary {
+    color: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 48px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+  .home-nav .read-link {
+    border-bottom-color: rgba(250, 247, 235, 0.65);
+  }
+  .read-link span {
+    color: #d9cba2;
+    font-size: 1.15rem;
+  }
+  .home-nav > a:hover,
+  summary:hover {
+    border-bottom-color: var(--home-white);
+  }
+  a:focus-visible,
+  summary:focus-visible,
+  button:focus-visible {
+    outline: 2px solid #ffe7aa;
+    outline-offset: 5px;
+    border-radius: 2px;
+  }
+  .home-categories {
+    position: relative;
+  }
+  summary {
+    list-style: none;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  summary > span {
+    font-size: 1.1rem;
+  }
+  details[open] summary > span {
+    transform: rotate(45deg);
+  }
+  .category-links {
+    position: absolute;
+    left: -1rem;
+    bottom: calc(100% + 0.7rem);
+    width: 265px;
+    padding: 0.5rem 1rem;
+    border: 1px solid #78817c;
+    background: #243330;
+    box-shadow: 0 16px 40px #0004;
+    z-index: 4;
+  }
+  .category-links a {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--home-white);
+    min-height: 48px;
+    font-size: 0.85rem;
+    border-bottom: 1px solid #46544d;
+    text-decoration: none;
+  }
+  .category-links a:last-child {
+    border-bottom: 0;
+  }
+  .category-links a:hover {
+    color: #ffe7aa;
+  }
+  .category-links span {
+    color: #ced2c5;
+    font-size: 0.65rem;
+  }
+  .home-bottom {
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+    min-height: 44px;
+  }
+  .scene-caption {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin: 0;
+    color: var(--home-muted);
+  }
+  .light-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #e5cf95;
+    box-shadow: 0 0 12px #e5cf9566;
+  }
+  .motion-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 44px;
+    border: 1px solid #e4e6d966;
+    padding: 0 1rem;
+    color: inherit;
+    font: inherit;
+    background: #1b29265c;
+    cursor: pointer;
+  }
+  .motion-toggle[hidden] {
+    display: none;
+  }
+  .motion-toggle:hover {
+    background: #243330;
+  }
+  .scene-status {
+    position: absolute;
+    bottom: 0.3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.65rem;
+    margin: 0;
+    color: #fff;
+    white-space: nowrap;
+  }
+  .scene-status:empty {
+    display: none;
+  }
+  @media (max-width: 700px) {
+    .illustrated-home {
+      min-height: max(740px, 100svh);
+      padding: max(1.3rem, env(safe-area-inset-top)) 1.5rem
+        max(1.2rem, env(safe-area-inset-bottom));
+    }
+    .study-art img {
+      object-position: 75% 50%;
+    }
+    .study-shade {
+      background: linear-gradient(
+        0deg,
+        #142521f2 0%,
+        #142521d9 20%,
+        #14252191 39%,
+        transparent 67%,
+        #1c292933 100%
+      );
+    }
+    .home-wordmark {
+      font-size: 1rem;
+      text-shadow: 0 1px 8px #21302a;
+    }
+    .home-clock time {
+      font-size: 1.8rem;
+    }
+    .home-clock > span {
+      font-size: 0.6rem;
+    }
+    .home-intro {
+      margin: auto 0 0;
+      padding: 20rem 0 1.6rem;
+    }
+    .home-greeting {
+      font-size: 0.72rem;
+      margin-bottom: 0.7rem;
+    }
+    h1 {
+      font-size: 4.1rem;
+      margin-bottom: 0.8rem;
+    }
+    .home-description {
+      font-size: 0.78rem;
+      line-height: 1.9;
+    }
+    .home-nav {
+      gap: 0.1rem 1.45rem;
+      margin-top: 1.2rem;
+    }
+    .home-nav > a,
+    summary {
+      font-size: 0.79rem;
+    }
+    .home-bottom {
+      font-size: 0.61rem;
+    }
+    .motion-toggle {
+      padding: 0 0.7rem;
+    }
+    .category-links {
+      left: -5.5rem;
+      width: 250px;
+    }
+  }
+  @media (max-width: 350px) {
+    .illustrated-home {
+      padding-inline: 1.1rem;
+    }
+    .home-nav {
+      column-gap: 1.2rem;
+    }
+    .desktop-break {
+      display: none;
+    }
+    .home-description {
+      max-width: 260px;
+    }
+  }
+</style>
+
+<script>
+  import { mountIllustratedHome } from './illustration/home';
+  const root = document.querySelector<HTMLElement>('[data-illustration]');
+  if (root) mountIllustratedHome(root);
+</script>

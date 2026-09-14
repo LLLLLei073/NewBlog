@@ -1,57 +1,64 @@
 ---
 import { ROOM_LINKS } from './config';
-import { SITE_AUTHOR_IMAGE } from '../../consts';
+import { HOTSPOTS } from './activity';
 import CoalAssistant from './CoalAssistant.astro';
 ---
 
-<section
-  class="room"
-  aria-label="房间导航"
-  data-room
-  data-avatar={SITE_AUTHOR_IMAGE}
->
+<section class="room" aria-label="房间导航" data-room>
   <div
     class="room-stage"
     data-room-stage
-    aria-label="黑白线框房间，可点击物品或使用键盘访问栏目"
+    aria-label="窗边书房，少女与小煤球在这里活动"
   >
-    <div class="room-placeholder" data-room-placeholder>
-      <svg
-        viewBox="0 0 800 530"
-        role="img"
-        aria-label="小房间的线稿：书桌、书架和一扇门"
-      >
-        <g
-          fill="var(--room-paper)"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linejoin="round"
-        >
-          <path d="M90 205 400 65 710 205 400 380Z"></path>
-          <path d="M90 205V355L400 510V380M710 205V355L400 510M400 65V220"
-          ></path>
-          <path
-            d="M90 205 400 350 710 205M400 350V510"
-            stroke-dasharray="4 7"
-            opacity=".2"></path>
-          <path d="m140 273 125-56 110 52-125 61Zm0 0v82m235-86v81m-125-20v82"
-          ></path>
-          <path d="m185 262 57-25v-50l-57 25Zm0 0 30 14 57-25-30-14"></path>
-          <path d="m510 195 80-38 0 137-80 40Zm0 40 80-38m-80 82 80-38"></path>
-          <path d="m325 189 0-77 50-23v123Zm40-24v10"></path>
-        </g>
-      </svg>
-      <p>房间加载后，可以点里面的物品。</p>
-    </div>
-    <div class="room-canvas" data-room-canvas aria-hidden="true"></div>
-    <span class="room-tooltip" data-room-tooltip hidden></span>
+    <img
+      class="room-background"
+      data-room-placeholder
+      src="/art/room/background.webp"
+      width="1536"
+      height="1024"
+      alt="与首页相同的窗边书房，木桌、书架、植物和空闲的地面"
+      fetchpriority="high"
+    />
+    <canvas data-room-canvas hidden aria-hidden="true"></canvas>
+    <nav class="room-hotspots" aria-label="房间物品入口">
+      {
+        HOTSPOTS.map((point) => {
+          const item = ROOM_LINKS.find((item) => item.id === point.id)!;
+          return (
+            <a
+              href={item.href}
+              style={`--x:${point.x * 100}%;--y:${point.y * 100}%`}
+              aria-label={`${item.object} · ${item.label}`}
+            >
+              <span>
+                {item.object} · {item.label}
+              </span>
+            </a>
+          );
+        })
+      }
+    </nav>
   </div>
   <CoalAssistant />
-  <div class="room-caption">
-    <p data-room-status role="status">
-      移动鼠标或使用键盘，可以查看每件物品通向哪里。
-    </p>
-    <button type="button" data-room-lamp hidden>台灯 · 切换明暗</button>
+  <div class="room-controls">
+    <p data-room-status role="status">在同一间书房里，慢慢待一会儿。</p>
+    <div class="room-buttons">
+      <button
+        type="button"
+        data-coal-open
+        aria-controls="coal-panel"
+        aria-expanded="false">找笔记</button
+      >
+      <label
+        >台灯 <select data-room-lamp aria-label="书房台灯"
+          ><option value="auto">跟随时间</option><option value="on">开</option
+          ><option value="off">关</option></select
+        ></label
+      >
+      <button type="button" data-room-motion aria-pressed="false" hidden
+        >暂停动效</button
+      >
+    </div>
   </div>
   <nav class="room-links" aria-label="房间的备用栏目入口">
     {
@@ -65,191 +72,170 @@ import CoalAssistant from './CoalAssistant.astro';
       ))
     }
   </nav>
-  <p class="room-credit">
-    房间改编自 <a
-      href="https://github.com/Animnia/pure-line-room"
-      target="_blank"
-      rel="noopener noreferrer">pure-line-room</a
-    > · <a href="/licenses/pure-line-room.txt">来源与许可</a>
-  </p>
 </section>
-
 <script>
+  import { mountRoomLife } from './life';
   const root = document.querySelector<HTMLElement>('[data-room]');
-  if (root) {
-    let started = false;
-    let observer: IntersectionObserver | undefined;
-    const start = () => {
-      if (started) return;
-      started = true;
-      observer?.disconnect();
-      import('./interaction')
-        .then(({ mountRoom }) => mountRoom(root))
-        .catch(() => {
-          root.dataset.roomReady = 'false';
-          const status = root.querySelector('[data-room-status]');
-          if (status)
-            status.textContent = '房间暂时没加载出来，可以使用备用栏目入口。';
-        });
-    };
-    if ('IntersectionObserver' in window) {
-      observer = new IntersectionObserver(
-        (entries) => entries.some((entry) => entry.isIntersecting) && start(),
-        { rootMargin: '100% 0px' },
-      );
-      observer.observe(root);
-    } else {
-      start();
-    }
-    window.addEventListener('pagehide', () => observer?.disconnect(), {
-      once: true,
-    });
-  }
+  if (root) mountRoomLife(root);
 </script>
-
 <style>
   .room {
     position: relative;
+    --room-ink: #e9e5d7;
+    --room-paper: #1f2929;
+    --room-muted: #c1c8bd;
   }
   .room-stage {
     position: relative;
     width: 100%;
-    height: clamp(360px, 51vw, 620px);
-    margin-top: 8px;
+    aspect-ratio: 3/2;
+    overflow: hidden;
+    border-radius: 5px;
+    background: #3c443e;
+    isolation: isolate;
     touch-action: pan-y pinch-zoom;
   }
-  .room-placeholder,
-  .room-canvas {
+  .room-background,
+  canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  canvas[hidden] {
+    display: none;
+  }
+  .room-hotspots {
     position: absolute;
     inset: 0;
   }
-  .room-placeholder svg {
-    width: 100%;
-    height: calc(100% - 36px);
-    opacity: 0.65;
-  }
-  .room-placeholder p {
-    text-align: center;
-    font-size: 12px;
-    color: var(--room-muted);
-    margin: 0;
-  }
-  .room-canvas :global(canvas) {
-    display: block;
-    width: 100%;
-    height: 100%;
-    touch-action: pan-y pinch-zoom;
-  }
-  .room-tooltip {
+  .room-hotspots a {
     position: absolute;
-    z-index: 2;
-    pointer-events: none;
-    padding: 7px 12px;
-    color: var(--room-paper);
-    background: var(--room-ink);
-    border-radius: 3px;
-    font-size: 12px;
-    white-space: nowrap;
-    transform: translate(-50%, -100%);
+    left: var(--x);
+    top: var(--y);
+    width: 44px;
+    height: 44px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    text-decoration: none;
+    color: #fff8e3;
+    outline-offset: 2px;
   }
-  .room-caption {
+  .room-hotspots a::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #fff8e3;
+    box-shadow:
+      0 0 0 4px #20282050,
+      0 0 12px #fff6;
+  }
+  .room-hotspots a span {
+    position: absolute;
+    bottom: 100%;
+    white-space: nowrap;
+    padding: 6px 9px;
+    background: #192625ed;
+    border: 1px solid #d3d9c533;
+    font-size: 12px;
+    opacity: 0;
+    pointer-events: none;
+    border-radius: 3px;
+  }
+  .room-hotspots a:hover span,
+  .room-hotspots a:focus-visible span {
+    opacity: 1;
+  }
+  .room-hotspots a:first-child span {
+    right: 0;
+  }
+  .room-hotspots a:last-child span {
+    left: 0;
+  }
+  .room-controls {
     display: flex;
     justify-content: space-between;
-    gap: 12px;
+    gap: 16px;
     align-items: center;
-    max-width: 900px;
-    margin: 4px auto 22px;
+    padding: 18px 0;
     color: var(--room-muted);
     font-size: 12px;
   }
-  .room-caption p {
+  .room-controls p {
     margin: 0;
+    line-height: 1.8;
   }
-  .room-caption button {
-    flex-shrink: 0;
-    background: none;
-    border: 0;
-    border-bottom: 1px solid currentColor;
-    color: var(--room-ink);
-    font: inherit;
+  .room-buttons {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .room-buttons button,
+  .room-buttons select {
     min-height: 44px;
-    padding: 0 4px;
+    background: #263431;
+    color: var(--room-ink);
+    border: 1px solid #d2d7bc38;
+    border-radius: 3px;
+    padding: 0 12px;
+    font: inherit;
     cursor: pointer;
   }
+  .room-buttons label {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .room-buttons button:disabled {
+    opacity: 0.7;
+    cursor: default;
+  }
   .room-links {
-    max-width: 900px;
-    margin: auto;
     display: grid;
     grid-template-columns: repeat(9, minmax(0, 1fr));
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
+    border-block: 1px solid #d2d7bc30;
   }
   .room-links a {
-    text-decoration: none;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 6px;
-    min-height: 77px;
-  }
-  .room-links a:hover,
-  .room-links a:focus-visible {
-    background: var(--room-ink);
-    color: var(--room-paper);
-  }
-  .room-links span {
+    min-height: 76px;
+    color: var(--room-ink);
+    text-decoration: none;
     font-size: 13px;
   }
   .room-links small {
     font-size: 10px;
-    opacity: 0.6;
-  }
-  .room[data-room-ready='true'] .room-links:not(:focus-within) {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-  .room-credit {
-    text-align: right;
-    max-width: 900px;
-    margin: 12px auto 0;
     color: var(--room-muted);
-    font-size: 10px;
   }
-  .room-credit a {
-    text-underline-offset: 3px;
+  .room-links a:hover,
+  .room-links a:focus-visible {
+    background: #ffffff0d;
   }
   @media (max-width: 700px) {
-    .room-links {
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-    }
-    .room-links a {
-      min-height: 68px;
-    }
-    .room-caption {
+    .room-controls {
       align-items: flex-start;
-    }
-    .room-caption p {
-      max-width: 185px;
-      line-height: 1.8;
-    }
-  }
-  @media (max-width: 400px) {
-    .room-stage {
-      height: 340px;
+      flex-direction: column;
     }
     .room-links {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
-    .room-caption {
-      font-size: 11px;
+    .room-hotspots {
+      display: none;
+    }
+    .room-buttons {
+      gap: 8px;
+    }
+    .room-buttons button,
+    .room-buttons select {
+      padding: 0 9px;
     }
   }
 </style>

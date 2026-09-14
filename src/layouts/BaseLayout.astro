@@ -21,6 +21,7 @@ interface Props {
   modifiedTime?: Date;
   noindex?: boolean;
   immersiveHome?: boolean;
+  illustratedHome?: boolean;
   imageWidth?: number;
   imageHeight?: number;
   imageAlt?: string;
@@ -36,6 +37,7 @@ const {
   modifiedTime,
   noindex = false,
   immersiveHome = false,
+  illustratedHome = false,
   imageWidth = 1200,
   imageHeight = 630,
   imageAlt,
@@ -151,13 +153,16 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       }
     </script>
   </head>
-  <body data-room-home={immersiveHome ? '' : undefined}>
+  <body
+    data-room-home={immersiveHome ? '' : undefined}
+    data-illustrated-home={illustratedHome ? '' : undefined}
+  >
     <a class="skip-link" href="#main-content">跳到正文</a>
-    <Header immersiveHome={immersiveHome} />
+    {!illustratedHome && <Header immersiveHome={immersiveHome} />}
     <main id="main-content" tabindex="-1">
       <slot />
     </main>
-    <Footer immersiveHome={immersiveHome} />
+    {!illustratedHome && <Footer immersiveHome={immersiveHome} />}
     <CodeBlockEnhance />
     <MermaidEnhance />
   </body>

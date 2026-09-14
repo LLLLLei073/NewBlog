@@ -92,8 +92,8 @@ test('random reading uses only the supplied published index', () => {
   );
 });
 
-test('homepage embeds only published notes and all room links', () => {
-  const html = readFileSync('dist/index.html', 'utf8');
+test('room page embeds only published notes and all room links', () => {
+  const html = readFileSync('dist/room/index.html', 'utf8');
   assert.ok(html.includes('data-coal-root'));
   assert.equal(
     (html.match(/class="coal-nav"[\s\S]*?<\/nav>/)?.[0].match(/<a /g) ?? [])

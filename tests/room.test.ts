@@ -1,10 +1,17 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, existsSync, readdirSync } from 'node:fs';
-import { Raycaster, Vector2, Vector3 } from 'three';
-import { createRoomScene } from '../src/components/room/scene.ts';
+import { readFileSync, existsSync } from 'node:fs';
 import { ROOM_LINKS } from '../src/components/room/config.ts';
-import { isRoomTap, type TapStart } from '../src/components/room/gesture.ts';
+import {
+  activityCycle,
+  cycleDuration,
+  girlAt,
+  COAL_POINTS,
+  HOTSPOTS,
+  distance,
+  SPRITES,
+} from '../src/components/room/activity.ts';
+import { lampStrength } from '../src/components/home/illustration/preferences.ts';
 
 const expected = [
   '/categories/algorithm/',
@@ -17,106 +24,84 @@ const expected = [
   '/archives/',
   '/friends/',
 ];
-test('nine unique objects point to the agreed existing routes', () => {
+test('nine original destinations retain both illustrated and ordinary entrances', () => {
   assert.deepEqual(
-    ROOM_LINKS.map((item) => item.href),
+    ROOM_LINKS.map((i) => i.href),
     expected,
   );
-  assert.equal(new Set(ROOM_LINKS.map((item) => item.id)).size, 9);
-  for (const href of expected)
-    assert.ok(existsSync(`dist${href}index.html`), href);
+  assert.deepEqual(
+    new Set(HOTSPOTS.map((i) => i.id)),
+    new Set(ROOM_LINKS.map((i) => i.id)),
+  );
+  for (const href of expected) assert.ok(existsSync(`dist${href}index.html`));
+  const html = readFileSync('dist/room/index.html', 'utf8');
+  assert.equal((html.match(/data-room-link=/g) || []).length, 9);
+  assert.ok(html.includes('data-coal-open'));
+  assert.ok(html.includes('data-room-placeholder'));
+  assert.ok(html.includes('/art/room/background.webp'));
+  assert.ok(!html.includes('线框'));
 });
-
-for (const [width, height] of [
-  [1120, 620],
-  [720, 392],
-  [343, 340],
-  [288, 340],
-]) {
-  test(`all ten object centers pick correctly and fit ${width}×${height}`, () => {
-    const room = createRoomScene();
-    room.fit(width!, height!);
-    const ray = new Raycaster();
-    const proxies = [...room.targets.values()].map((item) => item.proxy);
-    assert.equal(proxies.length, 10);
-    for (const [id, item] of room.targets) {
-      const p = item.anchor.clone().project(room.camera);
+for (const visit of ['window', 'shelf'] as const) {
+  test(`${visit} route walks continuously, visits furniture and returns to reading`, () => {
+    const cycle = activityCycle(visit, 26),
+      duration = cycleDuration(cycle);
+    let previous = girlAt(cycle, 0);
+    const poses = new Set();
+    const walkFrames = new Set();
+    for (let t = 0.02; t < duration * 3; t += 0.02) {
+      const g = girlAt(cycle, t);
+      assert.ok(distance(g, previous) < 0.002, 'no position teleport');
       assert.ok(
-        Math.abs(p.x) < 1 && Math.abs(p.y) < 1,
-        `${id} inside viewport`,
+        g.x >= 0.2 && g.x <= 0.706 && g.y >= 0.65 && g.y <= 0.8,
+        'inside open room',
       );
-      ray.setFromCamera(new Vector2(p.x, p.y), room.camera);
-      assert.equal(
-        ray.intersectObjects(proxies, false)[0]?.object.userData.roomId,
-        id,
-        `${id} unambiguous center`,
-      );
-      room.highlight(id);
-      assert.equal(
-        [...room.targets.values()].filter((t) => t.highlight.visible).length,
-        1,
-      );
+      assert.ok(!(g.x < 0.35 && g.y < 0.7), 'outside left cabinet');
+      assert.ok(!(g.x > 0.74), 'outside desk');
+      poses.add(g.pose);
+      if (g.pose === 'walk') walkFrames.add(g.frame);
+      previous = g;
     }
-    for (const x of [-5.15, 5.15])
-      for (const y of [-0.16, 5.45])
-        for (const z of [-4.15, 4.15]) {
-          const p = new Vector3(x, y, z).project(room.camera);
-          assert.ok(
-            Math.abs(p.x) <= 1 && Math.abs(p.y) <= 1,
-            'entire room silhouette fits',
-          );
-        }
-    room.dispose();
-    assert.equal(room.scene.children.length, 0);
+    assert.ok(poses.has(visit));
+    assert.ok(poses.has('read'));
+    assert.ok(poses.has('rise'));
+    assert.equal(walkFrames.size, 6);
+    assert.equal(girlAt(cycle, duration).pose, 'read');
   });
 }
-
-const start: TapStart = {
-  id: 'computer',
-  pointer: 1,
-  x: 20,
-  y: 20,
-  scrollY: 0,
-  time: 0,
-  moved: false,
-};
-const end = { id: 'computer', pointer: 1, x: 22, y: 22, scrollY: 0, time: 100 };
-test('single tap enters, movement/scroll/cancel/multi-touch/long press do not', () => {
-  assert.equal(isRoomTap(start, end), true);
-  for (const invalid of [
-    { ...end, y: 60 },
-    { ...end, scrollY: 10 },
-    { ...end, pointer: 2 },
-    { ...end, id: 'textbook' },
-    { ...end, time: 900 },
+test('coal paths remain clear of entrances and girl feet, including phone touch radius', () => {
+  for (const a of COAL_POINTS)
+    for (const b of COAL_POINTS)
+      for (let i = 0; i <= 100; i++) {
+        const t = i / 100,
+          p = { x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t };
+        assert.ok(p.y >= 0.9 && p.x >= 0.14 && p.x <= 0.61);
+        for (const hot of HOTSPOTS) assert.ok(distance(p, hot) > 0.15);
+        for (const visit of ['window', 'shelf'] as const) {
+          const c = activityCycle(visit, 26);
+          for (let s = 0; s < cycleDuration(c); s += 1)
+            assert.ok(distance(p, girlAt(c, s)) > 0.11);
+        }
+      }
+});
+test('sprite rectangles contain full poses and local maps are present', () => {
+  assert.equal(SPRITES.length, 12);
+  for (const [x, y, w, h] of SPRITES) {
+    assert.ok(x >= 0 && y >= 0 && x + w <= 1536 && y + h <= 1024);
+  }
+  for (const name of [
+    'background',
+    'normal',
+    'character',
+    'alpha',
+    'foreground',
   ])
-    assert.equal(isRoomTap(start, invalid), false);
-  assert.equal(isRoomTap(null, end), false);
-  assert.equal(isRoomTap({ ...start, moved: true }, end), false);
+    assert.ok(existsSync(`public/art/room/${name}.webp`));
 });
-
-test('static HTML keeps room fallback navigation at the end of the journey', () => {
-  const html = readFileSync('dist/index.html', 'utf8');
-  assert.equal((html.match(/data-room-link=/g) || []).length, 9);
-  assert.ok(html.includes('小房间的线稿'));
-  assert.ok(!html.includes('recent-notes'));
-  assert.ok(html.includes('data-room-placeholder'));
-  assert.ok(!html.includes('<audio'));
-  assert.ok(!html.includes('<room-assistant'));
-  assert.ok(!html.includes('data-coal-index'));
-  const article = readFileSync('dist/blog/second-post/index.html', 'utf8');
-  assert.ok(!article.includes('data-room-stage'));
-  assert.ok(!article.includes('data-room-home'));
-});
-
-test('dark variant control is CSS-managed for room lamp theme changes', () => {
-  const html = readFileSync('dist/index.html', 'utf8');
-  const control = html.match(/<button[^>]*id="dark-variant-toggle"[^>]*>/)?.[0];
-  const styles = readdirSync('dist/_astro')
-    .filter((file) => file.endsWith('.css'))
-    .map((file) => readFileSync(`dist/_astro/${file}`, 'utf8'))
-    .join('\n');
-  assert.ok(control);
-  assert.ok(!control.includes('hidden'));
-  assert.ok(!styles.includes('body[data-room-home] #dark-variant-toggle'));
+test('lamp override preserves automatic light and never modifies reading theme', () => {
+  assert.equal(lampStrength('auto', 0.42), 0.42);
+  assert.equal(lampStrength('off', 0.9), 0);
+  assert.equal(lampStrength('on', 0), 0.95);
+  const source = readFileSync('src/components/room/life.ts', 'utf8');
+  assert.ok(!source.includes('data-theme'));
+  assert.ok(!source.includes('setTheme'));
 });
