@@ -1,0 +1,90 @@
+<!doctype html><meta charset="UTF-8" /><title>三维房间验收</title>
+<style>
+  body {
+    margin: 0;
+    background: #202d2c;
+    color: #eee;
+    font: 14px sans-serif;
+  }
+  canvas {
+    display: block;
+    width: 100%;
+    height: calc(100vh - 90px);
+  }
+  button,
+  select,
+  input {
+    padding: 8px;
+  }
+  pre {
+    white-space: pre-wrap;
+  }
+</style>
+<label
+  >时刻
+  <select id="light">
+    <option value="420">清晨</option>
+    <option value="720" selected>正午</option>
+    <option value="1080">黄昏</option>
+    <option value="0">午夜</option>
+  </select></label
+>
+<label
+  >台灯
+  <select id="lamp">
+    <option>auto</option>
+    <option>on</option>
+    <option>off</option>
+  </select></label
+>
+<label>动作秒数 <input id="time" type="number" value="0" step=".1" /></label
+><button id="play">播放三个循环</button> <output id="state">加载</output
+><canvas></canvas>
+<script type="module">
+  import { createRoom3d } from '/src/components/room/scene3d.ts';
+  import {
+    roomPose,
+    roomCycle,
+    roomDuration,
+    COAL_ROAM,
+  } from '/src/components/room/motion3d.ts';
+  const scene = await createRoom3d(
+    document.querySelector('canvas'),
+    new AbortController().signal,
+  );
+  const cycle = roomCycle('shelf', 6),
+    duration = roomDuration(cycle);
+  let playing = false,
+    t = 0,
+    last = 0,
+    frames = 0;
+  const draw = () => {
+    scene.draw(+light.value, lamp.value, roomPose(cycle, t), COAL_ROAM[1], 0);
+    state.textContent = `${t.toFixed(2)} / ${duration.toFixed(2)} 秒 · ${Math.floor(t / duration)} 循环`;
+  };
+  time.oninput = () => {
+    t = +time.value;
+    draw();
+  };
+  light.onchange = lamp.onchange = draw;
+  play.onclick = () => {
+    playing = !playing;
+    last = 0;
+    requestAnimationFrame(frame);
+  };
+  function frame(now) {
+    if (!playing) return;
+    if (last) {
+      t += (now - last) / 1000;
+      frames++;
+    }
+    last = now;
+    draw();
+    if (t >= duration * 3) {
+      playing = false;
+      state.textContent += ' 完成 · ' + frames + ' 帧';
+    } else requestAnimationFrame(frame);
+  }
+  new ResizeObserver(draw).observe(document.querySelector('canvas'));
+  draw();
+</script>

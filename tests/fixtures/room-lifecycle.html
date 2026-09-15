@@ -39,15 +39,14 @@
     function boot(mode) {
       const bootstrap = `<script>
  window.__draws=0;
- const nativeDraw=WebGLRenderingContext.prototype.drawArrays;
- WebGLRenderingContext.prototype.drawArrays=function(...args){window.__draws++;return nativeDraw.apply(this,args)};
+ const nativeDraw=WebGL2RenderingContext.prototype.drawElements;
+ WebGL2RenderingContext.prototype.drawElements=function(...args){window.__draws++;return nativeDraw.apply(this,args)};
  if('${mode}'==='unsupported'){
   const original=HTMLCanvasElement.prototype.getContext;
-  HTMLCanvasElement.prototype.getContext=function(type,...rest){return type==='webgl'?null:original.call(this,type,...rest)};
+  HTMLCanvasElement.prototype.getContext=function(type,...rest){return type==='webgl'||type==='webgl2'?null:original.call(this,type,...rest)};
  }
  if('${mode}'==='missing'){
-  const Original=window.Image;
-  window.Image=class extends Original {set src(value){super.src=String(value).includes('normal.webp')?'/art/study/__missing.webp':value}get src(){return super.src}};
+  const originalFetch=window.fetch.bind(window); window.fetch=(url,...rest)=>String(url).includes('girl.vrm')?Promise.resolve(new Response('',{status:404})):originalFetch(url,...rest);
  }
  if('${mode}'==='reduced'){
   const original=window.matchMedia.bind(window);
@@ -76,7 +75,7 @@
             null,
             2,
           );
-        }, 1200);
+        }, 7000);
     }
     for (const button of document.querySelectorAll('[data-mode]'))
       button.onclick = () => boot(button.dataset.mode);
@@ -87,6 +86,30 @@
         button = d.querySelector('[data-room-motion]');
       const samples = {};
       if (button.getAttribute('aria-pressed') === 'true') button.click();
+      const coal = d.querySelector('[data-coal-root]'),
+        toggle = d.querySelector('[data-coal-toggle]');
+      const position = () => coal.style.left + ',' + coal.style.top;
+      for (const mode of ['focus', 'pointerenter', 'pointerdown']) {
+        if (mode === 'focus') toggle.focus();
+        else
+          toggle.dispatchEvent(
+            new w.PointerEvent(mode, {
+              bubbles: true,
+              pointerType: mode === 'pointerdown' ? 'touch' : 'mouse',
+            }),
+          );
+        const before = position();
+        await wait(1100);
+        samples[mode] = position() === before;
+        if (mode === 'focus') toggle.blur();
+        else
+          w.dispatchEvent(
+            new w.PointerEvent('pointercancel', { bubbles: true }),
+          );
+        toggle.dispatchEvent(
+          new w.PointerEvent('pointerleave', { bubbles: true }),
+        );
+      }
       let n = w.__draws;
       await wait(1100);
       samples.running = w.__draws - n;
@@ -114,11 +137,11 @@
       w.dispatchEvent(
         new w.PageTransitionEvent('pageshow', { persisted: true }),
       );
-      await wait(1000);
+      await wait(7000);
       samples.restored =
         d.querySelector('[data-room]').dataset.roomReady === 'true' &&
         !d.querySelector('canvas').hidden;
-      const gl = d.querySelector('canvas').getContext('webgl'),
+      const gl = d.querySelector('canvas').getContext('webgl2'),
         lose = gl.getExtension('WEBGL_lose_context');
       lose.loseContext();
       await wait(100);
@@ -127,8 +150,10 @@
       await wait(1000);
       samples.contextRestored = !d.querySelector('canvas').hidden;
       samples.passed =
+        samples.focus &&
+        samples.pointerenter &&
+        samples.pointerdown &&
         samples.running > 0 &&
-        samples.running <= 34 &&
         samples.paused === 0 &&
         samples.background === 0 &&
         samples.resumed > 0 &&

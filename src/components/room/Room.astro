@@ -1,6 +1,5 @@
 ---
 import { ROOM_LINKS } from './config';
-import { HOTSPOTS } from './activity';
 import CoalAssistant from './CoalAssistant.astro';
 ---
 
@@ -10,24 +9,15 @@ import CoalAssistant from './CoalAssistant.astro';
     data-room-stage
     aria-label="窗边书房，少女与小煤球在这里活动"
   >
-    <img
-      class="room-background"
-      data-room-placeholder
-      src="/art/room/background.webp"
-      width="1536"
-      height="1024"
-      alt="与首页相同的窗边书房，木桌、书架、植物和空闲的地面"
-      fetchpriority="high"
-    />
+    <div class="room-placeholder" data-room-placeholder>正在布置书房…</div>
     <canvas data-room-canvas hidden aria-hidden="true"></canvas>
     <nav class="room-hotspots" aria-label="房间物品入口">
       {
-        HOTSPOTS.map((point) => {
-          const item = ROOM_LINKS.find((item) => item.id === point.id)!;
+        ROOM_LINKS.map((item) => {
           return (
             <a
               href={item.href}
-              style={`--x:${point.x * 100}%;--y:${point.y * 100}%`}
+              data-room-hotspot={item.id}
               aria-label={`${item.object} · ${item.label}`}
             >
               <span>
@@ -85,6 +75,12 @@ import CoalAssistant from './CoalAssistant.astro';
     --room-paper: #1f2929;
     --room-muted: #c1c8bd;
   }
+  .room[data-room-ready='true'] :global([data-coal-toggle] svg) {
+    visibility: hidden;
+  }
+  .room[data-room-ready='true'] :global([data-coal-root]) {
+    transform: translate(-50%, -50%);
+  }
   .room-stage {
     position: relative;
     width: 100%;
@@ -95,13 +91,25 @@ import CoalAssistant from './CoalAssistant.astro';
     isolation: isolate;
     touch-action: pan-y pinch-zoom;
   }
-  .room-background,
+  .room-placeholder,
   canvas {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
     object-fit: contain;
+  }
+  .room-placeholder {
+    display: grid;
+    place-items: center;
+    color: var(--room-muted);
+    font-size: 14px;
+  }
+  .room[data-room-ready='true'] .room-placeholder {
+    display: none;
+  }
+  .room:not([data-room-ready='true']) .room-hotspots {
+    display: none;
   }
   canvas[hidden] {
     display: none;

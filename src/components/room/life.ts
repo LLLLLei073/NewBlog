@@ -12,15 +12,14 @@ import {
   type LampMode,
 } from '../home/illustration/preferences';
 import {
-  activityCycle,
-  cycleDuration,
-  girlAt,
-  COAL_POINTS,
-  lerpPoint,
-  distance,
-  type Point,
-} from './activity';
-import type { createIllustratedRoom } from './illustrated-scene';
+  roomCycle,
+  roomDuration,
+  roomPose,
+  COAL_ROAM,
+  distance3d,
+  type Ground,
+} from './motion3d';
+import type { createRoom3d } from './scene3d';
 
 export function mountRoomLife(root: HTMLElement) {
   const canvas = root.querySelector<HTMLCanvasElement>('[data-room-canvas]')!;
@@ -28,7 +27,7 @@ export function mountRoomLife(root: HTMLElement) {
   const coal = root.querySelector<HTMLElement>('[data-coal-root]')!;
   const coalButton =
     coal.querySelector<HTMLButtonElement>('[data-coal-toggle]')!;
-  const coalSprite = coalButton.querySelector('svg')!;
+
   const motion = root.querySelector<HTMLButtonElement>('[data-room-motion]')!;
   const lamp = root.querySelector<HTMLSelectElement>('[data-room-lamp]')!;
   const status = root.querySelector<HTMLElement>('[data-room-status]')!;
@@ -41,12 +40,12 @@ export function mountRoomLife(root: HTMLElement) {
     last = 0,
     timer = 0,
     minutes = localMinutes(new Date());
-  let scene: Awaited<ReturnType<typeof createIllustratedRoom>> | undefined,
+  let scene: Awaited<ReturnType<typeof createRoom3d>> | undefined,
     loading: AbortController | undefined;
-  let cycle = activityCycle('window', 26),
+  let cycle = roomCycle('window', 26),
     elapsed = 0,
     visits = 0;
-  let coalPoint: Point = { ...COAL_POINTS[1]! },
+  let coalPoint: Ground = { ...COAL_ROAM[1]! },
     coalFrom = { ...coalPoint },
     coalTo = { ...coalPoint },
     coalTime = 0,
@@ -56,9 +55,12 @@ export function mountRoomLife(root: HTMLElement) {
     pressed = false,
     focused = false;
   const moving = () => !preferences.paused && !reduced.matches;
+  let projectedCoal = { x: 0.32, y: 0.87 },
+    coalMotion = 0;
   const placeCoal = () => {
-    coal.style.left = `${coalPoint.x * stage.clientWidth}px`;
-    coal.style.top = `${coalPoint.y * stage.clientHeight}px`;
+    coal.style.left = String(projectedCoal.x * stage.clientWidth) + 'px';
+    coal.style.top =
+      String(projectedCoal.y * stage.clientHeight + stage.offsetTop) + 'px';
   };
   const coalHeld = () =>
     hover ||
@@ -68,7 +70,26 @@ export function mountRoomLife(root: HTMLElement) {
     coal.classList.contains('is-resting');
   const draw = () => {
     if (!active || document.hidden) return;
-    scene?.draw(minutes, preferences.lamp, girlAt(cycle, elapsed));
+    const projection = scene?.draw(
+      minutes,
+      preferences.lamp,
+      roomPose(cycle, elapsed),
+      coalPoint,
+      coalMotion,
+      coal.classList.contains('is-resting'),
+    );
+    if (projection) {
+      projectedCoal = projection.coal;
+      root
+        .querySelectorAll<HTMLElement>('[data-room-hotspot]')
+        .forEach((link) => {
+          const p = projection.hotspots[link.dataset.roomHotspot!];
+          if (p) {
+            link.style.setProperty('--x', String(p.x * 100) + '%');
+            link.style.setProperty('--y', String(p.y * 100) + '%');
+          }
+        });
+    }
     placeCoal();
   };
   const stop = () => {
@@ -80,25 +101,26 @@ export function mountRoomLife(root: HTMLElement) {
     if (coalHeld()) return;
     if (coalWait > 0) {
       coalWait -= dt;
-      coalSprite.style.transform = '';
+
       return;
     }
     if (coalTime === 0) {
-      const choices = COAL_POINTS.filter((p) => distance(p, coalPoint) > 0.08);
+      const choices = COAL_ROAM.filter((p) => distance3d(p, coalPoint) > 0.2);
       coalFrom = { ...coalPoint };
       coalTo = { ...choices[Math.floor(Math.random() * choices.length)]! };
-      coalDuration = 2 + distance(coalFrom, coalTo) * 5;
+      coalDuration = 2 + distance3d(coalFrom, coalTo) * 3;
     }
     coalTime += dt;
     const t = Math.min(1, coalTime / coalDuration);
-    coalPoint = lerpPoint(coalFrom, coalTo, t * t * (3 - 2 * t));
-    const hop = Math.abs(Math.sin(t * Math.PI * 3));
-    const roll = Math.sin(t * Math.PI * 2) * 12;
-    coalSprite.style.transform = `translateY(${-hop * 7}px) rotate(${roll}deg) scale(${1 + (1 - hop) * 0.1},${0.9 + hop * 0.1})`;
+    const eased = t * t * (3 - 2 * t);
+    coalPoint = {
+      x: coalFrom.x + (coalTo.x - coalFrom.x) * eased,
+      z: coalFrom.z + (coalTo.z - coalFrom.z) * eased,
+    };
+    coalMotion += dt;
     if (t === 1) {
       coalTime = 0;
       coalWait = 4 + Math.random() * 7;
-      coalSprite.style.transform = '';
     }
   };
   const animate = (now: number) => {
@@ -108,10 +130,10 @@ export function mountRoomLife(root: HTMLElement) {
       const dt = last ? Math.min((now - last) / 1000, 0.1) : 0;
       last = now;
       elapsed += dt;
-      if (elapsed >= cycleDuration(cycle)) {
-        elapsed -= cycleDuration(cycle);
+      if (elapsed >= roomDuration(cycle)) {
+        elapsed -= roomDuration(cycle);
         visits++;
-        cycle = activityCycle(
+        cycle = roomCycle(
           visits % 2 ? 'shelf' : 'window',
           24 + Math.random() * 14,
         );
@@ -150,6 +172,8 @@ export function mountRoomLife(root: HTMLElement) {
     canvas.hidden = true;
     motion.hidden = true;
     root.dataset.roomReady = 'false';
+    root.querySelector<HTMLElement>('[data-room-placeholder]')!.textContent =
+      '书房画面暂不可用，请使用下方入口。';
     status.textContent = '动态画面暂不可用，可以使用下方入口和找笔记。';
   };
   const dispose = () => {
@@ -164,9 +188,9 @@ export function mountRoomLife(root: HTMLElement) {
     const controller = new AbortController();
     loading = controller;
     try {
-      const { createIllustratedRoom } = await import('./illustrated-scene');
+      const { createRoom3d } = await import('./scene3d');
       if (controller.signal.aborted) return;
-      const next = await createIllustratedRoom(canvas, controller.signal);
+      const next = await createRoom3d(canvas, controller.signal);
       if (controller.signal.aborted) {
         next.dispose();
         return;
@@ -268,6 +292,18 @@ export function mountRoomLife(root: HTMLElement) {
   );
   const resize = new ResizeObserver(draw);
   resize.observe(stage);
+  let wasResting = coal.classList.contains('is-resting');
+  const coalState = new MutationObserver(() => {
+    const resting = coal.classList.contains('is-resting');
+    if (resting !== wasResting) {
+      wasResting = resting;
+      draw();
+    }
+  });
+  coalState.observe(coal, {
+    attributes: true,
+    attributeFilter: ['class', 'data-open'],
+  });
   canvas.addEventListener(
     'webglcontextlost',
     (event) => {
@@ -291,6 +327,7 @@ export function mountRoomLife(root: HTMLElement) {
       clearTimeout(timer);
       dispose();
       resize.disconnect();
+      coalState.disconnect();
       if (!event.persisted) events.abort();
     },
     { signal },
@@ -302,6 +339,10 @@ export function mountRoomLife(root: HTMLElement) {
         active = true;
         preferences = readStudyPreferences();
         resize.observe(stage);
+        coalState.observe(coal, {
+          attributes: true,
+          attributeFilter: ['class', 'data-open'],
+        });
         tick();
         void start();
       }
