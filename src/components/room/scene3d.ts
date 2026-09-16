@@ -74,6 +74,7 @@ export async function createRoom3d(
   coal.add(bridge);
   let girl: Awaited<ReturnType<typeof loadGirl>>;
   const dispose = () => {
+    girl?.dispose();
     VRMUtils.deepDispose(scene);
     renderer.dispose();
   };
@@ -154,5 +155,5 @@ export async function createRoom3d(
       ),
     };
   };
-  return { draw, dispose };
+  return { draw, dispose, camera, girl };
 }

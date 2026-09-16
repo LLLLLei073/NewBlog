@@ -6,14 +6,12 @@ import {
   roomCycle,
   roomDuration,
   roomPose,
-  footStep,
   distance3d,
   SEAT,
   STANDING,
   COAL_ROAM,
   TARGETS,
   SPEED,
-  STRIDE,
 } from '../src/components/room/motion3d.ts';
 import { lampStrength } from '../src/components/home/illustration/preferences.ts';
 test('nine destinations and static navigation remain available', () => {
@@ -70,19 +68,37 @@ for (const visit of ['window', 'shelf'] as const)
     assert.deepEqual(rise.from, SEAT);
     assert.deepEqual(rise.to, STANDING);
   });
-test('walking time and gait use the same travelled distance; stance cancels root velocity', () => {
-  for (const p of roomCycle('shelf'))
-    if (p.kind === 'walk')
-      assert.ok(Math.abs(p.seconds * SPEED - distance3d(p.from, p.to)) < 1e-9);
-  for (let phase = 0.02; phase < 0.55; phase += 0.01) {
-    const dt = 0.001,
-      a = footStep(phase),
-      b = footStep(phase + (SPEED * dt) / STRIDE);
-    assert.ok(a.planted && b.planted);
-    assert.ok(Math.abs(b.z - a.z + SPEED * dt) < 1e-9);
-    assert.equal(a.y, 0);
+test('routes accelerate, stop and preserve world-space foot contacts through corners', () => {
+  for (const visit of ['window', 'shelf'] as const) {
+    const cycle = roomCycle(visit);
+    let previous = roomPose(cycle, 0),
+      maxSpeed = 0;
+    for (let t = 0.01; t < roomDuration(cycle); t += 0.01) {
+      const p = roomPose(cycle, t);
+      if (p.action === 'walk' && previous.action === 'walk')
+        maxSpeed = Math.max(maxSpeed, distance3d(p, previous) / 0.01);
+      for (let i = 0; i < 2; i++) {
+        const f = p.feet[i]!,
+          old = previous.feet[i]!;
+        assert.ok(
+          Math.hypot(f.x - old.x, f.y - old.y, f.z - old.z) < 0.04,
+          'no teleporting feet',
+        );
+        if (f.planted && old.planted)
+          assert.ok(
+            distance3d(f, old) < 1e-7,
+            'planted feet remain fixed even while turning',
+          );
+      }
+      previous = p;
+    }
+    assert.ok(maxSpeed <= SPEED + 0.001);
+    assert.equal(
+      cycle.filter((p) => p.kind === 'walk').length,
+      2,
+      'continuous outbound and return routes',
+    );
   }
-  assert.ok(footStep(0.8).y > 0.08);
 });
 test('model metadata permits modification and web redistribution', () => {
   const data = readFileSync('public/models/study/girl.vrm');

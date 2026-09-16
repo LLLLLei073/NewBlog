@@ -44,6 +44,7 @@ export function mountRoomLife(root: HTMLElement) {
     loading: AbortController | undefined;
   let cycle = roomCycle('window', 26),
     elapsed = 0,
+    simulationTime = 0,
     visits = 0;
   let coalPoint: Ground = { ...COAL_ROAM[1]! },
     coalFrom = { ...coalPoint },
@@ -73,7 +74,7 @@ export function mountRoomLife(root: HTMLElement) {
     const projection = scene?.draw(
       minutes,
       preferences.lamp,
-      roomPose(cycle, elapsed),
+      roomPose(cycle, elapsed, simulationTime),
       coalPoint,
       coalMotion,
       coal.classList.contains('is-resting'),
@@ -130,6 +131,7 @@ export function mountRoomLife(root: HTMLElement) {
       const dt = last ? Math.min((now - last) / 1000, 0.1) : 0;
       last = now;
       elapsed += dt;
+      simulationTime += dt;
       if (elapsed >= roomDuration(cycle)) {
         elapsed -= roomDuration(cycle);
         visits++;

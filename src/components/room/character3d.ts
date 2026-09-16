@@ -6,7 +6,8 @@ import {
   type VRM,
   type VRMHumanBoneName,
 } from '@pixiv/three-vrm';
-import { footStep, SEAT_HEIGHT, type RoomPose } from './motion3d';
+import { FLOOR_HEIGHT, SEAT_HEIGHT, type RoomPose } from './motion3d.ts';
+import { createBodyAnimation } from './clips3d.ts';
 
 /** Two-bone IK in world space, keeping the knee on the forward side of the leg. */
 export function solveLimb(
@@ -23,7 +24,11 @@ export function solveLimb(
   const l1 = a.distanceTo(b),
     l2 = b.distanceTo(c),
     direction = target.clone().sub(a),
-    length = T.MathUtils.clamp(direction.length(), 0.001, l1 + l2 - 0.0001);
+    length = T.MathUtils.clamp(
+      direction.length(),
+      Math.abs(l1 - l2) + 0.002,
+      l1 + l2 - 0.004,
+    );
   direction.normalize();
   const bend = pole.clone().sub(a);
   bend.addScaledVector(direction, -bend.dot(direction)).normalize();
@@ -88,33 +93,66 @@ export async function loadGirl(signal: AbortSignal) {
       m.shadeColorFactor?.setHex(color).multiplyScalar(0.78);
     }
   }
+  return createGirlRig(vrm);
+}
+
+/** Shared with the actual-model skeleton tests; rendering is not needed for contact checks. */
+export function createGirlRig(vrm: VRM) {
   const bone = (name: VRMHumanBoneName) =>
     vrm.humanoid.getNormalizedBoneNode(name)!;
   const hips = bone('hips'),
     baseY = hips.position.y;
   vrm.scene.updateMatrixWorld(true);
-  const footY = bone('leftFoot').getWorldPosition(new T.Vector3()).y;
-  const footX = Math.abs(bone('leftFoot').getWorldPosition(new T.Vector3()).x);
-  let previousTime = 0;
+  const footY =
+    bone('leftFoot').getWorldPosition(new T.Vector3()).y + FLOOR_HEIGHT;
+  const animation = createBodyAnimation(bone);
+  const legLength = (side: 'left' | 'right') =>
+    bone(`${side}UpperLeg`)
+      .getWorldPosition(new T.Vector3())
+      .distanceTo(bone(`${side}LowerLeg`).getWorldPosition(new T.Vector3())) +
+    bone(`${side}LowerLeg`)
+      .getWorldPosition(new T.Vector3())
+      .distanceTo(bone(`${side}Foot`).getWorldPosition(new T.Vector3()));
+  const lengths = [legLength('left'), legLength('right')];
+  let previousTime: number | undefined;
   function pose(p: RoomPose) {
-    vrm.humanoid.resetNormalizedPose();
+    animation.sample(p);
     vrm.scene.position.set(p.x, 0, p.z);
     vrm.scene.rotation.y = p.yaw;
     // Pelvis rests just above the padded seat. Standing feet retain their bind-pose height.
     hips.position.y =
-      baseY + (SEAT_HEIGHT + 0.105 - baseY) * p.seated - 0.038 * (1 - p.seated);
-    bone('spine').rotation.x =
-      0.17 * p.seated + Math.sin(p.seated * Math.PI) * 0.2;
-    bone('chest').rotation.x = 0.04 * p.seated + Math.sin(p.time * 1.4) * 0.006;
-    bone('head').rotation.x = 0.16 * p.seated;
+      baseY +
+      (SEAT_HEIGHT + 0.105 - baseY) * p.seated -
+      0.045 * (1 - p.seated) -
+      0.009 * Math.sin(p.phase * Math.PI * 2) ** 2 * p.walk;
+    bone('chest').rotation.x += Math.sin(p.time * 1.4) * 0.006;
+    bone('head').rotation.y += Math.sin(p.time * 0.29) * 0.018 * (1 - p.walk);
+    bone('neck').rotation.y += p.lookAhead;
+    vrm.scene.updateMatrixWorld(true);
+    let lowerPelvis = 0;
+    for (const [i, side] of ['left', 'right'].entries()) {
+      const hip = bone(`${side}UpperLeg` as VRMHumanBoneName).getWorldPosition(
+          new T.Vector3(),
+        ),
+        f = p.feet[i]!;
+      const horizontal = (hip.x - f.x) ** 2 + (hip.z - f.z) ** 2;
+      const vertical = Math.sqrt(
+        Math.max(0.01, (lengths[i]! - 0.012) ** 2 - horizontal),
+      );
+      lowerPelvis = Math.max(
+        lowerPelvis,
+        hip.y - (footY + f.y + Math.abs(Math.sin(f.pitch)) * 0.1) - vertical,
+      );
+    }
+    hips.position.y -= Math.min(0.065, lowerPelvis);
     vrm.scene.updateMatrixWorld(true);
     const world = (x: number, y: number, z: number) =>
       vrm.scene.localToWorld(new T.Vector3(x, y, z));
-    for (const [side, sign, offset] of [
+    for (const [side, sign, index] of [
       ['left', 1, 0],
-      ['right', -1, 0.5],
+      ['right', -1, 1],
     ] as const) {
-      const gait = footStep(p.phase + offset);
+      const gait = p.feet[index];
       const foot = bone(`${side}Foot`),
         upper = bone(`${side}UpperLeg`),
         lower = bone(`${side}LowerLeg`);
@@ -122,36 +160,36 @@ export async function loadGirl(signal: AbortSignal) {
         upper,
         lower,
         foot,
-        world(
-          sign * footX,
-          footY + gait.y * p.walk * (1 - p.seated),
-          gait.z * p.walk * (1 - p.seated) + 0.32 * p.seated,
+        new T.Vector3(
+          gait.x,
+          footY + gait.y + Math.abs(Math.sin(gait.pitch)) * 0.1,
+          gait.z,
         ),
-        world(sign * footX, 0.48, 1.2),
+        world(sign * 0.12, 0.48, 1.2),
       );
-      // Keep shoe soles level, independently of the knee bend.
+      // Swing rolls the shoe; the contact phase retains a world-space planted sole.
       foot.quaternion.copy(
         foot
           .parent!.getWorldQuaternion(new T.Quaternion())
           .invert()
-          .multiply(vrm.scene.getWorldQuaternion(new T.Quaternion())),
+          .multiply(
+            new T.Quaternion().setFromEuler(
+              new T.Euler(gait.pitch, gait.yaw, 0, 'YXZ'),
+            ),
+          ),
       );
       const arm = bone(`${side}UpperArm`),
         forearm = bone(`${side}LowerArm`),
         hand = bone(`${side}Hand`);
-      arm.rotation.z = -sign * 1.35;
-      arm.rotation.x =
-        Math.sin((p.phase + offset) * Math.PI * 2) * 0.14 * p.walk;
-      forearm.rotation.y = -sign * 0.13;
-      if (p.seated > 0.01) {
+      if (p.hands > 0) {
         vrm.scene.updateMatrixWorld(true);
         const resting = hand.getWorldPosition(new T.Vector3());
-        const reading = world(sign * 0.12, 0.85, 0.38);
+        const reading = world(sign * 0.12, 0.895, 0.44);
         solveLimb(
           arm,
           forearm,
           hand,
-          resting.lerp(reading, p.seated),
+          resting.lerp(reading, p.hands),
           world(sign * 0.5, 0.69, 0.12),
         );
       } else if (side === 'right' && p.reach > 0) {
@@ -162,18 +200,18 @@ export async function loadGirl(signal: AbortSignal) {
           hand,
           hand
             .getWorldPosition(new T.Vector3())
-            .lerp(world(-0.18, 1.18, 0.4), p.reach),
-          world(-0.5, 0.9, 0.3),
+            .lerp(new T.Vector3(-2.04, 1.3, -1.045), p.reach),
+          new T.Vector3(-1.65, 0.95, -1.12),
         );
       }
     }
-    if (p.seated > 0.5)
+    if (p.hands > 0)
       for (const [side, sign] of [
         ['left', 1],
         ['right', -1],
       ] as const) {
         const hand = bone(`${side}Hand`);
-        hand.quaternion.copy(
+        hand.quaternion.slerp(
           hand
             .parent!.getWorldQuaternion(new T.Quaternion())
             .invert()
@@ -183,6 +221,7 @@ export async function loadGirl(signal: AbortSignal) {
                 new T.Euler(0, (-sign * Math.PI) / 2, 0),
               ),
             ),
+          p.hands,
         );
       }
     const blink = p.time % 5.7;
@@ -190,11 +229,12 @@ export async function loadGirl(signal: AbortSignal) {
       'blink',
       blink < 0.16 ? Math.sin((blink / 0.16) * Math.PI) : 0,
     );
-    const delta = p.time - previousTime;
+    const firstPose = previousTime === undefined;
+    const delta = firstPose ? 0 : p.time - previousTime!;
     const dt = Math.max(0, Math.min(0.05, delta));
     previousTime = p.time;
     // Scrubbing, a new cycle, or a heavily throttled tab must not fling the hair.
-    if (delta < 0 || delta > 0.2) {
+    if (firstPose || delta < 0 || delta > 0.2) {
       vrm.humanoid.update();
       vrm.nodeConstraintManager?.update();
       vrm.scene.updateMatrixWorld(true);
@@ -202,5 +242,5 @@ export async function loadGirl(signal: AbortSignal) {
     }
     vrm.update(dt);
   }
-  return { object: vrm.scene, pose, vrm };
+  return { object: vrm.scene, pose, vrm, dispose: animation.dispose };
 }

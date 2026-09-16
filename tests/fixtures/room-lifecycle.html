@@ -55,7 +55,7 @@
  <\/script>`;
       iframe.srcdoc = source.replace(
         '<head>',
-        '<head><base href="http://127.0.0.1:4650/">' + bootstrap,
+        '<head><base href="' + location.origin + '/">' + bootstrap,
       );
       output.textContent = '模式：' + mode;
       iframe.onload = () =>

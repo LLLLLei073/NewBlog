@@ -38,35 +38,123 @@
   </select></label
 >
 <label>动作秒数 <input id="time" type="number" value="0" step=".1" /></label
-><button id="play">播放三个循环</button> <output id="state">加载</output
+><label
+  >视角
+  <select id="view">
+    <option value="room">全景</option>
+    <option value="side">人物侧面</option>
+    <option value="front">人物正面</option>
+  </select></label
+>
+<button id="play">播放三个循环</button> <output id="state">加载</output
 ><canvas></canvas>
+<pre id="metrics"></pre>
 <script type="module">
+  import * as T from '/node_modules/three/build/three.module.js';
   import { createRoom3d } from '/src/components/room/scene3d.ts';
   import {
     roomPose,
     roomCycle,
     roomDuration,
     COAL_ROAM,
+    FLOOR_HEIGHT,
   } from '/src/components/room/motion3d.ts';
   const scene = await createRoom3d(
     document.querySelector('canvas'),
     new AbortController().signal,
   );
-  const cycle = roomCycle('shelf', 6),
-    duration = roomDuration(cycle);
+  const cycles = [roomCycle('window'), roomCycle('shelf'), roomCycle('window')];
+  const duration = cycles.reduce((n, c) => n + roomDuration(c), 0);
   let playing = false,
     t = 0,
     last = 0,
     frames = 0;
   const draw = () => {
-    scene.draw(+light.value, lamp.value, roomPose(cycle, t), COAL_ROAM[1], 0);
-    state.textContent = `${t.toFixed(2)} / ${duration.toFixed(2)} 秒 · ${Math.floor(t / duration)} 循环`;
+    let local = t,
+      cycle = cycles[0],
+      index = 0;
+    while (index < 2 && local >= roomDuration(cycle)) {
+      local -= roomDuration(cycle);
+      cycle = cycles[++index];
+    }
+    const pose = roomPose(cycle, local, t);
+    const camera = scene.camera;
+    if (view.value === 'room') {
+      camera.position.set(6.5, 5.1, 8.8);
+      camera.lookAt(0, 1, 0);
+      camera.zoom = 1;
+    } else {
+      camera.position.set(
+        pose.x + (view.value === 'side' ? 4 : 0),
+        1.1,
+        pose.z + (view.value === 'side' ? 0 : 4),
+      );
+      camera.lookAt(pose.x, 0.85, pose.z);
+      camera.zoom = 2.8;
+    }
+    camera.updateProjectionMatrix();
+    camera.updateMatrixWorld();
+    scene.draw(+light.value, lamp.value, pose, COAL_ROAM[1], 0);
+    state.textContent = `${t.toFixed(2)} / ${duration.toFixed(2)} 秒 · 第 ${index + 1} 循环 · ${pose.action}`;
+    const bone = (name) =>
+      scene.girl.vrm.humanoid
+        .getNormalizedBoneNode(name)
+        .getWorldPosition(new T.Vector3());
+    const error = pose.feet.map((f, i) =>
+      bone(i ? 'rightFoot' : 'leftFoot').distanceTo(
+        new T.Vector3(
+          f.x,
+          FLOOR_HEIGHT + 0.100651 + f.y + Math.abs(Math.sin(f.pitch)) * 0.1,
+          f.z,
+        ),
+      ),
+    );
+    let shoeMinY = Infinity;
+    scene.girl.object.traverse((o) => {
+      if (!o.isSkinnedMesh) return;
+      const mats = Array.isArray(o.material) ? o.material : [o.material];
+      o.skeleton.update();
+      const groups = o.geometry.groups.length
+        ? o.geometry.groups
+        : [
+            {
+              start: 0,
+              count:
+                o.geometry.index?.count ?? o.geometry.attributes.position.count,
+              materialIndex: 0,
+            },
+          ];
+      for (const g of groups) {
+        if (!/Shoes/.test(mats[g.materialIndex]?.name)) continue;
+        for (let i = g.start; i < g.start + g.count; i++) {
+          const v = o.getVertexPosition(
+            o.geometry.index ? o.geometry.index.getX(i) : i,
+            new T.Vector3(),
+          );
+          o.localToWorld(v);
+          shoeMinY = Math.min(shoeMinY, v.y);
+        }
+      }
+    });
+    metrics.textContent = JSON.stringify(
+      {
+        action: pose.action,
+        seconds: +t.toFixed(2),
+        shoeMinY,
+        footErrorMm: error.map((e) => +(e * 1000).toFixed(2)),
+        hips: bone('hips').toArray(),
+        leftKnee: bone('leftLowerLeg').toArray(),
+        leftHand: bone('leftHand').toArray(),
+      },
+      null,
+      2,
+    );
   };
   time.oninput = () => {
     t = +time.value;
     draw();
   };
-  light.onchange = lamp.onchange = draw;
+  light.onchange = lamp.onchange = view.onchange = draw;
   play.onclick = () => {
     playing = !playing;
     last = 0;
@@ -74,13 +162,17 @@
   };
   function frame(now) {
     if (!playing) return;
+    if (last && now - last < 1000 / 30) {
+      requestAnimationFrame(frame);
+      return;
+    }
     if (last) {
       t += (now - last) / 1000;
       frames++;
     }
     last = now;
     draw();
-    if (t >= duration * 3) {
+    if (t >= duration) {
       playing = false;
       state.textContent += ' 完成 · ' + frames + ' 帧';
     } else requestAnimationFrame(frame);
