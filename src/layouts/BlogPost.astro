@@ -3,6 +3,7 @@ import BaseLayout from './BaseLayout.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import TableOfContents from '../components/TableOfContents.astro';
 import Comments from '../components/Comments.astro';
+import CharacterDock from '../components/live2d/CharacterDock.astro';
 import { getCollection } from 'astro:content';
 import { readingTime, wordCount } from '../utils/reading';
 import { getPostCategory } from '../utils/categories.ts';
@@ -317,6 +318,9 @@ const currentPath = Astro.url.pathname;
       </ul>
     </div>
   </div>
+
+  <!-- 阅读页看板娘：桌面端、精细指针、未开启减少动效时才会加载 -->
+  <CharacterDock />
 </BaseLayout>
 
 <style>

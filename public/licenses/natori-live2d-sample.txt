@@ -1,0 +1,40 @@
+Live2D 官方样本模型 Natori —— 来源与许可记录
+============================================
+
+模型名称：Natori（Live2D Cubism 官方样本模型）
+下载日期：2026-10-06
+下载来源：https://github.com/Live2D/CubismWebSamples
+          Samples/Resources/Natori/（分支 develop，经 jsDelivr 逐文件获取）
+上游文件共 25 个，本地落地于 public/live2d/natori/，总体积 3.32 MB。
+
+许可
+----
+1) Live2D Free Material License（无偿提供素材使用授权协议）
+   本模型属于 CubismWebSamples 中「Free Material License」清单内的素材
+   （Haru / Hiyori / Mao / Mark / Natori / Ren / Rice / Wanko）。
+   英文：https://www.live2d.com/eula/live2d-free-material-license-agreement_en.html
+   中文：https://www.live2d.com/eula/live2d-free-material-license-agreement_cn.html
+
+2) Live2D Sample Model Terms（每个模型单独的使用条款）
+   上游 NOTICE 明确要求：使用这些模型须同意各模型对应的条款。
+   英文：https://www.live2d.com/eula/live2d-sample-model-terms_en.html
+
+3) 运行库、框架与 Core 的许可（与模型无关，随依赖包引入）
+   - Live2D Cubism Core：Live2D Proprietary Software License
+   - Cubism Web Framework / Samples：Live2D Open Software License
+   - 商业主体（最近会计年度营业额 ≥ 1000 万日元）需另行取得 Cubism SDK Release License
+   英文：https://www.live2d.com/eula/live2d-proprietary-software-license-agreement_en.html
+        https://www.live2d.com/eula/live2d-open-software-license-agreement_en.html
+        https://www.live2d.com/en/download/cubism-sdk/release-license/
+
+发布前请注意
+------------
+把模型文件提交进公开仓库、并通过 GitHub Pages 对外分发属于「对外发布素材」。
+本项目只按本人自用博客登记来源与许可，未替使用者判断该发布行为是否落在上述条款允许范围内。
+如需撤回：删除 public/live2d/natori/ 目录，并把
+src/components/live2d/config.ts 中的 MODEL 改回 null，页面即恢复为不含看板娘的状态。
+
+本地对上游文件做的唯一改动
+--------------------------
+无。Natori.model3.json 与全部 24 个资源文件均按上游原样保存（首次下载时
+exp/exp_05.exp3.json 因 CDN 缓存瞬时 404，重试后成功获取；最终以原始字节写入）。

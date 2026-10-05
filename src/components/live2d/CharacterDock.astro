@@ -1,0 +1,130 @@
+---
+/* 阅读页的 Live2D 看板娘。只在文章页输出容器，脚本按门控与空闲时机加载模型。
+   config 里 MODEL 为 null（模型尚未接入）时整块不渲染，页面完全不受影响。 */
+import { MODEL } from './config';
+const enabled = MODEL !== null;
+---
+
+{
+  enabled && (
+    <div
+      class="live2d-dock"
+      data-live2d
+      data-live2d-model={MODEL.path}
+      data-live2d-ready="false"
+    >
+      <div
+        class="live2d-stage"
+        data-live2d-host
+        role="button"
+        tabindex="0"
+        aria-label="和看板娘互动：点一下，或者按回车，她会有反应"
+      />
+      <button
+        class="live2d-toggle"
+        type="button"
+        data-live2d-toggle
+        aria-pressed="false"
+      >
+        隐藏看板娘
+      </button>
+      <p class="live2d-status" data-live2d-status role="status" />
+    </div>
+  )
+}
+
+<script>
+  import { mountCharacter } from './character';
+
+  const root = document.querySelector<HTMLElement>('[data-live2d]');
+  if (root) mountCharacter(root);
+</script>
+
+<style>
+  /* 层级低于返回顶部(40)、悬浮导航(45)、进度条(50)与灯箱(200)，永不遮挡控制件。 */
+  .live2d-dock {
+    position: fixed;
+    left: 0.75rem;
+    bottom: calc(0.75rem + env(safe-area-inset-bottom));
+    z-index: 30;
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+    pointer-events: none;
+  }
+
+  /* 与 JS 门控一致：窄屏与触屏不显示，也不加载模型。 */
+  @media (min-width: 1024px) {
+    .live2d-dock {
+      display: flex;
+    }
+  }
+
+  .live2d-dock[data-live2d-off='true'] .live2d-stage {
+    display: none;
+  }
+
+  .live2d-stage {
+    position: relative;
+    pointer-events: auto;
+  }
+
+  .live2d-dock:not([data-live2d-ready='true']) .live2d-stage {
+    pointer-events: none;
+  }
+
+  .live2d-stage:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 4px;
+    border-radius: var(--radius);
+  }
+
+  .live2d-dock :global(.oml2d-stage) {
+    max-width: 100%;
+  }
+
+  .live2d-toggle {
+    pointer-events: auto;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0 0.75rem;
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    color: var(--muted-foreground);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    transition:
+      color 0.15s ease,
+      border-color 0.15s ease;
+  }
+
+  .live2d-toggle:hover {
+    color: var(--primary);
+    border-color: var(--brand-300);
+  }
+
+  .live2d-status {
+    max-width: 200px;
+    margin: 0;
+    font-size: 11px;
+    line-height: 1.7;
+    color: var(--muted-foreground);
+  }
+
+  .live2d-status:empty {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .live2d-toggle {
+      transition: none;
+    }
+  }
+</style>

@@ -7,7 +7,7 @@
     "test:room": "node --test tests/room.test.ts tests/character.test.ts",
     "test:assistant": "node --test tests/assistant.test.ts",
     "test:site": "node --test tests/site.test.ts",
-    "test": "npm run build && npm run test:site && npm run test:room && npm run test:assistant && npm run test:illustration",
+    "test": "npm run build && npm run test:site && npm run test:room && npm run test:assistant && npm run test:illustration && npm run test:live2d",
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
@@ -15,7 +15,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "astro": "astro",
-    "test:illustration": "node --test tests/illustration.test.ts"
+    "test:illustration": "node --test tests/illustration.test.ts",
+    "test:live2d": "node --test tests/live2d.test.ts"
   },
   "keywords": [],
   "author": "",
@@ -29,6 +30,7 @@
     "astro": "^7.1.6",
     "katex": "^0.18.1",
     "mermaid": "^11.16.0",
+    "oh-my-live2d": "0.19.3",
     "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0",
     "three": "^0.185.1"
