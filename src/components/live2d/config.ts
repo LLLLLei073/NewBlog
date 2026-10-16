@@ -15,6 +15,8 @@ export interface Live2dModel {
   motions: string[];
   /** 优先用于「摇头」的动作组。 */
   shakeMotion?: string;
+  /** 配合「摇头」的表情，让点击反应更明确。 */
+  shakeExpression?: string;
   /** 优先用于「害羞」的表情名。 */
   shyExpression?: string;
   /** 没有害羞表情时退回的动作组。 */
@@ -24,20 +26,23 @@ export interface Live2dModel {
 }
 
 /**
- * Live2D 官方样本模型 Natori（`Samples/Resources/Natori`，Free Material License）。
- * 来源、许可与体积见 docs/live2d/README.md 与 public/licenses/natori-live2d-sample.txt。
+ * 用户指定的「小书仙青兔」。原包没有把表情和动作写进 model3.json，
+ * 本地清单补登了全部 exp3，并把 Scene1（头部参数来回摆动）登记为 Shake。
+ * 来源与体积见 docs/live2d/README.md。
  */
 export const MODEL: Live2dModel | null = {
-  name: 'natori',
-  path: '/live2d/natori/Natori.model3.json',
-  /** 舞台 200×260 下按浏览器实测调出的缩放与位置：半身构图，头肩填满舞台。 */
-  scale: 0.115,
-  position: [-130, 10],
-  motions: ['Idle', 'TapBody'],
-  /** 样本的 TapBody 组就是「被戳到」的反应，用作摇头。 */
-  shakeMotion: 'TapBody',
-  /** 样本自带 Blushing 表情，正好是害羞。 */
-  shyExpression: 'Blushing',
+  name: 'qingtu',
+  path: '/live2d/qingtu/小书仙青兔.model3.json',
+  /** 画布 4000×7000；舞台 200×260 下实测为「兔耳到腰」的半身构图。 */
+  scale: 0.083,
+  position: [-65, 5],
+  motions: ['Shake'],
+  /** Scene1 把头部参数在 -30 与 30 之间来回摆（原包登记为待机动作），用作摇头。 */
+  shakeMotion: 'Shake',
+  /** 摇头同时给一个惊讶表情，避免动作太含蓄。 */
+  shakeExpression: '惊讶',
+  /** 模型自带「脸红」表情，用作害羞。 */
+  shyExpression: '脸红',
   mirror: false,
 };
 

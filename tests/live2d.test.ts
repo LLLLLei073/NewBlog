@@ -69,9 +69,16 @@ test('反应规划在缺少动作组时仍然给出文案', () => {
   const named = {
     ...plain,
     shakeMotion: 'ShakeHead',
+    shakeExpression: 'f03',
     shyExpression: 'f02',
     shyMotion: 'Favor',
   };
+  assert.deepEqual(planReaction(named, 0, null, lines), {
+    kind: 'shake',
+    line: '别摇啦',
+    motion: 'ShakeHead',
+    expression: 'f03',
+  });
   assert.deepEqual(planReaction(named, 1, '别摇啦', lines), {
     kind: 'shy',
     line: '被发现了',
@@ -229,7 +236,10 @@ test(
       'MOC3',
       'moc3 文件头必须合法',
     );
-    assert.ok(total < 25 * 1024 * 1024, `模型总体积 ${total} 超出预算`);
+    assert.ok(
+      total < 80 * 1024 * 1024,
+      `模型总体积 ${total} 超出预算（单文件仍须小于 GitHub 100MB 限制）`,
+    );
 
     const inventory = inventoryFromManifest(manifest);
     assert.deepEqual(
@@ -240,8 +250,13 @@ test(
     for (const group of [MODEL.shakeMotion, MODEL.shyMotion]) {
       if (group) assert.ok(inventory.motions.includes(group), group);
     }
-    if (MODEL.shyExpression) {
-      assert.ok(inventory.expressions.includes(MODEL.shyExpression));
+    for (const expression of [MODEL.shakeExpression, MODEL.shyExpression]) {
+      if (expression) {
+        assert.ok(
+          inventory.expressions.includes(expression),
+          `${expression} 必须出现在 manifest 的表情清单里`,
+        );
+      }
     }
   },
 );

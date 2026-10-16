@@ -55,8 +55,8 @@ export function planReaction(
     line,
     motion: motionFor(model, kind, clickIndex),
   };
-  if (kind === 'shy' && model.shyExpression) {
-    reaction.expression = model.shyExpression;
-  }
+  const expression =
+    kind === 'shake' ? model.shakeExpression : model.shyExpression;
+  if (expression) reaction.expression = expression;
   return reaction;
 }
