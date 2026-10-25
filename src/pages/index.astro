@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { postHref } from '../utils/postRoute';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Room from '../components/room/Room.astro';
 import FormattedDate from '../components/FormattedDate.astro';
@@ -40,7 +41,7 @@ const recent = (await getCollection('blog'))
                   <FormattedDate date={post.data.pubDate} />
                 </p>
                 <h3>
-                  <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+                  <a href={postHref(post.id, post.data.category)}>{post.data.title}</a>
                 </h3>
                 <p class="note-description">{post.data.description}</p>
               </div>

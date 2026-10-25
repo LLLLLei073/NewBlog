@@ -1,0 +1,152 @@
+---
+/**
+ * 档案封套(占位视觉):中性纸底 + 墨色标题 + 条目专属色的书脊细条,
+ * 图案按 slug 在四种变体间轮换,避免所有封面共用同一排版。
+ * 编号/艺人/评分等信息由外层卡片展示,不烧进封面。
+ * cover 传入真实封面图地址时,直接使用原图(预留能力,当前未启用)。
+ */
+interface Props {
+  title: string;
+  artist?: string;
+  accent: string;
+  cover?: string;
+  slug?: string;
+  class?: string;
+}
+const { title, accent, cover, slug = '', class: klass } = Astro.props;
+
+const PAPER = '#EFEAE0';
+const INK = '#191917';
+const INK_SOFT = '#8A8175';
+
+// 标题自动字号与换行
+const chars = [...title];
+const size = chars.length > 12 ? 26 : chars.length > 7 ? 34 : 44;
+const lines: string[][] =
+  chars.length > 12 ? [chars.slice(0, 10), chars.slice(10, 20)] : [chars];
+
+// 由 slug 派生:确定性变体(0–3)与图案参数
+const hash = [...slug].reduce((a, c) => a * 31 + c.charCodeAt(0), 7);
+const variant = hash % 4;
+const inkFaint = 'rgba(25,25,23,.32)';
+---
+
+<svg
+  class={klass ? `sleeve ${klass}` : 'sleeve'}
+  viewBox="0 0 400 400"
+  role="img"
+  aria-label={`封套:${title}`}
+>
+  {
+    cover ? (
+      <>
+        <image
+          href={cover}
+          x="0"
+          y="0"
+          width="400"
+          height="400"
+          preserveAspectRatio="xMidYMid slice"
+        />
+        <rect
+          width="400"
+          height="400"
+          fill="none"
+          stroke={INK}
+          stroke-opacity="0.18"
+          stroke-width="1.5"
+        />
+      </>
+    ) : (
+      <>
+        <rect width="400" height="400" fill={PAPER} />
+        {/* 书脊细条:条目专属色的唯一落点 */}
+        <rect x="0" y="0" width="9" height="400" fill={accent} />
+        <rect
+          x="22"
+          y="22"
+          width="356"
+          height="356"
+          fill="none"
+          stroke={INK}
+          stroke-opacity="0.28"
+          stroke-width="1"
+        />
+
+        {/* 变体图案(slug 轮换,弱化墨色) */}
+        {variant === 0 &&
+          Array.from({ length: 9 }, (_, i) => (
+            <rect
+              x={40 + i * 34}
+              y={318 - ((hash >> i) & 31) * 2.4}
+              width="12"
+              height={16 + ((hash >> i) & 31) * 2.4}
+              fill={inkFaint}
+            />
+          ))}
+        {variant === 1 && (
+          <g fill="none" stroke={inkFaint} stroke-width="1.2">
+            <circle cx="330" cy="112" r="46" />
+            <circle cx="330" cy="112" r="30" />
+            <circle cx="330" cy="112" r="15" />
+          </g>
+        )}
+        {variant === 2 &&
+          Array.from({ length: 5 }, (_, r) =>
+            Array.from({ length: 5 }, (_, c) => (
+              <circle
+                cx={258 + c * 26}
+                cy={252 + r * 26}
+                r={((hash >> (r * 5 + c)) & 1) === 1 ? 4.5 : 2}
+                fill={inkFaint}
+              />
+            )),
+          )}
+        {variant === 3 && (
+          <g stroke={inkFaint} stroke-width="1.2">
+            {Array.from({ length: 7 }, (_, i) => (
+              <line x1={236 + i * 24} y1="352" x2={296 + i * 24} y2="292" />
+            ))}
+          </g>
+        )}
+
+        {/* 标题 */}
+        <text
+          x="42"
+          fill={INK}
+          font-family="var(--font-serif)"
+          font-weight="700"
+          font-size={size}
+        >
+          {lines.map((line, li) => (
+            <tspan x="42" dy={li === 0 ? 152 : size * 1.18}>
+              {line.join('')}
+            </tspan>
+          ))}
+        </text>
+
+        {/* 角标(条目专属色) */}
+        <rect x="348" y="34" width="16" height="16" fill={accent} />
+
+        <text
+          x="42"
+          y="374"
+          fill={INK_SOFT}
+          font-family="var(--font-mono)"
+          font-size="10"
+          letter-spacing="2.2"
+        >
+          A PRIVATE ARCHIVE OF LISTENING
+        </text>
+      </>
+    )
+  }
+</svg>
+
+<style>
+  .sleeve {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+</style>

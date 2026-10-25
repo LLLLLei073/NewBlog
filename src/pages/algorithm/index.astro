@@ -1,0 +1,457 @@
+---
+/**
+ * 「演算手稿」专栏首页:不对称编辑布局首屏(左文字 + 右图论示意 +
+ * 递归树草稿)、最近整理索引、底部本周主题四格。
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AlgoNav from '../../components/algo/AlgoNav.astro';
+import GraphFigure from '../../components/algo/GraphFigure.astro';
+import RecursionSketch from '../../components/algo/RecursionSketch.astro';
+import { COLUMN } from '../../data/algorithm/column.ts';
+import {
+  DIFFICULTY_LABEL,
+  STATUS_LABEL,
+  topicOf,
+  type Difficulty,
+  type NoteStatus,
+} from '../../data/algorithm/topics.ts';
+import { readingTime } from '../../utils/reading.ts';
+import { postHref } from '../../utils/postRoute.ts';
+
+const posts = (await getCollection('blog'))
+  .filter((p) => !p.data.draft && p.data.category === 'algorithm')
+  .sort((a, b) => {
+    const ka = a.data.fileNo ?? a.data.pubDate.toISOString();
+    const kb = b.data.fileNo ?? b.data.pubDate.toISOString();
+    return kb.localeCompare(ka);
+  });
+
+const recent = posts.slice(0, 5);
+const latest = posts[0];
+const latestDate = latest
+  ? (latest.data.updatedDate ?? latest.data.pubDate).toISOString().slice(0, 10)
+  : COLUMN.updated;
+---
+
+<BaseLayout
+  title="演算手稿 · Algorithm Field Notes"
+  description={COLUMN.intro}
+  pageName="algorithm"
+>
+  <div class="algo ap-home">
+    <AlgoNav />
+
+    <!-- ======== 首屏 ======== -->
+    <section class="hero grid-paper grid-paper-fade" aria-label="专栏介绍">
+      <div class="hero-grid">
+        <div class="hero-left">
+          <p class="hero-kicker mono-label rise d1">
+            <span class="hk-no">ALGORITHM</span>
+            <span class="hk-sep" aria-hidden="true">/</span>
+            <span>FIELD NOTES</span>
+            <span class="hk-sep" aria-hidden="true">/</span>
+            <span class="mono-num">{COLUMN.updated}</span>
+          </p>
+          <h1 class="rise d1">{COLUMN.headline}</h1>
+          <p class="hero-intro rise d2">{COLUMN.intro}</p>
+          <p class="hero-sub hand-note rise d2">「{COLUMN.sub}」</p>
+          <div class="hero-cta rise d3">
+            <a class="cta-primary" href="/algorithm/notes/">开始阅读 →</a>
+            <a class="cta-ghost" href="/algorithm/map/">知识地图</a>
+          </div>
+          <p class="hero-latest mono-label rise d3">
+            最近更新 <span class="mono-num">{latestDate}</span>
+            {
+              latest && (
+                <>
+                  <span aria-hidden="true">·</span>
+                  <a
+                    href={postHref(latest.id, latest.data.category)}
+                    class="algo-link"
+                  >
+                    {latest.data.fileNo} {latest.data.title}
+                  </a>
+                </>
+              )
+            }
+          </p>
+        </div>
+
+        <div class="hero-right rise d2">
+          <GraphFigure />
+          <div class="hero-sketch">
+            <RecursionSketch />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======== 最近整理 ======== -->
+    <section class="recent" aria-label="最近整理">
+      <header class="sec-head">
+        <h2 class="sec-title">最近整理</h2>
+        <p class="mono-label">RECENT NOTES · {posts.length} 篇</p>
+        <a href="/algorithm/notes/" class="algo-link sec-more">查看全部 →</a>
+      </header>
+      <ol class="recent-list">
+        {
+          recent.map((p) => {
+            const t = topicOf(p.data.topic);
+            const diff = p.data.difficulty
+              ? DIFFICULTY_LABEL[p.data.difficulty as Difficulty]
+              : null;
+            const st = p.data.status
+              ? STATUS_LABEL[p.data.status as NoteStatus]
+              : null;
+            const upd = (p.data.updatedDate ?? p.data.pubDate)
+              .toISOString()
+              .slice(0, 10);
+            const mins = readingTime(typeof p.body === 'string' ? p.body : '');
+            return (
+              <li class="recent-row rise">
+                <span class="mono-num rr-no">{p.data.fileNo ?? '···'}</span>
+                <span class="rr-main">
+                  <a href={postHref(p.id, p.data.category)} class="rr-title">
+                    {p.data.title}
+                  </a>
+                  <span class="rr-meta">
+                    {t && (
+                      <span class="mono-num">
+                        {t.no}·{t.label}
+                      </span>
+                    )}
+                    {diff && <span>{diff}</span>}
+                    {st && (
+                      <span class="status-chip" data-status={p.data.status}>
+                        {st}
+                      </span>
+                    )}
+                  </span>
+                  {p.data.takeaway && <p class="rr-take">{p.data.takeaway}</p>}
+                </span>
+                <span class="rr-side mono-num">
+                  <span class="block">{mins} 分钟</span>
+                  <span class="block">{upd}</span>
+                </span>
+              </li>
+            );
+          })
+        }
+      </ol>
+    </section>
+
+    <!-- ======== 底部四格 ======== -->
+    <section class="band" aria-label="本周学习状态">
+      <div class="band-card rise d1">
+        <p class="mono-label">THIS WEEK · 本周学习主题</p>
+        <h3>{COLUMN.weekly.title}</h3>
+        <p class="band-note">{COLUMN.weekly.note}</p>
+        <a
+          class="algo-link"
+          href={`/algorithm/map/?node=${COLUMN.weekly.mapNode}`}
+        >
+          在地图中查看 →
+        </a>
+      </div>
+      <div class="band-card rise d2">
+        <p class="mono-label">REVIEWING · 正在复习</p>
+        <h3>{COLUMN.reviewing.title}</h3>
+        <p class="band-note">{COLUMN.reviewing.note}</p>
+        {
+          COLUMN.reviewing.noteSlug && (
+            <a
+              class="algo-link"
+              href={`/algorithm/notes/${COLUMN.reviewing.noteSlug}/`}
+            >
+              打开手记 →
+            </a>
+          )
+        }
+      </div>
+      <div class="band-card rise d3">
+        <p class="mono-label">MAP · 知识地图</p>
+        <h3>一张可以持续生长的算法地图</h3>
+        <p class="band-note">从基础结构出发,沿着问题之间的关系继续向前。</p>
+        <a class="algo-link" href="/algorithm/map/">进入地图 →</a>
+      </div>
+      <div class="band-card rise d4">
+        <p class="mono-label" style="color: var(--algo-amber-deep)">
+          CORRECTED · 最近纠正
+        </p>
+        <h3 class="band-wrong">曾被误导:{COLUMN.corrected.wrong}</h3>
+        <p class="band-note">{COLUMN.corrected.right}</p>
+        {
+          COLUMN.corrected.noteSlug && (
+            <a
+              class="algo-link"
+              href={`/algorithm/notes/${COLUMN.corrected.noteSlug}/`}
+            >
+              复盘手记 →
+            </a>
+          )
+        }
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .ap-home {
+    padding-bottom: 3.5rem;
+  }
+
+  /* ===== 首屏 ===== */
+  .hero {
+    position: relative;
+    border-bottom: 1px solid var(--border);
+    padding: clamp(1.8rem, 4vw, 3.4rem) 0 clamp(2rem, 4vw, 3.2rem);
+    margin-bottom: 2.8rem;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.4rem;
+    align-items: center;
+  }
+  @media (min-width: 980px) {
+    .hero-grid {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      gap: 3.2rem;
+    }
+  }
+
+  .hero-kicker {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.6em;
+    margin-bottom: 1.1rem;
+  }
+  .hk-no {
+    color: var(--primary);
+    font-weight: 600;
+  }
+  .hk-sep {
+    opacity: 0.5;
+  }
+  .hero h1 {
+    font-family: var(--font-heading);
+    font-size: clamp(1.9rem, 4.6vw, 3rem);
+    font-weight: 700;
+    line-height: 1.28;
+    letter-spacing: 0.01em;
+    margin: 0 0 1.1rem;
+    color: var(--foreground);
+  }
+  .hero-intro {
+    max-width: 34em;
+    font-size: 0.98rem;
+    line-height: 1.95;
+    color: var(--secondary-foreground);
+    margin: 0 0 0.8rem;
+  }
+  .hero-sub {
+    font-family: var(--font-serif);
+    font-size: 0.88rem;
+    margin: 0 0 1.6rem;
+  }
+  .hero-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    margin-bottom: 1.2rem;
+  }
+  .cta-primary {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0.55rem 1.35rem;
+    background: var(--primary);
+    color: var(--primary-foreground);
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+  .cta-primary:hover {
+    opacity: 0.9;
+  }
+  .cta-ghost {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0.55rem 1.15rem;
+    border: 1px solid var(--border-400);
+    color: var(--foreground);
+    border-radius: 4px;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition:
+      border-color 0.2s ease,
+      color 0.2s ease;
+  }
+  .cta-ghost:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+  .hero-latest {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.55em;
+  }
+
+  .hero-sketch {
+    margin-top: 1rem;
+    max-width: 420px;
+  }
+  @media (min-width: 980px) {
+    .hero-sketch {
+      margin-left: auto;
+    }
+  }
+
+  /* ===== 最近整理 ===== */
+  .sec-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.4rem 1.2rem;
+    margin-bottom: 1.1rem;
+  }
+  .sec-title {
+    font-family: var(--font-heading);
+    font-size: 1.28rem;
+    font-weight: 700;
+    margin: 0;
+  }
+  .sec-more {
+    margin-left: auto;
+    font-size: 0.8rem;
+  }
+  .recent-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--border);
+  }
+  .recent-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.1rem;
+    padding: 1.05rem 0.3rem;
+    border-bottom: 1px solid var(--border);
+    transition: background-color 0.2s ease;
+  }
+  .recent-row:hover {
+    background: var(--accent);
+  }
+  .rr-no {
+    flex: none;
+    width: 2.6em;
+    padding-top: 0.2rem;
+    font-size: 1.02rem;
+    font-weight: 600;
+    color: var(--primary);
+  }
+  .rr-main {
+    flex: 1;
+    min-width: 0;
+  }
+  .rr-title {
+    font-size: 1.02rem;
+    font-weight: 600;
+    color: var(--foreground);
+    text-decoration: none;
+    line-height: 1.5;
+  }
+  .rr-title:hover {
+    color: var(--primary);
+  }
+  .rr-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem 0.9rem;
+    margin-top: 0.3rem;
+    font-size: 0.74rem;
+    color: var(--muted-foreground);
+  }
+  .rr-meta .mono-num {
+    letter-spacing: 0.05em;
+  }
+  .rr-take {
+    margin: 0.45rem 0 0;
+    font-size: 0.84rem;
+    line-height: 1.75;
+    color: var(--secondary-foreground);
+    max-width: 46em;
+  }
+  .rr-side {
+    flex: none;
+    display: none;
+    text-align: right;
+    font-size: 0.72rem;
+    color: var(--muted-foreground);
+    padding-top: 0.3rem;
+  }
+  @media (min-width: 720px) {
+    .rr-side {
+      display: block;
+    }
+  }
+
+  /* ===== 底部四格 ===== */
+  .band {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: 2.8rem;
+  }
+  @media (min-width: 760px) {
+    .band {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (min-width: 1100px) {
+    .band {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  .band-card {
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--popover);
+    padding: 1.1rem 1.2rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .band-card h3 {
+    font-family: var(--font-heading);
+    font-size: 0.98rem;
+    font-weight: 600;
+    line-height: 1.55;
+    margin: 0;
+    color: var(--foreground);
+  }
+  .band-wrong {
+    text-decoration: line-through;
+    text-decoration-color: color-mix(
+      in srgb,
+      var(--algo-amber) 70%,
+      transparent
+    );
+    text-decoration-thickness: 1.5px;
+  }
+  .band-note {
+    margin: 0;
+    font-size: 0.8rem;
+    line-height: 1.8;
+    color: var(--muted-foreground);
+    flex: 1;
+  }
+</style>

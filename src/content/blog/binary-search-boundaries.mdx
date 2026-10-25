@@ -1,0 +1,201 @@
+---
+title: '二分查找：边界究竟应该停在哪里？'
+description: '用闭区间 [left, right] 统一二分查找的写法：循环条件、区间收缩与不变量证明，以及空数组、重复元素等边界与防溢出中点。'
+pubDate: '2026-10-25'
+category: 'algorithm'
+topic: 'search-sort'
+difficulty: 'beginner'
+status: 'done'
+fileNo: '047'
+takeaway: '二分查找的关键在于始终维护同一个区间定义：闭区间 [left, right] 非空才循环，收缩时把 mid 也丢掉。'
+timeComplexity: 'O(log n)'
+spaceComplexity: 'O(1)'
+prerequisites: ['数组', '循环与整数运算']
+refs: ['LeetCode 704 · 二分查找', 'LeetCode 34 · 在排序数组中查找元素的第一个和最后一个位置']
+demo: 'binary-search'
+---
+
+import CodeTabs from '../../components/algo/CodeTabs.astro';
+import InvariantCallout from '../../components/algo/InvariantCallout.astro';
+import MarginNote from '../../components/algo/MarginNote.astro';
+import StepVisualizer from '../../components/algo/StepVisualizer.astro';
+
+## 1. 问题描述
+
+给定一个**升序**数组 `nums` 和目标值 `target`，要求返回 `target` 在数组中的下标；如果不存在，返回 `-1`。数组元素互不相同（这一条很多题面会悄悄不写，但它决定了「重复元素」那条分支要不要处理——见 §8）。
+
+朴素做法是从头到尾扫一遍，$O(n)$。但「有序」这个条件我们还没用上：**有序意味着每次比较都能排除掉一大批候选**。二分查找把这件事做到极致，做到 $O(\log n)$。
+
+## 2. 直觉与观察
+
+想象你在一本按拼音排序的词典里查「演」。你不会从第一页翻起——你会翻开中间：
+
+- 如果中间那个字比「演」小，「演」只可能在**右半本**；
+- 如果比「演」大，只可能在**左半本**；
+- 每翻一次，剩下的搜索范围都**减半**。
+
+<MarginNote>
+第一次学的时候我把「区间」理解成两个下标各自独立移动，写出来的循环条件和收缩永远对不上。后来才明白：先说清「区间是什么」，其余全部随之确定。
+</MarginNote>
+
+关键观察是：**「在哪半边」是一次比较就能回答的问题**，因为数组有序。而「减半」叠加 $\log_2 n$ 次就只剩一个元素——这就是 $O(\log n)$ 的来源。
+
+## 3. 推导过程
+
+把直觉翻译成循环，需要先做一个决定——**区间怎么定义**。这是二分查找所有争议的总源头。我固定用**闭区间** $[left, right]$：`left` 和 `right` 都是**仍可能包含答案**的下标。
+
+推导链条如下：
+
+1. **初始**：答案可能在任何位置，所以 $left = 0$，$right = n - 1$，闭区间覆盖全部；
+2. **循环条件**：闭区间 $[left, right]$ 非空的条件是 $left \le right$（相等时区间里还有一个元素）；
+3. **取中点**：$mid = \lfloor (left + right) / 2 \rfloor$（防溢出写法见 §5）；
+4. **收缩**：
+   - `nums[mid] == target`：直接返回；
+   - `nums[mid] < target`：$mid$ 及其左侧都**严格小于**目标，答案只可能在 $[mid+1, right]$ → 令 $left = mid + 1$；
+   - `nums[mid] > target`：对称地，答案只可能在 $[left, mid-1]$ → 令 $right = mid - 1$；
+5. **终止**：循环退出时 $left > right$，闭区间为空，说明答案不存在，返回 $-1$。
+
+注意第 4 步：**收缩时把 `mid` 本身也丢掉**。因为这一轮已经比较过 `nums[mid]`，它不可能是答案——这也是区间能严格变小、循环必然终止的原因。
+
+## 4. 算法不变量
+
+<InvariantCallout kind="循环不变量">
+若 target 在数组中，则它的下标始终位于闭区间 [left, right] 内。
+</InvariantCallout>
+
+用不变量复查三段：
+
+- **初始化**：$[0, n-1]$ 覆盖整个数组，成立；
+- **保持**：`nums[mid] < target` 时，有序性保证 $[left, mid]$ 内全都小于目标，答案若存在只能在 $[mid+1, right]$——`left = mid + 1` 保住了不变量；另一侧对称；
+- **终止**：退出时 $left > right$，区间为空。若 target 存在，不变量说它在空区间里——矛盾。所以返回 `-1` 是对的。
+
+一旦把不变量写出来，`while` 条件和收缩语句就**只能**这么搭配：用闭区间却写 `left < right`，会在区间剩一个元素时提前退出；收缩不舍弃 `mid`，就可能原地踏步死循环。边界不是背出来的，是从定义推出来的。
+
+## 5. 代码实现
+
+三种语言同一套结构，关键行已高亮（与 §3 的推导一一对应）：
+
+<CodeTabs
+  title="binary-search"
+  defaultLang="python"
+  variants={[
+    {
+      lang: 'python',
+      label: 'Python',
+      highlight: [3, 4, 8, 10],
+      code: `def binary_search(nums: list[int], target: int) -> int:
+    """在升序数组中查找 target,返回下标;不存在返回 -1。"""
+    left, right = 0, len(nums) - 1        # 闭区间 [left, right]
+    while left <= right:                  # 区间非空才继续
+        mid = left + (right - left) // 2  # 防溢出中点
+        if nums[mid] == target:
+            return mid
+        if nums[mid] < target:
+            left = mid + 1                # 答案只可能在 (mid, right]
+        else:
+            right = mid - 1               # 答案只可能在 [left, mid)
+    return -1                             # 区间为空:不存在`,
+    },
+    {
+      lang: 'cpp',
+      label: 'C++',
+      highlight: [3, 4, 8, 10],
+      code: `int binarySearch(const vector<int>& nums, int target) {
+    // 在升序数组中查找 target,返回下标;不存在返回 -1。
+    int left = 0, right = (int)nums.size() - 1;   // 闭区间 [left, right]
+    while (left <= right) {                       // 区间非空才继续
+        int mid = left + (right - left) / 2;      // 防溢出中点
+        if (nums[mid] == target) {
+            return mid;
+        }
+        if (nums[mid] < target) {
+            left = mid + 1;                       // 答案只可能在 (mid, right]
+        } else {
+            right = mid - 1;                      // 答案只可能在 [left, mid)
+        }
+    }
+    return -1;                                    // 区间为空:不存在
+}`,
+    },
+    {
+      lang: 'java',
+      label: 'Java',
+      highlight: [3, 4, 8, 10],
+      code: `static int binarySearch(int[] nums, int target) {
+    // 在升序数组中查找 target,返回下标;不存在返回 -1。
+    int left = 0, right = nums.length - 1;   // 闭区间 [left, right]
+    while (left <= right) {                  // 区间非空才继续
+        int mid = left + (right - left) / 2; // 防溢出中点
+        if (nums[mid] == target) {
+            return mid;
+        }
+        if (nums[mid] < target) {
+            left = mid + 1;                  // 答案只可能在 (mid, right]
+        } else {
+            right = mid - 1;                 // 答案只可能在 [left, mid)
+        }
+    }
+    return -1;                               // 区间为空:不存在
+}`,
+    },
+  ]}
+/>
+
+<MarginNote>
+防溢出不是 Python 的事（它的整数没有上限），但 C++/Java 里 left + right 可能超过 int 上限。left + (right - left) / 2 或 (left + right) >>> 1 都能避开。
+</MarginNote>
+
+## 6. 正确性说明
+
+§4 的不变量已经覆盖了「找到时返回正确」「找不到时返回 -1」两件事，这里补一个容易被问住的细节：**循环为什么一定会终止？**
+
+每次迭代要么返回，要么执行 $left = mid + 1$ 或 $right = mid - 1$。由于 $left \le mid \le right$，两种收缩都严格地缩小了区间宽度（$right - left$ 至少减 1）。宽度从 $n$ 开始单调递减且非负，所以循环至多执行 $O(\log n)$ 次——每次区间减半，实际上是 $\lfloor \log_2 n \rfloor + 1$ 次以内。
+
+「严格变小」同时说明：不存在那种 `mid` 恰好等于端点、收缩后区间不变的情况——只要你**始终把 mid 丢掉**。若写 `right = mid`（左闭右开风格混进闭区间），就要小心死循环了。
+
+## 7. 复杂度分析
+
+- **时间**：每次迭代区间至多减半，共 $O(\log n)$ 次比较；每次比较 $O(1)$，总计 $O(\log n)$。
+- **空间**：只用了 `left / right / mid` 三个变量，迭代实现为 $O(1)$。递归写法会是 $O(\log n)$ 栈空间——这也是我偏好迭代的原因之一。
+
+$n = 10^6$ 时大约 20 次比较，$n = 10^9$ 时大约 30 次——对数增长的直觉值得建立一次，享用终身。
+
+## 8. 边界情况
+
+用同一份闭区间模板，逐一过一遍危险输入：
+
+| 边界 | 输入 | 行为 |
+| --- | --- | --- |
+| 空数组 | `[]` | `right = -1`，`left(0) > right(-1)`，循环不执行，返回 `-1` ✓ |
+| 单元素 | `[7]`, target 7 | `mid = 0` 命中 ✓；target 8 时收缩为空返回 `-1` ✓ |
+| 目标不存在（在范围内） | `[2,5,8]`, target 4 | 收缩到 `left > right`，返回 `-1` ✓ |
+| 目标小于全部 | `[2,5,8]`, target 1 | `right` 一路减到 `-1` ✓ |
+| 目标大于全部 | `[2,5,8]`, target 9 | `left` 一路加到 `n` ✓ |
+| 重复元素 | `[1,2,2,2,3]`, target 2 | 返回**任意一个** 2 的下标 |
+
+最后一行要单独说：元素互异时「返回哪个」不成问题；有重复时本题只要求任意一个。如果你要**第一个**或**最后一个**（LeetCode 34），需要改收缩逻辑——命中时不返回，而是继续向一侧收缩，那是另一篇手记的主题。
+
+## 9. 常见错误
+
+按出现频率记下我犯过（不止一次）的错：
+
+1. **`while left < right` 配闭区间**：剩一个元素时提前退出，漏判。闭区间配 `<=`；
+2. **`left = mid` 或 `right = mid`**：区间没有严格变小。当区间长度为 1 且 `mid == left` 时死循环——本质是把「左闭右开」的收缩搬进了闭区间模板；
+3. **`(left + right) / 2` 溢出**：C++/Java 中两个大 `int` 相加越界，得到负数下标直接越界访问。用 `left + (right - left) / 2`；
+4. **`nums` 未排序就二分**：二分的正确性以有序为前提，输入没保证时先排序（或别用二分）；
+5. **返回值语义混用**：有人的模板找不到时返回 `left`（插入位置），有人返回 `-1`。调用方按错误语义使用会得到离奇的 bug——最好在函数注释里写死。
+
+## 10. 单步演示与相关练习
+
+下面是本文使用的演示数据（`nums = [2,5,8,12,14,18,22,25,30]`，`target = 8`）。用「下一步」逐步走完，观察区间如何收缩、`mid` 如何变化；也可以用键盘 ←/→ 操作：
+
+<StepVisualizer demo="binary-search" />
+
+相关练习（由近及远）：
+
+- LeetCode 704 · 二分查找——本文模板的直接套用；
+- LeetCode 34 · 在排序数组中查找元素的第一个和最后一个位置——闭区间模板改成找边界；
+- LeetCode 33 · 搜索旋转排序数组——「有序」只存在于半段里，判断该丢哪半边变得更微妙；
+- LeetCode 4 · 寻找两个正序数组的中位数——二分答案思想的进阶应用。
+
+下一篇建议读 [046《用不变量理解动态规划》](/algorithm/notes/dp-invariants/)——不变量这把尺子,在状态设计里同样好用。

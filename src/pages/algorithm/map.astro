@@ -1,0 +1,97 @@
+---
+/**
+ * 知识地图:可缩放平移的节点关系图(KnowledgeMap React 岛屿),
+ * 同时提供分主题列表视图,移动端默认列表。
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AlgoNav from '../../components/algo/AlgoNav.astro';
+import KnowledgeMap, {
+  type KmEdge,
+  type KmGroup,
+  type KmNode,
+} from '../../components/algo/react/KnowledgeMap';
+import { MAP_EDGES, MAP_GROUPS, MAP_NODES } from '../../data/algorithm/map.ts';
+
+const posts = (await getCollection('blog')).filter(
+  (p) => !p.data.draft && p.data.category === 'algorithm',
+);
+
+const groups: KmGroup[] = MAP_GROUPS.map((g) => ({ ...g }));
+const nodes: KmNode[] = MAP_NODES.map((n) => ({
+  id: n.id,
+  group: n.group,
+  label: n.label,
+  x: n.x,
+  y: n.y,
+  status: n.status,
+  articles: n.noteSlugs
+    .map((slug) => posts.find((p) => p.id === slug))
+    .filter((p) => p !== undefined)
+    .map((p) => ({
+      title: p!.data.title,
+      href: `/algorithm/notes/${p!.id}/`,
+      fileNo: p!.data.fileNo ?? '',
+    })),
+  intro: n.intro,
+  order: [...n.order],
+  mistakes: [...n.mistakes],
+  next: { ...n.next },
+}));
+const edges: KmEdge[] = MAP_EDGES.map((e) => ({ ...e }));
+---
+
+<BaseLayout
+  title="知识地图 · 演算手稿"
+  description="一张可以持续生长的算法地图:从基础结构出发,沿着问题之间的关系继续向前。"
+  pageName="algorithm"
+>
+  <div class="algo ap-map">
+    <AlgoNav />
+
+    <header class="page-head">
+      <h1>一张可以持续生长的算法地图</h1>
+      <p class="head-sub">从基础结构出发,沿着问题之间的关系继续向前。</p>
+      <div class="legend mono-label" aria-hidden="true">
+        <span>— 先修关系</span>
+        <span>-- 已掌握的关联</span>
+        <span>·· 待探索的拓展</span>
+      </div>
+    </header>
+
+    <KnowledgeMap client:load {groups} {nodes} {edges} />
+  </div>
+</BaseLayout>
+
+<style>
+  .ap-map {
+    padding-bottom: 3rem;
+  }
+  .page-head {
+    padding: 1.6rem 0 1.4rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1.6rem;
+  }
+  .page-head h1 {
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    margin: 0 0 0.5rem;
+  }
+  .head-sub {
+    margin: 0 0 0.7rem;
+    font-size: 0.92rem;
+    color: var(--muted-foreground);
+  }
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.4rem;
+    font-size: 0.7rem;
+  }
+  @media (min-width: 760px) {
+    .legend {
+      display: none;
+    }
+  }
+</style>

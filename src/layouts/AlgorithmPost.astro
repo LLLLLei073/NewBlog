@@ -1,0 +1,780 @@
+---
+/**
+ * 「演算手稿」算法手记详情布局。
+ * 面包屑 + 档案头部(编号/主题/难度/状态/前置/参考) + 正文 +
+ * 右侧栏(复杂度面板/前置知识/结构示意/目录/批注) + 栏内上下篇。
+ * 正文宽度舒适阅读;关键行高亮与步骤演示由 MDX 内嵌组件承担。
+ */
+import BaseLayout from './BaseLayout.astro';
+import AlgoNav from '../components/algo/AlgoNav.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+import Comments from '../components/Comments.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import { readingTime } from '../utils/reading';
+import {
+  DIFFICULTY_LABEL,
+  STATUS_LABEL,
+  topicOf,
+  type Difficulty,
+  type NoteStatus,
+} from '../data/algorithm/topics';
+
+type Heading = { depth: number; slug: string; text: string };
+type Nav = {
+  slug: string;
+  title: string;
+  href: string;
+  fileNo?: string;
+} | null;
+type SameTopic = { title: string; href: string; fileNo?: string };
+
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  headings?: Heading[];
+  newer?: Nav;
+  older?: Nav;
+  sameTopic?: SameTopic[];
+  rawBody?: string;
+  /* 算法专栏 frontmatter 字段 */
+  topic?: string;
+  difficulty?: string;
+  status?: string;
+  fileNo?: string;
+  takeaway?: string;
+  timeComplexity?: string;
+  spaceComplexity?: string;
+  prerequisites?: string[];
+  refs?: string[];
+  demo?: string;
+  /** 知识地图节点 id(「在知识地图中查看」用) */
+  mapNode?: string;
+}
+
+const {
+  title,
+  description,
+  pubDate,
+  updatedDate,
+  headings = [],
+  newer = null,
+  older = null,
+  sameTopic = [],
+  rawBody = '',
+  topic,
+  difficulty,
+  status,
+  fileNo,
+  takeaway,
+  timeComplexity,
+  spaceComplexity,
+  prerequisites = [],
+  refs = [],
+  demo,
+  mapNode,
+} = Astro.props;
+
+const toc = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
+const readMinutes = readingTime(rawBody);
+const topicDef = topicOf(topic);
+const diffLabel = difficulty
+  ? DIFFICULTY_LABEL[difficulty as Difficulty]
+  : undefined;
+const statusLabel = status ? STATUS_LABEL[status as NoteStatus] : undefined;
+const updatedISO = (updatedDate ?? pubDate).toISOString().slice(0, 10);
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  type="article"
+  pageName="algorithm"
+  publishedTime={pubDate}
+  modifiedTime={updatedDate}
+>
+  <div class="reading-progress" aria-hidden="true">
+    <div class="reading-progress-bar" id="ap-progress"></div>
+  </div>
+
+  <div class="algo ap-page">
+    <AlgoNav />
+
+    <nav class="breadcrumb mono-label" aria-label="面包屑">
+      <a href="/">首页</a>
+      <span aria-hidden="true">/</span>
+      <a href="/algorithm/">演算手稿</a>
+      <span aria-hidden="true">/</span>
+      <a href="/algorithm/notes/">题解手记</a>
+      <span aria-hidden="true">/</span>
+      <span class="crumb-current" aria-current="page">{title}</span>
+    </nav>
+
+    <div class="ap-layout">
+      <!-- ======== 正文列 ======== -->
+      <article class="ap-main">
+        <header class="ap-head">
+          <p class="spec rise d1">
+            <span>FILE NO. <b class="mono-num">{fileNo ?? '—'}</b></span>
+            <span aria-hidden="true">·</span>
+            <span>
+              TOPIC <b class="mono-num"
+                >{topicDef ? `${topicDef.no} ${topicDef.abbr}` : '—'}</b
+              >
+              {topicDef && <span class="spec-cn">{topicDef.label}</span>}
+            </span>
+            {
+              diffLabel && (
+                <>
+                  <span aria-hidden="true">·</span>
+                  <span>
+                    难度 <b>{diffLabel}</b>
+                  </span>
+                </>
+              )
+            }
+            {
+              statusLabel && (
+                <>
+                  <span aria-hidden="true">·</span>
+                  <span
+                    class={`status-chip status-chip-sm`}
+                    data-status={status}
+                  >
+                    {statusLabel}
+                  </span>
+                </>
+              )
+            }
+          </p>
+          <h1 class="rise d1">{title}</h1>
+          <p class="ap-meta mono-label rise d2">
+            <span>发布 <FormattedDate date={pubDate} /></span>
+            <span aria-hidden="true">·</span>
+            <span>更新 <span class="mono-num">{updatedISO}</span></span>
+            <span aria-hidden="true">·</span>
+            <span>{readMinutes} 分钟阅读</span>
+          </p>
+          {
+            (prerequisites.length > 0 || refs.length > 0) && (
+              <dl class="ap-facts rise d2">
+                {prerequisites.length > 0 && (
+                  <div class="fact">
+                    <dt>前置知识</dt>
+                    <dd>{prerequisites.join(' / ')}</dd>
+                  </div>
+                )}
+                {refs.length > 0 && (
+                  <div class="fact">
+                    <dt>相关题目 / 参考</dt>
+                    <dd>{refs.join(';')}</dd>
+                  </div>
+                )}
+              </dl>
+            )
+          }
+        </header>
+
+        <div class="prose algo-prose rise d3">
+          <slot />
+        </div>
+
+        <!-- 文末导航 -->
+        <footer class="ap-foot">
+          {
+            mapNode && (
+              <a class="map-cta" href={`/algorithm/map/?node=${mapNode}`}>
+                <svg
+                  viewBox="0 0 24 24"
+                  width="15"
+                  height="15"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  aria-hidden="true"
+                >
+                  <circle cx="5.5" cy="6" r="2.3" />
+                  <circle cx="18.5" cy="5" r="2.3" />
+                  <circle cx="12" cy="19" r="2.3" />
+                  <path d="M7.5 7.2 L11 17 M16.6 6.8 L13.2 17 M7.8 6 L16.2 5.4" />
+                </svg>
+                在知识地图中查看该主题
+              </a>
+            )
+          }
+
+          {
+            (newer || older) && (
+              <nav class="pn" aria-label="上一篇下一篇">
+                {newer ? (
+                  <a class="pn-link" href={newer.href}>
+                    <span class="mono-label">
+                      ← 上一篇{newer.fileNo ? ` · ${newer.fileNo}` : ''}
+                    </span>
+                    <span class="pn-title">{newer.title}</span>
+                  </a>
+                ) : (
+                  <span class="pn-empty" />
+                )}
+                {older ? (
+                  <a class="pn-link pn-right" href={older.href}>
+                    <span class="mono-label">
+                      下一篇{older.fileNo ? ` · ${older.fileNo}` : ''} →
+                    </span>
+                    <span class="pn-title">{older.title}</span>
+                  </a>
+                ) : (
+                  <span class="pn-empty" />
+                )}
+              </nav>
+            )
+          }
+
+          {
+            sameTopic.length > 0 && (
+              <section class="same-topic" aria-label="同主题手记">
+                <p class="mono-label crosshair">同主题手记</p>
+                <ul>
+                  {sameTopic.map((s) => (
+                    <li>
+                      <a href={s.href}>
+                        {s.fileNo && <span class="mono-num">{s.fileNo}</span>}
+                        {s.title}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )
+          }
+        </footer>
+
+        <Comments />
+      </article>
+
+      <!-- ======== 右侧栏 ======== -->
+      <aside class="ap-side" id="ap-sidebar">
+        <section class="side-card complexity-panel">
+          <p class="mono-label">COMPLEXITY</p>
+          <div class="cx-row">
+            <span class="cx-name">时间</span>
+            <span class="cx-val mono-num">{timeComplexity ?? '—'}</span>
+          </div>
+          <div class="cx-row">
+            <span class="cx-name">空间</span>
+            <span class="cx-val mono-num">{spaceComplexity ?? '—'}</span>
+          </div>
+          {
+            takeaway && (
+              <p class="cx-takeaway hand-note">
+                <span class="mn-label">F. 批注</span>
+                {takeaway}
+              </p>
+            )
+          }
+        </section>
+
+        {
+          prerequisites.length > 0 && (
+            <section class="side-card">
+              <p class="mono-label">PREREQUISITES</p>
+              <ul class="prereq-list">
+                {prerequisites.map((p) => (
+                  <li>{p}</li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+
+        <section class="side-card side-figure">
+          <p class="mono-label">STRUCTURE</p>
+          {
+            demo === 'binary-search' ? (
+              <svg
+                viewBox="0 0 220 64"
+                role="img"
+                aria-label="闭区间二分示意:[left..mid..right]"
+              >
+                <title>闭区间二分结构示意</title>
+                <rect
+                  x="2"
+                  y="14"
+                  width="216"
+                  height="36"
+                  rx="3"
+                  fill="none"
+                  stroke="var(--border-400)"
+                />
+                <line
+                  x1="74"
+                  y1="14"
+                  x2="74"
+                  y2="50"
+                  stroke="var(--border-400)"
+                  stroke-dasharray="3 3"
+                />
+                <line
+                  x1="146"
+                  y1="14"
+                  x2="146"
+                  y2="50"
+                  stroke="var(--border-400)"
+                  stroke-dasharray="3 3"
+                />
+                <text
+                  x="38"
+                  y="37"
+                  text-anchor="middle"
+                  font-size="11"
+                  font-family="var(--font-mono)"
+                  fill="var(--muted-foreground)"
+                >
+                  left
+                </text>
+                <text
+                  x="110"
+                  y="37"
+                  text-anchor="middle"
+                  font-size="11"
+                  font-family="var(--font-mono)"
+                  fill="var(--primary)"
+                  font-weight="600"
+                >
+                  mid
+                </text>
+                <text
+                  x="182"
+                  y="37"
+                  text-anchor="middle"
+                  font-size="11"
+                  font-family="var(--font-mono)"
+                  fill="var(--muted-foreground)"
+                >
+                  right
+                </text>
+              </svg>
+            ) : (
+              <svg
+                viewBox="0 0 220 64"
+                role="img"
+                aria-label="主题关联示意:三个节点两条边"
+              >
+                <title>主题结构示意</title>
+                <circle
+                  cx="30"
+                  cy="32"
+                  r="9"
+                  fill="none"
+                  stroke="var(--primary)"
+                  stroke-width="1.5"
+                />
+                <circle
+                  cx="110"
+                  cy="18"
+                  r="9"
+                  fill="none"
+                  stroke="var(--border-400)"
+                  stroke-width="1.5"
+                />
+                <circle
+                  cx="190"
+                  cy="32"
+                  r="9"
+                  fill="none"
+                  stroke="var(--algo-teal)"
+                  stroke-width="1.5"
+                  stroke-dasharray="3 2"
+                />
+                <path
+                  d="M38.5 29 L101 20"
+                  stroke="var(--primary)"
+                  stroke-width="1.2"
+                />
+                <path
+                  d="M119 20 L181 29"
+                  stroke="var(--border-400)"
+                  stroke-width="1.2"
+                />
+              </svg>
+            )
+          }
+        </section>
+
+        {
+          toc.length > 1 && (
+            <section class="side-card side-toc">
+              <TableOfContents toc={toc} />
+            </section>
+          )
+        }
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    import { onPageLoad } from '../utils/lifecycle';
+
+    function initAlgoPost() {
+      const cleanups: Array<() => void> = [];
+
+      // 阅读进度条
+      const bar = document.getElementById('ap-progress');
+      if (bar) {
+        const onScroll = () => {
+          const h = document.documentElement;
+          const max = h.scrollHeight - h.clientHeight;
+          bar.style.width = max > 0 ? `${(h.scrollTop / max) * 100}%` : '0%';
+        };
+        document.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+        cleanups.push(() => document.removeEventListener('scroll', onScroll));
+      }
+
+      // 键盘 ← → 上一篇/下一篇
+      const newerLink = document.querySelector<HTMLAnchorElement>(
+        '.pn-link:not(.pn-right)',
+      );
+      const olderLink =
+        document.querySelector<HTMLAnchorElement>('.pn-link.pn-right');
+      if (newerLink || olderLink) {
+        const onKey = (e: KeyboardEvent) => {
+          const target = e.target as HTMLElement | null;
+          // 输入框与演示器内不劫持方向键
+          if (
+            target?.closest(
+              'input, textarea, [role="group"][aria-label*="演示"]',
+            )
+          )
+            return;
+          if (e.key === 'ArrowLeft' && newerLink)
+            location.assign(newerLink.href);
+          else if (e.key === 'ArrowRight' && olderLink)
+            location.assign(olderLink.href);
+        };
+        document.addEventListener('keydown', onKey);
+        cleanups.push(() => document.removeEventListener('keydown', onKey));
+      }
+
+      return () => cleanups.forEach((c) => c());
+    }
+
+    onPageLoad(initAlgoPost);
+  </script>
+</BaseLayout>
+
+<style>
+  .reading-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: transparent;
+    z-index: 50;
+    pointer-events: none;
+  }
+  .reading-progress-bar {
+    height: 100%;
+    width: 0;
+    background: var(--primary);
+    transition: width 0.08s linear;
+  }
+
+  .ap-page {
+    padding-bottom: 3rem;
+  }
+
+  .breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.55em;
+    padding: 1.1rem 0 0.9rem;
+    font-size: 0.72rem;
+  }
+  .breadcrumb a {
+    color: var(--muted-foreground);
+    text-decoration: none;
+    transition: color 0.18s ease;
+  }
+  .breadcrumb a:hover {
+    color: var(--primary);
+  }
+  .crumb-current {
+    color: var(--foreground);
+    max-width: 34em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* ===== 布局:正文 + 右侧栏 ===== */
+  .ap-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.2rem;
+    align-items: start;
+  }
+  @media (min-width: 1080px) {
+    .ap-layout {
+      grid-template-columns: minmax(0, 1fr) 280px;
+    }
+  }
+
+  /* ===== 档案头部 ===== */
+  .ap-head {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1.6rem;
+    margin-bottom: 2rem;
+  }
+  .ap-head .spec {
+    flex-wrap: wrap;
+    row-gap: 0.4em;
+  }
+  .spec-cn {
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    letter-spacing: 0.05em;
+  }
+  .ap-head h1 {
+    font-family: var(--font-heading);
+    font-size: clamp(1.6rem, 3.4vw, 2.3rem);
+    font-weight: 700;
+    line-height: 1.32;
+    letter-spacing: 0.01em;
+    margin: 0.7rem 0 0.8rem;
+    color: var(--foreground);
+  }
+  .ap-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55em;
+  }
+  .ap-facts {
+    margin: 1rem 0 0;
+    display: grid;
+    gap: 0.45rem;
+  }
+  .fact {
+    display: flex;
+    gap: 0.8em;
+    font-size: 0.8rem;
+    line-height: 1.7;
+  }
+  .fact dt {
+    flex: none;
+    width: 7.5em;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    color: var(--muted-foreground);
+    padding-top: 0.15em;
+  }
+  .fact dd {
+    margin: 0;
+    color: var(--secondary-foreground);
+  }
+
+  /* ===== 正文 ===== */
+  .ap-main {
+    min-width: 0;
+    max-width: 900px;
+  }
+  :global(.algo-prose) {
+    /* 40rem 正文 + 右侧预留 224px 页边放边注(≥1240px) */
+    max-width: 40rem;
+    font-size: 0.98rem;
+  }
+  :global(.algo-prose h2) {
+    font-family: var(--font-heading);
+    scroll-margin-top: calc(var(--header-height) + 1.5rem);
+  }
+  :global(.algo-prose h3) {
+    scroll-margin-top: calc(var(--header-height) + 1.5rem);
+  }
+  :global(.algo-prose table) {
+    display: block;
+    overflow-x: auto;
+  }
+
+  /* ===== 文末 ===== */
+  .ap-foot {
+    margin-top: 3rem;
+    display: grid;
+    gap: 1.6rem;
+  }
+  .map-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55em;
+    justify-self: start;
+    padding: 0.55rem 1rem;
+    border: 1px solid color-mix(in srgb, var(--primary) 40%, transparent);
+    border-radius: 4px;
+    color: var(--primary);
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease;
+  }
+  .map-cta:hover {
+    background: color-mix(in srgb, var(--primary) 7%, transparent);
+    border-color: var(--primary);
+  }
+  .pn {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    border-top: 1px solid var(--border);
+    padding-top: 1.4rem;
+  }
+  .pn-link {
+    display: grid;
+    gap: 0.3rem;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    text-decoration: none;
+    background: var(--popover);
+    transition: border-color 0.2s ease;
+  }
+  .pn-link:hover {
+    border-color: var(--primary);
+  }
+  .pn-title {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--foreground);
+    line-height: 1.5;
+  }
+  .pn-right {
+    text-align: right;
+  }
+  .pn-empty {
+    display: none;
+  }
+  @media (max-width: 640px) {
+    .pn {
+      grid-template-columns: 1fr;
+    }
+    .pn-empty {
+      display: none;
+    }
+  }
+  .same-topic ul {
+    list-style: none;
+    margin: 0.5rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .same-topic a {
+    color: var(--foreground);
+    text-decoration: none;
+    font-size: 0.88rem;
+    border-bottom: 1px solid transparent;
+    transition: color 0.18s ease;
+  }
+  .same-topic a:hover {
+    color: var(--primary);
+  }
+  .same-topic .mono-num {
+    color: var(--primary);
+    margin-right: 0.6em;
+    font-size: 0.8rem;
+  }
+
+  /* ===== 右侧栏 ===== */
+  .ap-side {
+    display: grid;
+    gap: 1rem;
+    min-width: 0;
+  }
+  @media (min-width: 1080px) {
+    .ap-side {
+      position: sticky;
+      top: calc(var(--header-height) + 1.2rem);
+      max-height: calc(100vh - var(--header-height) - 2.4rem);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      scrollbar-width: thin;
+    }
+  }
+  .side-card {
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--popover);
+    padding: 0.95rem 1.05rem 1.05rem;
+  }
+  .complexity-panel .cx-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px dashed var(--border);
+  }
+  .complexity-panel .cx-row:last-of-type {
+    border-bottom: 0;
+  }
+  .cx-name {
+    font-size: 0.8rem;
+    color: var(--muted-foreground);
+  }
+  .cx-val {
+    font-size: 1.12rem;
+    font-weight: 600;
+    color: var(--primary);
+  }
+  .cx-takeaway {
+    margin: 0.8rem 0 0;
+    padding-top: 0.7rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.8rem;
+    line-height: 1.8;
+  }
+  .mn-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-style: normal;
+    font-size: 0.64rem;
+    letter-spacing: 0.16em;
+    color: var(--algo-amber-deep);
+    margin-bottom: 0.3rem;
+  }
+  :root[data-theme='dark'] .mn-label,
+  html[data-theme='dark'] .mn-label {
+    color: var(--algo-amber);
+  }
+  .prereq-list {
+    list-style: none;
+    margin: 0.45rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.4rem;
+  }
+  .prereq-list li {
+    font-size: 0.82rem;
+    line-height: 1.6;
+    color: var(--secondary-foreground);
+    padding-left: 1em;
+    position: relative;
+  }
+  .prereq-list li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--primary);
+    font-weight: 700;
+  }
+  .side-figure svg {
+    width: 100%;
+    height: auto;
+    margin-top: 0.5rem;
+  }
+  .side-toc {
+    background: transparent;
+  }
+</style>

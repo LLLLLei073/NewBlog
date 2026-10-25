@@ -1,0 +1,230 @@
+---
+/**
+ * 曲目表:专栏各页共用(档案详情页 / 场景歌单)。
+ * 服务端渲染行,客户端脚本统一处理点播与"正在播放"状态
+ * (朱红细线 + 小波形,不改变整行背景)。
+ */
+import { TRACK_MAP, mmss, entryOfTrack, type Track } from '../../data/music';
+
+interface Props {
+  queueId: string;
+  trackIds: string[];
+  /** 档案页显示个人注记 */
+  showNote?: boolean;
+  /** 场景歌单显示情绪标签 */
+  showMood?: boolean;
+  /** 场景歌单显示所属条目 */
+  showEntry?: boolean;
+  /** 显示曲序(默认) */
+  showNo?: boolean;
+  /** 显示艺人(默认) */
+  showArtist?: boolean;
+  compact?: boolean;
+}
+const {
+  queueId,
+  trackIds,
+  showNote = false,
+  showMood = false,
+  showEntry = false,
+  showNo = true,
+  showArtist = true,
+  compact = false,
+} = Astro.props;
+
+const tracks = trackIds
+  .map((id) => TRACK_MAP.get(id))
+  .filter((t): t is Track => Boolean(t));
+---
+
+<ol
+  class:list={['track-rows', { compact }]}
+  data-track-rows
+  data-queue={queueId}
+>
+  {
+    tracks.map((t, i) => {
+      const entry = entryOfTrack(t.id);
+      return (
+        <li class="row" data-row-index={i} data-track-id={t.id}>
+          <button
+            type="button"
+            class="row-btn"
+            data-index={i}
+            aria-label={`播放:${t.title}${t.artist ? ` — ${t.artist}` : ''}`}
+          >
+            {showNo && (
+              <span class="no mono-num" aria-hidden="true">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+            )}
+            <span class="main">
+              <span class="t-title">
+                {t.loved && <i class="loved-dot" aria-label="心动曲" />}
+                {t.title}
+              </span>
+              {showArtist && t.artist && (
+                <span class="t-artist">{t.artist}</span>
+              )}
+              {showEntry && entry && (
+                <span class="t-entry">收录于《{entry.title}》</span>
+              )}
+              {showNote && t.note && <span class="t-note">{t.note}</span>}
+            </span>
+            {showMood && t.mood && <span class="mood-tag">{t.mood}</span>}
+            <span class="playing-mark" aria-hidden="true">
+              <i />
+              <i />
+              <i />
+            </span>
+            <span class="dur mono-num">{mmss(t.duration)}</span>
+          </button>
+        </li>
+      );
+    })
+  }
+</ol>
+
+<script>
+  import { onPageLoad } from '../../utils/lifecycle';
+  import { playQueue, subscribe, getState } from '../music/player';
+
+  // ClientRouter 换页后 DOM 重建,跟随 page-load 重绑
+  onPageLoad(() => {
+    const containers = Array.from(
+      document.querySelectorAll<HTMLElement>('[data-track-rows]'),
+    );
+    if (containers.length === 0) return;
+
+    const onRowClick = (e: Event) => {
+      const btn = (e.target as HTMLElement).closest<HTMLElement>(
+        '[data-index]',
+      );
+      if (!btn) return;
+      const container = btn.closest<HTMLElement>('[data-track-rows]');
+      if (!container?.dataset.queue) return;
+      playQueue(container.dataset.queue, Number(btn.dataset.index));
+    };
+    containers.forEach((c) => c.addEventListener('click', onRowClick));
+
+    const sync = () => {
+      const st = getState();
+      containers.forEach((c) => {
+        const active = c.dataset.queue === st.queueId;
+        c.querySelectorAll<HTMLElement>('.row').forEach((row) => {
+          row.classList.toggle(
+            'playing',
+            active && Number(row.dataset.rowIndex) === st.index,
+          );
+        });
+      });
+    };
+    const stop = subscribe(sync);
+    sync();
+
+    return () => {
+      containers.forEach((c) => c.removeEventListener('click', onRowClick));
+      stop();
+    };
+  });
+</script>
+
+<style>
+  .track-rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .row-btn {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 2.2rem 1fr auto auto;
+    align-items: baseline;
+    column-gap: 0.875rem;
+    padding: 0.72rem 0.5rem;
+    border: 0;
+    border-bottom: 1px solid var(--border);
+    background: none;
+    text-align: left;
+    font: inherit;
+    cursor: pointer;
+    color: var(--foreground);
+    transition: background-color 0.18s ease;
+    min-height: 44px;
+  }
+  .row-btn:hover {
+    background: var(--accent);
+  }
+
+  .no {
+    font-size: 12px;
+    color: var(--muted-foreground);
+    text-align: center;
+  }
+
+  .main {
+    min-width: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: 0.6rem;
+    row-gap: 0.15rem;
+  }
+
+  .t-title {
+    font-size: 14.5px;
+    color: var(--foreground);
+  }
+  .row.playing .t-title {
+    color: var(--primary);
+    font-weight: 600;
+    box-shadow: inset 2px 0 0 var(--primary);
+    padding-left: 0.5rem;
+  }
+
+  .loved-dot {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--primary);
+    margin-right: 0.4rem;
+    vertical-align: 2px;
+  }
+
+  .t-artist,
+  .t-entry {
+    font-size: 12.5px;
+    color: var(--muted-foreground);
+  }
+  .t-entry {
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+  .t-note {
+    flex-basis: 100%;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--muted-foreground);
+  }
+
+  .dur {
+    font-size: 12.5px;
+    color: var(--muted-foreground);
+    text-align: right;
+  }
+
+  /* 紧凑行(小屏):隐藏注记与所属 */
+  @media (max-width: 640px) {
+    .t-note,
+    .t-entry {
+      display: none;
+    }
+    .row-btn {
+      grid-template-columns: 1.6rem 1fr auto auto;
+      column-gap: 0.5rem;
+    }
+  }
+</style>

@@ -1,0 +1,365 @@
+/* ============================================================
+   「演算手稿 / Algorithm Field Notes」专栏视觉系统
+   计算手稿 + 工程图纸气质:冷灰纸面、坐标网格、信号蓝批注。
+   仅在 body[data-page='algorithm'] 内生效:重定义语义令牌,
+   全站 Header/Footer/迷你播放器在这些页面自动换装。
+   暗色为墨蓝图纸 + 提亮信号蓝。
+   ============================================================ */
+
+body[data-page='algorithm'] {
+  /* 覆盖全局令牌:冷灰白纸面 + 墨蓝油墨 */
+  --background: #f3f4ef;
+  --card: #f3f4ef;
+  --popover: #e9edf0;
+  --muted: #e9edf0;
+  --foreground: #102a43;
+  --card-foreground: #102a43;
+  --muted-foreground: #657383;
+  --primary: #2457e6; /* 信号蓝 */
+  --primary-foreground: #f5f7fb;
+  --secondary: #e9edf0;
+  --secondary-foreground: #33475c;
+  --accent: rgba(36, 87, 230, 0.07);
+  --accent-foreground: #1b44bc;
+  --border: #c9d2db;
+  --border-300: #c9d2db;
+  --border-400: #b4c0cb;
+  --ring: #2457e6;
+  --header-bg: color-mix(in srgb, #f3f4ef 94%, transparent);
+
+  /* 信号蓝品牌色覆盖(链接/hover 等) */
+  --brand-300: #5b82ee;
+  --brand-400: #3d6bea;
+  --brand-500: #2457e6;
+  --brand-600: #1b44bc;
+  --brand-700: #16367f;
+
+  /* 专栏专属令牌 */
+  --algo-amber: #e89a35; /* 批注与复习标记 */
+  --algo-amber-deep: #b06f1a;
+  --algo-teal: #2e7d6b; /* 成功/已掌握 */
+  --algo-code-bg: #0d1b2a; /* 代码区深海军蓝 */
+  --algo-grid: rgba(16, 42, 67, 0.055); /* 坐标纸网格线 */
+  --algo-grid-strong: rgba(16, 42, 67, 0.09);
+  --algo-note-ink: #4a5a6e; /* 手写批注墨色 */
+
+  /* 专栏内不做玻璃拟态 */
+  --card-alpha: 1;
+  --card-border-alpha: 1;
+
+  /* 英文辅助刊名窄体栈 */
+  --font-condensed:
+    'Bahnschrift', 'IBM Plex Sans Condensed', 'Segoe UI Variable Display',
+    'Avenir Next Condensed', 'Arial Narrow', sans-serif;
+
+  /* 中文标题:现代有力量的黑体优先 */
+  --font-heading:
+    'Noto Sans SC', 'Source Han Sans SC', 'PingFang SC', 'HarmonyOS Sans SC',
+    'Microsoft YaHei', var(--font-sans);
+
+  background: var(--background);
+  color: var(--foreground);
+}
+
+/* 暗色:墨蓝图纸 + 提亮信号蓝,同一气质 */
+:root[data-theme='dark'] body[data-page='algorithm'],
+html[data-theme='dark'] body[data-page='algorithm'] {
+  --background: #0e1621;
+  --card: #0e1621;
+  --popover: #16222f;
+  --muted: #16222f;
+  --foreground: #d9e2ec;
+  --card-foreground: #d9e2ec;
+  --muted-foreground: #8a9aab;
+  --primary: #6e96f2;
+  --primary-foreground: #0e1621;
+  --secondary: #16222f;
+  --secondary-foreground: #b9c6d4;
+  --accent: rgba(110, 150, 242, 0.13);
+  --accent-foreground: #9db8f6;
+  --border: #24344a;
+  --border-300: #24344a;
+  --border-400: #33465f;
+  --ring: #6e96f2;
+  --header-bg: color-mix(in srgb, #0e1621 92%, transparent);
+  --brand-300: #9db8f6;
+  --brand-400: #82a5f4;
+  --brand-500: #6e96f2;
+  --brand-600: #5b82ee;
+  --brand-700: #3d6bea;
+
+  --algo-amber: #f0b05e;
+  --algo-amber-deep: #f0b05e;
+  --algo-teal: #57b39c;
+  --algo-code-bg: #0a1420;
+  --algo-grid: rgba(150, 180, 220, 0.05);
+  --algo-grid-strong: rgba(150, 180, 220, 0.085);
+  --algo-note-ink: #94a5b8;
+
+  /* 覆盖全局暗色直接写死在 body 上的深空渐变 */
+  background: var(--background);
+  background-image: none;
+}
+
+/* 专栏页面不显示全局星空与暗色光晕 */
+body[data-page='algorithm']::before,
+:root[data-theme='dark'] body[data-page='algorithm']::before,
+:root[data-theme='dark'] body[data-page='algorithm']::after,
+html[data-theme='dark'] body[data-page='algorithm']::after {
+  display: none;
+  content: none;
+}
+
+/* ============ 坐标纸网格(首屏与插图区域使用) ============ */
+/* 两级网格(28px 细 + 140px 粗)统一画在伪元素上:内容天然在其上,
+   淡出遮罩也只作用于网格,不会把正文一起淡掉 */
+body[data-page='algorithm'] .grid-paper {
+  position: relative;
+}
+body[data-page='algorithm'] .grid-paper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, var(--algo-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--algo-grid) 1px, transparent 1px),
+    linear-gradient(to right, var(--algo-grid-strong) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--algo-grid-strong) 1px, transparent 1px);
+  background-size:
+    28px 28px,
+    28px 28px,
+    140px 140px,
+    140px 140px;
+}
+/* 内容抬到网格之上:首屏栏、图形画布与岛内 svg */
+body[data-page='algorithm'] .hero.grid-paper > .hero-grid,
+body[data-page='algorithm'] .grid-paper > svg {
+  position: relative;
+  z-index: 1;
+}
+/* 阅读方向淡出:仅网格向下渐隐 */
+body[data-page='algorithm'] .grid-paper-fade::before {
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 96%);
+  mask-image: linear-gradient(to bottom, #000 0%, transparent 96%);
+}
+
+/* ============ 专栏公共构件 ============ */
+
+/* 12 栏编辑网格容器:最大 1280px */
+body[data-page='algorithm'] .algo {
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: clamp(1.1rem, 4vw, 3rem);
+}
+
+body[data-page='algorithm'] .mono-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+body[data-page='algorithm'] .mono-num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 编号小铭牌:FILE NO. / TOPIC 之类 */
+body[data-page='algorithm'] .spec {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.45em;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--muted-foreground);
+}
+body[data-page='algorithm'] .spec b {
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+/* 交叉定位标记(章节/区块编号) */
+body[data-page='algorithm'] .crosshair {
+  position: relative;
+  padding-left: 1.1rem;
+}
+body[data-page='algorithm'] .crosshair::before {
+  content: '+';
+  position: absolute;
+  left: 0;
+  top: -0.05em;
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  color: var(--primary);
+  opacity: 0.85;
+}
+
+/* 信号蓝文字链接(带细底线) */
+body[data-page='algorithm'] .algo-link {
+  color: var(--primary);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--primary) 40%, transparent);
+  padding-bottom: 1px;
+  transition: border-color 0.18s ease;
+}
+body[data-page='algorithm'] .algo-link:hover {
+  border-bottom-color: var(--primary);
+}
+
+/* 琥珀批注标记(复习 / 纠错) */
+body[data-page='algorithm'] .amber-mark {
+  color: var(--algo-amber-deep);
+  border-bottom: 1px dashed
+    color-mix(in srgb, var(--algo-amber) 70%, transparent);
+}
+:root[data-theme='dark'] body[data-page='algorithm'] .amber-mark,
+html[data-theme='dark'] body[data-page='algorithm'] .amber-mark {
+  color: var(--algo-amber);
+}
+
+/* 状态签:非颜色单通道,附文字与形状 */
+body[data-page='algorithm'] .status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.1em 0.55em;
+  border: 1px solid var(--border-400);
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--muted-foreground);
+  white-space: nowrap;
+}
+body[data-page='algorithm'] .status-chip::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--muted-foreground);
+}
+body[data-page='algorithm'] .status-chip[data-status='done'] {
+  color: var(--algo-teal);
+  border-color: color-mix(in srgb, var(--algo-teal) 45%, transparent);
+}
+body[data-page='algorithm'] .status-chip[data-status='done']::before {
+  background: var(--algo-teal);
+}
+body[data-page='algorithm'] .status-chip[data-status='reviewing'] {
+  color: var(--algo-amber-deep);
+  border-color: color-mix(in srgb, var(--algo-amber) 55%, transparent);
+}
+:root[data-theme='dark']
+  body[data-page='algorithm']
+  .status-chip[data-status='reviewing'] {
+  color: var(--algo-amber);
+}
+body[data-page='algorithm'] .status-chip[data-status='reviewing']::before {
+  background: var(--algo-amber);
+}
+body[data-page='algorithm'] .status-chip[data-status='todo']::before {
+  background: transparent;
+  border: 1.5px solid var(--muted-foreground);
+}
+/* 小号变体(头部 spec 行、表格行内) */
+body[data-page='algorithm'] .status-chip.status-chip-sm {
+  font-size: 0.64rem;
+  padding: 0.08em 0.45em;
+}
+body[data-page='algorithm'] .status-chip.status-chip-sm::before {
+  width: 6px;
+  height: 6px;
+}
+
+/* 进场:轻微错位淡入(150–300ms 主区间) */
+body[data-page='algorithm'] .rise {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: algo-rise 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+body[data-page='algorithm'] .d1 {
+  animation-delay: 0.04s;
+}
+body[data-page='algorithm'] .d2 {
+  animation-delay: 0.12s;
+}
+body[data-page='algorithm'] .d3 {
+  animation-delay: 0.2s;
+}
+body[data-page='algorithm'] .d4 {
+  animation-delay: 0.3s;
+}
+@keyframes algo-rise {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 手稿批注墨迹(斜体 + 淡化) */
+body[data-page='algorithm'] .hand-note {
+  font-style: italic;
+  color: var(--algo-note-ink);
+}
+
+/* ============ 边注(MDX 手记中的手写批注) ============ */
+/* 平板与移动端:内联小块;≥1240px 浮入正文右侧预留页边 */
+body[data-page='algorithm'] .margin-note {
+  display: block;
+  margin: 1.3rem 0;
+  padding: 0.65rem 0.85rem;
+  border-left: 2px solid var(--algo-amber);
+  background: color-mix(in srgb, var(--algo-amber) 7%, var(--background));
+  border-radius: 0 3px 3px 0;
+  font-size: 0.8rem;
+  line-height: 1.75;
+}
+body[data-page='algorithm'] .margin-note .mn-body {
+  color: var(--algo-note-ink);
+}
+@media (min-width: 1240px) {
+  body[data-page='algorithm'] .algo-prose .margin-note {
+    float: right;
+    clear: right;
+    width: 208px;
+    margin: 0.2rem -224px 1rem 1.6rem;
+    border-left-width: 2px;
+  }
+}
+
+/* 代码块包装:贴深海军蓝底(全局 CodeBlockEnhance 的补充) */
+body[data-page='algorithm'] .code-block-wrapper pre {
+  background: var(--algo-code-bg);
+  border: 1px solid color-mix(in srgb, var(--algo-code-bg) 82%, #48607e);
+}
+
+/* 触控目标与焦点 */
+body[data-page='algorithm'] button {
+  -webkit-tap-highlight-color: transparent;
+}
+body[data-page='algorithm'] a:focus-visible,
+body[data-page='algorithm'] button:focus-visible,
+body[data-page='algorithm'] [tabindex]:focus-visible,
+body[data-page='algorithm'] input:focus-visible,
+body[data-page='algorithm'] select:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* 动效偏好:全部关闭 */
+@media (prefers-reduced-motion: reduce) {
+  body[data-page='algorithm'] .rise {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+  body[data-page='algorithm'] *,
+  body[data-page='algorithm'] *::before,
+  body[data-page='algorithm'] *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

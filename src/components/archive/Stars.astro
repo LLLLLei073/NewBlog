@@ -1,0 +1,53 @@
+---
+/** 个人评分:5 星 + 等宽数字(半星按四舍五入) */
+interface Props {
+  rating: number;
+  class?: string;
+}
+const { rating, class: klass } = Astro.props;
+const filled = Math.round(rating / 2);
+const star =
+  'M8 1.6l1.9 4 4.4.5-3.2 3 .9 4.4L8 11.3 4 13.5l.9-4.4-3.2-3 4.4-.5z';
+---
+
+<span
+  class:list={['stars', klass]}
+  aria-label={`个人评分 ${rating.toFixed(1)}`}
+>
+  {
+    Array.from({ length: 5 }, (_, i) => (
+      <svg
+        viewBox="0 0 16 16"
+        width="12"
+        height="12"
+        aria-hidden="true"
+        class={i < filled ? 'on' : 'off'}
+      >
+        <path d={star} />
+      </svg>
+    ))
+  }
+  <span class="num">{rating.toFixed(1)}</span>
+</span>
+
+<style>
+  .stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+  }
+  .stars svg.on path {
+    fill: var(--primary);
+  }
+  .stars svg.off path {
+    fill: none;
+    stroke: var(--border-400);
+    stroke-width: 1.2;
+  }
+  .stars .num {
+    margin-left: 5px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--primary);
+  }
+</style>

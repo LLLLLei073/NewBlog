@@ -1,0 +1,110 @@
+---
+/**
+ * 题解手记列表:主题/难度/状态筛选 + 搜索 + 列表/表格视图(NotesExplorer)。
+ * 筛选状态保留在 URL query 中。
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AlgoNav from '../../components/algo/AlgoNav.astro';
+import NotesExplorer, {
+  type ExplorerNote,
+  type FilterDef,
+} from '../../components/algo/react/NotesExplorer';
+import {
+  DIFFICULTY_LABEL,
+  STATUS_LABEL,
+  TOPICS,
+  topicOf,
+  type Difficulty,
+  type NoteStatus,
+} from '../../data/algorithm/topics.ts';
+import { readingTime } from '../../utils/reading.ts';
+
+const posts = (await getCollection('blog'))
+  .filter((p) => !p.data.draft && p.data.category === 'algorithm')
+  .sort((a, b) => {
+    const ka = a.data.fileNo ?? a.data.pubDate.toISOString();
+    const kb = b.data.fileNo ?? b.data.pubDate.toISOString();
+    return kb.localeCompare(ka);
+  });
+
+const notes: ExplorerNote[] = posts.map((p) => {
+  const t = topicOf(p.data.topic);
+  const terms = [
+    p.data.title,
+    p.data.takeaway,
+    t?.label,
+    p.data.fileNo,
+    ...(p.data.refs ?? []),
+    ...(p.data.prerequisites ?? []),
+  ]
+    .filter(Boolean)
+    .join(' ')
+    .toLowerCase();
+  return {
+    slug: p.id,
+    href: `/algorithm/notes/${p.id}/`,
+    fileNo: p.data.fileNo ?? '···',
+    title: p.data.title,
+    topic: p.data.topic ?? '',
+    topicLabel: t?.label ?? '未分类',
+    topicNo: t?.no ?? '—',
+    difficulty: p.data.difficulty ?? '',
+    difficultyLabel: p.data.difficulty
+      ? DIFFICULTY_LABEL[p.data.difficulty as Difficulty]
+      : '—',
+    status: p.data.status ?? 'todo',
+    statusLabel: p.data.status
+      ? STATUS_LABEL[p.data.status as NoteStatus]
+      : '待补充',
+    readMinutes: readingTime(typeof p.body === 'string' ? p.body : ''),
+    updated: (p.data.updatedDate ?? p.data.pubDate).toISOString().slice(0, 10),
+    takeaway: p.data.takeaway ?? p.data.description,
+    haystack: terms,
+  };
+});
+
+const topics: FilterDef[] = TOPICS.map((t) => ({ id: t.id, label: t.label }));
+const difficulties: FilterDef[] = (
+  ['beginner', 'intermediate', 'advanced'] as const
+).map((d) => ({ id: d, label: DIFFICULTY_LABEL[d] }));
+const statuses: FilterDef[] = (['done', 'reviewing', 'todo'] as const).map(
+  (s) => ({ id: s, label: STATUS_LABEL[s] }),
+);
+---
+
+<BaseLayout
+  title="题解手记 · 演算手稿"
+  description="按主题、难度与状态整理的算法题解手记索引。"
+  pageName="algorithm"
+>
+  <div class="algo ap-notes">
+    <AlgoNav />
+
+    <header class="page-head">
+      <h1>题解手记</h1>
+      <p class="mono-label">
+        FIELD NOTES · {notes.length} 篇 · 筛选条件会保留在地址栏,可直接分享
+      </p>
+    </header>
+
+    <NotesExplorer client:load {notes} {topics} {difficulties} {statuses} />
+  </div>
+</BaseLayout>
+
+<style>
+  .ap-notes {
+    padding-bottom: 3rem;
+  }
+  .page-head {
+    padding: 1.6rem 0 1.4rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1.6rem;
+  }
+  .page-head h1 {
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    margin: 0 0 0.5rem;
+  }
+</style>

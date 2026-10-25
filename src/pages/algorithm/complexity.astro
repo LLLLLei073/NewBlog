@@ -1,0 +1,422 @@
+---
+/**
+ * 复杂度手册:数据结构操作 / 排序 / 图算法三张速查表 + 递推式推导。
+ * 表格服务端渲染;搜索为轻量 DOM 过滤;移动端切换为逐条定义列表。
+ */
+import katex from 'katex';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AlgoNav from '../../components/algo/AlgoNav.astro';
+import {
+  COMPLEXITY_SECTIONS,
+  RECURRENCES,
+} from '../../data/algorithm/complexity.ts';
+
+const tex = (latex: string) =>
+  katex.renderToString(latex, {
+    throwOnError: false,
+    displayMode: false,
+    output: 'html',
+  });
+
+const sections = COMPLEXITY_SECTIONS.map((s) => ({
+  ...s,
+  // 图算法表:最好=平均=最坏,合并为单列「时间」
+  merged: s.id === 'graph',
+}));
+
+const formulas = RECURRENCES.map((r) => ({
+  ...r,
+  formulaHtml: tex(r.formula),
+  resultHtml: tex(r.result),
+}));
+---
+
+<BaseLayout
+  title="复杂度手册 · 演算手稿"
+  description="常见数据结构操作、排序与图算法的复杂度速查:最好/平均/最坏、空间、稳定性与适用条件。"
+  pageName="algorithm"
+>
+  <div class="algo ap-cx">
+    <AlgoNav />
+
+    <header class="page-head">
+      <h1>复杂度手册</h1>
+      <p class="mono-label">COMPLEXITY REFERENCE · 速查</p>
+      <div class="anchors mono-label">
+        {
+          sections.map((s) => (
+            <a href={`#${s.id}`} class="algo-link">
+              {s.title}
+            </a>
+          ))
+        }
+        <a href="#recurrence" class="algo-link">递推式推导</a>
+      </div>
+      <div class="search-row">
+        <input
+          id="cx-search"
+          type="search"
+          placeholder="搜索结构、算法或复杂度(如 哈希 / O(n log n) / 稳定)…"
+          aria-label="搜索复杂度表"
+        />
+        <span id="cx-count" class="mono-num mono-label" aria-live="polite"
+        ></span>
+      </div>
+    </header>
+
+    {
+      sections.map((s) => (
+        <section class="cx-section" id={s.id} aria-labelledby={`h-${s.id}`}>
+          <header class="cx-sec-head">
+            <h2 id={`h-${s.id}`}>{s.title}</h2>
+            <p class="cx-desc">{s.desc}</p>
+          </header>
+
+          {/* 桌面:表格 */}
+          <div class="cx-table-wrap" data-cx-table>
+            <table class="cx-table" data-cx-section={s.id}>
+              <thead>
+                <tr>
+                  {s.columns.map((c) => (
+                    <th scope="col">{c}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {s.rows.map((r) => (
+                  <tr data-cx-row>
+                    <th scope="row" class="cx-name-cell">
+                      {r.name}
+                      {r.op && <span class="cx-op"> · {r.op}</span>}
+                    </th>
+                    {s.merged ? (
+                      <td class="mono-num">{r.best}</td>
+                    ) : (
+                      <>
+                        <td class="mono-num">{r.best}</td>
+                        <td class="mono-num">{r.avg}</td>
+                        <td class="mono-num">{r.worst}</td>
+                      </>
+                    )}
+                    <td class="mono-num">{r.space}</td>
+                    {r.stable !== undefined && (
+                      <td>
+                        {r.stable ? (
+                          <span class="stable-yes" title="稳定">
+                            ◎ 稳定
+                          </span>
+                        ) : (
+                          <span class="stable-no" title="不稳定">
+                            △ 不稳定
+                          </span>
+                        )}
+                      </td>
+                    )}
+                    <td class="cx-note-cell">{r.note}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* 移动端:逐条定义列表 */}
+          <div class="cx-dl" data-cx-list>
+            {s.rows.map((r) => (
+              <div class="cx-item" data-cx-row>
+                <p class="cx-item-name">
+                  {r.name}
+                  {r.op && <span class="cx-op"> · {r.op}</span>}
+                </p>
+                <dl>
+                  {s.merged ? (
+                    <div>
+                      <dt>时间</dt>
+                      <dd class="mono-num">{r.best}</dd>
+                    </div>
+                  ) : (
+                    <div>
+                      <dt>最好/平均/最坏</dt>
+                      <dd class="mono-num">
+                        {r.best} / {r.avg} / {r.worst}
+                      </dd>
+                    </div>
+                  )}
+                  <div>
+                    <dt>空间</dt>
+                    <dd class="mono-num">{r.space}</dd>
+                  </div>
+                  {r.stable !== undefined && (
+                    <div>
+                      <dt>稳定性</dt>
+                      <dd>{r.stable ? '◎ 稳定' : '△ 不稳定'}</dd>
+                    </div>
+                  )}
+                  <div>
+                    <dt>适用</dt>
+                    <dd>{r.note}</dd>
+                  </div>
+                </dl>
+              </div>
+            ))}
+          </div>
+        </section>
+      ))
+    }
+
+    <section class="cx-section" id="recurrence" aria-labelledby="h-rec">
+      <header class="cx-sec-head">
+        <h2 id="h-rec">递推式速查与推导</h2>
+        <p class="cx-desc">常见递推式的直觉解释;严格工具是递归树与主定理。</p>
+      </header>
+      <ol class="rec-list">
+        {
+          formulas.map((f) => (
+            <li class="rec-item" data-cx-row>
+              <div class="rec-line">
+                <span class="rec-algo mono-label">{f.algo}</span>
+                <span class="rec-formula" set:html={f.formulaHtml} />
+                <span class="rec-eq">=</span>
+                <span class="rec-result" set:html={f.resultHtml} />
+              </div>
+              <p class="rec-derive">{f.derivation}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  import { onPageLoad } from '../../utils/lifecycle';
+
+  function initCxSearch() {
+    const input = document.querySelector<HTMLInputElement>('#cx-search');
+    const count = document.querySelector('#cx-count');
+    if (!input || !count) return;
+
+    const rows = Array.from(document.querySelectorAll('[data-cx-row]'));
+    const sections = Array.from(document.querySelectorAll('.cx-section'));
+
+    const apply = () => {
+      const q = input.value.trim().toLowerCase();
+      let visible = 0;
+      rows.forEach((row) => {
+        const hit = !q || (row.textContent ?? '').toLowerCase().includes(q);
+        (row as HTMLElement).hidden = !hit;
+        // 桌面表格与移动端列表各有一份条目，只按表格条目计数。
+        if (hit && row.closest('[data-cx-table]')) visible++;
+      });
+      sections.forEach((sec) => {
+        const any =
+          sec.querySelectorAll('[data-cx-row]:not([hidden])').length > 0;
+        (sec as HTMLElement).hidden = !any;
+      });
+      count.textContent = q ? `${visible} 条匹配` : '';
+    };
+
+    input.addEventListener('input', apply);
+    apply();
+    return () => input.removeEventListener('input', apply);
+  }
+
+  onPageLoad(initCxSearch);
+</script>
+
+<style>
+  .ap-cx {
+    padding-bottom: 3rem;
+  }
+  .page-head {
+    padding: 1.6rem 0 1.3rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1.8rem;
+  }
+  .page-head h1 {
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    margin: 0 0 0.5rem;
+  }
+  .anchors {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.3rem;
+    margin: 0.3rem 0 1rem;
+    font-size: 0.74rem;
+  }
+  .search-row {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+  }
+  .search-row input {
+    flex: 1;
+    max-width: 480px;
+    min-height: 40px;
+    border: 1px solid var(--border-400);
+    border-radius: 4px;
+    background: var(--background);
+    padding: 0.45rem 0.9rem;
+    font-size: 0.86rem;
+    color: var(--foreground);
+  }
+  .search-row input:focus {
+    border-color: var(--primary);
+    outline: none;
+  }
+
+  .cx-section {
+    margin-bottom: 2.6rem;
+    scroll-margin-top: calc(var(--header-height) + 1.2rem);
+  }
+  .cx-sec-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.3rem 1.1rem;
+    margin-bottom: 0.8rem;
+  }
+  .cx-sec-head h2 {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 0;
+  }
+  .cx-desc {
+    margin: 0;
+    font-size: 0.78rem;
+    color: var(--muted-foreground);
+  }
+
+  .cx-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+  }
+  .cx-table th,
+  .cx-table td {
+    border: 1px solid var(--border);
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    vertical-align: top;
+  }
+  .cx-table thead th {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: var(--muted-foreground);
+    background: var(--popover);
+  }
+  .cx-name-cell {
+    font-weight: 600;
+    color: var(--foreground);
+    white-space: nowrap;
+  }
+  .cx-op {
+    font-weight: 400;
+    color: var(--muted-foreground);
+    font-size: 0.78rem;
+  }
+  .cx-note-cell {
+    color: var(--secondary-foreground);
+    font-size: 0.8rem;
+  }
+  .stable-yes {
+    color: var(--algo-teal);
+    white-space: nowrap;
+  }
+  .stable-no {
+    color: var(--muted-foreground);
+    white-space: nowrap;
+  }
+
+  .cx-dl {
+    display: none;
+  }
+
+  /* 递推式 */
+  .rec-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--border);
+  }
+  .rec-item {
+    padding: 1rem 0.2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .rec-line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.6rem 0.9rem;
+  }
+  .rec-algo {
+    flex: none;
+    min-width: 7em;
+  }
+  .rec-formula,
+  .rec-result {
+    font-size: 0.95rem;
+  }
+  .rec-result :global(.katex) {
+    color: var(--primary);
+  }
+  .rec-eq {
+    color: var(--muted-foreground);
+  }
+  .rec-derive {
+    margin: 0.45rem 0 0;
+    font-size: 0.82rem;
+    line-height: 1.8;
+    color: var(--muted-foreground);
+    max-width: 46em;
+  }
+
+  @media (max-width: 759px) {
+    .cx-table-wrap {
+      display: none;
+    }
+    .cx-dl {
+      display: grid;
+      gap: 0.7rem;
+    }
+    .cx-item {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: var(--popover);
+      padding: 0.8rem 0.95rem;
+    }
+    .cx-item-name {
+      margin: 0 0 0.5rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .cx-item dl {
+      margin: 0;
+      display: grid;
+      gap: 0.35rem;
+    }
+    .cx-item dl > div {
+      display: flex;
+      gap: 0.8em;
+      font-size: 0.8rem;
+      line-height: 1.7;
+    }
+    .cx-item dt {
+      flex: none;
+      width: 7.5em;
+      color: var(--muted-foreground);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      padding-top: 0.15em;
+    }
+    .cx-item dd {
+      margin: 0;
+      color: var(--secondary-foreground);
+    }
+  }
+</style>

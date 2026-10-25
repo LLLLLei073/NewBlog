@@ -1,22 +1,30 @@
 ---
 /* 防 FOUC：在 <head> 中内联执行，确保首屏就有正确的 data-theme。
-   必须放在 global.css 之后、</head> 之前。 */
+   必须放在 global.css 之后、</head> 之前。
+   ClientRouter 换页时会重置 <html> 属性，因此在 astro:after-swap 后重新应用。 */
 ---
 
 <script is:inline>
   (function () {
-    var t;
-    try {
-      t = localStorage.getItem('theme');
-    } catch {}
-    if (!t)
-      t = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
-    document.documentElement.setAttribute('data-theme', t);
-    // 暗色变体：默认 starfield（带星空），可由用户切换为 minimal（极简单色）
-    var v;
-    try {
-      v = localStorage.getItem('dark-variant');
-    } catch {}
-    if (v) document.documentElement.setAttribute('data-dark-variant', v);
+    var apply = function () {
+      var t;
+      try {
+        t = localStorage.getItem('theme');
+      } catch (e) {}
+      if (!t)
+        t = matchMedia('(prefers-color-scheme:dark)').matches
+          ? 'dark'
+          : 'light';
+      document.documentElement.setAttribute('data-theme', t);
+      // 暗色变体：默认 starfield（带星空），可由用户切换为 minimal（极简单色）
+      var v;
+      try {
+        v = localStorage.getItem('dark-variant');
+      } catch (e) {}
+      if (v) document.documentElement.setAttribute('data-dark-variant', v);
+      else document.documentElement.removeAttribute('data-dark-variant');
+    };
+    apply();
+    document.addEventListener('astro:after-swap', apply);
   })();
 </script>

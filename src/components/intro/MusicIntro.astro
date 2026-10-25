@@ -1,0 +1,459 @@
+---
+/**
+ * 「耳朵的私人档案」开屏动画组件:仅挂在音乐专栏首页。
+ * 模板服务端渲染(封面 Sleeve 与首页主封面同一份 featured 数据,
+ * 保证交接时封面一致);播放与否由客户端 sessionStorage + 减少动态
+ * 偏好决定(intro.ts),不播放时直接移除节点,不阻塞正文渲染。
+ */
+import Sleeve from '../archive/Sleeve.astro';
+import { ENTRIES, FEATURED_SLUG } from '../../data/music';
+
+const featured = ENTRIES.find((e) => e.slug === FEATURED_SLUG);
+---
+
+{
+  featured && (
+    <div
+      class="music-intro"
+      data-music-intro
+      hidden
+      role="dialog"
+      aria-modal="true"
+      aria-label="音乐专栏开屏动画"
+    >
+      {/* 纸张颗粒与四角定位线(装饰) */}
+      <i class="mi-grain" data-mi-grain aria-hidden="true" />
+      <i class="mi-corner c-tl" aria-hidden="true" />
+      <i class="mi-corner c-tr" aria-hidden="true" />
+      <i class="mi-corner c-bl" aria-hidden="true" />
+      <i class="mi-corner c-br" aria-hidden="true" />
+
+      <div class="mi-stage">
+        {/* 左:唱片 + 沟槽 + 封面 + 唱臂(装饰) */}
+        <div class="mi-art" aria-hidden="true">
+          <div class="mi-disc" data-mi-disc>
+            <svg viewBox="0 0 240 240">
+              <circle cx="120" cy="120" r="118" fill="var(--mi-disc)" />
+              {/* 沟槽:由内向外依次绘制(stroke-dashoffset 见 intro.ts) */}
+              <circle
+                cx="120"
+                cy="120"
+                r="58"
+                fill="none"
+                stroke="var(--mi-line)"
+                stroke-width="1"
+                data-mi-groove
+                data-c="364.4"
+                style="stroke-dasharray: 364.4; stroke-dashoffset: 364.4"
+              />
+              <circle
+                cx="120"
+                cy="120"
+                r="76"
+                fill="none"
+                stroke="var(--mi-line)"
+                stroke-width="1"
+                data-mi-groove
+                data-c="477.5"
+                style="stroke-dasharray: 477.5; stroke-dashoffset: 477.5"
+              />
+              <circle
+                cx="120"
+                cy="120"
+                r="94"
+                fill="none"
+                stroke="var(--mi-line)"
+                stroke-width="1"
+                data-mi-groove
+                data-c="590.6"
+                style="stroke-dasharray: 590.6; stroke-dashoffset: 590.6"
+              />
+              {/* 中心标签(朱红)与中心孔(透纸色) */}
+              <circle cx="120" cy="120" r="34" fill="var(--primary)" />
+              <circle cx="120" cy="120" r="5" fill="var(--background)" />
+            </svg>
+          </div>
+
+          <div class="mi-sleeve" data-mi-sleeve>
+            <Sleeve
+              title={featured.title}
+              artist={featured.artist}
+              accent={featured.accent}
+              slug={featured.slug}
+            />
+          </div>
+
+          {/* 极简唱臂:细线 + 支点(移动端隐藏) */}
+          <svg
+            class="mi-tonearm"
+            data-mi-tonearm
+            viewBox="0 0 120 120"
+            aria-hidden="true"
+          >
+            <circle
+              cx="98"
+              cy="22"
+              r="5"
+              fill="none"
+              stroke="var(--mi-ink)"
+              stroke-width="1.5"
+            />
+            <line
+              x1="98"
+              y1="22"
+              x2="38"
+              y2="86"
+              stroke="var(--mi-ink)"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+            <circle cx="38" cy="86" r="3" fill="var(--mi-ink)" />
+          </svg>
+        </div>
+
+        {/* 右:标题与档案信息(装饰文本,屏幕阅读器不逐项朗读) */}
+        <div class="mi-copy" data-mi-copy aria-hidden="true">
+          <p class="mi-en" data-mi-en>
+            A PRIVATE ARCHIVE OF LISTENING
+          </p>
+          <p class="mi-title">
+            <span class="mask">
+              <span class="line" data-mi-l1>
+                耳朵的
+              </span>
+            </span>
+            <span class="mask">
+              <span class="line" data-mi-l2>
+                私人档案
+              </span>
+            </span>
+          </p>
+          <p class="mi-sub" data-mi-sub>
+            在声音里,留住一些日子
+          </p>
+          <dl class="mi-meta">
+            <div data-mi-meta>
+              <dt>CATALOGUE NO.</dt>
+              <dd class="mono-num">{featured.no}</dd>
+              <i class="mi-rule" data-mi-rule aria-hidden="true" />
+            </div>
+            <div data-mi-meta>
+              <dt>SIDE</dt>
+              <dd class="mono-num">A</dd>
+            </div>
+            <div data-mi-meta>
+              <dt>SPEED</dt>
+              <dd class="mono-num">33 1/3 RPM</dd>
+            </div>
+            <div data-mi-meta>
+              <dt>ARCHIVE</dt>
+              <dd>PRIVATE LISTENING ARCHIVE</dd>
+            </div>
+          </dl>
+          <span class="mi-stamp" data-mi-stamp>
+            本周在听
+          </span>
+        </div>
+      </div>
+
+      <button type="button" class="mi-skip" data-mi-skip>
+        跳过开屏
+      </button>
+    </div>
+  )
+}
+
+<script>
+  import { onPageLoad } from '../../utils/lifecycle';
+  import { mountIntro, cancelIntroForSwap, isMusicHome } from './intro';
+
+  onPageLoad(() => {
+    if (isMusicHome()) mountIntro();
+  });
+  // 快速离开音乐专栏:立即取消动画并清理(html 上的滚动锁定会跨 swap 存留)
+  document.addEventListener('astro:before-swap', cancelIntroForSwap);
+</script>
+
+<style is:global>
+  /* 覆盖层为 JS 动态显隐:样式走全局,选择器全部以 .music-intro 收口 */
+  .music-intro {
+    --mi-disc: #20201e;
+    --mi-line: rgba(25, 25, 23, 0.16);
+    --mi-ink: var(--foreground, #191917);
+    position: fixed;
+    inset: 0;
+    height: 100dvh;
+    z-index: 300;
+    display: grid;
+    place-items: center;
+    background: var(--background, #f1ede4);
+    color: var(--foreground, #191917);
+    padding: env(safe-area-inset-top) env(safe-area-inset-right)
+      env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+  .music-intro[hidden] {
+    display: none;
+  }
+  :root[data-theme='dark'] .music-intro {
+    --mi-disc: #0f0f0e;
+    --mi-line: rgba(232, 225, 213, 0.14);
+  }
+
+  /* 纸张颗粒(与专栏一致的细腻噪点,极低透明度) */
+  .music-intro .mi-grain {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.5; /* 元素本体透明度再乘 0.06,接近正文纸张颗粒 */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.12'/%3E%3C/svg%3E");
+  }
+
+  /* 四角极淡十字定位线 */
+  .music-intro .mi-corner {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    opacity: 0.35;
+    pointer-events: none;
+  }
+  .music-intro .mi-corner::before,
+  .music-intro .mi-corner::after {
+    content: '';
+    position: absolute;
+    background: var(--mi-line);
+  }
+  .music-intro .mi-corner::before {
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+  }
+  .music-intro .mi-corner::after {
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+  }
+  .music-intro .c-tl {
+    top: 20px;
+    left: 20px;
+  }
+  .music-intro .c-tr {
+    top: 20px;
+    right: 20px;
+  }
+  .music-intro .c-bl {
+    bottom: 20px;
+    left: 20px;
+  }
+  .music-intro .c-br {
+    bottom: 20px;
+    right: 20px;
+  }
+
+  /* 桌面:左右不对称(左 45% / 右 40%) */
+  .music-intro .mi-stage {
+    display: grid;
+    grid-template-columns: minmax(0, 45fr) minmax(0, 40fr);
+    justify-content: space-between;
+    gap: 6%;
+    align-items: center;
+    width: min(1060px, 100%);
+    padding: clamp(1.5rem, 4vw, 3rem);
+  }
+
+  /* 左:封面在左前,唱片右后探出 30–40% */
+  .music-intro .mi-art {
+    position: relative;
+    width: min(430px, 100%);
+    margin-inline: auto;
+  }
+  .music-intro .mi-disc {
+    position: absolute;
+    top: -10%;
+    right: -34%;
+    width: 64%;
+    will-change: transform;
+  }
+  .music-intro .mi-disc svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 2px 8px rgba(20, 18, 12, 0.1));
+  }
+  .music-intro .mi-sleeve {
+    position: relative;
+    z-index: 2;
+    width: clamp(230px, 24vw, 300px);
+    border-radius: 4px;
+    box-shadow: 0 3px 12px rgba(25, 25, 23, 0.16);
+    will-change: transform;
+  }
+  .music-intro .mi-sleeve svg {
+    display: block;
+    border-radius: 4px;
+  }
+  .music-intro .mi-tonearm {
+    position: absolute;
+    top: -16%;
+    right: 2%;
+    width: 24%;
+    z-index: 3;
+    transform-origin: 82% 18%;
+    will-change: transform;
+  }
+
+  /* 右:标题与档案信息 */
+  .music-intro .mi-en {
+    margin: 0;
+    font-family: var(--font-condensed, sans-serif);
+    font-size: 13px;
+    letter-spacing: 0.3em;
+    color: var(--primary, #c84632);
+  }
+  .music-intro .mi-title {
+    margin: 1.1rem 0 0;
+    font-family: var(--font-display, serif);
+    font-weight: 700;
+    font-size: clamp(40px, 4.6vw, 62px);
+    line-height: 1.18;
+    letter-spacing: 0.02em;
+    color: var(--card-foreground, #191917);
+  }
+  .music-intro .mi-title .mask {
+    display: block;
+    overflow: hidden;
+  }
+  .music-intro .mi-title .line {
+    display: block;
+    will-change: transform;
+  }
+  .music-intro .mi-sub {
+    margin: 1.15rem 0 0;
+    font-size: 15px;
+    color: var(--muted-foreground, #716a60);
+  }
+  .music-intro .mi-meta {
+    margin: 1.6rem 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+  .music-intro .mi-meta > div {
+    display: flex;
+    align-items: baseline;
+    gap: 0.7rem;
+    position: relative;
+    will-change: transform;
+  }
+  .music-intro .mi-meta dt {
+    font-family: var(--font-mono, monospace);
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    color: var(--muted-foreground, #716a60);
+    flex: none;
+    width: 8.5em;
+  }
+  .music-intro .mi-meta dd {
+    margin: 0;
+    font-family: var(--font-mono, monospace);
+    font-size: 13px;
+    color: var(--foreground, #191917);
+  }
+  .music-intro .mi-meta > div:first-child {
+    flex-wrap: wrap;
+  }
+  .music-intro .mi-rule {
+    display: block;
+    flex-basis: 100%;
+    height: 2px;
+    margin-top: 0.3rem;
+    background: var(--primary, #c84632);
+    transform-origin: left center;
+    will-change: transform;
+  }
+  .music-intro .mi-stamp {
+    display: inline-block;
+    margin-top: 1.7rem;
+    padding: 0.3em 0.85em;
+    border: 1.5px solid var(--primary, #c84632);
+    border-radius: 3px;
+    color: var(--primary, #c84632);
+    font-family: var(--font-serif, serif);
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.32em;
+    text-indent: 0.32em;
+    will-change: transform;
+  }
+
+  /* 跳过按钮:轻量细下划线,焦点清晰 */
+  .music-intro .mi-skip {
+    position: absolute;
+    top: calc(16px + env(safe-area-inset-top));
+    right: calc(20px + env(safe-area-inset-right));
+    padding: 0.7rem 0.3rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-family: var(--font-sans, sans-serif);
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    color: var(--muted-foreground, #716a60);
+    border-bottom: 1px solid var(--mi-line);
+  }
+  .music-intro .mi-skip:hover {
+    color: var(--primary, #c84632);
+    border-bottom-color: var(--primary, #c84632);
+  }
+  .music-intro .mi-skip:focus-visible {
+    outline: 2px solid var(--primary, #c84632);
+    outline-offset: 3px;
+  }
+
+  /* 移动端:上下构图,封面 200px / 标题 34–38px,省略唱臂 */
+  @media (max-width: 759px) {
+    .music-intro .mi-stage {
+      grid-template-columns: 1fr;
+      gap: 2.2rem;
+      justify-items: center;
+      text-align: center;
+      overflow-y: auto;
+      max-height: 100dvh;
+      align-content: center;
+    }
+    .music-intro .mi-art {
+      width: min(300px, 84vw);
+    }
+    .music-intro .mi-sleeve {
+      width: 200px;
+    }
+    .music-intro .mi-disc {
+      top: -8%;
+      right: -26%;
+      width: 58%;
+    }
+    .music-intro .mi-tonearm {
+      display: none;
+    }
+    .music-intro .mi-title {
+      font-size: 36px;
+    }
+    .music-intro .mi-meta {
+      align-items: center;
+    }
+    .music-intro .mi-meta > div {
+      justify-content: center;
+    }
+    .music-intro .mi-rule {
+      flex-basis: 70%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    /* 减少动态效果时不展示开屏(intro.ts 直接移除),此处仅兜底 */
+    .music-intro {
+      display: none;
+    }
+  }
+</style>

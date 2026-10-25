@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { postHref } from '../utils/postRoute';
 import FormattedDate from '../components/FormattedDate.astro';
 import { getCollection } from 'astro:content';
 
@@ -42,7 +43,7 @@ const archiveGroups = Array.from(groups.entries());
             <ul class="archive-list">
               {monthPosts.map((post) => (
                 <li>
-                  <a href={`/blog/${post.id}/`} class="archive-item">
+                  <a href={postHref(post.id, post.data.category)} class="archive-item">
                     <span class="archive-date">
                       <FormattedDate date={post.data.pubDate} />
                     </span>

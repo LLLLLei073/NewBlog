@@ -1,0 +1,444 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ArchiveNav from '../../../components/archive/ArchiveNav.astro';
+import Sleeve from '../../../components/archive/Sleeve.astro';
+import Stars from '../../../components/archive/Stars.astro';
+import TrackRows from '../../../components/archive/TrackRows.astro';
+import { ENTRIES, mmss, totalSec } from '../../../data/music';
+
+export function getStaticPaths() {
+  return ENTRIES.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const cf = ENTRIES.find((e) => e.slug === entry.cfSlug);
+const total = totalSec(entry.trackIds);
+---
+
+<BaseLayout
+  title={`${entry.title} — ${entry.artist}`}
+  description={entry.intro}
+  pageName="music"
+>
+  <div class="archive">
+    <ArchiveNav />
+    <article class="arch album-page">
+      <!-- 顶部:SIDE A 侧栏 + 大封套 + 标题 -->
+      <header class="head rise">
+        <aside class="side">
+          <p class="side-label">SIDE A</p>
+          <dl class="meta">
+            <div><dt>No.</dt><dd class="mono-num">{entry.no}</dd></div>
+            <div><dt>评分</dt><dd><Stars rating={entry.rating} /></dd></div>
+            <div><dt>收藏</dt><dd class="mono-num">{entry.acquired}</dd></div>
+            <div><dt>分类</dt><dd>{entry.category}</dd></div>
+            <div><dt>时长</dt><dd class="mono-num">{mmss(total)}</dd></div>
+          </dl>
+        </aside>
+
+        <div class="cover-wrap">
+          <div class="cover tilt tilt-l rise d1" style="--tilt-deg: -2.5deg">
+            <Sleeve
+              title={entry.title}
+              artist={entry.artist}
+              accent={entry.accent}
+              slug={entry.slug}
+            />
+          </div>
+          <!-- 唱片探出一角,播放时旋转 -->
+          <div class="peek-disc" data-vinyl aria-hidden="true">
+            <svg viewBox="0 0 40 40">
+              <circle cx="20" cy="20" r="19" fill="#413d37"></circle>
+              <circle
+                cx="20"
+                cy="20"
+                r="16"
+                fill="none"
+                stroke="rgba(241,237,228,.2)"></circle>
+              <circle
+                cx="20"
+                cy="20"
+                r="12.5"
+                fill="none"
+                stroke="rgba(241,237,228,.14)"></circle>
+              <circle cx="20" cy="20" r="5.8" fill={entry.accent}></circle>
+              <circle cx="20" cy="20" r="1.8" fill="#413d37"></circle>
+            </svg>
+          </div>
+        </div>
+
+        <div class="title-block rise d2">
+          <p class="mono-label">{entry.kind} · {entry.no}</p>
+          <h1>{entry.title}</h1>
+          <p class="artist">
+            {entry.artist}
+            <button
+              type="button"
+              class="play-all"
+              data-play-all={entry.slug}
+              aria-label={`播放整张专辑:${entry.title}`}
+            >
+              <svg
+                viewBox="0 0 24 24"
+                width="11"
+                height="11"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path d="M8 5.5v13l11-6.5z"></path>
+              </svg>
+              播放整张
+            </button>
+          </p>
+          <p class="intro">{entry.intro}</p>
+          {entry.blurb && <p class="blurb">「{entry.blurb}」</p>}
+        </div>
+      </header>
+
+      <!-- 乐评正文(仅主打条目有完整乐评) -->
+      {
+        entry.review && entry.review.length > 0 && (
+          <section class="review rise d3" aria-label="乐评">
+            {entry.review.map((para, i) => (
+              <>
+                {i === 1 && entry.quote && (
+                  <blockquote class="pull">{entry.quote}</blockquote>
+                )}
+                <p>{para}</p>
+              </>
+            ))}
+            <p class="review-end">
+              评分说明:{entry.rating.toFixed(1)} / 10
+              ——私人口径,只代表这张唱片在我这里的重量。
+            </p>
+          </section>
+        )
+      }
+
+      <!-- 对照推荐 -->
+      {
+        cf && entry.cfText && (
+          <aside class="cf rise d3">
+            <p class="mono-label">对照推荐</p>
+            <a href={`/music/album/${cf.slug}/`} class="cf-link">
+              <span class="cf-sleeve" aria-hidden="true">
+                <Sleeve
+                  title={cf.title}
+                  artist={cf.artist}
+                  accent={cf.accent}
+                  no={cf.no}
+                  kind={cf.kind}
+                  slug={cf.slug}
+                />
+              </span>
+              <span class="cf-body">
+                <strong>《{cf.title}》</strong>
+                <span>{cf.artist}</span>
+                <em>{entry.cfText}</em>
+              </span>
+            </a>
+          </aside>
+        )
+      }
+
+      <!-- 曲目表 -->
+      <section class="tracks rise d4" aria-label="曲目列表">
+        <div class="tracks-head">
+          <h2>曲目</h2>
+          <p class="mono-label">
+            {entry.trackIds.length} TRACKS · {mmss(total)}
+          </p>
+        </div>
+        <p class="legend">
+          <i class="loved-dot" aria-hidden="true"></i>心动曲 · 附个人注记
+        </p>
+        <TrackRows
+          queueId={`album:${entry.slug}`}
+          trackIds={entry.trackIds}
+          showNote
+        />
+      </section>
+    </article>
+  </div>
+</BaseLayout>
+
+<script>
+  import { onPageLoad } from '../../../utils/lifecycle';
+  import { playQueue, subscribe } from '../../../components/music/player';
+
+  onPageLoad(() => {
+    const btn = document.querySelector<HTMLButtonElement>('[data-play-all]');
+    if (!btn) return;
+    const slug = btn.dataset.playAll;
+    const onClick = () => playQueue(`album:${slug}`, 0);
+    btn.addEventListener('click', onClick);
+    // 唱片线稿仅在播放时旋转
+    const stop = subscribe(() => {
+      const playing = document
+        .getElementById('music-player')
+        ?.hasAttribute('data-playing');
+      document
+        .querySelectorAll('[data-vinyl]')
+        .forEach((el) => el.classList.toggle('vinyl-spin', Boolean(playing)));
+    });
+    return () => {
+      btn.removeEventListener('click', onClick);
+      stop();
+    };
+  });
+</script>
+
+<style>
+  .album-page {
+    padding-top: clamp(1.25rem, 3.5vw, 2.25rem);
+    padding-bottom: clamp(4rem, 8vw, 6rem);
+  }
+
+  /* ===== 顶部三段(紧凑) ===== */
+  .head {
+    display: grid;
+    grid-template-columns: 165px minmax(0, 260px) 1fr;
+    gap: clamp(1.25rem, 3vw, 2.25rem);
+    align-items: start;
+  }
+
+  .side .meta {
+    margin: 0;
+  }
+  .side .meta > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.75rem;
+    padding: 0.42rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .side dt {
+    font-size: 12px;
+    color: var(--muted-foreground);
+    letter-spacing: 0.08em;
+  }
+  .side dd {
+    margin: 0;
+    font-size: 14px;
+    color: var(--foreground);
+  }
+
+  /* 播放整张:标题旁的轻量幽灵按钮 */
+  .play-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-left: 0.9rem;
+    padding: 0.28rem 0.7rem;
+    border: 1px solid var(--primary);
+    border-radius: 3px;
+    background: transparent;
+    color: var(--primary);
+    font-size: 12.5px;
+    font-family: var(--font-sans);
+    letter-spacing: 0.08em;
+    vertical-align: 2px;
+    cursor: pointer;
+    transition:
+      background-color 0.18s ease,
+      color 0.18s ease;
+    min-height: 32px;
+  }
+  .play-all:hover {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+
+  .cover-wrap {
+    position: relative;
+  }
+  .cover {
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(25, 25, 23, 0.14);
+  }
+  .peek-disc {
+    position: absolute;
+    right: -12%;
+    top: 10%;
+    width: 36%;
+    filter: drop-shadow(0 2px 6px rgba(20, 18, 12, 0.12));
+    pointer-events: none;
+  }
+  .peek-disc svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .title-block h1 {
+    margin: 0.4rem 0 0;
+    font-family: var(--font-display);
+    font-size: clamp(32px, 3.8vw, 52px);
+    line-height: 1.18;
+    letter-spacing: 0.02em;
+    color: var(--card-foreground);
+    box-shadow: inset 0 -2px 0 0 var(--primary);
+    display: inline-block;
+    padding-bottom: 0.18em;
+  }
+  .title-block .artist {
+    margin: 0.7rem 0 0;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.16em;
+    color: var(--muted-foreground);
+  }
+  .title-block .intro {
+    margin: 1.05rem 0 0;
+    max-width: 44ch;
+    font-size: 15px;
+    line-height: 1.9;
+    color: var(--foreground);
+  }
+  .title-block .blurb {
+    margin: 0.9rem 0 0;
+    font-family: var(--font-serif);
+    font-size: 14.5px;
+    color: var(--primary);
+  }
+
+  /* ===== 乐评 ===== */
+  .review {
+    max-width: 640px;
+    margin: clamp(2.5rem, 6vw, 4rem) auto 0;
+    font-size: 15.5px;
+    line-height: 1.95;
+    color: var(--foreground);
+  }
+  .review p {
+    margin: 0 0 1.15rem;
+  }
+  .pull {
+    margin: 2.2rem 0;
+    padding: 0 0 0 1.25rem;
+    border-left: 3px solid var(--primary);
+    font-family: var(--font-display);
+    font-size: 22px;
+    line-height: 1.8;
+    color: var(--card-foreground);
+  }
+  .review-end {
+    font-size: 13px;
+    color: var(--muted-foreground);
+  }
+
+  /* ===== 对照推荐 ===== */
+  .cf {
+    max-width: 640px;
+    margin: 2.5rem auto 0;
+    border-top: 1px solid var(--border);
+    padding-top: 1.25rem;
+  }
+  .cf-link {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+  }
+  .cf-sleeve {
+    flex: none;
+    width: 72px;
+    border-radius: 3px;
+    overflow: hidden;
+    transform: rotate(-1.6deg);
+    transition: transform 0.24s ease;
+  }
+  .cf-link:hover .cf-sleeve {
+    transform: rotate(0deg);
+  }
+  .cf-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    font-size: 14.5px;
+  }
+  .cf-body strong {
+    font-family: var(--font-serif);
+  }
+  .cf-body span {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--muted-foreground);
+  }
+  .cf-body em {
+    font-style: normal;
+    font-size: 13.5px;
+    color: var(--muted-foreground);
+    line-height: 1.7;
+  }
+
+  /* ===== 曲目表 ===== */
+  .tracks {
+    max-width: 820px;
+    margin: clamp(2.5rem, 6vw, 4rem) auto 0;
+  }
+  .tracks-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+  .tracks-head h2 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 22px;
+  }
+  .legend {
+    margin: 0.4rem 0 0.8rem;
+    font-size: 12.5px;
+    color: var(--muted-foreground);
+  }
+  .loved-dot {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--primary);
+    margin-right: 0.35rem;
+    vertical-align: 2px;
+  }
+
+  /* ===== 响应式 ===== */
+  @media (max-width: 960px) {
+    .head {
+      grid-template-columns: 160px 1fr;
+    }
+    .cover-wrap {
+      grid-row: span 2;
+      max-width: 260px;
+    }
+  }
+  @media (max-width: 640px) {
+    .head {
+      grid-template-columns: 1fr;
+    }
+    .cover-wrap {
+      max-width: 236px;
+      margin: 0.5rem auto;
+    }
+    .side .meta {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+    .title-block {
+      text-align: center;
+    }
+    .title-block .intro {
+      text-align: left;
+    }
+    .review,
+    .tracks {
+      max-width: none;
+    }
+  }
+</style>

@@ -1,0 +1,385 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArchiveNav from '../../components/archive/ArchiveNav.astro';
+import TrackRows from '../../components/archive/TrackRows.astro';
+import { SCENES, mmss, totalSec } from '../../data/music';
+---
+
+<BaseLayout
+  title="场景歌单"
+  description="给每种时刻,配一段声音:深夜独处、雨天散步、通勤路上、专注工作、周末醒来。"
+  pageName="music"
+>
+  <div class="archive">
+    <ArchiveNav />
+
+    <main class="arch scenes-page">
+      <header class="page-head rise">
+        <div>
+          <h1>给每种时刻,<br />配一段声音</h1>
+          <p class="mono-label">MOOD &amp; SITUATION PLAYLISTS</p>
+        </div>
+        <p class="head-note rise d1">
+          五个预设场景,按我真实的使用习惯排列。歌单不追新,只求在对应的时刻刚刚好。
+        </p>
+      </header>
+
+      <div class="layout rise d2">
+        <!-- 场景内容区 -->
+        <div class="scenes">
+          {
+            SCENES.map((scene, i) => (
+              <section
+                class:list={['scene', { on: i === 0 }]}
+                data-scene={scene.slug}
+                hidden={i !== 0}
+                aria-label={scene.title}
+              >
+                <header class="scene-head">
+                  <p class="scene-no mono-num">
+                    {String(i + 1).padStart(2, '0')}
+                  </p>
+                  <div class="scene-title">
+                    <h2>
+                      {scene.title}
+                      <span class="en">{scene.en}</span>
+                    </h2>
+                    <p>{scene.desc}</p>
+                    <p class="moods">
+                      {scene.moods.map((m) => (
+                        <span class="mood-tag">{m}</span>
+                      ))}
+                    </p>
+                  </div>
+                  <div class="scene-ops">
+                    <p class="mono-label">
+                      {scene.trackIds.length} TRACKS ·{' '}
+                      {mmss(totalSec(scene.trackIds))}
+                    </p>
+                    <button
+                      type="button"
+                      class="play-all"
+                      data-play-scene={scene.slug}
+                    >
+                      播放全部
+                    </button>
+                  </div>
+                </header>
+
+                <div class="scene-body">
+                  <TrackRows
+                    queueId={`scene:${scene.slug}`}
+                    trackIds={scene.trackIds}
+                    showMood
+                    showEntry
+                  />
+                </div>
+
+                <aside class="scene-memo">
+                  <p class="memo-label mono-label">LISTENING NOTE</p>
+                  <div class="memo">{scene.note}</div>
+                </aside>
+              </section>
+            ))
+          }
+        </div>
+
+        <!-- 右侧情绪索引:横向文字,每个场景一行 -->
+        <nav class="mood-index" aria-label="情绪索引">
+          <p class="mono-label index-title">情绪索引<br />INDEX</p>
+          {
+            SCENES.map((scene, i) => (
+              <button
+                type="button"
+                class:list={['idx', { on: i === 0 }]}
+                data-idx={scene.slug}
+                aria-pressed={i === 0 ? 'true' : 'false'}
+              >
+                <span class="idx-no mono-num">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <span class="idx-title">{scene.title}</span>
+              </button>
+            ))
+          }
+        </nav>
+      </div>
+    </main>
+  </div>
+</BaseLayout>
+
+<script>
+  import { onPageLoad } from '../../utils/lifecycle';
+  import { playQueue } from '../../components/music/player';
+
+  onPageLoad(() => {
+    const page = document.querySelector<HTMLElement>('.scenes-page');
+    if (!page) return;
+    const cleanups: Array<() => void> = [];
+    const listen = (el: Element, type: string, fn: (e: Event) => void) => {
+      el.addEventListener(type, fn as EventListener);
+      cleanups.push(() => el.removeEventListener(type, fn as EventListener));
+    };
+
+    const sections = Array.from(
+      page.querySelectorAll<HTMLElement>('[data-scene]'),
+    );
+    const idxBtns = Array.from(
+      page.querySelectorAll<HTMLButtonElement>('[data-idx]'),
+    );
+
+    const activate = (slug: string) => {
+      sections.forEach((s) => {
+        const on = s.dataset.scene === slug;
+        s.hidden = !on;
+        s.classList.toggle('on', on);
+      });
+      idxBtns.forEach((b) => {
+        const on = b.dataset.idx === slug;
+        b.classList.toggle('on', on);
+        b.setAttribute('aria-pressed', String(on));
+      });
+      history.replaceState(null, '', `#${slug}`);
+    };
+
+    listen(page, 'click', (e) => {
+      const target = e.target as HTMLElement;
+      const idx = target.closest<HTMLButtonElement>('[data-idx]');
+      if (idx) {
+        activate(idx.dataset.idx!);
+        return;
+      }
+      const play = target.closest<HTMLButtonElement>('[data-play-scene]');
+      if (play) playQueue(`scene:${play.dataset.playScene}`, 0);
+    });
+
+    // 进入页面时按 hash 直达对应场景
+    const hash = decodeURIComponent(location.hash.slice(1));
+    if (hash && sections.some((s) => s.dataset.scene === hash)) activate(hash);
+
+    return () => cleanups.forEach((c) => c());
+  });
+</script>
+
+<style>
+  .scenes-page {
+    padding-top: clamp(2rem, 5vw, 3.5rem);
+    padding-bottom: clamp(4rem, 8vw, 6rem);
+  }
+
+  .page-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .page-head h1 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    line-height: 1.25;
+    color: var(--card-foreground);
+  }
+  .page-head .mono-label {
+    margin: 0.9rem 0 0;
+  }
+  .head-note {
+    margin: 0;
+    max-width: 34ch;
+    font-size: 0.85rem;
+    line-height: 2;
+    color: var(--muted-foreground);
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 190px;
+    gap: clamp(2rem, 5vw, 4rem);
+    margin-top: clamp(2rem, 5vw, 3rem);
+  }
+
+  /* ===== 场景区(交叉淡化) ===== */
+  .scene.on {
+    animation: scene-in 0.3s ease both;
+  }
+  @keyframes scene-in {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .scene-head {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 1.4rem;
+    align-items: start;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1.1rem;
+  }
+  .scene-no {
+    margin: 0;
+    font-size: 2.8rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--primary);
+  }
+  .scene-title h2 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 26px;
+    color: var(--card-foreground);
+  }
+  .scene-title .en {
+    margin-left: 0.7rem;
+    font-family: var(--font-condensed);
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: var(--muted-foreground);
+  }
+  .scene-title > p {
+    margin: 0.5rem 0 0;
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--muted-foreground);
+    max-width: 48ch;
+  }
+  .scene-title .moods {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    margin-top: 0.7rem !important;
+  }
+  .scene-ops {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.7rem;
+  }
+  .scene-ops .mono-label {
+    margin: 0;
+  }
+  .play-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 3px;
+    background: var(--primary);
+    color: var(--primary-foreground);
+    font-size: 14px;
+    letter-spacing: 0.12em;
+    cursor: pointer;
+    transition: opacity 0.18s ease;
+  }
+  .play-all:hover {
+    opacity: 0.86;
+  }
+
+  .scene-body {
+    margin-top: 0.5rem;
+  }
+
+  .scene-memo {
+    margin-top: 2rem;
+    max-width: 380px;
+    margin-left: auto;
+  }
+  .memo-label {
+    text-align: right;
+    margin: 0 0 0.9rem;
+  }
+
+  /* ===== 右侧情绪索引 ===== */
+  .mood-index {
+    position: sticky;
+    top: calc(var(--header-height, 56px) + 1.5rem);
+    align-self: start;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    border-left: 1px solid var(--border);
+    padding-left: 1.1rem;
+  }
+  .index-title {
+    margin: 0 0 0.9rem;
+    line-height: 1.8;
+  }
+  .idx {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    padding: 0.55rem 0.4rem;
+    border: none;
+    border-left: 2px solid transparent;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    color: var(--muted-foreground);
+    font-family: inherit;
+    transition:
+      color 0.18s ease,
+      border-color 0.18s ease;
+    min-height: 44px;
+  }
+  .idx:hover {
+    color: var(--foreground);
+  }
+  .idx.on {
+    color: var(--primary);
+    border-left-color: var(--primary);
+  }
+  .idx-no {
+    font-size: 12px;
+  }
+  .idx-title {
+    font-family: var(--font-serif);
+    font-size: 15px;
+    letter-spacing: 0.14em;
+  }
+
+  /* ===== 响应式 ===== */
+  @media (max-width: 900px) {
+    .layout {
+      grid-template-columns: 1fr;
+    }
+    .mood-index {
+      position: static;
+      flex-direction: row;
+      flex-wrap: wrap;
+      border-left: none;
+      border-top: 1px solid var(--border);
+      padding: 0.9rem 0 0;
+    }
+    .index-title {
+      display: none;
+    }
+    .idx {
+      border-left: none;
+      border-bottom: 2px solid transparent;
+      padding: 0.35rem 0.5rem;
+    }
+    .idx.on {
+      border-bottom-color: var(--primary);
+    }
+    .idx-title {
+      letter-spacing: 0.08em;
+    }
+    .scene-head {
+      grid-template-columns: auto 1fr;
+    }
+    .scene-ops {
+      grid-column: 2;
+      flex-direction: row;
+      align-items: center;
+      text-align: left;
+    }
+  }
+</style>

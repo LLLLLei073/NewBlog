@@ -1,29 +1,16 @@
 ---
 /* GitHub Discussions 评论区（giscus）。
-   前置条件：仓库已启用 Discussions，且已安装 giscus App（https://github.com/apps/giscus）。 */
+   前置条件：仓库已启用 Discussions，且已安装 giscus App（https://github.com/apps/giscus）。
+   ClientRouter 换页后外链脚本不会重新执行，因此改为在容器可见时注入脚本，
+   脚本标签由 JS 动态创建（见底部 script）。 */
 
 const lightTheme = new URL('/giscus/light.css', Astro.site).href;
 ---
 
-<section class="comments" aria-label="评论区">
+<section class="comments" aria-label="评论区" data-giscus-theme={lightTheme}>
   <h2 class="comments-title">评论</h2>
 
-  <script
-    is:inline
-    src="https://giscus.app/client.js"
-    data-repo="LLLLLei073/NewBlog"
-    data-repo-id="R_kgDOToND8g"
-    data-category="General"
-    data-category-id="DIC_kwDOToND8s4DCY0P"
-    data-mapping="pathname"
-    data-strict="0"
-    data-reactions-enabled="1"
-    data-emit-metadata="0"
-    data-input-position="top"
-    data-theme={lightTheme}
-    data-lang="zh-CN"
-    data-loading="lazy"
-    async></script>
+  <div class="comments-body" data-comments-body></div>
 
   <noscript>
     <p class="comments-noscript">
@@ -38,6 +25,52 @@ const lightTheme = new URL('/giscus/light.css', Astro.site).href;
   </noscript>
 </section>
 
+<script>
+  import { onPageLoad } from '../utils/lifecycle';
+
+  const GISCUS_SRC = 'https://giscus.app/client.js';
+  const GISCUS_ATTRS: Array<[string, string]> = [
+    ['data-repo', 'LLLLLei073/NewBlog'],
+    ['data-repo-id', 'R_kgDOToND8g'],
+    ['data-category', 'General'],
+    ['data-category-id', 'DIC_kwDOToND8s4DCY0P'],
+    ['data-mapping', 'pathname'],
+    ['data-strict', '0'],
+    ['data-reactions-enabled', '1'],
+    ['data-emit-metadata', '0'],
+    ['data-input-position', 'top'],
+    ['data-lang', 'zh-CN'],
+    ['data-crossorigin', 'anonymous'],
+    ['async', ''],
+  ];
+
+  function mountGiscus() {
+    const section = document.querySelector<HTMLElement>('[data-giscus-theme]');
+    const body = document.querySelector<HTMLElement>('[data-comments-body]');
+    if (!section || !body || body.querySelector('iframe')) return;
+    // 滚动到可见才加载(等价于原来的 data-loading="lazy")
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        observer.disconnect();
+        if (body.querySelector('iframe')) return;
+        const script = document.createElement('script');
+        script.src = GISCUS_SRC;
+        for (const [key, value] of GISCUS_ATTRS) {
+          script.setAttribute(key, value);
+        }
+        script.setAttribute('data-theme', section.dataset.giscusTheme || '');
+        body.appendChild(script);
+      },
+      { rootMargin: '200px 0px' },
+    );
+    observer.observe(body);
+    return () => observer.disconnect();
+  }
+
+  onPageLoad(mountGiscus);
+</script>
+
 <style>
   .comments {
     /* 已包在 .comments-wrap 卡片内，不再需要大外边距和顶部边框 */
@@ -49,6 +82,10 @@ const lightTheme = new URL('/giscus/light.css', Astro.site).href;
     margin: 0 0 1rem;
     /* 卡片固定白底，标题固定深色，亮暗模式下都可读 */
     color: #1a1e35;
+  }
+
+  .comments-body {
+    min-height: 1rem;
   }
 
   .comments-noscript {

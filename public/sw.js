@@ -30,6 +30,10 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(req.url);
   if (url.origin !== location.origin) return;
 
+  /* 音频文件不拦截:避免 stale-while-revalidate 缓存爆仓,
+     并保留浏览器原生的 Range 分段加载(播放进度拖动依赖它)。 */
+  if (/\.(mp3|m4a|flac|ogg|wav)$/i.test(url.pathname)) return;
+
   if (req.mode === 'navigate') {
     event.respondWith(
       fetch(req)

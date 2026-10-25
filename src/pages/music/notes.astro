@@ -1,0 +1,221 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { postHref } from '../../utils/postRoute';
+import ArchiveNav from '../../components/archive/ArchiveNav.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .filter((p) => !p.data.draft && p.data.category === 'music')
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const fmtDate = (d: Date) =>
+  `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
+---
+
+<BaseLayout
+  title="音乐手记"
+  description="关于音乐的手记:一首歌与一段生活的关系、现场记录、最近发现的艺人。"
+  pageName="music"
+>
+  <div class="archive">
+    <ArchiveNav />
+
+    <main class="arch notes-page">
+      <header class="page-head rise">
+        <h1>音乐手记</h1>
+        <p class="mono-label">LISTENING NOTES · {posts.length} 篇</p>
+        <p class="head-note">
+          与声音有关的碎碎念:某首歌和一段日子的关系、一次循环到停不下来的深夜、最近新认识的艺人。
+        </p>
+      </header>
+
+      {
+        posts.length > 0 && (
+          <a
+            href={postHref(posts[0].id, posts[0].data.category)}
+            class="featured rise d1"
+          >
+            <p class="f-kicker mono-label">编辑推荐 · EDITOR'S PICK</p>
+            <h2>{posts[0].data.title}</h2>
+            <p class="f-desc">{posts[0].data.description}</p>
+            <p class="f-date mono-num">
+              {fmtDate(posts[0].data.pubDate)}
+              <span class="f-arrow" aria-hidden="true">
+                阅读全文 →
+              </span>
+            </p>
+          </a>
+        )
+      }
+
+      <ul class="post-list rise d2">
+        {
+          posts.length > 1 ? (
+            posts.slice(1).map((p, i) => (
+              <li>
+                <a
+                  href={postHref(p.id, p.data.category)}
+                  class:list={['post', { tilt: i % 2 === 0 }]}
+                >
+                  <span class="p-date mono-num">{fmtDate(p.data.pubDate)}</span>
+                  <span class="p-body">
+                    <strong>{p.data.title}</strong>
+                    <span class="p-desc">{p.data.description}</span>
+                  </span>
+                  <span class="p-arrow" aria-hidden="true">
+                    →
+                  </span>
+                </a>
+              </li>
+            ))
+          ) : posts.length === 0 ? (
+            <li class="empty">还没有手记,唱片架先逛逛。</li>
+          ) : null
+        }
+      </ul>
+    </main>
+  </div>
+</BaseLayout>
+
+<style>
+  .notes-page {
+    padding-top: clamp(2rem, 5vw, 3.5rem);
+    padding-bottom: clamp(4rem, 8vw, 6rem);
+    max-width: 980px;
+  }
+
+  .page-head h1 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(32px, 4vw, 52px);
+    color: var(--card-foreground);
+  }
+  .page-head .mono-label {
+    margin: 0.8rem 0 0;
+  }
+  .head-note {
+    margin: 1.2rem 0 0;
+    max-width: 52ch;
+    font-size: 15px;
+    line-height: 1.9;
+    color: var(--muted-foreground);
+  }
+
+  /* ===== 首篇:编辑推荐 ===== */
+  .featured {
+    display: block;
+    margin: 2.2rem 0 0;
+    padding: 1.5rem 0 1.4rem;
+    border-top: 2px solid var(--foreground);
+    text-decoration: none;
+    color: inherit;
+    transition: background-color 0.18s ease;
+  }
+  .featured:hover {
+    background: var(--accent);
+  }
+  .f-kicker {
+    margin: 0;
+    color: var(--primary);
+  }
+  .featured h2 {
+    margin: 0.7rem 0 0;
+    font-family: var(--font-display);
+    font-size: 26px;
+    line-height: 1.4;
+    color: var(--card-foreground);
+  }
+  .f-desc {
+    margin: 0.7rem 0 0;
+    max-width: 64ch;
+    font-size: 15px;
+    line-height: 1.9;
+    color: var(--muted-foreground);
+  }
+  .f-date {
+    margin: 1rem 0 0;
+    font-size: 12.5px;
+    color: var(--muted-foreground);
+  }
+  .f-arrow {
+    margin-left: 1rem;
+    color: var(--primary);
+  }
+
+  .post-list {
+    list-style: none;
+    margin: 2.2rem 0 0;
+    padding: 0;
+    border-top: 1px solid var(--border);
+  }
+  .post {
+    display: grid;
+    grid-template-columns: 6.2rem 1fr auto;
+    gap: 1.2rem;
+    align-items: baseline;
+    padding: 1.1rem 0.5rem;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+    color: inherit;
+    transition: background-color 0.18s ease;
+  }
+  .post:hover {
+    background: var(--accent);
+  }
+  .post.tilt:hover {
+    background: var(--accent);
+  }
+  .p-date {
+    font-size: 12px;
+    color: var(--muted-foreground);
+  }
+  .p-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    min-width: 0;
+  }
+  .p-body strong {
+    font-family: var(--font-serif);
+    font-size: 16.5px;
+    color: var(--foreground);
+  }
+  .p-desc {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--muted-foreground);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .p-arrow {
+    color: var(--primary);
+    opacity: 0;
+    transform: translateX(-6px);
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease;
+  }
+  .post:hover .p-arrow {
+    opacity: 1;
+    transform: none;
+  }
+  .empty {
+    padding: 1.5rem 0;
+    color: var(--muted-foreground);
+    font-size: 15px;
+  }
+
+  @media (max-width: 640px) {
+    .post {
+      grid-template-columns: 1fr auto;
+    }
+    .p-date {
+      display: none;
+    }
+    .featured h2 {
+      font-size: 22px;
+    }
+  }
+</style>

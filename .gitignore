@@ -26,3 +26,9 @@ pnpm-debug.log*
 *.swo
 status-watcher.log
 scripts/status-watchdog.log
+
+# 本地工具与截图产物
+.zcode/
+.mimosa/
+.screenshots/
+.release-blog-*/

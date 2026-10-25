@@ -143,6 +143,8 @@
 
 <script>
   import { setSiteTheme } from '../utils/theme';
+  import { onPageLoad } from '../utils/lifecycle';
+
   function initThemeToggle() {
     const btn = document.getElementById('theme-toggle');
     const variantBtn = document.getElementById('dark-variant-toggle');
@@ -162,7 +164,9 @@
       ) {
         root.style.setProperty('--vt-x', `${x}px`);
         root.style.setProperty('--vt-y', `${y}px`);
-        document.startViewTransition(update);
+        const transition = document.startViewTransition(update);
+        // 过渡被跳过/中止(如文档暂时不可见)时静默,主题本身已应用
+        transition.ready.catch(() => {});
       } else {
         update();
       }
@@ -188,5 +192,5 @@
     });
   }
 
-  initThemeToggle();
+  onPageLoad(initThemeToggle);
 </script>

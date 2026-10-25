@@ -1,0 +1,271 @@
+---
+/**
+ * 首屏图论示意:真实数据的小图 + Dijkstra 最短路标注(非装饰图片)。
+ * s→t 最短路径 s→b→d→t(3+4+6=13)以信号蓝加粗;节点附最终距离。
+ * hover 节点会突出其关联边(客户端脚本)。
+ */
+const nodes = [
+  { id: 's', x: 55, y: 175, dist: 0, label: 's', kind: 'start' },
+  { id: 'a', x: 178, y: 66, dist: 7, label: 'a', kind: 'mid' },
+  { id: 'b', x: 162, y: 268, dist: 3, label: 'b', kind: 'mid' },
+  { id: 'c', x: 312, y: 128, dist: 9, label: 'c', kind: 'mid' },
+  { id: 'd', x: 322, y: 288, dist: 7, label: 'd', kind: 'mid' },
+  { id: 't', x: 468, y: 196, dist: 13, label: 't', kind: 'end' },
+] as const;
+
+const edges = [
+  { from: 's', to: 'a', w: 7, onPath: false },
+  { from: 's', to: 'b', w: 3, onPath: true },
+  { from: 'a', to: 'c', w: 2, onPath: false },
+  { from: 'b', to: 'c', w: 9, onPath: false },
+  { from: 'b', to: 'd', w: 4, onPath: true },
+  { from: 'c', to: 't', w: 6, onPath: false },
+  { from: 'd', to: 't', w: 6, onPath: true },
+] as const;
+
+const N = Object.fromEntries(nodes.map((n) => [n.id, n]));
+const R = 17;
+
+/** 边端点收缩到节点圆外 */
+function shrink(a: { x: number; y: number }, b: { x: number; y: number }) {
+  const dx = b.x - a.x;
+  const dy = b.y - a.y;
+  const len = Math.hypot(dx, dy);
+  const ux = dx / len;
+  const uy = dy / len;
+  return {
+    x1: a.x + ux * (R + 3),
+    y1: a.y + uy * (R + 3),
+    x2: b.x - ux * (R + 8),
+    y2: b.y - uy * (R + 8),
+  };
+}
+---
+
+<figure class="gf" data-graph-fig>
+  <div class="gf-canvas grid-paper">
+    <svg
+      viewBox="0 0 520 360"
+      role="img"
+      aria-label="带权有向图:从 s 到 t 的最短路径是 s→b→d→t,总距离 13"
+    >
+      <title>最短路示意:Dijkstra 在带权图上的结果</title>
+      <desc>
+        六个节点 s、a、b、c、d、t;边权
+        s→a=7、s→b=3、a→c=2、b→c=9、b→d=4、c→t=6、d→t=6。 最短路径 s→b→d→t
+        用信号蓝加粗标出,总距离 13;每个节点下方标注 Dijkstra 求得的最终距离。
+      </desc>
+
+      {
+        edges.map((e) => {
+          const a = N[e.from];
+          const b = N[e.to];
+          const p = shrink(a, b);
+          const mx = (p.x1 + p.x2) / 2;
+          const my = (p.y1 + p.y2) / 2;
+          const ang = Math.atan2(p.y2 - p.y1, p.x2 - p.x1);
+          const off = e.onPath ? 0 : 10; // 非路径边标签外移,避免重叠
+          return (
+            <g
+              class="gf-edge"
+              data-edge={`${e.from}-${e.to}`}
+              data-onpath={e.onPath ? '1' : '0'}
+            >
+              <line
+                x1={p.x1}
+                y1={p.y1}
+                x2={p.x2}
+                y2={p.y2}
+                stroke={e.onPath ? 'var(--primary)' : 'var(--border-400)'}
+                stroke-width={e.onPath ? 2.6 : 1.3}
+                stroke-dasharray={e.onPath ? undefined : '0'}
+              />
+              <path
+                d={`M ${p.x2} ${p.y2} l ${-Math.cos(ang - 0.44) * 8.5} ${-Math.sin(ang - 0.44) * 8.5} l ${-Math.cos(ang + 0.44) * 8.5} ${-Math.sin(ang + 0.44) * 8.5} z`}
+                fill={e.onPath ? 'var(--primary)' : 'var(--border-400)'}
+              />
+              <text
+                x={mx - Math.sin(ang) * off}
+                y={my + Math.cos(ang) * off + 3.5}
+                text-anchor="middle"
+                class="gf-w"
+                data-w-onpath={e.onPath ? '1' : '0'}
+              >
+                {e.w}
+              </text>
+            </g>
+          );
+        })
+      }
+
+      {
+        nodes.map((n) => (
+          <g
+            class="gf-node"
+            data-node={n.id}
+            tabindex="0"
+            role="button"
+            aria-label={`节点 ${n.label},最终距离 ${n.dist}${n.kind === 'start' ? ',起点' : n.kind === 'end' ? ',终点' : ''}`}
+          >
+            <circle
+              cx={n.x}
+              cy={n.y}
+              r={R}
+              fill={
+                n.kind === 'start'
+                  ? 'var(--foreground)'
+                  : n.kind === 'end'
+                    ? 'var(--primary)'
+                    : 'var(--background)'
+              }
+              stroke={
+                n.kind === 'start' ? 'var(--foreground)' : 'var(--primary)'
+              }
+              stroke-width={n.kind === 'mid' ? 1.6 : 0}
+            />
+            <text
+              x={n.x}
+              y={n.y + 4.5}
+              text-anchor="middle"
+              class="gf-id"
+              fill={n.kind === 'mid' ? 'var(--foreground)' : '#fff'}
+            >
+              {n.label}
+            </text>
+            <text x={n.x} y={n.y + R + 15} text-anchor="middle" class="gf-dist">
+              d={n.dist}
+            </text>
+          </g>
+        ))
+      }
+    </svg>
+  </div>
+  <figcaption>
+    <span class="mono-num gf-no">图 1</span>
+    <span class="gf-cap">
+      Dijkstra 的结果:最短路 <b>s→b→d→t</b>,总距离
+      <span class="mono-num"> 3+4+6 = 13</span>;节点下方为确定的最终距离 d。
+    </span>
+  </figcaption>
+</figure>
+
+<style>
+  .gf {
+    margin: 0;
+  }
+  .gf-canvas {
+    position: relative;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--popover);
+    padding: 0.6rem;
+  }
+  .gf-canvas svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .gf-w {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    fill: var(--muted-foreground);
+  }
+  .gf-w[data-w-onpath='1'] {
+    fill: var(--primary);
+    font-weight: 600;
+  }
+  .gf-id {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    font-weight: 600;
+  }
+  .gf-dist {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--muted-foreground);
+  }
+  .gf-node {
+    cursor: pointer;
+    outline: none;
+  }
+  .gf-node:focus-visible circle {
+    stroke: var(--ring);
+    stroke-width: 2.5;
+  }
+  figcaption {
+    display: flex;
+    gap: 0.7em;
+    align-items: baseline;
+    margin-top: 0.5rem;
+    font-size: 0.78rem;
+    color: var(--muted-foreground);
+  }
+  .gf-no {
+    color: var(--primary);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  .gf-cap {
+    line-height: 1.7;
+  }
+  .gf-cap b {
+    color: var(--primary);
+  }
+
+  /* hover:突出关联边,其余降对比度 */
+  .gf[data-dim='1'] .gf-edge {
+    opacity: 0.22;
+    transition: opacity 0.18s ease;
+  }
+  .gf[data-dim='1'] .gf-node {
+    opacity: 0.35;
+    transition: opacity 0.18s ease;
+  }
+  .gf .gf-edge[data-lit='1'] {
+    opacity: 1;
+    transition: opacity 0.18s ease;
+  }
+  .gf .gf-node[data-lit='1'] {
+    opacity: 1;
+    transition: opacity 0.18s ease;
+  }
+</style>
+
+<script>
+  import { onPageLoad } from '../../utils/lifecycle';
+
+  function initGraphFigure() {
+    const figs = document.querySelectorAll<HTMLElement>('[data-graph-fig]');
+    const cleanups: Array<() => void> = [];
+    figs.forEach((fig) => {
+      const nodes = Array.from(
+        fig.querySelectorAll<HTMLElement>('[data-node]'),
+      );
+      const edges = Array.from(
+        fig.querySelectorAll<HTMLElement>('[data-edge]'),
+      );
+      const lit = (id: string | null) => {
+        fig.dataset.dim = id ? '1' : '0';
+        edges.forEach((e) => {
+          const [a, b] = (e.dataset.edge ?? '').split('-');
+          e.dataset.lit = id && (a === id || b === id) ? '1' : '0';
+        });
+        nodes.forEach((n) => {
+          n.dataset.lit = !id || n.dataset.node === id ? '1' : '0';
+        });
+      };
+      const enter = () => lit(null);
+      nodes.forEach((n) => {
+        const id = n.dataset.node ?? '';
+        n.addEventListener('mouseenter', () => lit(id));
+        n.addEventListener('focus', () => lit(id));
+        n.addEventListener('mouseleave', enter);
+        n.addEventListener('blur', enter);
+      });
+      cleanups.push(() => fig.removeAttribute('data-dim'));
+    });
+    return () => cleanups.forEach((c) => c());
+  }
+
+  onPageLoad(initGraphFigure);
+</script>

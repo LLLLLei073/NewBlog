@@ -1,0 +1,133 @@
+---
+title: '并查集：把等价关系收进森林'
+description: '路径压缩 + 按大小合并的并查集：为什么两个优化叠起来是近乎常数的 O(α(n))，以及合并方向的经典错误。'
+pubDate: '2026-10-14'
+category: 'algorithm'
+topic: 'ds'
+difficulty: 'beginner'
+status: 'done'
+fileNo: '044'
+takeaway: '并查集的 find 不承诺具体路径，只承诺「同集同根」——把这个当不变量，合并方向写错也能立刻看出来。'
+timeComplexity: 'O(α(n))'
+spaceComplexity: 'O(n)'
+prerequisites: ['数组', '树的基本概念']
+refs: ['LeetCode 547 · 省份数量', 'LeetCode 684 · 冗余连接']
+---
+
+import CodeTabs from '../../components/algo/CodeTabs.astro';
+import InvariantCallout from '../../components/algo/InvariantCallout.astro';
+import MarginNote from '../../components/algo/MarginNote.astro';
+
+## 1. 问题描述
+
+维护一组元素的**动态等价关系**，支持两种操作：
+
+- `union(a, b)`：把 a、b 所在的集合合并；
+- `find(a)`：返回 a 所在集合的代表元（根）。
+
+判等价 = `find(a) == find(b)`。连通性、分组、环检测（逐条加边，两端已同集即成环）都能归到这个模型。
+
+## 2. 直觉：一棵随时可以变形的树
+
+用「指向父亲」的数组 `parent` 表示森林：每个集合是一棵树，**树根充当代表元**。`find` 沿父指针爬到根；`union` 把一棵树的根挂到另一棵树的根下。
+
+变形是允许的——树长什么样**不重要**，重要的是：
+
+<InvariantCallout kind="结构不变量">
+任意时刻，两个元素属于同一集合，当且仅当它们沿着 parent 指针到达同一个根。
+</InvariantCallout>
+
+这个不变量只关心「同根」，不关心路径长短。于是我们可以**理直气壮地压扁路径**：`find` 的路上顺手把每个结点直接挂到根上（路径压缩），树变浅，不变量毫发无损。
+
+## 3. 两个优化与 α(n)
+
+1. **路径压缩**：`find` 时把沿途结点的父指针全部改为根；
+2. **按大小合并**（或按秩）：永远把**小树**挂到**大树**底下，避免森林退化成链。
+
+两个优化叠加后，单次操作的均摊复杂度是 $O(\alpha(n))$——阿克曼函数的反函数，对一切现实规模的 $n$ 都 $\le 4$，工程上视作常数。
+
+<MarginNote>
+单独用任何一个优化,最坏仍是 O(log n) 量级;叠起来才是 α(n)。两个都写,是最划算的「免费午餐」。
+</MarginNote>
+
+注意一个细节：用了路径压缩后，「按秩」里的 rank 就**不再是准确的高度**，只是一个足够好用的估计——它只用于合并时的比较，不影响正确性（正确性只靠 §2 的不变量）。
+
+## 4. 代码实现
+
+<CodeTabs
+  title="union-find"
+  defaultLang="python"
+  variants={[
+    {
+      lang: 'python',
+      label: 'Python',
+      highlight: [8, 9, 14],
+      code: `class UnionFind:
+    def __init__(self, n: int):
+        self.parent = list(range(n))   # 初始每个元素自成一棵树
+        self.size = [1] * n            # 按大小合并用的估计值
+
+    def find(self, x: int) -> int:
+        root = x
+        while self.parent[root] != root:
+            root = self.parent[root]
+        while self.parent[x] != root:  # 路径压缩:第二次爬,逐个挂到根
+            self.parent[x], x = root, self.parent[x]
+        return root
+
+    def union(self, a: int, b: int) -> bool:
+        ra, rb = self.find(a), self.find(b)
+        if ra == rb:
+            return False               # 已同集,合并无效果
+        if self.size[ra] < self.size[rb]:
+            ra, rb = rb, ra            # 保证 ra 是大树,把小树 rb 挂上去
+        self.parent[rb] = ra
+        self.size[ra] += self.size[rb]
+        return True`,
+    },
+    {
+      lang: 'cpp',
+      label: 'C++',
+      highlight: [13, 14, 18],
+      code: `struct UnionFind {
+    vector<int> parent, size_;
+    UnionFind(int n) : parent(n), size_(n, 1) {
+        iota(parent.begin(), parent.end(), 0);
+    }
+    int find(int x) {
+        int root = x;
+        while (parent[root] != root) root = parent[root];
+        while (parent[x] != root) {          // 路径压缩
+            int nxt = parent[x];
+            parent[x] = root;
+            x = nxt;
+        }
+        return root;
+    }
+    bool unite(int a, int b) {
+        int ra = find(a), rb = find(b);
+        if (ra == rb) return false;          // 已同集
+        if (size_[ra] < size_[rb]) swap(ra, rb); // 大树收小树
+        parent[rb] = ra;
+        size_[ra] += size_[rb];
+        return true;
+    }
+};`,
+    },
+  ]}
+/>
+
+## 5. 边界与常见错误
+
+- **自环 / 重复边**：`union(a, a)` 直接无害返回 `False`，无需特判；
+- **合并方向写反**：`parent[ra] = rb` 与大小判断不一致时，优化失效（复杂度退化，但不影响正确性——不变量仍在）；
+- **把结点挂到非根上**：`parent[a] = rb`（挂到了 b 而不是 b 的根），这会**破坏不变量**，是最危险的笔误；
+- **忘记初始化 size**：按大小合并退化成随机方向。
+
+## 6. 相关练习
+
+- LeetCode 547 · 省份数量——`union` + 数根的个数；
+- LeetCode 684 · 冗余连接——第一条使两端已连通的边；
+- LeetCode 128 · 最长连续序列——哈希 + 并查集两种视角的对照。
+
+下一篇建议读 [043《单调栈：下一个更大元素》](/algorithm/notes/monotonic-stack/)。

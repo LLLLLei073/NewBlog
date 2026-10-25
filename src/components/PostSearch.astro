@@ -8,6 +8,7 @@
    - 命中关键词在 title/desc 节点用 <mark> 高亮
    - 空结果时显示推荐阅读（来自全站其他文章） */
 import { getCollection } from 'astro:content';
+import { postHref } from '../utils/postRoute';
 
 interface Props {
   total: number;
@@ -20,7 +21,7 @@ const { total, placeholder = '搜索当前专栏的文章...' } = Astro.props;
 const allPosts = (await getCollection('blog'))
   .sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
   .slice(0, 3)
-  .map((p) => ({ title: p.data.title, href: `/blog/${p.id}/` }));
+  .map((p) => ({ title: p.data.title, href: postHref(p.id, p.data.category) }));
 ---
 
 <div class="post-search" data-post-search>
@@ -213,6 +214,8 @@ const allPosts = (await getCollection('blog'))
 </style>
 
 <script>
+  import { onPageLoad } from '../utils/lifecycle';
+
   function initPostSearch() {
     const root = document.querySelector('[data-post-search]');
     if (!root) return;
@@ -323,6 +326,7 @@ const allPosts = (await getCollection('blog'))
       input.select();
     };
     document.addEventListener('keydown', onKey);
+    const stopKey = () => document.removeEventListener('keydown', onKey);
 
     // ESC 清空已聚焦的搜索
     input.addEventListener('keydown', (e) => {
@@ -332,9 +336,11 @@ const allPosts = (await getCollection('blog'))
         e.stopPropagation();
       }
     });
+
+    return stopKey;
   }
 
-  initPostSearch();
+  onPageLoad(initPostSearch);
 </script>
 
 <style is:global>

@@ -1,0 +1,24 @@
+---
+/**
+ * StepVisualizer 的 Astro 薄包装:按 frontmatter 里的 demo id
+ * 从数据模块取「构建期生成的完整快照」,交给 React 岛屿渲染。
+ */
+import StepVisualizerReact from './react/StepVisualizer';
+import { DEMOS } from '../../data/algorithm/demos';
+
+interface Props {
+  demo: string;
+}
+const { demo } = Astro.props;
+const d = DEMOS[demo];
+if (!d) {
+  throw new Error(`[StepVisualizer] 未注册的演示 id: ${demo}`);
+}
+---
+
+<StepVisualizerReact
+  client:load
+  nums={d.nums}
+  target={d.target}
+  steps={d.steps}
+/>

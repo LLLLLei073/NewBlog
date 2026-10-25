@@ -7,9 +7,10 @@ import { ROOM_LINKS } from '../src/components/room/config.ts';
 import { isRoomTap, type TapStart } from '../src/components/room/gesture.ts';
 
 const expected = [
-  '/categories/algorithm/',
+  // 算法已迁入专属专栏「演算手稿」(/algorithm/)
+  '/algorithm/',
   '/categories/math/',
-  '/categories/music/',
+  '/music/',
   '/categories/game/',
   '/categories/others/',
   '/blog/',
@@ -101,7 +102,9 @@ test('static HTML keeps room fallback navigation without the assistant', () => {
   assert.ok(html.includes('小房间的线稿'));
   assert.equal((html.match(/class="note-number"/g) || []).length, 3);
   assert.ok(html.includes('data-room-placeholder'));
-  assert.ok(!html.includes('<audio'));
+  // 全局音乐播放器(见 src/components/MusicPlayer.astro)是有意加入的
+  assert.ok(html.includes('id="music-player"'));
+  assert.ok(html.includes('<audio'));
   assert.ok(!html.includes('<room-assistant'));
   assert.ok(!html.includes('data-coal-index'));
   const article = readFileSync('dist/blog/second-post/index.html', 'utf8');

@@ -4,6 +4,8 @@
 ---
 
 <script>
+  import { onPageLoad } from '../utils/lifecycle';
+
   function enhanceCodeBlocks() {
     document.querySelectorAll('pre').forEach((pre) => {
       if (pre.parentElement?.classList.contains('code-block-wrapper')) return;
@@ -98,5 +100,6 @@
     });
   }
 
-  enhanceCodeBlocks();
+  // 已包裹的块会跳过,换页后的新 DOM 会重新处理
+  onPageLoad(enhanceCodeBlocks);
 </script>

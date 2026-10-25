@@ -1,0 +1,47 @@
+---
+/**
+ * 关键结论提示框:浅蓝底 + 细线框,用于循环不变量、关键结论等。
+ * <InvariantCallout kind="循环不变量">答案始终位于 [left, right] 内。</InvariantCallout>
+ */
+interface Props {
+  kind?: string;
+}
+const { kind = '循环不变量' } = Astro.props;
+---
+
+<aside class="invariant-callout">
+  <p class="ic-kind">{kind}</p>
+  <div class="ic-body">
+    <slot />
+  </div>
+</aside>
+
+<style>
+  .invariant-callout {
+    margin: 1.6rem 0;
+    padding: 0.9rem 1.1rem 0.95rem;
+    background: color-mix(in srgb, var(--primary) 6%, var(--background));
+    border: 1px solid color-mix(in srgb, var(--primary) 32%, transparent);
+    border-left-width: 3px;
+    border-radius: 0 4px 4px 0;
+  }
+  .ic-kind {
+    margin: 0 0 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    color: var(--primary);
+  }
+  .ic-body {
+    font-size: 0.95rem;
+    line-height: 1.85;
+    color: var(--foreground);
+  }
+  .ic-body :global(code) {
+    font-family: var(--font-mono);
+    font-size: 0.86em;
+    background: color-mix(in srgb, var(--primary) 9%, transparent);
+    border-radius: 3px;
+    padding: 0.1em 0.35em;
+  }
+</style>

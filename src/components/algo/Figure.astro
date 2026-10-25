@@ -1,0 +1,67 @@
+---
+/**
+ * 编号图注:包裹 SVG 插图,附「图 N」编号与说明文字。
+ * SVG 本体经 slot 传入(MDX 内联 svg 或组件)。
+ */
+interface Props {
+  no: string;
+  caption: string;
+  /** 供屏幕阅读器的图形标题 */
+  title?: string;
+}
+const { no, caption, title } = Astro.props;
+---
+
+<figure class="algo-figure">
+  <div class="fig-canvas grid-paper">
+    <slot />
+  </div>
+  <figcaption>
+    <span class="mono-num fig-no">图 {no}</span>
+    <span class="fig-text">{caption}</span>
+    {title && <span class="sr-only">图形标题:{title}</span>}
+  </figcaption>
+</figure>
+
+<style>
+  .algo-figure {
+    margin: 1.8rem 0;
+  }
+  .fig-canvas {
+    position: relative;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--popover);
+    padding: 1rem;
+    overflow-x: auto;
+  }
+  .fig-canvas :global(svg) {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+  figcaption {
+    display: flex;
+    align-items: baseline;
+    gap: 0.7em;
+    margin-top: 0.55rem;
+    font-size: 0.78rem;
+    color: var(--muted-foreground);
+  }
+  .fig-no {
+    font-weight: 500;
+    color: var(--primary);
+    white-space: nowrap;
+  }
+  .fig-text {
+    line-height: 1.7;
+  }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+</style>

@@ -5,12 +5,14 @@ import Footer from '../components/Footer.astro';
 import ThemeInit from '../components/ThemeInit.astro';
 import CodeBlockEnhance from '../components/CodeBlockEnhance.astro';
 import MermaidEnhance from '../components/MermaidEnhance.astro';
+import MusicPlayer from '../components/MusicPlayer.astro';
 import {
   SITE_TITLE,
   SITE_DESCRIPTION,
   SITE_URL,
   SITE_AUTHOR,
 } from '../consts.ts';
+import { ClientRouter } from 'astro:transitions';
 
 interface Props {
   title?: string;
@@ -21,6 +23,8 @@ interface Props {
   modifiedTime?: Date;
   noindex?: boolean;
   room?: boolean;
+  /** 页面标识,渲染为 body[data-page],供播放器等全局组件区分页面 */
+  pageName?: string;
 }
 
 const {
@@ -32,6 +36,7 @@ const {
   modifiedTime,
   noindex = false,
   room = false,
+  pageName,
 } = Astro.props;
 const pageTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -42,6 +47,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {/* 页面过渡:导航变为 DOM swap,让持久化的音乐播放器跨页面连续播放 */}
+    <ClientRouter />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/icon-192.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
@@ -94,7 +101,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       }
     </script>
   </head>
-  <body data-room-home={room ? '' : undefined}>
+  <body data-room-home={room ? '' : undefined} data-page={pageName}>
     <Header />
     <main>
       <slot />
@@ -102,5 +109,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <Footer />
     <CodeBlockEnhance />
     <MermaidEnhance />
+    <MusicPlayer />
   </body>
 </html>

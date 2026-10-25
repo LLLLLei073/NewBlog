@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { postHref } from '../../utils/postRoute';
 import FormattedDate from '../../components/FormattedDate.astro';
 import PostSearch from '../../components/PostSearch.astro';
 import {
@@ -51,7 +52,7 @@ const allPosts = (await getCollection('blog'))
           <div class="post-list">
             {allPosts.map((post) => (
               <a
-                href={`/blog/${post.id}/`}
+                href={postHref(post.id, post.data.category)}
                 class="post-card"
                 data-search-item
                 data-title={post.data.title}

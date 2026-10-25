@@ -1,0 +1,16 @@
+---
+/**
+ * CodeTabs 的 Astro 薄包装:MDX 手记中直接以 props 传入多语言代码,
+ * React 岛屿负责页签/行号/复制/关键行高亮。
+ */
+import CodeTabsReact, { type CodeVariant } from './react/CodeTabs';
+
+interface Props {
+  variants: CodeVariant[];
+  title?: string;
+  defaultLang?: string;
+}
+const { variants, title, defaultLang } = Astro.props;
+---
+
+<CodeTabsReact client:load {variants} {title} {defaultLang} />

@@ -1,0 +1,97 @@
+---
+title: 'Dijkstra 为什么要求非负权边'
+description: '用反例与不变量说明 Dijkstra 的非负权前提不是实现限制：负权边会摧毁「已确定即最优」的贪心前提。'
+pubDate: '2026-10-17'
+category: 'algorithm'
+topic: 'graph'
+difficulty: 'advanced'
+status: 'done'
+fileNo: '045'
+takeaway: 'Dijkstra 每弹出一个节点就宣称其距离最终确定，这个承诺只在所有边权非负时守得住。'
+timeComplexity: 'O((V + E) log V)'
+spaceComplexity: 'O(V)'
+prerequisites: ['BFS 与 DFS', '优先队列（二叉堆）']
+refs: ['LeetCode 743 · 网络延迟时间', '《算法导论》第 24 章 单源最短路径']
+---
+
+import InvariantCallout from '../../components/algo/InvariantCallout.astro';
+import MarginNote from '../../components/algo/MarginNote.astro';
+import Figure from '../../components/algo/Figure.astro';
+
+## 1. 问题描述
+
+Dijkstra 算法求**单源最短路**：给定源点 $s$，输出 $s$ 到每个点的最短距离。教科书都会补一句「要求边权非负」，但很少解释为什么。我曾经的错误理解是：
+
+> 「负权边只是会让优先队列的键值更新变得麻烦，工程上处理一下就好。」
+
+这句话错了，而且错得有教育意义——它把一个**正确性**问题当成了**实现**问题。这篇手记就是那次纠错的复盘（也是首页「最近纠正」栏目的常驻素材）。
+
+## 2. 算法的承诺（不变量）
+
+堆优化 Dijkstra 的流程：把 $(0, s)$ 放入优先队列；每次弹出距离最小的节点 $u$——若 $u$ 已确定则跳过——否则**宣布 $dist[u]$ 为最终答案**，并用 $u$ 的出边松弛邻居。
+
+它的正确性依赖这条不变量：
+
+<InvariantCallout kind="算法不变量">
+每次从优先队列中弹出的、尚未确定的节点 u，其当前距离 dist[u] 已经等于从 s 到 u 的最短距离。
+</InvariantCallout>
+
+为什么这条不变量成立？反证：设弹出 $u$ 时真正的最短路 $P$ 更短，$P$ 必然经过某个**尚未确定**的中间点 $x$（否则 $P$ 的每一段都已确定，$dist[u]$ 早该更小）。$P$ 上从 $s$ 到 $x$ 的前缀长度 $\le dist$ 沿 $P$ 的总长 $< dist[u]$。注意前缀长度里每一段边都……
+
+——推理在这里需要一步关键假设：**从 $x$ 继续走到 $u$，路径长度不会再减少**。即后缀边的总和非负。**这就是非负权登场的地方**：边权非负保证任何路径前缀 $\le$ 整条路径，于是 $dist[x] \le$ 前缀长度 $< dist[u]$，与「$u$ 是堆中最小」矛盾。不变量得证。
+
+## 3. 反例：负权边如何击穿承诺
+
+只看一个最小的反例。三点图：$s \to a$ 边权 $2$；$s \to b$ 边权 $3$；$b \to a$ 边权 $-2$：
+
+<Figure no="1" caption="带负权边的反例：直接走 s→a 是 2，绕行 s→b→a 只有 1；但 Dijkstra 会先把 a 定为 2。">
+  <svg viewBox="0 0 380 130" role="img" aria-label="反例图：s 到 a 直达边权 2，s 到 b 边权 3，b 到 a 边权 -2，绕行更短">
+    <title>Dijkstra 负权反例</title>
+    <defs>
+      <marker id="arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0,0 L8,4 L0,8 z" fill="var(--muted-foreground)" />
+      </marker>
+    </defs>
+    <line x1="70" y1="58" x2="152" y2="42" stroke="var(--border-400)" stroke-width="1.4" marker-end="url(#arr)" />
+    <text x="105" y="38" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="var(--muted-foreground)">2</text>
+    <line x1="62" y1="72" x2="62" y2="108" stroke="var(--border-400)" stroke-width="1.4" marker-end="url(#arr)" />
+    <text x="44" y="95" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="var(--muted-foreground)">3</text>
+    <path d="M78 118 L 300 118" stroke="var(--algo-amber)" stroke-width="1.8" marker-end="url(#arr)" />
+    <text x="188" y="136" text-anchor="middle" font-family="var(--font-mono)" font-size="12" fill="var(--algo-amber)">&#8722;2</text>
+    <path d="M320 108 Q 336 70 182 50" fill="none" stroke="var(--primary)" stroke-width="2" stroke-dasharray="6 4" />
+    <circle cx="62" cy="50" r="16" fill="var(--background)" stroke="var(--foreground)" stroke-width="1.6" />
+    <text x="62" y="55" text-anchor="middle" font-family="var(--font-mono)" font-size="13" font-weight="600" fill="var(--foreground)">s</text>
+    <circle cx="62" cy="122" r="16" fill="var(--background)" stroke="var(--border-400)" stroke-width="1.6" />
+    <text x="62" y="127" text-anchor="middle" font-family="var(--font-mono)" font-size="13" fill="var(--foreground)">b</text>
+    <circle cx="330" cy="42" r="16" fill="var(--background)" stroke="var(--primary)" stroke-width="1.8" />
+    <text x="330" y="47" text-anchor="middle" font-family="var(--font-mono)" font-size="13" font-weight="600" fill="var(--foreground)">a</text>
+    <text x="348" y="18" font-family="var(--font-mono)" font-size="10" fill="var(--primary)">dist=2?</text>
+  </svg>
+</Figure>
+
+Dijkstra 的执行：弹出 $s$（0），松弛得 $dist[a]=2$、$dist[b]=3$；弹出 $a$（键 2，最小），**宣布 $dist[a]=2$ 为最终结果**。但真相是 $s \to b \to a = 3 + (-2) = 1 < 2$。
+
+问题出在：从 $b$ 出发的后缀边权是**负**的，它让「前缀 $\le$ 整条路径」失效——§2 的证明链条从根上断掉。堆序不再蕴含确定性，算法输出的「答案」只是**某个**尚未被更优路径推翻的值。
+
+<MarginNote>
+我曾试图「修复」:弹出的节点允许被再次松弛、再次入队。这其实就是 SPFA / Bellman-Ford 的思路——能处理负权,但最坏 O(VE)。为了负权丢掉 Dijkstra 的保证,不如直接换算法。
+</MarginNote>
+
+## 4. 那负权图怎么办
+
+- **Bellman-Ford**：松弛所有边 $V-1$ 轮，允许负权，第 $V$ 轮仍可松弛则存在负环，$O(VE)$；
+- **SPFA**：Bellman-Ford 的队列优化，平均快、最坏同阶；
+- **Johnson**（多源）：给每个点加势能 $h$，改写边权 $w'(u,v) = w(u,v) + h(u) - h(v) \ge 0$，再对每个点跑 Dijkstra——「消除负权」而不是「忍受负权」，很漂亮。
+
+## 5. 复杂度与常见错误
+
+- 堆优化 Dijkstra：$O((V+E)\log V)$，空间 $O(V)$；
+- 常见错误：① 懒删除写法中，松弛成功却**忘记把新距离入队**；② 用 `dist[u] + w` 与 `INF` 相加导致溢出（先判 `dist[u] == INF`）；③ 在有负权的图上「顺手」用了 Dijkstra 并对错误答案深信不疑。
+
+## 6. 相关练习
+
+- LeetCode 743 · 网络延迟时间——标准堆优化模板；
+- LeetCode 787 · K 站中转内最便宜的航班——**有负权**，体会一下为什么题解都往 Bellman-Ford / DP 走；
+- 洛谷 P3371 / P4779——双倍经验，注意数据范围对实现的要求。
+
+下一篇建议读 [044《并查集：把等价关系收进森林》](/algorithm/notes/union-find-forest/)，图论工具箱的另一件常备品。

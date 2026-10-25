@@ -1,0 +1,77 @@
+---
+title: '单调栈：下一个更大元素'
+description: '维护一个越往栈底越大的栈，一次遍历回答「下一个更大元素」类问题。基础模板已整理，柱状图与环形数组场景待补充。'
+pubDate: '2026-10-10'
+category: 'algorithm'
+topic: 'ds'
+difficulty: 'beginner'
+status: 'todo'
+fileNo: '043'
+takeaway: '单调栈的栈内顺序就是「尚未找到答案的元素」按值排序的等待队列，弹栈即回答。'
+timeComplexity: 'O(n)'
+spaceComplexity: 'O(n)'
+prerequisites: ['栈与队列', '数组']
+refs: ['LeetCode 496 · 下一个更大元素 I', 'LeetCode 739 · 每日温度']
+---
+
+import InvariantCallout from '../../components/algo/InvariantCallout.astro';
+import MarginNote from '../../components/algo/MarginNote.astro';
+
+> 状态：**待补充**。核心模板与一阶直觉已就位；「柱状图中最大矩形」「环形数组」两节尚未写完，先占位。
+
+## 1. 问题描述
+
+给定数组，对每个元素问：**右边第一个比它大的元素**在哪（值或下标）？暴力是每个位置向后扫，最坏 $O(n^2)$。单调栈把全体元素的等待与回答组织成一次 $O(n)$ 的遍历。
+
+## 2. 直觉：等待队列
+
+从左往右扫描。维护一个栈，栈里存**还没有等到答案的元素**——并且它们**从栈底到栈顶单调递减**：
+
+- 新来的元素 `x` 比栈顶大？那栈顶的答案就是 `x`——弹栈、记录答案；重复直到栈顶不小于 `x`，再把 `x` 入栈；
+- `x` 更小？它入栈，继续等待。
+
+<InvariantCallout kind="栈不变量">
+任意时刻，栈中下标对应的元素值从栈底到栈顶严格递减，且栈中恰好是「右侧还没有更大元素出现」的全部候选。
+</InvariantCallout>
+
+为什么弹栈是安全的？被弹出的元素**此刻拿到了答案**，之后再也不需要它——每个元素至多入栈、出栈各一次，总代价 $O(n)$。这是「用摊还换直觉」的典型结构。
+
+## 3. 代码模板
+
+```python
+def next_greater(nums: list[int]) -> list[int]:
+    """ans[i] = 右边第一个大于 nums[i] 的下标;不存在为 -1。"""
+    n = len(nums)
+    ans = [-1] * n
+    stack: list[int] = []          # 存下标,对应值从栈底到栈顶递减
+    for i in range(n):
+        while stack and nums[stack[-1]] < nums[i]:
+            ans[stack.pop()] = i   # 弹栈即回答
+        stack.append(i)
+    return ans
+```
+
+<MarginNote>
+弹栈条件用 &lt; 还是 &lt;=,取决于「相等算不算更大」。写模板前先回答这个问题,答案差一位。
+</MarginNote>
+
+## 4. 常见错误
+
+1. 栈里存**值**而不是**下标**——答案要的是位置，存值就丢了；
+2. 弹栈条件带不带等号与题意不一致（见边注）；
+3. 循环数组（LeetCode 503）忘记用取模遍历两倍长度；
+4. 忘记处理「栈里剩下的元素」——它们答案为 `-1`，初始化时已覆盖，别在结尾重复赋值。
+
+## 5. 待补充
+
+- 柱状图中最大矩形（LeetCode 84）：弹栈时的宽度计算；
+- 环形数组的两遍扫描技巧；
+- 单调队列与滑动窗口最大值的对照。
+
+## 6. 相关练习
+
+- LeetCode 496 / 503 · 下一个更大元素 I/II；
+- LeetCode 739 · 每日温度——最干净的应用；
+- LeetCode 84 · 柱状图中最大的矩形——等这篇补充完再来。
+
+上一篇回顾：[044《并查集：把等价关系收进森林》](/algorithm/notes/union-find-forest/)。

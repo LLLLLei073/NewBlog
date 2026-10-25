@@ -5,6 +5,12 @@
 
 /* ---- KaTeX 数学公式样式（math 专栏渲染 LaTeX）---- */
 @import 'katex/dist/katex.min.css';
+/* ---- 「耳朵的私人档案」专栏视觉系统(仅 body[data-page='music'] 生效) ---- */
+@import './archive.css';
+/* ---- 「演算手稿」算法专栏视觉系统(仅 body[data-page='algorithm'] 生效) ---- */
+@import './algo.css';
+/* ---- 「演算手稿」React 岛屿的 Tailwind 工具类(无 preflight) ---- */
+@import './algo-tw.css';
 
 /* ---- Fonts: 标题优先使用中文衬线，正文使用本机人文无衬线；代码字体自托管。 ---- */
 @font-face {

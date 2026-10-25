@@ -1,0 +1,17 @@
+---
+/**
+ * 边注(手写批注):桌面端浮动到正文右侧页边,平板/移动端
+ * 内联为小块。样式见 algo.css 的 .margin-note(依赖布局容器)。
+ */
+interface Props {
+  label?: string;
+}
+const { label = 'F. 批注' } = Astro.props;
+---
+
+<aside class="margin-note" role="note">
+  <span class="mn-label">{label}</span>
+  <div class="mn-body hand-note">
+    <slot />
+  </div>
+</aside>

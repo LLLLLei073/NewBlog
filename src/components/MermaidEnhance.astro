@@ -4,6 +4,8 @@
 ---
 
 <script>
+  import { onPageLoad } from '../utils/lifecycle';
+
   function enhanceMermaid() {
     const blocks = Array.from(
       document.querySelectorAll('pre code.language-mermaid'),
@@ -50,5 +52,6 @@
     });
   }
 
-  enhanceMermaid();
+  // 已渲染的块由 data-mermaid-done 标记跳过,换页后的新 DOM 会重新处理
+  onPageLoad(enhanceMermaid);
 </script>

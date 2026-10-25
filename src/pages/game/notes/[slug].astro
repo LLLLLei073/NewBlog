@@ -1,0 +1,39 @@
+---
+/**
+ * 游戏专栏文章详情:专属命名空间 /game/notes/<slug>/,
+ * 数据仍来自 blog 内容集合(category: game),布局沿用 BlogPost。
+ */
+import { render } from 'astro:content';
+import BlogPost from '../../../layouts/BlogPost.astro';
+import {
+  buildPostJsonLd,
+  getNotePaths,
+  type NoteProps,
+} from '../../../utils/notes-paths.ts';
+
+export const getStaticPaths = () => getNotePaths('game');
+
+const { post, newer, older, related, seriesPosts, seriesName } =
+  Astro.props as NoteProps;
+const { Content, headings } = await render(post);
+const rawBody = typeof post.body === 'string' ? post.body : '';
+const jsonLd = buildPostJsonLd(post);
+---
+
+<BlogPost
+  {...post.data}
+  headings={headings}
+  newer={newer}
+  older={older}
+  related={related}
+  rawBody={rawBody}
+  seriesPosts={seriesPosts}
+  seriesName={seriesName}
+>
+  <script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(jsonLd)}
+  />
+  <Content />
+</BlogPost>

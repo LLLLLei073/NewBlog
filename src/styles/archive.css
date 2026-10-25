@@ -1,0 +1,373 @@
+/* ============================================================
+   「耳朵的私人档案」专栏视觉系统
+   纸感编辑骨架 + 艺人专属平面色。仅在 body[data-page='music']
+   (即专栏五个页面)内生效:重定义语义令牌,全站 Header/Footer/
+   迷你播放器在这些页面自动换装。暗色为炭黑底 + 米白字。
+   ============================================================ */
+
+body[data-page='music'] {
+  /* 覆盖全局令牌:暖纸色系 */
+  --background: #f1ede4;
+  --card: #f1ede4;
+  --popover: #ece7db;
+  --muted: #e7e1d6;
+  --foreground: #191917;
+  --card-foreground: #191917;
+  --muted-foreground: #716a60;
+  --primary: #c84632; /* 朱红 */
+  --primary-foreground: #f6f2e9;
+  --secondary: #e7e1d6;
+  --secondary-foreground: #403c34;
+  --accent: rgba(200, 70, 50, 0.08);
+  --accent-foreground: #a53a28;
+  --border: #d5cec0;
+  --border-300: #d5cec0;
+  --border-400: #c2b9a8;
+  --ring: #c84632;
+  --header-bg: color-mix(in srgb, #f1ede4 94%, transparent);
+
+  /* 朱红品牌色覆盖(链接/hover 等) */
+  --brand-300: #d96a52;
+  --brand-400: #cf5742;
+  --brand-500: #c84632;
+  --brand-600: #a53a28;
+  --brand-700: #862d1e;
+
+  /* 专栏内不做玻璃拟态 */
+  --card-alpha: 1;
+  --card-border-alpha: 1;
+
+  /* 英文刊名窄体栈 */
+  --font-condensed:
+    'Bahnschrift', 'Segoe UI Variable Display', 'Avenir Next Condensed',
+    'Arial Narrow', sans-serif;
+
+  /* 标题字体补日文宋体回退,中日文标题字形一致 */
+  --font-display:
+    'Noto Serif CJK SC', 'Source Han Serif SC', 'Noto Serif CJK JP',
+    'Hiragino Mincho ProN', 'Yu Mincho', 'Songti SC', 'STSong', ui-serif, serif;
+  --font-serif: var(--font-display);
+
+  /* 正文基准:15–16px / 1.8 */
+  font-size: 15px;
+  line-height: 1.8;
+
+  /* 覆盖全局背景:回到纯纸色;文字色不再继承 html 的全局值 */
+  background: var(--background);
+  color: var(--foreground);
+}
+
+/* 裁掉旋转封面等造成的横向溢出。
+   注意:必须挂在 html(视口)上——写在 body 上会让 body 变成独立
+   滚动容器,窗口滚不动、scrollY 恒为 0。 */
+html:has(body[data-page='music']) {
+  overflow-x: clip;
+}
+
+/* 暗色:炭黑 + 米白,同一气质 */
+:root[data-theme='dark'] body[data-page='music'],
+html[data-theme='dark'] body[data-page='music'] {
+  --background: #181816;
+  --card: #181816;
+  --popover: #201f1c;
+  --muted: #201f1c;
+  --foreground: #e8e1d5;
+  --card-foreground: #e8e1d5;
+  --muted-foreground: #aaa295;
+  --primary: #df725e;
+  --primary-foreground: #181816;
+  --secondary: #201f1c;
+  --secondary-foreground: #c9c2b4;
+  --accent: rgba(223, 114, 94, 0.14);
+  --accent-foreground: #e8907d;
+  --border: rgba(232, 225, 213, 0.14);
+  --border-300: rgba(232, 225, 213, 0.14);
+  --border-400: rgba(232, 225, 213, 0.22);
+  --ring: #df725e;
+  --header-bg: color-mix(in srgb, #181816 92%, transparent);
+  --brand-300: #e8907d;
+  --brand-400: #e37e68;
+  --brand-500: #df725e;
+  --brand-600: #c25a46;
+  --brand-700: #a54a38;
+
+  /* 覆盖全局暗色直接写死在 body 上的深空渐变(不经过变量) */
+  background: var(--background);
+  background-image: none;
+}
+
+/* 专栏页面不显示全局星空与暗色光晕(它们直接写在 body 伪元素上) */
+body[data-page='music']::before,
+:root[data-theme='dark'] body[data-page='music']::before,
+:root[data-theme='dark'] body[data-page='music']::after,
+html[data-theme='dark'] body[data-page='music']::after {
+  display: none;
+  content: none;
+}
+
+/* ============ 纸张颗粒 ============ */
+body[data-page='music'] .archive::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 3; /* 内容之上、悬浮件之下,pointer-events 穿透 */
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+:root[data-theme='dark'] body[data-page='music'] .archive::after {
+  opacity: 0.04;
+}
+
+/* ============ 专栏公共构件 ============ */
+
+/* 12 栏编辑网格容器:最大 1280px */
+body[data-page='music'] .arch {
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: clamp(1.1rem, 4vw, 3rem);
+}
+
+body[data-page='music'] .mono-label {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+body[data-page='music'] .mono-num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 朱红小印章 */
+body[data-page='music'] .stamp {
+  display: inline-block;
+  padding: 0.22em 0.6em;
+  border: 1.5px solid var(--primary);
+  border-radius: 3px;
+  color: var(--primary);
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 0.78rem;
+  letter-spacing: 0.32em;
+  text-indent: 0.32em;
+  transform: rotate(-4deg);
+  user-select: none;
+}
+
+/* SIDE A 侧栏标签 */
+body[data-page='music'] .side-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  color: var(--primary);
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1rem;
+}
+
+/* 红色文字链接(带 →) */
+body[data-page='music'] .arch-link {
+  color: var(--primary);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--primary) 45%, transparent);
+  padding-bottom: 1px;
+  transition: border-color 0.18s ease;
+}
+body[data-page='music'] .arch-link:hover {
+  border-bottom-color: var(--primary);
+}
+
+/* 封面轻倾斜(悬停回正 + 上浮) */
+body[data-page='music'] .tilt {
+  transition:
+    transform 0.28s cubic-bezier(0.22, 0.61, 0.36, 1),
+    box-shadow 0.28s ease;
+}
+body[data-page='music'] .tilt-l {
+  --tilt-deg: -1.4deg;
+}
+body[data-page='music'] .tilt-r {
+  --tilt-deg: 1.2deg;
+}
+body[data-page='music'] .tilt-l,
+body[data-page='music'] .tilt-r {
+  transform: rotate(var(--tilt-deg, 0deg));
+}
+body[data-page='music'] .tilt:hover,
+body[data-page='music'] .tilt:focus-within {
+  transform: rotate(0deg) translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* 进场:轻微错位淡入 */
+body[data-page='music'] .rise {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: arch-rise 0.55s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+body[data-page='music'] .d1 {
+  animation-delay: 0.05s;
+}
+body[data-page='music'] .d2 {
+  animation-delay: 0.15s;
+}
+body[data-page='music'] .d3 {
+  animation-delay: 0.25s;
+}
+body[data-page='music'] .d4 {
+  animation-delay: 0.4s;
+}
+@keyframes arch-rise {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 播放中曲目的朱红细线 + 小波形(曲目表共用) */
+body[data-page='music'] .playing-mark {
+  display: none;
+  align-items: flex-end;
+  gap: 2px;
+  height: 12px;
+}
+body[data-page='music'] .row.playing .playing-mark {
+  display: flex;
+}
+body[data-page='music'] .playing-mark i {
+  width: 2.5px;
+  background: var(--primary);
+  border-radius: 1px;
+  animation: arch-eq 0.9s ease-in-out infinite;
+}
+body[data-page='music'] .playing-mark i:nth-child(2) {
+  animation-delay: 0.18s;
+}
+body[data-page='music'] .playing-mark i:nth-child(3) {
+  animation-delay: 0.36s;
+}
+@keyframes arch-eq {
+  0%,
+  100% {
+    transform: scaleY(0.4);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+/* 唱片线稿:仅在播放时缓慢旋转 */
+body[data-page='music'] .vinyl-spin {
+  animation: vinyl-rotate 7s linear infinite;
+  transform-origin: center;
+}
+@keyframes vinyl-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 专栏内 range 滑杆(进度/音量) */
+body[data-page='music'] input[type='range'].arch-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 3px;
+  border-radius: 0;
+  background: linear-gradient(
+    to right,
+    var(--primary) var(--p, 0%),
+    var(--border) var(--p, 0%)
+  );
+  cursor: pointer;
+}
+body[data-page='music'] input[type='range'].arch-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--primary);
+  border: none;
+}
+body[data-page='music'] input[type='range'].arch-range::-moz-range-thumb {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--primary);
+  border: none;
+}
+
+/* 情绪标签:细边框小方签 */
+body[data-page='music'] .mood-tag {
+  display: inline-block;
+  padding: 0.1em 0.45em;
+  border: 1px solid var(--border-400);
+  border-radius: 2px;
+  font-size: 0.68rem;
+  color: var(--muted-foreground);
+  white-space: nowrap;
+}
+
+/* 便签(listening note):顶部"胶带"效果 */
+body[data-page='music'] .memo {
+  position: relative;
+  background: var(--popover);
+  border: 1px solid var(--border);
+  padding: 1rem 1.1rem;
+  font-size: 0.86rem;
+  line-height: 1.9;
+  color: var(--secondary-foreground);
+}
+body[data-page='music'] .memo::before {
+  content: '';
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  translate: -50% 0;
+  width: 64px;
+  height: 14px;
+  background: color-mix(in srgb, var(--primary) 22%, var(--popover));
+  border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
+  transform: rotate(-1.5deg);
+}
+
+/* 触控目标与焦点 */
+body[data-page='music'] button {
+  -webkit-tap-highlight-color: transparent;
+}
+body[data-page='music'] a:focus-visible,
+body[data-page='music'] button:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* 动效偏好:全部关闭 */
+@media (prefers-reduced-motion: reduce) {
+  body[data-page='music'] .rise {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+  body[data-page='music'] .tilt,
+  body[data-page='music'] .tilt-l,
+  body[data-page='music'] .tilt-r {
+    transform: none;
+    transition: none;
+  }
+  body[data-page='music'] .vinyl-spin,
+  body[data-page='music'] .playing-mark i {
+    animation: none;
+  }
+}
+
+/* 播放器激活时给页面内容预留底部空间,避免遮挡正文与末尾按钮 */
+body.music-active {
+  padding-bottom: 96px;
+}
+@media (max-width: 720px) {
+  body.music-active {
+    padding-bottom: 112px;
+  }
+}

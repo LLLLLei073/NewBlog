@@ -1,0 +1,665 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { postHref } from '../../utils/postRoute';
+import ArchiveNav from '../../components/archive/ArchiveNav.astro';
+import Sleeve from '../../components/archive/Sleeve.astro';
+import Stars from '../../components/archive/Stars.astro';
+import MusicIntro from '../../components/intro/MusicIntro.astro';
+import { getCollection } from 'astro:content';
+import {
+  ENTRIES,
+  SCENES,
+  FEATURED_SLUG,
+  mmss,
+  totalSec,
+  type Entry,
+} from '../../data/music';
+
+const featured = ENTRIES.find((e) => e.slug === FEATURED_SLUG)!;
+const shelf = ENTRIES.filter((e) => e.slug !== featured.slug).slice(0, 5);
+const scene = SCENES[0];
+const posts = (await getCollection('blog'))
+  .filter((p) => !p.data.draft && p.data.category === 'music')
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+const fmtDate = (d: Date) =>
+  `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
+
+const cardTilt = (e: Entry, i: number) =>
+  i % 2 === 0 ? 'tilt tilt-l' : 'tilt tilt-r';
+---
+
+<BaseLayout
+  title="耳朵的私人档案"
+  description="关于音乐,也关于那些听歌的日子:唱片架、场景歌单与音乐手记。"
+  pageName="music"
+>
+  <div class="archive">
+    <ArchiveNav />
+    <MusicIntro />
+
+    <main class="arch home">
+      <!-- ===== 首屏:不对称三段 ===== -->
+      <section class="hero rise" aria-label="最近反复播放">
+        <aside class="hero-meta">
+          <p class="repeat">
+            <i class="pulse" aria-hidden="true"></i>最近反复播放
+            <span class="mono-label">CURRENTLY ON REPEAT</span>
+          </p>
+          <dl class="meta">
+            <div>
+              <dt>CATALOGUE NO.</dt><dd class="mono-num">{featured.no}</dd>
+            </div>
+            <div>
+              <dt>收藏日期</dt><dd class="mono-num">{featured.acquired}</dd>
+            </div>
+            <div>
+              <dt>RATING</dt><dd><Stars rating={featured.rating} /></dd>
+            </div>
+          </dl>
+          <p class="stamp stamp-pos">本周在听</p>
+        </aside>
+
+        <div class="hero-cover rise d1">
+          <div class="cover tilt tilt-l" style="--tilt-deg: -2.5deg">
+            <a
+              href={`/music/album/${featured.slug}/`}
+              aria-label={`打开档案:${featured.title}`}
+            >
+              <Sleeve
+                title={featured.title}
+                artist={featured.artist}
+                accent={featured.accent}
+                slug={featured.slug}
+              />
+            </a>
+          </div>
+          <div class="peek-disc" data-vinyl aria-hidden="true">
+            <svg viewBox="0 0 40 40">
+              <circle cx="20" cy="20" r="19" fill="#413d37"></circle>
+              <circle
+                cx="20"
+                cy="20"
+                r="15.5"
+                fill="none"
+                stroke="rgba(241,237,228,.2)"></circle>
+              <circle
+                cx="20"
+                cy="20"
+                r="11.5"
+                fill="none"
+                stroke="rgba(241,237,228,.14)"></circle>
+              <circle cx="20" cy="20" r="5.4" fill={featured.accent}></circle>
+              <circle cx="20" cy="20" r="1.7" fill="#413d37"></circle>
+            </svg>
+          </div>
+        </div>
+
+        <div class="hero-title rise d2">
+          <p class="masthead-en">A PRIVATE ARCHIVE OF LISTENING</p>
+          <h1>在声音里,<br />留住一些日子</h1>
+          <p class="sub">关于音乐,也关于那些听歌的日子。</p>
+          <p class="lead">
+            这里收的是我真正反复听过的东西:花譜的夜行巴士、V.W.P
+            的电流、明透与ヰ世界情緒的东京夜色。每一张都有编号、评分和一句只有我自己懂的批注——像给耳机里的日子盖章归档。
+          </p>
+          <p class="entry-link">
+            <a class="arch-link" href={`/music/album/${featured.slug}/`}>
+              阅读这篇手记——《{featured.title}》 →
+            </a>
+          </p>
+        </div>
+      </section>
+
+      <!-- ===== 唱片架预览 ===== -->
+      <section class="shelf-preview rise d3" aria-label="唱片架预览">
+        <header class="sec-head">
+          <h2>唱片架<span class="mono-label">RECORD SHELF</span></h2>
+          <a class="arch-link" href="/music/shelf/">查看全部 →</a>
+        </header>
+        <div class="shelf-grid">
+          {
+            shelf.map((entry, i) => (
+              <a
+                href={`/music/album/${entry.slug}/`}
+                class:list={['card', cardTilt(entry, i)]}
+              >
+                <span class="card-cover">
+                  <Sleeve
+                    title={entry.title}
+                    artist={entry.artist}
+                    accent={entry.accent}
+                    no={entry.no}
+                    kind={entry.kind}
+                    slug={entry.slug}
+                  />
+                  <span class="card-blurb">{entry.blurb}</span>
+                </span>
+                <span class="card-info">
+                  <strong>{entry.title}</strong>
+                  <span class="card-artist">{entry.artist}</span>
+                  <span class="card-foot">
+                    <span class="mono-num">{entry.no}</span>
+                    <Stars rating={entry.rating} />
+                  </span>
+                </span>
+              </a>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- ===== 最近手记 + 此刻适合听 ===== -->
+      <section class="duo rise d4">
+        <div class="notes">
+          <header class="sec-head">
+            <h2>最近写下的声音<span class="mono-label">NOTES</span></h2>
+            <a class="arch-link" href="/music/notes/">全部手记 →</a>
+          </header>
+          <ul class="note-list">
+            {
+              posts.length > 0 ? (
+                posts.map((p) => (
+                  <li>
+                    <a href={postHref(p.id, p.data.category)}>
+                      <span class="note-date mono-num">
+                        {fmtDate(p.data.pubDate)}
+                      </span>
+                      <span class="note-body">
+                        <strong>{p.data.title}</strong>
+                        <span>{p.data.description}</span>
+                      </span>
+                    </a>
+                  </li>
+                ))
+              ) : (
+                <li class="note-empty">手记正在路上,先去唱片架逛逛。</li>
+              )
+            }
+          </ul>
+        </div>
+
+        <aside class="now" aria-label="此刻适合听">
+          <header class="sec-head">
+            <h2>此刻适合听<span class="mono-label">NOW FITS</span></h2>
+          </header>
+          <div class="scene-card">
+            <p class="scene-no mono-num">01</p>
+            <h3>{scene.title}<span class="scene-en">{scene.en}</span></h3>
+            <p class="scene-desc">{scene.desc}</p>
+            <p class="scene-moods">
+              {scene.moods.map((m) => <span class="mood-tag">{m}</span>)}
+            </p>
+            <p class="scene-meta mono-label">
+              {scene.trackIds.length} TRACKS · {mmss(totalSec(scene.trackIds))}
+            </p>
+            <div class="scene-actions">
+              <button
+                type="button"
+                class="play-all"
+                data-play-scene={scene.slug}>播放全部</button
+              >
+              <a class="arch-link" href="/music/scenes/">去场景歌单 →</a>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <!-- ===== 页尾短句 ===== -->
+      <footer class="home-foot">
+        <p>「歌单不会替你记住日子,但会替你记住那天的耳机里放着什么。」</p>
+        <p class="links">
+          <a href="/music/shelf/">唱片架</a><span>·</span>
+          <a href="/music/scenes/">场景歌单</a><span>·</span>
+          <a href="/music/notes/">音乐手记</a><span>·</span>
+          <a href="/about/">关于我</a>
+        </p>
+      </footer>
+    </main>
+  </div>
+</BaseLayout>
+
+<script>
+  import { onPageLoad } from '../../utils/lifecycle';
+  import { playQueue, subscribe } from '../../components/music/player';
+
+  onPageLoad(() => {
+    const btn = document.querySelector<HTMLButtonElement>('[data-play-scene]');
+    if (!btn) return;
+    const onClick = () => playQueue(`scene:${btn.dataset.playScene}`, 0);
+    btn.addEventListener('click', onClick);
+    // 唱片线稿仅在播放时旋转
+    const stop = subscribe(() => {
+      const playing = document
+        .getElementById('music-player')
+        ?.hasAttribute('data-playing');
+      document
+        .querySelectorAll('[data-vinyl]')
+        .forEach((el) => el.classList.toggle('vinyl-spin', Boolean(playing)));
+    });
+    return () => {
+      btn.removeEventListener('click', onClick);
+      stop();
+    };
+  });
+</script>
+
+<style>
+  .home {
+    padding-top: clamp(1rem, 3vw, 1.75rem);
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+  }
+
+  /* ===== 首屏 ===== */
+  .hero {
+    display: grid;
+    grid-template-columns: 170px minmax(0, 340px) 1fr;
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+    align-items: center;
+    padding: clamp(0.5rem, 2vw, 1.25rem) 0 clamp(2rem, 5vw, 3rem);
+  }
+
+  .hero-meta .repeat {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin: 0 0 1rem;
+    font-size: 0.78rem;
+    color: var(--primary);
+    letter-spacing: 0.08em;
+  }
+  .hero-meta .repeat .mono-label {
+    display: none;
+  }
+  .pulse {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--primary);
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.3;
+    }
+  }
+
+  .meta {
+    margin: 0;
+  }
+  .meta > div {
+    padding: 0.45rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .meta dt {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    color: var(--muted-foreground);
+  }
+  .meta dd {
+    margin: 0.2rem 0 0;
+    font-size: 14px;
+    color: var(--foreground);
+  }
+
+  .stamp-pos {
+    margin-top: 1.4rem;
+  }
+
+  .hero-cover {
+    position: relative;
+  }
+  .hero-cover .cover {
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(25, 25, 23, 0.14);
+    display: block;
+  }
+  .hero-cover a {
+    display: block;
+  }
+  .peek-disc {
+    position: absolute;
+    right: -12%;
+    top: 10%;
+    width: 36%;
+    filter: drop-shadow(0 2px 6px rgba(20, 18, 12, 0.12));
+    pointer-events: none;
+  }
+  .peek-disc svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .hero-title .masthead-en {
+    margin: 0;
+    font-family: var(--font-condensed);
+    font-size: 14px;
+    letter-spacing: 0.28em;
+    color: var(--primary);
+  }
+  .hero-title h1 {
+    margin: 1rem 0 0;
+    font-family: var(--font-display);
+    font-size: clamp(36px, 4.8vw, 66px);
+    line-height: 1.12;
+    letter-spacing: 0.01em;
+    color: var(--card-foreground);
+  }
+  .hero-title .sub {
+    margin: 1.15rem 0 0;
+    color: var(--muted-foreground);
+    font-size: 15px;
+  }
+  .hero-title .lead {
+    margin: 1.5rem 0 0;
+    max-width: 42ch;
+    font-size: 15.5px;
+    line-height: 1.9;
+    color: var(--foreground);
+  }
+  .entry-link {
+    margin: 1.8rem 0 0;
+    font-size: 15px;
+  }
+
+  /* ===== 分区标题 ===== */
+  .sec-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.6rem;
+    margin-bottom: 1.4rem;
+  }
+  .sec-head h2 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 24px;
+    display: flex;
+    align-items: baseline;
+    gap: 0.7rem;
+  }
+  .sec-head .arch-link {
+    font-size: 13.5px;
+    white-space: nowrap;
+  }
+
+  /* ===== 唱片架预览 ===== */
+  .shelf-preview {
+    margin-top: clamp(2rem, 5vw, 3rem);
+  }
+  .shelf-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: clamp(0.9rem, 2vw, 1.5rem);
+  }
+  /* 轻微错位陈列:像随手摆在桌面的封套 */
+  .shelf-grid .card:nth-child(2) {
+    transform: translateY(12px);
+  }
+  .shelf-grid .card:nth-child(4) {
+    transform: translateY(16px);
+  }
+  .shelf-grid .card:nth-child(5) {
+    transform: translateY(6px);
+  }
+  .card {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    /* 允许窄于内容宽:艺人名 nowrap 不再把 1fr 列撑出横向溢出 */
+    min-width: 0;
+  }
+  .card-cover {
+    position: relative;
+    display: block;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(25, 25, 23, 0.14);
+  }
+  .card-blurb {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0.9rem;
+    background: color-mix(in srgb, #191917 78%, transparent);
+    color: #f1ede4;
+    font-size: 13px;
+    line-height: 1.9;
+    opacity: 0;
+    transition: opacity 0.22s ease;
+  }
+  .card:hover .card-blurb,
+  .card:focus-visible .card-blurb {
+    opacity: 1;
+  }
+  .card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    font-size: 13.5px;
+  }
+  .card-info strong {
+    font-family: var(--font-serif);
+    font-size: 15px;
+    color: var(--foreground);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .card-artist {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--muted-foreground);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .card-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.2rem;
+    font-size: 0.68rem;
+    color: var(--muted-foreground);
+  }
+
+  /* ===== 手记 + 此刻 ===== */
+  .duo {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    margin-top: clamp(2.5rem, 6vw, 4rem);
+  }
+  .note-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .note-list a {
+    display: flex;
+    gap: 1.1rem;
+    align-items: baseline;
+    padding: 0.85rem 0.25rem;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+    color: inherit;
+    transition: background-color 0.18s ease;
+  }
+  .note-list a:hover {
+    background: var(--accent);
+  }
+  .note-date {
+    flex: none;
+    font-size: 12px;
+    color: var(--muted-foreground);
+  }
+  .note-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
+  }
+  .note-body strong {
+    font-family: var(--font-serif);
+    font-size: 16.5px;
+    color: var(--foreground);
+  }
+  .note-body span {
+    font-size: 14px;
+    color: var(--muted-foreground);
+    line-height: 1.7;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .note-empty {
+    padding: 1rem 0;
+    font-size: 0.85rem;
+    color: var(--muted-foreground);
+  }
+
+  .scene-card {
+    position: relative;
+    background: var(--popover);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.4rem 1.4rem 1.25rem;
+    overflow: hidden;
+  }
+  .scene-no {
+    position: absolute;
+    top: 0.4rem;
+    right: 0.9rem;
+    font-size: 2.6rem;
+    font-weight: 700;
+    color: var(--border-400);
+  }
+  .scene-card h3 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 22px;
+    color: var(--card-foreground);
+  }
+  .scene-en {
+    margin-left: 0.6rem;
+    font-family: var(--font-condensed);
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: var(--muted-foreground);
+  }
+  .scene-desc {
+    margin: 0.6rem 0 0;
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--muted-foreground);
+  }
+  .scene-moods {
+    margin: 0.8rem 0 0;
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+  .scene-meta {
+    margin: 0.8rem 0 0;
+  }
+  .scene-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  .play-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 0.95rem;
+    border: none;
+    border-radius: 3px;
+    background: var(--primary);
+    color: var(--primary-foreground);
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: background-color 0.18s ease;
+  }
+  .play-all:hover {
+    background: var(--brand-600);
+  }
+
+  /* ===== 页尾 ===== */
+  .home-foot {
+    margin-top: clamp(3rem, 7vw, 5rem);
+    border-top: 1px solid var(--border);
+    padding-top: 1.6rem;
+    text-align: center;
+  }
+  .home-foot > p:first-child {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: 15px;
+    color: var(--muted-foreground);
+  }
+  .home-foot .links {
+    margin: 0.9rem 0 0;
+    display: flex;
+    justify-content: center;
+    gap: 0.7rem;
+    font-size: 13px;
+  }
+  .home-foot .links a {
+    color: var(--muted-foreground);
+    text-decoration: none;
+  }
+  .home-foot .links a:hover {
+    color: var(--primary);
+  }
+
+  /* ===== 响应式 ===== */
+  @media (max-width: 1024px) {
+    .shelf-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .shelf-grid .card:nth-child(n) {
+      transform: none;
+    }
+    .duo {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 760px) {
+    .hero {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+    .hero-meta {
+      display: none;
+    }
+    .hero-cover {
+      max-width: 236px;
+      margin: 0 auto;
+    }
+    .hero-title .lead {
+      margin-inline: auto;
+      text-align: left;
+    }
+    .shelf-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

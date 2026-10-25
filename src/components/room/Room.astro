@@ -73,8 +73,13 @@ import { SITE_AUTHOR_IMAGE } from '../../consts';
 </section>
 
 <script>
-  const root = document.querySelector<HTMLElement>('[data-room]');
-  if (root) {
+  import { onPageLoad } from '../../utils/lifecycle';
+
+  // ClientRouter 换页后模块脚本不会重跑,跟随 page-load 重新挂载;
+  // mountRoom 内部已在 astro:before-swap 时清理(见 interaction.ts)
+  onPageLoad(() => {
+    const root = document.querySelector<HTMLElement>('[data-room]');
+    if (!root) return;
     import('./interaction')
       .then(({ mountRoom }) => mountRoom(root))
       .catch(() => {
@@ -82,7 +87,7 @@ import { SITE_AUTHOR_IMAGE } from '../../consts';
         if (status)
           status.textContent = '房间暂时没加载出来，下面的栏目和文章照常可用。';
       });
-  }
+  });
 </script>
 
 <style>

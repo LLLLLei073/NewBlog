@@ -4,10 +4,10 @@ export const ROOM_LINKS = [
     id: 'computer',
     object: '电脑',
     label: '算法',
-    href: '/categories/algorithm/',
+    href: '/algorithm/',
   },
   { id: 'textbook', object: '课本', label: '数学', href: '/categories/math/' },
-  { id: 'record', object: '唱片机', label: '音乐', href: '/categories/music/' },
+  { id: 'record', object: '唱片机', label: '音乐', href: '/music/' },
   {
     id: 'controller',
     object: '游戏手柄',

@@ -5,6 +5,7 @@
  * See /licenses/pure-line-room.txt. No upstream audio or continuous animation.
  */
 import { Raycaster, Vector2, WebGLRenderer } from 'three';
+import { navigate } from 'astro:transitions/client';
 import { createRoomScene } from './scene';
 import { ROOM_ITEMS, type RoomId } from './config';
 import { isRoomTap, type TapStart } from './gesture';
@@ -199,7 +200,8 @@ export function mountRoom(root: HTMLElement) {
         if (id === 'lamp') toggleSiteTheme();
         else {
           const item = ROOM_ITEMS.find((item) => item.id === id);
-          if (item?.href) window.location.assign(item.href);
+          // 软导航:保持页面过渡与持续播放的音乐不被整页刷新打断
+          if (item?.href) navigate(item.href);
         }
       },
       { signal },

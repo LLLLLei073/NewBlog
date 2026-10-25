@@ -1,0 +1,82 @@
+---
+/**
+ * 「演算手稿」手记详情:/algorithm/notes/<slug>/。
+ * 数据来自 blog 集合(category: algorithm),布局 AlgorithmPost;
+ * 在共享 getNotePaths 之上补充同主题列表与知识地图节点。
+ */
+import { getCollection, render } from 'astro:content';
+import AlgorithmPost from '../../../layouts/AlgorithmPost.astro';
+import {
+  buildPostJsonLd,
+  getNotePaths,
+  type NoteProps,
+} from '../../../utils/notes-paths.ts';
+import { MAP_NODES } from '../../../data/algorithm/map.ts';
+
+export async function getStaticPaths() {
+  const paths = await getNotePaths('algorithm');
+  const all = (await getCollection('blog')).filter(
+    (p) => !p.data.draft && p.data.category === 'algorithm',
+  );
+  const byId = new Map(all.map((p) => [p.id, p]));
+
+  return paths.map(({ params, props }) => {
+    const post = props.post;
+    const sameTopic = all
+      .filter((p) => p.id !== post.id && p.data.topic === post.data.topic)
+      .sort((a, b) => (b.data.fileNo ?? '').localeCompare(a.data.fileNo ?? ''))
+      .map((p) => ({
+        title: p.data.title,
+        href: `/algorithm/notes/${p.id}/`,
+        fileNo: p.data.fileNo,
+      }));
+
+    const withNo = (n: NoteProps['newer']) =>
+      n && byId.has(n.slug)
+        ? { ...n, fileNo: byId.get(n.slug)!.data.fileNo }
+        : n;
+
+    return {
+      params,
+      props: {
+        ...props,
+        newer: withNo(props.newer),
+        older: withNo(props.older),
+        sameTopic,
+        mapNode: MAP_NODES.find((n) => n.noteSlugs.includes(post.id))?.id,
+      },
+    };
+  });
+}
+
+type Extra = {
+  post: NoteProps['post'];
+  newer: NoteProps['newer'] & { fileNo?: string };
+  older: NoteProps['older'] & { fileNo?: string };
+  sameTopic: { title: string; href: string; fileNo?: string }[];
+  mapNode?: string;
+};
+
+const { post, newer, older, sameTopic, mapNode } = Astro.props as NoteProps &
+  Extra;
+const { Content, headings } = await render(post);
+const rawBody = typeof post.body === 'string' ? post.body : '';
+const jsonLd = buildPostJsonLd(post);
+---
+
+<AlgorithmPost
+  {...post.data}
+  headings={headings}
+  newer={newer}
+  older={older}
+  sameTopic={sameTopic}
+  rawBody={rawBody}
+  mapNode={mapNode}
+>
+  <script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(jsonLd)}
+  />
+  <Content />
+</AlgorithmPost>

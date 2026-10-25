@@ -85,6 +85,8 @@ const { toc } = Astro.props;
 </style>
 
 <script>
+  import { onPageLoad } from '../utils/lifecycle';
+
   function initTOC() {
     const nav = document.querySelector('.toc');
     if (!nav) return;
@@ -118,7 +120,8 @@ const { toc } = Astro.props;
     );
 
     targets.forEach((_, el) => observer.observe(el));
+    return () => observer.disconnect();
   }
 
-  initTOC();
+  onPageLoad(initTOC);
 </script>

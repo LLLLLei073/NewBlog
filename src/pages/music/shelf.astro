@@ -1,0 +1,518 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ArchiveNav from '../../components/archive/ArchiveNav.astro';
+import Sleeve from '../../components/archive/Sleeve.astro';
+import Stars from '../../components/archive/Stars.astro';
+import { ENTRIES, SHELF_FILTERS, mmss, totalSec } from '../../data/music';
+---
+
+<BaseLayout
+  title="唱片架"
+  description="喜欢的声音,值得留下位置:我的专辑收藏与私人批注。"
+  pageName="music"
+>
+  <div class="archive">
+    <ArchiveNav />
+
+    <main class="arch shelf-page">
+      <header class="page-head rise">
+        <h1>喜欢的声音,<br />值得留下位置</h1>
+        <p class="mono-label">RECORD SHELF · {ENTRIES.length} ENTRIES</p>
+      </header>
+
+      <div class="toolbar rise d1" role="group" aria-label="筛选与视图">
+        <div class="filters">
+          {
+            SHELF_FILTERS.map((f, i) => (
+              <button
+                type="button"
+                class:list={['filter', { on: i === 0 }]}
+                data-filter={f.key}
+                aria-pressed={i === 0 ? 'true' : 'false'}
+              >
+                {f.label}
+              </button>
+            ))
+          }
+        </div>
+        <div class="view-toggle" role="group" aria-label="视图切换">
+          <button
+            type="button"
+            class="vt on"
+            data-view="grid"
+            aria-pressed="true"
+            aria-label="陈列视图"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="15"
+              height="15"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <rect x="3" y="3" width="8" height="8" rx="1"></rect>
+              <rect x="13" y="3" width="8" height="8" rx="1"></rect>
+              <rect x="3" y="13" width="8" height="8" rx="1"></rect>
+              <rect x="13" y="13" width="8" height="8" rx="1"></rect>
+            </svg>
+          </button>
+          <button
+            type="button"
+            class="vt"
+            data-view="list"
+            aria-pressed="false"
+            aria-label="紧凑列表视图"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="15"
+              height="15"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              aria-hidden="true"
+            >
+              <line x1="4" y1="6" x2="20" y2="6"></line>
+              <line x1="4" y1="12" x2="20" y2="12"></line>
+              <line x1="4" y1="18" x2="20" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- 陈列视图 -->
+      <div class="grid-view" data-view-group="grid" aria-label="封面陈列">
+        {
+          ENTRIES.map((entry, i) => (
+            <a
+              href={`/music/album/${entry.slug}/`}
+              class:list={['card', i % 2 === 0 ? 'tilt tilt-l' : 'tilt tilt-r']}
+              data-cat={entry.category}
+              data-fresh={entry.fresh ? '1' : undefined}
+              data-rating={entry.rating}
+            >
+              <span class="card-cover">
+                <Sleeve
+                  title={entry.title}
+                  artist={entry.artist}
+                  accent={entry.accent}
+                  slug={entry.slug}
+                />
+                <span class="card-blurb">{entry.blurb}</span>
+                {entry.fresh && <span class="fresh-flag">NEW IN</span>}
+              </span>
+              <span class="card-info">
+                <strong>{entry.title}</strong>
+                <span class="card-artist">{entry.artist}</span>
+                <span class="card-foot">
+                  <span class="mono-num">{entry.no}</span>
+                  <Stars rating={entry.rating} />
+                </span>
+              </span>
+            </a>
+          ))
+        }
+      </div>
+
+      <!-- 紧凑列表视图 -->
+      <div
+        class="list-view"
+        data-view-group="list"
+        hidden
+        aria-label="紧凑列表"
+      >
+        {
+          ENTRIES.map((entry) => (
+            <a
+              href={`/music/album/${entry.slug}/`}
+              class="lrow"
+              data-cat={entry.category}
+              data-fresh={entry.fresh ? '1' : undefined}
+              data-rating={entry.rating}
+            >
+              <span class="l-no mono-num">{entry.no}</span>
+              <span class="l-thumb" aria-hidden="true">
+                <Sleeve
+                  title={entry.title}
+                  artist={entry.artist}
+                  accent={entry.accent}
+                  slug={entry.slug}
+                />
+              </span>
+              <strong class="l-title">{entry.title}</strong>
+              <span class="l-artist">{entry.artist}</span>
+              <span class="l-cat">
+                {entry.category} · {entry.kind}
+              </span>
+              <span class="l-tracks mono-num">{entry.trackIds.length} 首</span>
+              <span class="l-dur mono-num">
+                {mmss(totalSec(entry.trackIds))}
+              </span>
+              <span class="l-date mono-num">{entry.acquired}</span>
+              <span class="l-stars">
+                <Stars rating={entry.rating} />
+              </span>
+            </a>
+          ))
+        }
+      </div>
+
+      <p class="empty-hint" data-empty hidden>这个分类下暂时没有条目。</p>
+    </main>
+  </div>
+</BaseLayout>
+
+<script>
+  import { onPageLoad } from '../../utils/lifecycle';
+
+  onPageLoad(() => {
+    const page = document.querySelector<HTMLElement>('.shelf-page');
+    if (!page) return;
+    const filters = Array.from(
+      page.querySelectorAll<HTMLButtonElement>('[data-filter]'),
+    );
+    const vts = Array.from(
+      page.querySelectorAll<HTMLButtonElement>('[data-view]'),
+    );
+    const groups = ['grid', 'list'].map((v) => ({
+      v,
+      items: Array.from(
+        page.querySelectorAll<HTMLElement>(`[data-cat][data-rating]`),
+      ),
+      box: page.querySelector<HTMLElement>(`[data-view-group="${v}"]`),
+    }));
+    const emptyHint = page.querySelector<HTMLElement>('[data-empty]');
+
+    const applyFilter = (key: string) => {
+      let visible = 0;
+      for (const { items, box } of groups) {
+        let n = 0;
+        items.forEach((item) => {
+          const cat = item.dataset.cat;
+          const ok =
+            key === 'all' ||
+            key === cat ||
+            (key === 'fresh' && item.dataset.fresh === '1') ||
+            (key === 'top' && Number(item.dataset.rating) >= 9.2);
+          item.hidden = !ok;
+          if (ok) n++;
+        });
+        if (box && !box.hidden) visible = n;
+      }
+      if (emptyHint) emptyHint.hidden = visible > 0;
+    };
+
+    const onFilter = (e: Event) => {
+      const btn = (e.target as HTMLElement).closest<HTMLButtonElement>(
+        '[data-filter]',
+      );
+      if (!btn) return;
+      filters.forEach((f) => {
+        const on = f === btn;
+        f.classList.toggle('on', on);
+        f.setAttribute('aria-pressed', String(on));
+      });
+      applyFilter(btn.dataset.filter!);
+    };
+
+    const onView = (e: Event) => {
+      const btn = (e.target as HTMLElement).closest<HTMLButtonElement>(
+        '[data-view]',
+      );
+      if (!btn) return;
+      vts.forEach((v) => {
+        const on = v === btn;
+        v.classList.toggle('on', on);
+        v.setAttribute('aria-pressed', String(on));
+      });
+      for (const { v, box } of groups) {
+        if (box) box.hidden = v !== btn.dataset.view;
+      }
+      // 当前视图下重新统计可见数(切视图不影响筛选结果,仅提示用)
+      const active = filters.find((f) => f.classList.contains('on'));
+      if (active) applyFilter(active.dataset.filter!);
+    };
+
+    const onRoot = (e: Event) => {
+      if ((e.target as HTMLElement).closest('[data-filter]')) onFilter(e);
+      else if ((e.target as HTMLElement).closest('[data-view]')) onView(e);
+    };
+    page.addEventListener('click', onRoot);
+    return () => page.removeEventListener('click', onRoot);
+  });
+</script>
+
+<style>
+  .shelf-page {
+    padding-top: clamp(2rem, 5vw, 3.5rem);
+    padding-bottom: clamp(4rem, 8vw, 6rem);
+  }
+
+  /* hidden 必须优先于卡片、列表和视图容器的 display 布局。 */
+  .shelf-page [hidden] {
+    display: none !important;
+  }
+
+  .page-head h1 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(32px, 4.2vw, 52px);
+    line-height: 1.22;
+    color: var(--card-foreground);
+  }
+  .page-head .mono-label {
+    margin: 0.9rem 0 0;
+  }
+
+  /* ===== 工具栏 ===== */
+  .toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin: 2rem 0 1.8rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .filters {
+    display: flex;
+    gap: 0.3rem;
+    flex-wrap: wrap;
+  }
+  .filter {
+    padding: 0.35rem 0.8rem;
+    border: none;
+    border-radius: 2px;
+    background: none;
+    color: var(--muted-foreground);
+    font-size: 13.5px;
+    font-family: inherit;
+    cursor: pointer;
+    transition:
+      color 0.18s ease,
+      background-color 0.18s ease;
+    min-height: 44px;
+  }
+  .filter:hover {
+    color: var(--foreground);
+    background: var(--accent);
+  }
+  .filter.on {
+    color: var(--primary);
+    background: var(--accent);
+    box-shadow: inset 0 -2px 0 0 var(--primary);
+  }
+  .view-toggle {
+    display: inline-flex;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .vt {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border: none;
+    background: none;
+    color: var(--muted-foreground);
+    cursor: pointer;
+    transition:
+      color 0.18s ease,
+      background-color 0.18s ease;
+  }
+  .vt.on {
+    color: var(--primary);
+    background: var(--accent);
+  }
+
+  /* ===== 陈列视图:五列轻微错位 ===== */
+  .grid-view {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: clamp(0.9rem, 2vw, 1.6rem);
+  }
+  .grid-view .card:nth-child(2) {
+    transform: translateY(12px);
+  }
+  .grid-view .card:nth-child(4) {
+    transform: translateY(16px);
+  }
+  .grid-view .card:nth-child(5) {
+    transform: translateY(6px);
+  }
+  .card {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    /* 允许窄于内容宽:艺人名 nowrap 不再把 1fr 列撑出横向溢出 */
+    min-width: 0;
+  }
+  .card-cover {
+    position: relative;
+    display: block;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(25, 25, 23, 0.14);
+  }
+  .card-blurb {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0.9rem;
+    background: color-mix(in srgb, #191917 78%, transparent);
+    color: #f1ede4;
+    font-size: 13px;
+    line-height: 1.9;
+    opacity: 0;
+    transition: opacity 0.22s ease;
+  }
+  .card:hover .card-blurb,
+  .card:focus-visible .card-blurb {
+    opacity: 1;
+  }
+  .fresh-flag {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    padding: 0.12em 0.4em;
+    background: var(--primary);
+    color: var(--primary-foreground);
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.14em;
+    border-radius: 2px;
+  }
+  .card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+  .card-info strong {
+    font-family: var(--font-serif);
+    font-size: 15px;
+    color: var(--foreground);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .card-artist {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--muted-foreground);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .card-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.2rem;
+    font-size: 0.68rem;
+    color: var(--muted-foreground);
+  }
+
+  /* ===== 紧凑列表视图 ===== */
+  .list-view {
+    border-top: 1px solid var(--border);
+  }
+  .lrow {
+    display: grid;
+    grid-template-columns: 3.2rem 44px 1.4fr 1fr 1fr 3.2rem 3.4rem 5.2rem 4.5rem;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.6rem 0.4rem;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+    color: inherit;
+    transition: background-color 0.18s ease;
+  }
+  .lrow:hover {
+    background: var(--accent);
+  }
+  .l-no {
+    font-size: 12px;
+    color: var(--muted-foreground);
+  }
+  .l-thumb {
+    width: 44px;
+    height: 44px;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .l-title {
+    font-family: var(--font-serif);
+    font-size: 15px;
+    color: var(--foreground);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .l-artist {
+    font-size: 13px;
+    color: var(--muted-foreground);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .l-cat {
+    font-size: 12.5px;
+    color: var(--muted-foreground);
+  }
+  .l-tracks,
+  .l-dur,
+  .l-date {
+    font-size: 12px;
+    color: var(--muted-foreground);
+    text-align: right;
+  }
+
+  .empty-hint {
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 14.5px;
+    color: var(--muted-foreground);
+  }
+
+  /* ===== 响应式 ===== */
+  @media (max-width: 1024px) {
+    .grid-view {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .grid-view .card:nth-child(n) {
+      transform: none;
+    }
+    .lrow {
+      grid-template-columns: 44px 1.4fr 1fr 3.4rem 4.5rem;
+    }
+    .l-no,
+    .l-cat,
+    .l-date {
+      display: none;
+    }
+  }
+  @media (max-width: 700px) {
+    .grid-view {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .lrow {
+      grid-template-columns: 44px 1fr 4.5rem;
+    }
+    .l-no,
+    .l-cat,
+    .l-tracks,
+    .l-dur,
+    .l-date {
+      display: none;
+    }
+  }
+</style>

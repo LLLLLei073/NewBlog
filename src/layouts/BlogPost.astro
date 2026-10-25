@@ -5,17 +5,19 @@ import TableOfContents from '../components/TableOfContents.astro';
 import Comments from '../components/Comments.astro';
 import { getCollection } from 'astro:content';
 import { readingTime, wordCount } from '../utils/reading';
+import { postHref } from '../utils/postRoute';
 
 type Heading = { depth: number; slug: string; text: string };
-type Nav = { slug: string; title: string } | null;
+type Nav = { slug: string; title: string; href: string } | null;
 type Related = {
   slug: string;
   title: string;
   description: string;
   pubDate: Date;
   category: string | null;
+  href: string;
 };
-type SeriesPost = { slug: string; title: string };
+type SeriesPost = { slug: string; title: string; href: string };
 
 interface Props {
   title: string;
@@ -80,11 +82,12 @@ const currentPath = Astro.url.pathname;
         <ul>
           {
             allPosts.map((post) => {
-              const isActive = currentPath === `/blog/${post.id}/`;
+              const isActive =
+                currentPath === postHref(post.id, post.data.category);
               return (
                 <li class:list={['nav-item', { active: isActive }]}>
                   <a
-                    href={`/blog/${post.id}/`}
+                    href={postHref(post.id, post.data.category)}
                     class:list={[{ active: isActive }]}
                   >
                     {post.data.title}
@@ -134,7 +137,7 @@ const currentPath = Astro.url.pathname;
         (newer || older) && (
           <nav class="prev-next" aria-label="文章导航">
             {newer ? (
-              <a class="pn-link newer" href={`/blog/${newer.slug}/`}>
+              <a class="pn-link newer" href={newer.href}>
                 <span class="pn-label">&larr; 上一篇</span>
                 <span class="pn-title">{newer.title}</span>
               </a>
@@ -142,7 +145,7 @@ const currentPath = Astro.url.pathname;
               <span class="pn-placeholder" />
             )}
             {older ? (
-              <a class="pn-link older" href={`/blog/${older.slug}/`}>
+              <a class="pn-link older" href={older.href}>
                 <span class="pn-label">下一篇 &rarr;</span>
                 <span class="pn-title">{older.title}</span>
               </a>
@@ -160,7 +163,7 @@ const currentPath = Astro.url.pathname;
             <ul class="series-list">
               {seriesPosts.map((s) => (
                 <li>
-                  <a href={`/blog/${s.slug}/`} class="series-link">
+                  <a href={s.href} class="series-link">
                     {s.title}
                   </a>
                 </li>
@@ -180,7 +183,7 @@ const currentPath = Astro.url.pathname;
             <ul class="related-list">
               {related.map((r) => (
                 <li>
-                  <a href={`/blog/${r.slug}/`} class="related-card">
+                  <a href={r.href} class="related-card">
                     <div class="related-meta">
                       <FormattedDate date={r.pubDate} />
                       {r.category && (
@@ -288,10 +291,13 @@ const currentPath = Astro.url.pathname;
           allPosts.map((post) => (
             <li>
               <a
-                href={`/blog/${post.id}/`}
+                href={postHref(post.id, post.data.category)}
                 class:list={[
                   'fab-item',
-                  { active: currentPath === `/blog/${post.id}/` },
+                  {
+                    active:
+                      currentPath === postHref(post.id, post.data.category),
+                  },
                 ]}
               >
                 {post.data.title}
@@ -1092,6 +1098,9 @@ const currentPath = Astro.url.pathname;
 </style>
 
 <script>
+  import { onPageLoad } from '../utils/lifecycle';
+  import { navigate } from 'astro:transitions/client';
+
   function initProgress() {
     const bar = document.getElementById('reading-progress-bar');
     if (!bar) return;
@@ -1104,6 +1113,10 @@ const currentPath = Astro.url.pathname;
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update);
     update();
+    return () => {
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
+    };
   }
 
   function initFab() {
@@ -1145,36 +1158,39 @@ const currentPath = Astro.url.pathname;
     });
 
     // ESC 关闭
-    document.addEventListener('keydown', (e: KeyboardEvent) => {
+    const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setOpen(false);
-    });
+    };
+    document.addEventListener('keydown', onKey);
 
     // 视口变宽（回到桌面有悬浮 TOC）时复位
     const mq = window.matchMedia('(min-width: 1280px)');
-    mq.addEventListener('change', (e) => {
+    const onMq = (e: MediaQueryListEvent) => {
       if (e.matches) setOpen(false);
-    });
-  }
+    };
+    mq.addEventListener('change', onMq);
 
-  initProgress();
-  initFab();
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      mq.removeEventListener('change', onMq);
+    };
+  }
 
   // 返回顶部：滚动一段距离后显示，点击平滑回顶
   function initBackToTop() {
-    let btn = document.getElementById('back-to-top');
-    if (!btn) {
-      btn = document.createElement('button');
-      btn.id = 'back-to-top';
-      btn.type = 'button';
-      btn.className = 'back-to-top';
-      btn.setAttribute('aria-label', '返回顶部');
-      btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>`;
-      document.body.appendChild(btn);
-    }
+    // 换页后 body 会被替换,这里每次重建,避免残留旧监听
+    document.getElementById('back-to-top')?.remove();
+    const btn = document.createElement('button');
+    btn.id = 'back-to-top';
+    btn.type = 'button';
+    btn.className = 'back-to-top';
+    btn.setAttribute('aria-label', '返回顶部');
+    btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>`;
+    document.body.appendChild(btn);
 
     const onScroll = () => {
       const y = window.scrollY || document.documentElement.scrollTop;
-      btn!.classList.toggle('visible', y > 600);
+      btn.classList.toggle('visible', y > 600);
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
@@ -1182,8 +1198,9 @@ const currentPath = Astro.url.pathname;
     btn.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+
+    return () => window.removeEventListener('scroll', onScroll);
   }
-  initBackToTop();
 
   // 图片灯箱：点击文章图片全屏预览
   function initLightbox() {
@@ -1215,7 +1232,7 @@ const currentPath = Astro.url.pathname;
       lb.activeTrigger = undefined;
     };
 
-    if (lb.dataset.lightboxBound !== 'true') {
+    if (!lb.dataset.lightboxBound) {
       lb.dataset.lightboxBound = 'true';
       closeBtn.addEventListener('click', close);
       lb.addEventListener('click', (event) => {
@@ -1225,10 +1242,12 @@ const currentPath = Astro.url.pathname;
         )
           close();
       });
-      document.addEventListener('keydown', (event: KeyboardEvent) => {
-        if (event.key === 'Escape' && lb?.classList.contains('open')) close();
-      });
     }
+    // 文档级监听每次执行都重新绑定,由 onPageLoad 的清理函数移除
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && lb.classList.contains('open')) close();
+    };
+    document.addEventListener('keydown', onKey);
 
     const open = (img: HTMLImageElement) => {
       if (!img.src || !lb) return;
@@ -1257,8 +1276,9 @@ const currentPath = Astro.url.pathname;
         open(img);
       });
     });
+
+    return () => document.removeEventListener('keydown', onKey);
   }
-  initLightbox();
 
   // 分享按钮：复制链接 / 复制分享文案
   function initShare() {
@@ -1300,7 +1320,7 @@ const currentPath = Astro.url.pathname;
       document.querySelector<HTMLAnchorElement>('.pn-link.older');
     if (!newerLink && !olderLink) return;
 
-    document.addEventListener('keydown', (e: KeyboardEvent) => {
+    const onKey = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement;
       const typing =
         target.tagName === 'INPUT' ||
@@ -1308,12 +1328,28 @@ const currentPath = Astro.url.pathname;
         target.isContentEditable ||
         target.closest('[contenteditable]') !== null;
       if (typing) return;
+      // 软导航,避免整页刷新打断播放中的音乐
       if (e.key === 'ArrowLeft' && newerLink) {
-        location.href = newerLink.href;
+        navigate(newerLink.href);
       } else if (e.key === 'ArrowRight' && olderLink) {
-        location.href = olderLink.href;
+        navigate(olderLink.href);
       }
-    });
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
   }
-  initKeyNav();
+
+  // ClientRouter 换页后文章页 DOM 整体替换,跟随 page-load 重新初始化;
+  // 各 init 返回的清理函数会在下次执行前/换页前移除 window/document 级监听
+  onPageLoad(() => {
+    const cleanups = [
+      initProgress(),
+      initFab(),
+      initBackToTop(),
+      initLightbox(),
+      initShare(),
+      initKeyNav(),
+    ];
+    return () => cleanups.forEach((cleanup) => cleanup?.());
+  });
 </script>

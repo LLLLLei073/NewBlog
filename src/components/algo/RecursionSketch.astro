@@ -1,0 +1,147 @@
+---
+/**
+ * 递归树草稿:T(n) → 2·T(n/2) 的分治递归树与每层代价,
+ * 手稿感虚线笔触,配一行复杂度推导(归并排序)。
+ */
+const levels = [
+  { y: 34, labels: ['T(n)'] },
+  { y: 92, labels: ['T(n/2)', 'T(n/2)'] },
+  { y: 150, labels: ['T(n/4)', 'T(n/4)', 'T(n/4)', 'T(n/4)'] },
+] as const;
+
+const xs = (lv: number, i: number, n: number) => {
+  const w = 300;
+  const pad = 34;
+  return (
+    pad +
+    (lv === 0
+      ? (w - pad * 2) / 2
+      : lv === 1
+        ? [88, 212][i]
+        : [52, 124, 178, 250][i])
+  );
+};
+---
+
+<figure
+  class="rs"
+  aria-label="分治递归树草稿:T(n) 分成两个 T(n/2),每层总代价 O(n)"
+>
+  <svg viewBox="0 0 300 208" role="img">
+    <title>递归树:T(n) = 2T(n/2) + O(n)</title>
+    <desc>
+      递归树草稿:根是 T(n),两个孩子 T(n/2),四个孙子 T(n/4)。
+      每层合并代价加起来都是 O(n),树高 log₂ n,总计 O(n log n)。
+    </desc>
+
+    {/* 层代价注记:放在层间空白带,避开节点与连线 */}
+    <text x="296" y="63" text-anchor="end" class="rs-note">每层 O(n)</text>
+    <text x="296" y="121" text-anchor="end" class="rs-note">每层 O(n)</text>
+
+    {/* 虚线连接(手稿笔触) */}
+    <path d="M150 44 C 150 62, 88 72, 88 82" class="rs-stroke"></path>
+    <path d="M150 44 C 150 62, 212 72, 212 82" class="rs-stroke"></path>
+    <path d="M88 102 C 88 118, 52 128, 52 140" class="rs-stroke"></path>
+    <path d="M88 102 C 88 118, 124 128, 124 140" class="rs-stroke"></path>
+    <path d="M212 102 C 212 118, 178 128, 178 140" class="rs-stroke"></path>
+    <path d="M212 102 C 212 118, 250 128, 250 140" class="rs-stroke"></path>
+    <path d="M52 160 C 52 176, 40 184, 26 190" class="rs-stroke rs-faint"
+    ></path>
+    <path d="M124 160 C 124 176, 136 184, 150 190" class="rs-stroke rs-faint"
+    ></path>
+    <path d="M178 160 C 178 176, 166 184, 152 190" class="rs-stroke rs-faint"
+    ></path>
+    <path d="M250 160 C 250 176, 262 184, 276 190" class="rs-stroke rs-faint"
+    ></path>
+
+    {/* 节点标签 */}
+    {
+      levels.map((lv, li) =>
+        lv.labels.map((lb, i) => (
+          <text
+            x={xs(li, i, lv.labels.length)}
+            y={lv.y}
+            text-anchor="middle"
+            class:list={['rs-node', { 'rs-leaf': li === 2 }]}
+          >
+            {lb}
+          </text>
+        )),
+      )
+    }
+    <text x="10" y="196" class="rs-note">⋯ 深度 log₂ n</text>
+
+    {/* 推导一行 */}
+    <text x="150" y="34" text-anchor="middle" class="rs-node rs-root">T(n)</text
+    >
+  </svg>
+  <p class="rs-formula">
+    <span class="mono-num">T(n) = 2T(n/2) + O(n) = O(n log n)</span>
+    <span class="rs-hand">—— 每层 O(n),共 log₂n 层</span>
+  </p>
+</figure>
+
+<style>
+  .rs {
+    margin: 0;
+  }
+  .rs svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--background);
+    padding: 0.4rem;
+  }
+  .rs-node {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    fill: var(--foreground);
+  }
+  .rs-leaf {
+    font-size: 10.5px;
+    font-weight: 500;
+    fill: var(--muted-foreground);
+  }
+  .rs-root {
+    fill: var(--primary);
+    font-size: 13px;
+  }
+  .rs-note {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 10.5px;
+    fill: var(--algo-amber-deep);
+  }
+  :global(html[data-theme='dark']) .rs-note {
+    fill: var(--algo-amber);
+  }
+  .rs-stroke {
+    fill: none;
+    stroke: var(--muted-foreground);
+    stroke-width: 1.2;
+    stroke-dasharray: 4 4;
+    opacity: 0.75;
+  }
+  .rs-faint {
+    opacity: 0.4;
+  }
+  .rs-formula {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.7em;
+    margin: 0.55rem 0 0;
+    font-size: 0.78rem;
+  }
+  .rs-formula .mono-num {
+    color: var(--primary);
+  }
+  .rs-hand {
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--algo-note-ink);
+  }
+</style>

@@ -1,0 +1,486 @@
+---
+/**
+ * 全局迷你播放器:挂在 BaseLayout 的 body 末尾。
+ * 根元素 transition:persist 跨页面存活(ClientRouter),内含 <audio>;
+ * 底部可收起的播放条:封面/歌名/上下首/进度/音量(桌面)。
+ * 「耳朵的私人档案」页面内自动换装为纸色系(令牌见 archive.css)。
+ */
+---
+
+<div id="music-player" transition:persist="music-player">
+  <audio data-music-audio preload="metadata"></audio>
+
+  <div class="mini" data-mini hidden>
+    <!-- 顶部细进度条(可拖动) -->
+    <div class="prog-line">
+      <input
+        class="arch-range"
+        data-mini-seek
+        type="range"
+        min="0"
+        max="100"
+        step="0.1"
+        value="0"
+        aria-label="播放进度"
+      />
+    </div>
+
+    <div class="mini-row">
+      <button
+        type="button"
+        class="cover"
+        data-music-toggle
+        aria-label="播放或暂停"
+      >
+        <span class="cover-chip" aria-hidden="true">
+          <svg viewBox="0 0 40 40" class="disc">
+            <circle cx="20" cy="20" r="19" fill="#23262f"></circle>
+            <circle
+              cx="20"
+              cy="20"
+              r="13"
+              fill="none"
+              stroke="rgba(255,255,255,.16)"></circle>
+            <circle cx="20" cy="20" r="6.4" fill="var(--chip, #C84632)"
+            ></circle>
+            <circle cx="20" cy="20" r="1.9" fill="#23262f"></circle>
+          </svg>
+        </span>
+        <span class="glyph g-play" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor">
+            <path d="M8 5.5v13l11-6.5z"></path>
+          </svg>
+        </span>
+        <span class="glyph g-pause" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor">
+            <path d="M7 5h3.4v14H7zM13.6 5H17v14h-3.4z"></path>
+          </svg>
+        </span>
+      </button>
+
+      <a class="meta" href="/music/" title="打开耳朵的私人档案">
+        <span class="title" data-mini-title>—</span>
+        <span class="artist" data-mini-artist>—</span>
+      </a>
+
+      <button type="button" class="ctl" data-music-prev aria-label="上一首">
+        <svg
+          viewBox="0 0 24 24"
+          width="15"
+          height="15"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path d="M6 5h2.2v14H6zM20 5.8v12.4L9.8 12z"></path>
+        </svg>
+      </button>
+      <button type="button" class="ctl" data-music-next aria-label="下一首">
+        <svg
+          viewBox="0 0 24 24"
+          width="15"
+          height="15"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path d="M15.8 5H18v14h-2.2zM4 5.8v12.4L14.2 12z"></path>
+        </svg>
+      </button>
+
+      <span class="time" data-mini-cur>0:00</span>
+      <span class="time dim" data-mini-dur>--:--</span>
+
+      <span class="vol-wrap">
+        <svg
+          viewBox="0 0 24 24"
+          width="13"
+          height="13"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M11 5 6 9H2v6h4l5 4z"></path>
+          <path d="M15.5 8.5a5 5 0 0 1 0 7"></path>
+        </svg>
+        <input
+          class="arch-range vol"
+          data-mini-vol
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          value="0.8"
+          aria-label="音量"
+        />
+      </span>
+
+      <button
+        type="button"
+        class="ctl fold"
+        data-music-fold
+        aria-label="收起播放器"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          width="14"
+          height="14"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- 收起后的圆钮 -->
+  <button
+    type="button"
+    class="bubble"
+    data-music-bubble
+    hidden
+    aria-label="展开播放器"
+  >
+    <span class="cover-chip small" aria-hidden="true">
+      <svg viewBox="0 0 40 40" class="disc">
+        <circle cx="20" cy="20" r="19" fill="#23262f"></circle>
+        <circle
+          cx="20"
+          cy="20"
+          r="13"
+          fill="none"
+          stroke="rgba(255,255,255,.16)"></circle>
+        <circle cx="20" cy="20" r="6.4" fill="var(--chip, #C84632)"></circle>
+        <circle cx="20" cy="20" r="1.9" fill="#23262f"></circle>
+      </svg>
+    </span>
+  </button>
+</div>
+
+<script>
+  import {
+    initPlayer,
+    subscribe,
+    getState,
+    currentTrack,
+    currentQueue,
+    togglePlay,
+    next,
+    prev,
+    seekTo,
+    setVolume,
+  } from './music/player';
+
+  const setup = () => {
+    const root = document.getElementById('music-player');
+    if (!root) return;
+    // body 会随 ClientRouter 换页被替换:每次 page-load 重挂底部预留类
+    document.body.classList.toggle('music-active', Boolean(getState().queueId));
+    // 持久化元素跨导航存活:初始化一次,之后由守卫挡住重复绑定
+    if (root.dataset.musicInit === 'true') return;
+    root.dataset.musicInit = 'true';
+    initPlayer(root);
+
+    const mini = root.querySelector<HTMLElement>('[data-mini]');
+    const bubble = root.querySelector<HTMLButtonElement>('[data-music-bubble]');
+    const toggle = root.querySelector<HTMLButtonElement>('[data-music-toggle]');
+    const prevBtn = root.querySelector<HTMLButtonElement>('[data-music-prev]');
+    const nextBtn = root.querySelector<HTMLButtonElement>('[data-music-next]');
+    const foldBtn = root.querySelector<HTMLButtonElement>('[data-music-fold]');
+    const titleEl = root.querySelector<HTMLElement>('[data-mini-title]');
+    const artistEl = root.querySelector<HTMLElement>('[data-mini-artist]');
+    const curEl = root.querySelector<HTMLElement>('[data-mini-cur]');
+    const durEl = root.querySelector<HTMLElement>('[data-mini-dur]');
+    const seek = root.querySelector<HTMLInputElement>('[data-mini-seek]');
+    const vol = root.querySelector<HTMLInputElement>('[data-mini-vol]');
+    const fmt = (s: number) => {
+      if (!Number.isFinite(s) || s <= 0) return '--:--';
+      return `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+    };
+
+    /* 收起/展开(记忆状态) */
+    let folded = false;
+    try {
+      folded = localStorage.getItem('music-folded') === '1';
+    } catch {}
+    const applyFold = () => {
+      const active = Boolean(getState().queueId);
+      document.body.classList.toggle('music-active', active);
+      if (mini) mini.hidden = !active || folded;
+      if (bubble) bubble.hidden = !active || !folded;
+    };
+
+    toggle?.addEventListener('click', () => togglePlay());
+    prevBtn?.addEventListener('click', () => prev());
+    nextBtn?.addEventListener('click', () => next());
+    foldBtn?.addEventListener('click', () => {
+      folded = true;
+      try {
+        localStorage.setItem('music-folded', '1');
+      } catch {}
+      applyFold();
+    });
+    bubble?.addEventListener('click', () => {
+      folded = false;
+      try {
+        localStorage.setItem('music-folded', '0');
+      } catch {}
+      applyFold();
+    });
+    seek?.addEventListener('input', () => {
+      const max = Number(seek.max || 0);
+      if (max > 0) seekTo(Number(seek.value));
+    });
+    vol?.addEventListener('input', () => {
+      if (vol) setVolume(Number(vol.value));
+    });
+
+    subscribe(() => {
+      const st = getState();
+      const track = currentTrack();
+      const queue = currentQueue();
+      root.toggleAttribute('data-playing', st.playing);
+      applyFold();
+      if (titleEl) titleEl.textContent = track?.title ?? '—';
+      if (artistEl) {
+        artistEl.textContent = track?.artist
+          ? `${track.artist}${queue ? ` · ${queue.title}` : ''}`
+          : '—';
+      }
+      if (curEl) curEl.textContent = fmt(st.time);
+      if (durEl) durEl.textContent = fmt(st.duration);
+      if (seek) {
+        seek.max = String(st.duration || 0);
+        seek.value = String(st.duration ? Math.min(st.time, st.duration) : 0);
+        seek.disabled = !st.loaded;
+        seek.style.setProperty(
+          '--p',
+          st.duration ? `${(st.time / st.duration) * 100}%` : '0%',
+        );
+      }
+      if (vol) {
+        vol.value = String(st.volume);
+        vol.style.setProperty('--p', `${st.volume * 100}%`);
+      }
+      root.style.setProperty('--chip', queue?.accent || '#C84632');
+    });
+    applyFold();
+  };
+
+  setup();
+  document.addEventListener('astro:page-load', setup);
+</script>
+
+<style>
+  /* ===== 底部播放条 ===== */
+  .mini {
+    position: fixed;
+    left: 50%;
+    translate: -50% 0;
+    bottom: calc(1.125rem + env(safe-area-inset-bottom));
+    width: min(640px, calc(100vw - 24px));
+    background: var(--popover, #fff);
+    border: 1px solid var(--border, #ddd);
+    border-radius: 10px;
+    box-shadow: var(--shadow-xl, 0 8px 24px rgba(0, 0, 0, 0.12));
+    z-index: 60;
+    overflow: hidden;
+  }
+
+  /* 未播放:只保留封面/歌名/播放控件与进度线 */
+  #music-player:not([data-playing]) [data-music-prev],
+  #music-player:not([data-playing]) [data-music-next],
+  #music-player:not([data-playing]) [data-mini-dur],
+  #music-player:not([data-playing]) .vol-wrap {
+    display: none;
+  }
+
+  .prog-line {
+    padding: 0.45rem 0.9rem 0;
+  }
+
+  .mini-row {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.35rem 0.75rem 0.55rem;
+  }
+
+  .cover {
+    position: relative;
+    flex: none;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    overflow: hidden;
+  }
+
+  .cover-chip {
+    position: absolute;
+    inset: 0;
+    display: block;
+    background: var(--chip, #c84632);
+  }
+
+  .cover-chip .disc {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  #music-player[data-playing] .cover-chip .disc {
+    animation: mini-spin 6s linear infinite;
+  }
+  @keyframes mini-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .glyph {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(18, 18, 22, 0.55);
+    color: #f6f2e9;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+  .cover:hover .glyph,
+  .cover:focus-visible .glyph {
+    opacity: 1;
+  }
+  .g-pause {
+    display: none;
+  }
+  #music-player[data-playing] .g-play {
+    display: none;
+  }
+  #music-player[data-playing] .g-pause {
+    display: flex;
+  }
+
+  .meta {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    line-height: 1.3;
+    margin-left: 0.25rem;
+  }
+  .title {
+    font-size: 14px;
+    color: var(--foreground, #191917);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .artist {
+    font-size: 12px;
+    color: var(--muted-foreground, #716a60);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .ctl {
+    flex: none;
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    border-radius: 6px;
+    background: none;
+    color: var(--muted-foreground, #706b62);
+    cursor: pointer;
+    transition:
+      color 0.15s ease,
+      background-color 0.15s ease;
+  }
+  .ctl:hover {
+    color: var(--primary, #c84632);
+    background: var(--accent, rgba(200, 70, 50, 0.08));
+  }
+
+  .time {
+    flex: none;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--muted-foreground, #716a60);
+    min-width: 3ch;
+  }
+  .dim {
+    color: var(--muted-foreground, #716a60);
+  }
+
+  .vol-wrap {
+    flex: none;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--muted-foreground, #706b62);
+    width: 110px;
+  }
+  .vol {
+    flex: 1;
+  }
+
+  /* ===== 收起后的圆钮 ===== */
+  .bubble {
+    position: fixed;
+    left: 1rem;
+    bottom: calc(1rem + env(safe-area-inset-bottom));
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid var(--border, #ddd);
+    border-radius: 50%;
+    cursor: pointer;
+    overflow: hidden;
+    background: var(--popover, #fff);
+    box-shadow: var(--shadow-md, 0 2px 8px rgba(0, 0, 0, 0.1));
+    z-index: 60;
+  }
+  .cover-chip.small {
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
+  }
+
+  /* 移动端:仅封面/歌名/播放/进度 */
+  @media (max-width: 720px) {
+    .vol-wrap,
+    [data-mini-dur],
+    [data-music-prev],
+    [data-music-next],
+    .fold {
+      display: none;
+    }
+  }
+  @media (max-width: 420px) {
+    .artist {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #music-player[data-playing] .cover-chip .disc {
+      animation: none;
+    }
+  }
+</style>
