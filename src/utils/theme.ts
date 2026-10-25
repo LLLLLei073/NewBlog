@@ -1,4 +1,4 @@
-/** One persisted theme for the header and the homepage lamp. */
+/** One persisted reading theme for the header and the room's lamp. */
 export function setSiteTheme(theme: 'light' | 'dark') {
   document.documentElement.dataset.theme = theme;
   try {

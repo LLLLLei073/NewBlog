@@ -8,6 +8,7 @@ import { type CollectionEntry, getCollection, render } from 'astro:content';
 import BlogPost from '../../layouts/BlogPost.astro';
 import { SITE_AUTHOR, SITE_AUTHOR_IMAGE, SITE_URL } from '../../consts.ts';
 import { postHref, isMigrated } from '../../utils/postRoute.ts';
+import { getPostCategory } from '../../utils/categories.ts';
 
 type Nav = { slug: string; title: string; href: string };
 type Related = {
@@ -120,6 +121,8 @@ const { title, description, pubDate, updatedDate, heroImage, category } =
   post.data;
 const canonical = postHref(post.id, category);
 const canonicalUrl = new URL(canonical, Astro.site ?? SITE_URL).toString();
+const noindex = post.data.noindex ?? false;
+const categoryLabel = getPostCategory(post.data).label;
 
 let Content: any = null;
 let headings: { depth: number; slug: string; text: string }[] = [];
@@ -145,7 +148,7 @@ const jsonLd = {
     image: new URL(SITE_AUTHOR_IMAGE, SITE_URL).toString(),
   },
   publisher: { '@type': 'Person', name: SITE_AUTHOR, url: SITE_URL },
-  ...(category ? { articleSection: category } : {}),
+  ...(category ? { articleSection: categoryLabel } : {}),
   mainEntityOfPage: canonicalUrl,
   ...(heroImage ? { image: new URL(heroImage, SITE_URL).toString() } : {}),
 };
@@ -158,7 +161,7 @@ const jsonLd = {
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>{title}</title>
-        <meta name="robots" content="noindex" />
+        <meta name="robots" content="noindex, follow" />
         <link rel="canonical" href={canonicalUrl} />
         <meta http-equiv="refresh" content={`0; url=${redirect}`} />
       </head>
@@ -178,6 +181,8 @@ const jsonLd = {
       rawBody={rawBody}
       seriesPosts={seriesPosts}
       seriesName={seriesName}
+      category={categoryLabel}
+      noindex={noindex}
     >
       <script
         is:inline

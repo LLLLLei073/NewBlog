@@ -22,7 +22,12 @@ interface Props {
   publishedTime?: Date;
   modifiedTime?: Date;
   noindex?: boolean;
-  room?: boolean;
+  immersiveHome?: boolean;
+  illustratedHome?: boolean;
+  imageWidth?: number;
+  imageHeight?: number;
+  imageAlt?: string;
+  structuredData?: Record<string, unknown>;
   /** 页面标识,渲染为 body[data-page],供播放器等全局组件区分页面 */
   pageName?: string;
 }
@@ -35,7 +40,12 @@ const {
   publishedTime,
   modifiedTime,
   noindex = false,
-  room = false,
+  immersiveHome = false,
+  illustratedHome = false,
+  imageWidth = 1200,
+  imageHeight = 630,
+  imageAlt,
+  structuredData,
   pageName,
 } = Astro.props;
 const pageTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
@@ -52,6 +62,12 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/icon-192.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={`${SITE_TITLE} RSS`}
+      href="/rss.xml"
+    />
     <meta name="theme-color" content="#d97757" />
     <meta name="generator" content={Astro.generator} />
     <meta name="author" content={SITE_AUTHOR} />
@@ -62,8 +78,15 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content={type} />
+    <meta property="og:locale" content="zh_CN" />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:image" content={new URL(image, SITE_URL)} />
+    <meta property="og:image:width" content={String(imageWidth)} />
+    <meta property="og:image:height" content={String(imageHeight)} />
+    <meta
+      property="og:image:alt"
+      content={imageAlt ?? `${pageTitle} 分享图片`}
+    />
     {
       type === 'article' && publishedTime && (
         <meta
@@ -89,24 +112,65 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={new URL(image, SITE_URL)} />
+    <meta
+      name="twitter:image:alt"
+      content={imageAlt ?? `${pageTitle} 分享图片`}
+    />
+    {
+      structuredData && (
+        <script
+          is:inline
+          type="application/ld+json"
+          set:html={JSON.stringify(structuredData)}
+        />
+      )
+    }
     <ThemeInit />
-    <script
-      is:inline
-      define:vars={{ enableServiceWorker: import.meta.env.PROD }}
-    >
-      if (enableServiceWorker && 'serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js').catch(() => {});
-        });
+    <script is:inline>
+      // 过渡版本：不再注册离线 Worker，并清掉旧版本留下的站内缓存。
+      if (!localStorage.getItem('lllllei-sw-retired-v1')) {
+        window.addEventListener(
+          'load',
+          async () => {
+            try {
+              if ('serviceWorker' in navigator) {
+                const registrations =
+                  await navigator.serviceWorker.getRegistrations();
+                await Promise.all(
+                  registrations.map((registration) =>
+                    registration.unregister(),
+                  ),
+                );
+              }
+              if ('caches' in window) {
+                const keys = await caches.keys();
+                await Promise.all(
+                  keys
+                    .filter((key) => key.startsWith('lllllei-'))
+                    .map((key) => caches.delete(key)),
+                );
+              }
+              localStorage.setItem('lllllei-sw-retired-v1', '1');
+            } catch {
+              // 浏览器禁止存储或旧 Worker 正忙时，下次打开页面再试。
+            }
+          },
+          { once: true },
+        );
       }
     </script>
   </head>
-  <body data-room-home={room ? '' : undefined} data-page={pageName}>
-    <Header />
-    <main>
+  <body
+    data-room-home={immersiveHome ? '' : undefined}
+    data-illustrated-home={illustratedHome ? '' : undefined}
+    data-page={pageName}
+  >
+    <a class="skip-link" href="#main-content">跳到正文</a>
+    {!illustratedHome && <Header immersiveHome={immersiveHome} />}
+    <main id="main-content" tabindex="-1">
       <slot />
     </main>
-    <Footer />
+    {!illustratedHome && <Footer immersiveHome={immersiveHome} />}
     <CodeBlockEnhance />
     <MermaidEnhance />
     <MusicPlayer />

@@ -59,8 +59,7 @@ export function getPostCategory(
   post: Pick<CollectionEntry<'blog'>['data'], 'category'>,
 ): CategoryDef {
   const cat = post.category;
-  if (cat && CATEGORY_BY_ID[cat] && cat !== 'others')
-    return CATEGORY_BY_ID[cat]!;
+  if (cat && CATEGORY_BY_ID[cat]) return CATEGORY_BY_ID[cat]!;
   return CATEGORY_BY_ID['others']!;
 }
 

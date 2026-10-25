@@ -2,6 +2,7 @@
 title: '数学专栏 · 把数学讲清楚'
 description: '数学专栏即将上线：高等数学、线性代数、概率论，用直觉理解数学。'
 pubDate: '2026-08-01'
+noindex: true
 category: 'math'
 ---
 

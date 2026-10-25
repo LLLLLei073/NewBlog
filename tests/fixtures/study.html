@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-CN">
+  <meta charset="utf-8" /><title>插画渲染验收（仅开发服务器）</title>
+  <style>
+    body {
+      margin: 0;
+      background: #172221;
+      color: #fff;
+      font: 14px sans-serif;
+    }
+    nav {
+      padding: 12px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    button {
+      min-height: 44px;
+      padding: 0 16px;
+    }
+    canvas {
+      width: 100%;
+      height: calc(100vh - 150px);
+      display: block;
+    }
+    output {
+      display: block;
+      padding: 12px;
+      white-space: pre-wrap;
+    }
+  </style>
+  <nav>
+    <button data-time="420">清晨 07:00</button
+    ><button data-time="720">正午 12:00</button
+    ><button data-time="1080">黄昏 18:00</button
+    ><button data-time="0">午夜 00:00</button
+    ><button id="blink">闭眼对齐</button
+    ><button id="verify">运行 GPU 检查</button
+    ><button id="lose">丢失 WebGL 上下文</button>
+  </nav>
+  <canvas></canvas
+  ><output>载入中</output>
+  <script type="module">
+    import { createStudyScene } from '/src/components/home/illustration/scene.ts';
+    const canvas = document.querySelector('canvas'),
+      output = document.querySelector('output');
+    const controller = new AbortController();
+    const scene = await createStudyScene(canvas, controller.signal);
+    let minutes = 720,
+      closed = false;
+    const draw = () => scene.draw(minutes, closed ? 5.82 : 1, true);
+    draw();
+    output.textContent = '已载入，时间 12:00';
+    for (const button of document.querySelectorAll('[data-time]'))
+      button.onclick = () => {
+        minutes = Number(button.dataset.time);
+        closed = false;
+        draw();
+        output.textContent = button.textContent;
+      };
+    document.querySelector('#blink').onclick = () => {
+      closed = !closed;
+      draw();
+      output.textContent = closed ? '闭眼帧' : '睁眼帧';
+    };
+    const gl = canvas.getContext('webgl');
+    function pixel(u, v) {
+      const color = new Uint8Array(4);
+      const scale = Math.max(canvas.width / 1536, canvas.height / 1024);
+      const ox = (1536 * scale - canvas.width) * 0.6,
+        oy = (1024 * scale - canvas.height) * 0.5;
+      const x = Math.round(u * 1536 * scale - ox),
+        y = canvas.height - Math.round(v * 1024 * scale - oy);
+      gl.readPixels(x, y, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, color);
+      return [...color].slice(0, 3);
+    }
+    document.querySelector('#verify').onclick = () => {
+      const result = {};
+      for (const [name, m] of [
+        ['dawn', 420],
+        ['noon', 720],
+        ['dusk', 1080],
+        ['night', 0],
+      ]) {
+        scene.draw(m, 1, true);
+        result[name] = {
+          face: pixel(0.75, 0.4),
+          wall: pixel(0.2, 0.4),
+          desk: pixel(0.7, 0.8),
+        };
+      }
+      scene.draw(720, 1, true);
+      const open = pixel(0.7363, 0.3506),
+        cheekOpen = pixel(0.76, 0.411);
+      scene.draw(720, 5.82, true);
+      const closedEye = pixel(0.7363, 0.3506),
+        cheekClosed = pixel(0.76, 0.411);
+      result.blink = { open, closedEye, cheekOpen, cheekClosed };
+      result.passed =
+        JSON.stringify(open) !== JSON.stringify(closedEye) &&
+        JSON.stringify(cheekOpen) === JSON.stringify(cheekClosed) &&
+        result.noon.face[0] > result.night.face[0] &&
+        result.dawn.face[0] !== result.dusk.face[0];
+      output.textContent = JSON.stringify(result, null, 2);
+      draw();
+    };
+    document.querySelector('#lose').onclick = () => {
+      gl.getExtension('WEBGL_lose_context')?.loseContext();
+      output.textContent = '已模拟上下文丢失';
+    };
+    window.addEventListener('pagehide', () => {
+      controller.abort();
+      scene.dispose();
+    });
+  </script>
+</html>

@@ -3,6 +3,7 @@ title: '演算手稿：把算法写成可以复查的推导'
 description: '「演算手稿」开栏：为什么开始按「问题—直觉—推导—实现—验证」整理算法笔记，以及这个专栏会放什么。'
 pubDate: '2026-10-20'
 updatedDate: '2026-10-25'
+noindex: true
 category: 'algorithm'
 ---
 

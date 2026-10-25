@@ -2,6 +2,7 @@
 title: '游戏专栏 · 玩也要玩得明白'
 description: '游戏专栏即将上线：游戏开发、设计拆解、玩法攻略，从玩家到创作者。'
 pubDate: '2026-08-01'
+noindex: true
 category: 'game'
 ---
 
