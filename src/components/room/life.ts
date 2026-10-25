@@ -334,6 +334,19 @@ export function mountRoomLife(root: HTMLElement) {
     },
     { signal },
   );
+  // ClientRouter 软导航换页:同样释放 GPU 资源与监听(页面本身不会触发 pagehide)
+  window.addEventListener(
+    'astro:before-swap',
+    () => {
+      active = false;
+      clearTimeout(timer);
+      dispose();
+      resize.disconnect();
+      coalState.disconnect();
+      events.abort();
+    },
+    { signal },
+  );
   window.addEventListener(
     'pageshow',
     (event) => {
