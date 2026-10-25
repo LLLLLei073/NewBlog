@@ -14,3 +14,7 @@
 *.ico binary
 *.woff binary
 *.woff2 binary
+*.webp binary
+# Live2D 模型与贴图：moc3 是二进制编译产物，tga 贴图同样不做换行转换
+*.moc3 binary
+*.tga binary

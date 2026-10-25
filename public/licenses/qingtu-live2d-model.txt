@@ -1,0 +1,48 @@
+Live2D 模型「小书仙青兔」—— 来源与授权记录
+============================================
+
+模型名称：小书仙青兔（VTube Studio 工程内 Name 字段）
+接入日期：2026-10-16
+来源：用户提供的本地压缩包 D:\Desktop\小书仙青兔 (3).zip
+      文件大小 47,882,147 字节，修改时间 2026-10-16 16:56
+落地目录：public/live2d/qingtu/
+
+授权状态：未知
+------------
+压缩包内共 39 个条目，**没有任何许可、说明或作者文件**；`小书仙青兔.vtube.json`
+是 VTube Studio 的模型工程（含 Hotkeys、PhysicsSettings、SavedActiveExpressions 等），
+其中没有 Author 字段。因此原作者与使用条款本项目无法判定。
+
+把该模型提交进公开仓库、并通过 GitHub Pages 对外分发，属于「对外发布素材」。
+本记录只登记事实，不替使用者判断该发布行为是否获得原作者许可。
+如该模型是购买或受限于特定使用范围的素材，请先确认再发布。
+
+撤回方式
+--------
+1) 删除目录 public/live2d/qingtu/
+2) 把 src/components/live2d/config.ts 里的 MODEL 改回 null
+页面即恢复为不含看板娘的状态（测试中依赖模型的断言会自动跳过）。
+
+随仓库分发的文件（25 个，56.74 MB）
+-----------------------------------
+- 小书仙青兔.model3.json（本地补登了全部表情与动作，见下）
+- 小书仙青兔.moc3（23.35 MB）
+- 小书仙青兔.4096/texture_00.png ~ texture_06.png（7 张 4096 贴图，合计约 33 MB）
+- 小书仙青兔.physics3.json、小书仙青兔.cdi3.json
+- 23 个 *.exp3.json 表情
+- Scene1.motion3.json
+
+未随仓库分发（为省体积剔除，原文件仍在压缩包内）
+------------------------------------------------
+- 小书仙青兔.vtube.json（VTube Studio 工程配置）
+- items_pinned_to_model.json
+- 小书仙青兔.png（模型预览图）
+
+对上游文件做的唯一改动
+----------------------
+小书仙青兔.model3.json 的 FileReferences 原本只有 Moc / Textures / Physics / DisplayInfo，
+既没有 Expressions 也没有 Motions，因此 23 个 exp3 与 Scene1.motion3.json 在原包里
+是「存在但未被引用」的状态。本地补登内容：
+  - Expressions：全部 23 个 exp3，Name 取文件名去掉 .exp3.json
+  - Motions：把 Scene1.motion3.json 登记为动作组 Shake
+其余文件（moc3、贴图、physics3、cdi3、exp3、motion3）均按压缩包原样保存，未做任何改写。
