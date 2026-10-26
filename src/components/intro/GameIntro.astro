@@ -1,0 +1,178 @@
+---
+/**
+ * 「玩法解剖室」开屏动画组件:仅挂在游戏专栏首页。
+ * 模板服务端渲染(hidden),由 columnIntro 控制器 + gameIntro 时间线
+ * 决定播放;不播放时直接移除节点,不阻塞正文渲染。
+ */
+import { COLUMN } from '../../data/game/column.ts';
+---
+
+<div
+  class="game-intro"
+  data-game-intro
+  hidden
+  role="dialog"
+  aria-modal="true"
+  aria-label="游戏专栏开屏动画"
+>
+  <div class="gt-stage">
+    {/* 左:HUD 引导行(装饰) */}
+    <div class="gt-boot" aria-hidden="true">
+      <p data-gt-boot>
+        <span class="gt-prompt">▸</span> PLAYLAB.SYS ............ OK
+      </p>
+      <p data-gt-boot>
+        <span class="gt-prompt">▸</span> MODULE: 玩法解剖室 ...... OK
+      </p>
+      <p data-gt-boot>
+        <span class="gt-prompt">▸</span> PLAYER: 1 ............ READY<span
+          class="px-cursor"
+          data-gt-cursor></span>
+      </p>
+    </div>
+
+    {/* 右:标题与 START(装饰文本) */}
+    <div class="gt-copy" data-gt-copy aria-hidden="true">
+      <p class="gt-en" data-gt-en>{COLUMN.en}</p>
+      <p class="gt-title">
+        <span class="mask"><span class="line" data-gt-l1>玩法</span></span>
+        <span class="mask"><span class="line" data-gt-l2>解剖室</span></span>
+      </p>
+      <p class="gt-sub" data-gt-sub>{COLUMN.sub}</p>
+      <span class="start-badge gt-start" data-gt-start>PRESS START</span>
+    </div>
+  </div>
+
+  <button type="button" class="gt-skip" data-intro-skip>
+    跳过开屏
+  </button>
+</div>
+
+<script>
+  import { onPageLoad } from '../../utils/lifecycle';
+  import { mountGameIntro, cancelGameIntroForSwap } from './gameIntro';
+
+  onPageLoad(() => {
+    mountGameIntro();
+  });
+  // 快速离开专栏:立即取消动画并清理(html 上的滚动锁定会跨 swap 存留)
+  document.addEventListener('astro:before-swap', cancelGameIntroForSwap);
+</script>
+
+<style is:global>
+  .game-intro {
+    position: fixed;
+    inset: 0;
+    height: 100dvh;
+    z-index: 300;
+    display: grid;
+    place-items: center;
+    background: var(--background, #101318);
+    color: var(--foreground, #dfe6df);
+    padding: env(safe-area-inset-top) env(safe-area-inset-right)
+      env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+  .game-intro[hidden] {
+    display: none;
+  }
+
+  .game-intro .gt-stage {
+    display: grid;
+    grid-template-columns: minmax(0, 10fr) minmax(0, 10fr);
+    align-items: center;
+    gap: clamp(1.6rem, 5vw, 3.2rem);
+    width: min(880px, calc(100vw - 3rem));
+  }
+
+  /* 左:引导行 */
+  .game-intro .gt-boot {
+    display: grid;
+    gap: 0.55rem;
+    font-family: var(--font-mono, monospace);
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    color: var(--muted-foreground, #8d97a3);
+  }
+  .game-intro .gt-boot p {
+    margin: 0;
+  }
+  .game-intro .gt-prompt {
+    color: var(--primary, #45d483);
+  }
+
+  /* 右:标题 */
+  .game-intro .gt-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .game-intro .gt-en {
+    margin: 0;
+    font-family: var(--font-condensed, sans-serif);
+    font-size: 12.5px;
+    letter-spacing: 0.3em;
+    color: var(--muted-foreground, #8d97a3);
+  }
+  .game-intro .gt-title {
+    margin: 0.9rem 0 0;
+    font-family: var(--font-display, serif);
+    font-weight: 700;
+    line-height: 1.12;
+  }
+  .game-intro .gt-title .mask {
+    display: block;
+    overflow: hidden;
+  }
+  .game-intro .gt-title .line {
+    display: block;
+    font-size: clamp(42px, 7vw, 68px);
+  }
+  .game-intro .gt-sub {
+    margin: 1rem 0 0;
+    font-size: 15px;
+    color: var(--muted-foreground, #8d97a3);
+  }
+  .game-intro .gt-start {
+    margin-top: 1.6rem;
+  }
+
+  /* 跳过按钮 */
+  .game-intro .gt-skip {
+    position: absolute;
+    right: max(20px, env(safe-area-inset-right));
+    bottom: max(20px, env(safe-area-inset-bottom));
+    padding: 0.5em 1.1em;
+    border: 1px solid var(--border, rgba(223, 230, 223, 0.2));
+    border-radius: 999px;
+    background: transparent;
+    color: var(--muted-foreground, #8d97a3);
+    font-family: var(--font-sans, sans-serif);
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    cursor: pointer;
+    transition:
+      color 0.18s ease,
+      border-color 0.18s ease;
+  }
+  .game-intro .gt-skip:hover {
+    color: var(--foreground, #dfe6df);
+    border-color: var(--primary, #45d483);
+  }
+
+  @media (max-width: 759px) {
+    .game-intro .gt-stage {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      width: min(440px, calc(100vw - 2.4rem));
+    }
+    .game-intro .gt-title .line {
+      font-size: clamp(34px, 9.5vw, 50px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .game-intro {
+      display: none;
+    }
+  }
+</style>

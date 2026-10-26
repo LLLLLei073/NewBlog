@@ -1,0 +1,101 @@
+---
+/**
+ * 「玩法解剖室」专栏内部导航:HUD 菜单条,当前项信号绿高亮;
+ * 右侧玩家标记「F.」(→ /about)。
+ */
+const path = Astro.url.pathname;
+const is = {
+  home: path === '/game/' || path === '/game',
+  notes: path.startsWith('/game/notes'),
+};
+const items = [
+  { href: '/game/', no: '01', label: '首页', active: is.home },
+  { href: '/game/notes/', no: '02', label: '手记存档', active: is.notes },
+];
+---
+
+<nav class="game-nav" aria-label="专栏导航">
+  <div class="game">
+    <div class="links">
+      {
+        items.map((item) => (
+          <a
+            href={item.href}
+            class:list={['nav-item', { active: item.active }]}
+            aria-current={item.active ? 'page' : undefined}
+          >
+            <span class="no" aria-hidden="true">[{item.no}]</span>
+            {item.label}
+          </a>
+        ))
+      }
+    </div>
+    <a href="/about/" class="mark" title="关于我">F.</a>
+  </div>
+</nav>
+
+<style>
+  .game-nav {
+    border-bottom: 1px solid var(--border);
+    margin-top: clamp(0.75rem, 2vw, 1.25rem);
+  }
+  .game-nav .game {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .links {
+    display: flex;
+    gap: clamp(1.1rem, 3vw, 2rem);
+    overflow-x: auto;
+  }
+  .nav-item {
+    position: relative;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4em;
+    padding: 0.55rem 0 0.7rem;
+    color: var(--muted-foreground);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    transition: color 0.18s ease;
+  }
+  .nav-item .no {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--game-violet);
+    opacity: 0.8;
+  }
+  .nav-item::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 0;
+    height: 2px;
+    background: var(--primary);
+    transition: width 0.22s ease;
+  }
+  .nav-item:hover {
+    color: var(--foreground);
+  }
+  .nav-item.active {
+    color: var(--primary);
+  }
+  .nav-item.active::after {
+    width: 1.6em;
+  }
+  .mark {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 1.02rem;
+    color: var(--foreground);
+    text-decoration: none;
+  }
+  .mark:hover {
+    color: var(--primary);
+  }
+</style>

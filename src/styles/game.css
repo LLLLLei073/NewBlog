@@ -1,0 +1,226 @@
+/* ============================================================
+   「玩法解剖室 · PLAYLAB」游戏专栏视觉系统
+   街机/debug HUD 语言:深炭底 + 信号绿/珊瑚橙/紫罗兰,等宽字点缀、
+   HUD 边框与存档槽卡片,扫描线极淡且仅暗色。仅在
+   body[data-page='game'] 内生效:重定义语义令牌,全站 Header/
+   Footer/播放器自动换装。亮色为米灰主机面板变体。
+   ============================================================ */
+
+body[data-page='game'] {
+  /* 覆盖全局令牌:米灰主机面板(亮色) */
+  --background: #ebeee5;
+  --card: #f2f4ec;
+  --popover: #e3e7da;
+  --muted: #e0e4d7;
+  --foreground: #1b2330;
+  --card-foreground: #1b2330;
+  --muted-foreground: #5d6570;
+  --primary: #157f4b; /* 信号绿(可读深绿) */
+  --primary-foreground: #f2f4ec;
+  --secondary: #e0e4d7;
+  --secondary-foreground: #2a3444;
+  --accent: rgba(21, 127, 75, 0.09);
+  --accent-foreground: #0f6a3c;
+  --border: #d3d8c8;
+  --border-300: #d3d8c8;
+  --border-400: #bfc5b2;
+  --ring: #157f4b;
+  --header-bg: color-mix(in srgb, #ebeee5 94%, transparent);
+
+  /* 品牌色覆盖 */
+  --brand-300: #2aa06a;
+  --brand-400: #1f9159;
+  --brand-500: #157f4b;
+  --brand-600: #0f6a3c;
+  --brand-700: #0b5530;
+
+  /* 专栏专属:珊瑚橙(START/高亮)与紫罗兰(次级标记) */
+  --game-coral: #d75a3c;
+  --game-violet: #6d5bd0;
+  --game-hud: #1b2330;
+
+  --card-alpha: 1;
+  --card-border-alpha: 1;
+
+  font-size: 15px;
+  line-height: 1.8;
+
+  background: var(--background);
+  color: var(--foreground);
+}
+
+/* 裁掉旋转卡片造成的横向溢出 */
+html:has(body[data-page='game']) {
+  overflow-x: clip;
+}
+
+/* 暗色:深炭底 + 霓虹三色(专栏的招牌形态) */
+:root[data-theme='dark'] body[data-page='game'],
+html[data-theme='dark'] body[data-page='game'] {
+  --background: #101318;
+  --card: #151922;
+  --popover: #181d28;
+  --muted: #181d28;
+  --foreground: #dfe6df;
+  --card-foreground: #dfe6df;
+  --muted-foreground: #8d97a3;
+  --primary: #45d483;
+  --primary-foreground: #101318;
+  --secondary: #181d28;
+  --secondary-foreground: #b9c4c9;
+  --accent: rgba(69, 212, 131, 0.1);
+  --accent-foreground: #6fe3a1;
+  --border: rgba(223, 230, 223, 0.14);
+  --border-300: rgba(223, 230, 223, 0.14);
+  --border-400: rgba(223, 230, 223, 0.24);
+  --ring: #45d483;
+  --header-bg: color-mix(in srgb, #101318 92%, transparent);
+  --brand-300: #6fe3a1;
+  --brand-400: #58dc91;
+  --brand-500: #45d483;
+  --brand-600: #34b56c;
+  --brand-700: #259257;
+
+  --game-coral: #ff8667;
+  --game-violet: #b3a3f5;
+  --game-hud: #dfe6df;
+
+  /* 关掉全局暗色深空渐变 */
+  background: var(--background);
+  background-image: none;
+}
+
+/* 专栏页面不显示全局星空与暗色光晕 */
+body[data-page='game']::before,
+:root[data-theme='dark'] body[data-page='game']::before,
+:root[data-theme='dark'] body[data-page='game']::after,
+html[data-theme='dark'] body[data-page='game']::after {
+  display: none;
+  content: none;
+}
+
+/* ============ HUD 公共构件 ============ */
+
+/* 专栏容器 */
+body[data-page='game'] .game {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: clamp(1.1rem, 4vw, 3rem);
+}
+
+/* 等宽小标 */
+body[data-page='game'] .mono-label {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: var(--muted-foreground);
+}
+
+/* HUD 槽位卡:细框 + 四角 L 形缺口 */
+body[data-page='game'] .hud-card {
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--border);
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+body[data-page='game'] .hud-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 22px -10px color-mix(in srgb, var(--primary) 45%, transparent);
+}
+body[data-page='game'] .hud-card::before,
+body[data-page='game'] .hud-card::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-color: var(--game-coral);
+  border-style: solid;
+  opacity: 0.85;
+  pointer-events: none;
+}
+body[data-page='game'] .hud-card::before {
+  top: -1px;
+  left: -1px;
+  border-width: 2px 0 0 2px;
+}
+body[data-page='game'] .hud-card::after {
+  bottom: -1px;
+  right: -1px;
+  border-width: 0 2px 2px 0;
+}
+
+/* START 徽章(珊瑚橙) */
+body[data-page='game'] .start-badge {
+  display: inline-block;
+  padding: 0.3em 0.9em;
+  border: 1.5px solid var(--game-coral);
+  color: var(--game-coral);
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+}
+
+/* 像素方块光标 */
+body[data-page='game'] .px-cursor {
+  display: inline-block;
+  width: 0.58em;
+  height: 1em;
+  margin-left: 0.15em;
+  vertical-align: -0.12em;
+  background: var(--primary);
+}
+
+/* 页面元素错峰进场 */
+body[data-page='game'] .g-rise {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: g-rise-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+body[data-page='game'] .g-rise.d1 {
+  animation-delay: 0.08s;
+}
+body[data-page='game'] .g-rise.d2 {
+  animation-delay: 0.18s;
+}
+body[data-page='game'] .g-rise.d3 {
+  animation-delay: 0.3s;
+}
+body[data-page='game'] .g-rise.d4 {
+  animation-delay: 0.42s;
+}
+@keyframes g-rise-in {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* 扫描线:仅暗色,极淡 */
+:root[data-theme='dark'] body[data-page='game'] .game::after,
+html[data-theme='dark'] body[data-page='game'] .game::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0 2px,
+    rgba(223, 230, 223, 0.5) 2px 3px
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body[data-page='game'] .g-rise {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

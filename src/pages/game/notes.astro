@@ -1,110 +1,165 @@
 ---
 /**
- * 游戏专栏手记列表(过渡版):Phase 3 将替换为「玩法解剖室」主题版本。
+ * 「玩法解剖室」手记存档列表:HUD 存档行索引。
  */
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import FormattedDate from '../../components/FormattedDate.astro';
+import GameNav from '../../components/game/GameNav.astro';
 import { postHref } from '../../utils/postRoute.ts';
 
 const posts = (await getCollection('blog'))
   .filter((p) => !p.data.draft && p.data.category === 'game')
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const fmtDate = (d: Date) =>
+  `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
 ---
 
 <BaseLayout
-  title="游戏手记"
-  description="游戏专栏全部手记列表。"
+  title="游戏手记 · 玩法解剖室"
+  description="游戏专栏手记存档:开发、设计拆解、算法与攻略。"
   pageName="game"
 >
-  <section class="container">
-    <div class="page-head">
-      <p class="eyebrow"><a href="/game/">游戏专栏</a> / 手记</p>
-      <h1>全部手记</h1>
-      <p class="count">共 {posts.length} 篇</p>
-    </div>
-    <div class="post-list">
-      {
-        posts.map((post) => (
-          <a href={postHref(post.id, post.data.category)} class="post-card">
-            <div class="post-meta">
-              <FormattedDate date={post.data.pubDate} />
-            </div>
-            <h2>{post.data.title}</h2>
-            <p class="desc">{post.data.description}</p>
-          </a>
-        ))
-      }
-    </div>
-  </section>
+  <div class="game notes-page">
+    <GameNav />
+
+    <header class="page-head g-rise">
+      <p class="mono-label">SAVE INDEX · {posts.length} 篇</p>
+      <h1>手记存档</h1>
+      <p class="head-note">
+        每一篇手记都是一个存档位:读了就续上,没读的等你 LOAD。
+      </p>
+    </header>
+
+    {
+      posts.length > 0 ? (
+        <ol class="save-list g-rise d1">
+          {posts.map((p, i) => (
+            <li>
+              <a href={postHref(p.id, p.data.category)} class="save-row">
+                <span class="mono-num s-no">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <span class="s-main">
+                  <strong>{p.data.title}</strong>
+                  <span class="s-desc">{p.data.description}</span>
+                </span>
+                <span class="s-side">
+                  <span class="mono-num">{fmtDate(p.data.pubDate)}</span>
+                  <span class="s-load" aria-hidden="true">
+                    LOAD →
+                  </span>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <p class="empty g-rise d1">存档为空,NEW GAME 从第一篇开始。</p>
+      )
+    }
+  </div>
 </BaseLayout>
 
 <style>
-  .page-head {
-    padding: 2.5rem 0 1.75rem;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 1.25rem;
+  .notes-page {
+    padding-top: clamp(2rem, 5vw, 3.2rem);
+    padding-bottom: clamp(3.5rem, 8vw, 5.5rem);
+    max-width: 960px;
   }
-  .eyebrow {
-    font-family: var(--font-sans);
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--primary);
-    margin: 0 0 0.65rem;
-  }
-  .eyebrow a {
-    color: inherit;
-  }
+
   .page-head h1 {
-    font-size: 2rem;
-    margin: 0 0 0.4rem;
+    margin: 0.7rem 0 0;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(30px, 4vw, 48px);
+    color: var(--foreground);
   }
-  .count {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
+  .head-note {
+    margin: 1rem 0 0;
+    max-width: 50ch;
+    font-size: 14.5px;
+    line-height: 1.9;
     color: var(--muted-foreground);
-    margin: 0;
   }
-  .post-list {
+
+  .save-list {
+    list-style: none;
+    margin: 2.4rem 0 0;
+    padding: 0;
+    border-top: 1px solid var(--border);
+  }
+  .save-row {
+    display: grid;
+    grid-template-columns: 3rem 1fr auto;
+    gap: 1.1rem;
+    align-items: baseline;
+    padding: 1.15rem 0.4rem;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+    color: inherit;
+    transition: background-color 0.18s ease;
+  }
+  .save-row:hover {
+    background: var(--accent);
+  }
+  .s-no {
+    font-size: 12px;
+    color: var(--game-coral);
+  }
+  .s-main {
     display: flex;
     flex-direction: column;
-    gap: 0.875rem;
-    padding-bottom: 2rem;
+    gap: 0.28rem;
+    min-width: 0;
   }
-  .post-card {
-    display: block;
-    padding: 1.25rem;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
+  .s-main strong {
+    font-family: var(--font-serif);
+    font-size: 16.5px;
+    color: var(--foreground);
+  }
+  .s-desc {
+    font-size: 13.5px;
+    line-height: 1.75;
+    color: var(--muted-foreground);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .s-side {
+    display: flex;
+    align-items: baseline;
+    gap: 0.9rem;
+    font-size: 12px;
+    color: var(--muted-foreground);
+  }
+  .s-load {
+    font-family: var(--font-mono);
+    color: var(--primary);
+    opacity: 0;
+    transform: translateX(-6px);
     transition:
-      border-color 0.15s ease,
-      box-shadow 0.15s ease,
+      opacity 0.2s ease,
       transform 0.2s ease;
   }
-  .post-card:hover {
-    text-decoration: none;
-    border-color: var(--brand-300);
-    box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
+  .save-row:hover .s-load {
+    opacity: 1;
+    transform: none;
   }
-  .post-meta {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
+  .empty {
+    margin-top: 2rem;
+    padding: 1.4rem 0;
     color: var(--muted-foreground);
-    margin-bottom: 0.4rem;
+    font-size: 14.5px;
   }
-  .post-card h2 {
-    font-size: 1.2rem;
-    margin: 0 0 0.4rem;
-    color: var(--card-foreground);
-  }
-  .desc {
-    margin: 0;
-    font-size: 0.875rem;
-    color: var(--muted-foreground);
-    line-height: 1.5;
+
+  @media (max-width: 640px) {
+    .save-row {
+      grid-template-columns: 2.4rem 1fr;
+    }
+    .s-side {
+      display: none;
+    }
   }
 </style>

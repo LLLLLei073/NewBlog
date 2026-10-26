@@ -1,115 +1,321 @@
 ---
 /**
- * 游戏专栏首页(过渡版):Phase 3 将替换为「玩法解剖室 · PLAYLAB」
- * 街机 HUD 式独立界面与开屏动画。先保证 /game/ 路由与全站入口可用。
+ * 「玩法解剖室 · PLAYLAB」游戏专栏首页:SELECT GAME 式布局。
+ * hero(左文案 + 右 CONTINUE 存档槽) → 四个存档槽区块 → 存档列表。
  */
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import FormattedDate from '../../components/FormattedDate.astro';
+import GameNav from '../../components/game/GameNav.astro';
+import HudCard from '../../components/game/HudCard.astro';
+import GameIntro from '../../components/intro/GameIntro.astro';
+import { COLUMN, SECTIONS } from '../../data/game/column.ts';
 import { postHref } from '../../utils/postRoute.ts';
 
 const posts = (await getCollection('blog'))
   .filter((p) => !p.data.draft && p.data.category === 'game')
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const latest = posts[0];
+const recent = posts.slice(0, 5);
+
+const fmtDate = (d: Date) =>
+  `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
 ---
 
 <BaseLayout
-  title="游戏专栏"
-  description="游戏开发、设计拆解、玩法攻略,从玩家到创作者。"
+  title="玩法解剖室 · PLAYLAB"
+  description={COLUMN.intro}
   pageName="game"
 >
-  <section class="container">
-    <div class="page-head">
-      <p class="eyebrow">专栏</p>
-      <h1>游戏</h1>
-      <p class="lead">玩,也要玩得明白。</p>
-      <p class="count">共 {posts.length} 篇文章</p>
-    </div>
-    <div class="post-list">
-      {
-        posts.map((post) => (
-          <a href={postHref(post.id, post.data.category)} class="post-card">
-            <div class="post-meta">
-              <FormattedDate date={post.data.pubDate} />
+  <div class="game game-page">
+    <GameNav />
+    <GameIntro />
+
+    <!-- ======== 首屏:SELECT GAME ======== -->
+    <section class="hero g-rise" aria-label="专栏介绍">
+      <div class="hero-copy g-rise d1">
+        <p class="hero-kicker">
+          <span class="k-no">[01]</span>
+          <span class="mono-label">{COLUMN.en}</span>
+        </p>
+        <h1>{COLUMN.headline}</h1>
+        <p class="hero-sub">「{COLUMN.sub}」</p>
+        <p class="hero-intro">{COLUMN.intro}</p>
+        <div class="hero-cta">
+          <a class="cta-primary" href="/game/notes/">进入手记存档 →</a>
+        </div>
+        <p class="hero-latest mono-label">
+          SAVE UPDATED <span class="mono-num">{COLUMN.updated}</span>
+        </p>
+      </div>
+
+      <div class="hero-slot g-rise d2">
+        {
+          latest ? (
+            <HudCard
+              slot="CONTINUE"
+              label="LATEST SAVE"
+              title={latest.data.title}
+              note={latest.data.description}
+              meta={`${fmtDate(latest.data.pubDate)} · READ →`}
+              href={postHref(latest.id, latest.data.category)}
+            />
+          ) : (
+            <HudCard
+              slot="NEW GAME"
+              label="EMPTY"
+              title="第一个存档位虚位以待"
+              note="从做一个小游戏或拆一个机制开始。"
+            />
+          )
+        }
+      </div>
+    </section>
+
+    <!-- ======== 四个存档槽 ======== -->
+    <section class="slots" aria-label="内容板块">
+      <header class="sec-head g-rise">
+        <h2>SELECT<span class="mono-label">GAME MODES</span></h2>
+        <p class="sec-note">{COLUMN.sectionsHint}</p>
+      </header>
+      <div class="slots-grid">
+        {
+          SECTIONS.map((s, i) => (
+            <div class:list={['g-rise', `d${(i % 4) + 1}`]}>
+              <HudCard slot={s.slot} label={s.en} title={s.title} note={s.note} />
+              <ul class="slot-items">
+                {s.items.map((it) => (
+                  <li>{it}</li>
+                ))}
+              </ul>
             </div>
-            <h2>{post.data.title}</h2>
-            <p class="desc">{post.data.description}</p>
-          </a>
-        ))
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- ======== 存档列表 ======== -->
+    <section class="saves" aria-label="手记存档">
+      <header class="sec-head g-rise">
+        <h2>存档列表<span class="mono-label">SAVED · {posts.length} 篇</span></h2>
+        {
+          posts.length > 0 && (
+            <a href="/game/notes/" class="sec-more">
+              查看全部 →
+            </a>
+          )
+        }
+      </header>
+      {
+        recent.length > 0 ? (
+          <ul class="saves-list g-rise d1">
+            {recent.map((p, i) => (
+              <li>
+                <a href={postHref(p.id, p.data.category)} class="save-row">
+                  <span class="mono-num s-no">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <span class="s-main">
+                    <strong>{p.data.title}</strong>
+                    <span class="s-desc">{p.data.description}</span>
+                  </span>
+                  <span class="mono-num s-date">{fmtDate(p.data.pubDate)}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p class="empty g-rise d1">还没有存档,NEW GAME 等你开始。</p>
+        )
       }
-    </div>
-  </section>
+    </section>
+  </div>
 </BaseLayout>
 
 <style>
-  .page-head {
-    padding: 2.5rem 0 1.75rem;
+  .game-page {
+    padding-bottom: clamp(3rem, 7vw, 5rem);
+  }
+
+  /* ===== 首屏 ===== */
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.2rem;
+    align-items: center;
+    padding: clamp(1.8rem, 4vw, 3.2rem) 0 clamp(2rem, 4vw, 3rem);
     border-bottom: 1px solid var(--border);
-    margin-bottom: 1.25rem;
+    margin-bottom: 2.6rem;
   }
-  .eyebrow {
-    font-family: var(--font-sans);
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--primary);
-    margin: 0 0 0.65rem;
+  @media (min-width: 960px) {
+    .hero {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+      gap: 3rem;
+    }
   }
-  .page-head h1 {
-    font-size: 2rem;
-    margin: 0 0 0.4rem;
-  }
-  .lead {
-    font-family: var(--font-sans);
-    font-size: 0.95rem;
-    color: var(--muted-foreground);
-    margin: 0 0 0.4rem;
-  }
-  .count {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    color: var(--muted-foreground);
+
+  .hero-kicker {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
     margin: 0;
   }
-  .post-list {
+  .k-no {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--game-violet);
+  }
+  .hero-copy h1 {
+    margin: 1rem 0 0;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(30px, 4.6vw, 52px);
+    line-height: 1.22;
+    color: var(--foreground);
+  }
+  .hero-sub {
+    margin: 0.9rem 0 0;
+    font-family: var(--font-serif);
+    color: var(--game-coral);
+    letter-spacing: 0.1em;
+  }
+  .hero-intro {
+    margin: 1.2rem 0 0;
+    max-width: 46ch;
+    font-size: 14.5px;
+    line-height: 1.9;
+    color: var(--muted-foreground);
+  }
+  .hero-cta {
+    margin-top: 1.6rem;
+  }
+  .cta-primary {
+    display: inline-block;
+    padding: 0.62em 1.35em;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    text-decoration: none;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    transition:
+      background-color 0.18s ease,
+      color 0.18s ease;
+  }
+  .cta-primary:hover {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+  .hero-latest {
+    margin: 1.3rem 0 0;
+  }
+
+  /* ===== 存档槽 ===== */
+  .sec-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.9rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.4rem;
+  }
+  .sec-head h2 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(22px, 3vw, 30px);
+  }
+  .sec-note {
+    margin: 0;
+    font-size: 13.5px;
+    color: var(--muted-foreground);
+    flex-basis: 100%;
+  }
+  .sec-more {
+    margin-left: auto;
+    color: var(--primary);
+    text-decoration: none;
+    font-size: 14px;
+  }
+  .sec-more:hover {
+    text-decoration: underline;
+  }
+
+  .slots {
+    margin-bottom: 2.8rem;
+  }
+  .slots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+  .slot-items {
+    margin: 0.6rem 0 0;
+    padding: 0 0 0 1.1em;
+    display: grid;
+    gap: 0.28rem;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--muted-foreground);
+  }
+
+  /* ===== 存档列表 ===== */
+  .saves-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--border);
+  }
+  .save-row {
+    display: grid;
+    grid-template-columns: 3rem 1fr auto;
+    gap: 1.1rem;
+    align-items: baseline;
+    padding: 1.05rem 0.4rem;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+    color: inherit;
+    transition: background-color 0.18s ease;
+  }
+  .save-row:hover {
+    background: var(--accent);
+  }
+  .s-no {
+    font-size: 12px;
+    color: var(--game-coral);
+  }
+  .s-main {
     display: flex;
     flex-direction: column;
-    gap: 0.875rem;
-    padding-bottom: 2rem;
+    gap: 0.25rem;
+    min-width: 0;
   }
-  .post-card {
-    display: block;
-    padding: 1.25rem;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    transition:
-      border-color 0.15s ease,
-      box-shadow 0.15s ease,
-      transform 0.2s ease;
+  .s-main strong {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    color: var(--foreground);
   }
-  .post-card:hover {
-    text-decoration: none;
-    border-color: var(--brand-300);
-    box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
-  }
-  .post-meta {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
+  .s-desc {
+    font-size: 13.5px;
+    line-height: 1.75;
     color: var(--muted-foreground);
-    margin-bottom: 0.4rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
-  .post-card h2 {
-    font-size: 1.2rem;
-    margin: 0 0 0.4rem;
-    color: var(--card-foreground);
-  }
-  .desc {
-    margin: 0;
-    font-size: 0.875rem;
+  .s-date {
+    font-size: 12px;
     color: var(--muted-foreground);
-    line-height: 1.5;
+  }
+  .empty {
+    padding: 1.4rem 0;
+    color: var(--muted-foreground);
+    font-size: 14.5px;
+  }
+
+  @media (max-width: 640px) {
+    .save-row {
+      grid-template-columns: 2.4rem 1fr;
+    }
+    .s-date {
+      display: none;
+    }
   }
 </style>
