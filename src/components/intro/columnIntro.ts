@@ -87,6 +87,9 @@ export function mountColumnIntro(options: ColumnIntroOptions): void {
   } catch {
     /* 忽略 */
   }
+  /* 暗色模式下 main 是 z-index:1 的堆叠上下文(压星空用),覆盖层留在
+     main 内会压不过 z-40 的 Header;搬到 body 直下以脱离该上下文。 */
+  document.body.appendChild(root);
   active = createController(root, options);
 }
 

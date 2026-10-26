@@ -64,8 +64,9 @@ import { COLUMN } from '../../data/game/column.ts';
     height: 100dvh;
     z-index: 300;
     display: grid;
-    /* 矮视口(手机横屏)下内容可纵向滚动,而不是被裁切 */
+    /* 矮视口(手机横屏)下内容可纵向滚动;水平居中交给 justify-content */
     overflow-y: auto;
+    justify-content: center;
     background: var(--background, #101318);
     color: var(--foreground, #dfe6df);
     padding: env(safe-area-inset-top) env(safe-area-inset-right)

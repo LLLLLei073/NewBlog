@@ -1,26 +1,72 @@
 ---
 /**
  * 「演算手稿」开屏动画组件:仅挂在算法专栏首页。
- * 模板服务端渲染(hidden),由 columnIntro 控制器 + algorithmIntro 时间线
- * 决定播放;不播放时直接移除节点,不阻塞正文渲染。
- * 底纹复用 algo.css 的坐标纸,节点-边图自绘(与首页 GraphFigure 同语言)。
+ * 主题「从离散节点到清晰路径」:工程坐标纸上落位一张固定的
+ * 五节点带权图,按预定义步骤呈现 A → C → D → E(dist[E] = 3)
+ * 的最短路径推导,结束后以共享元素过渡进入首页 hero 图区。
+ *
+ * 模板服务端渲染(hidden);播放与否由 columnIntro 控制器 +
+ * algorithmIntro 时间线决定,不播放时直接移除,不阻塞正文渲染。
+ * 节点/边权/距离标签使用同一套坐标数据(viewBox 内定位);
+ * 图形的可访问性描述见 svg 的 aria-label,装饰文本不逐项朗读。
  */
 
-// 迷你节点-边图:与 hero 的 GraphFigure 同一"坐标纸 + 图论"语言
-const NODES = [
-  { x: 56, y: 128, r: 9 },
-  { x: 138, y: 62, r: 12 },
-  { x: 148, y: 168, r: 8 },
-  { x: 232, y: 96, r: 14 },
-  { x: 236, y: 196, r: 9 },
+type NodeId = 'A' | 'B' | 'C' | 'D' | 'E';
+
+/** 五节点固定坐标(viewBox 内),保证每次播放结果与交接位置稳定 */
+const N: Record<NodeId, { x: number; y: number }> = {
+  A: { x: 90, y: 180 },
+  B: { x: 220, y: 60 },
+  C: { x: 250, y: 250 },
+  D: { x: 375, y: 160 },
+  E: { x: 490, y: 280 },
+};
+
+/** 边次序即绘制次序:三条路径边最先落笔,950ms 起搜索时已可高亮 */
+const EDGES: [NodeId, NodeId, number][] = [
+  ['A', 'C', 1],
+  ['C', 'D', 1],
+  ['D', 'E', 1],
+  ['A', 'B', 2],
+  ['B', 'C', 2],
+  ['A', 'D', 4],
+  ['B', 'E', 3],
+  ['C', 'E', 5],
 ];
-const EDGES = [
-  [0, 1],
-  [0, 2],
-  [1, 3],
-  [2, 4],
-  [1, 2],
-];
+
+const PATH_EDGES = ['AC', 'CD', 'DE'];
+
+/** 边权标签位置:构建期定死,避开边线与交叉点 */
+const WEIGHT_POS: Record<string, { x: number; y: number; anchor?: 'end' }> = {
+  AC: { x: 150, y: 240 },
+  CD: { x: 312, y: 183 },
+  DE: { x: 432, y: 200 },
+  AB: { x: 140, y: 102 },
+  BC: { x: 226, y: 148, anchor: 'end' },
+  AD: { x: 214, y: 192 },
+  BE: { x: 324, y: 132 },
+  CE: { x: 370, y: 290 },
+};
+
+/** 节点距离标签位置(d[A]=0 为初始条件,其余在搜索步骤中显现) */
+const DIST_POS: Record<'A' | 'C' | 'D' | 'E', { x: number; y: number }> = {
+  A: { x: 90, y: 228 },
+  C: { x: 250, y: 300 },
+  D: { x: 375, y: 210 },
+  E: { x: 472, y: 328 },
+};
+
+const DIST_VAL: Record<'A' | 'C' | 'D' | 'E', string> = {
+  A: '0',
+  C: '1',
+  D: '2',
+  E: '3',
+};
+
+const edgeLen = (a: NodeId, b: NodeId): number =>
+  Math.round(Math.hypot(N[b].x - N[a].x, N[b].y - N[a].y));
+
+const NODE_IDS = Object.keys(N) as NodeId[];
 ---
 
 <div
@@ -31,67 +77,158 @@ const EDGES = [
   aria-modal="true"
   aria-label="算法专栏开屏动画"
 >
-  <div class="ai-stage">
-    {/* 左:坐标纸上的节点-边图(装饰) */}
-    <div class="ai-paper grid-paper" data-ai-paper aria-hidden="true">
-      <svg viewBox="0 0 292 256" fill="none">
-        {
-          EDGES.map(([a, b]) => (
-            <line
-              data-ai-edge
-              x1={NODES[a]!.x}
-              y1={NODES[a]!.y}
-              x2={NODES[b]!.x}
-              y2={NODES[b]!.y}
-              stroke="var(--algo-amber, #b8860b)"
-              stroke-width="1.4"
-              opacity="0.75"
-            />
-          ))
-        }
-        {
-          NODES.map((n, i) => (
-            <g data-ai-node style={`transform-origin: ${n.x}px ${n.y}px`}>
-              <circle
-                cx={n.x}
-                cy={n.y}
-                r={n.r}
-                fill={
-                  i === 3 ? 'var(--primary, #3b6ea5)' : 'var(--card, #f4f4ef)'
-                }
-                stroke="var(--primary, #3b6ea5)"
-                stroke-width="1.6"
-              />
-            </g>
-          ))
-        }
-      </svg>
-    </div>
+  {/* 坐标纸网格与图纸标记(纯装饰) */}
+  <i class="ai-gridbg" data-ai-grid aria-hidden="true"></i>
+  <i class="ai-corner c-tl" aria-hidden="true"></i>
+  <i class="ai-corner c-tr" aria-hidden="true"></i>
+  <i class="ai-corner c-bl" aria-hidden="true"></i>
+  <i class="ai-corner c-br" aria-hidden="true"></i>
+  <p class="ai-meta ai-vol" data-ai-vol aria-hidden="true">
+    FIELD NOTES / VOL. 01
+  </p>
+  <p class="ai-meta ai-input" data-ai-input aria-hidden="true">
+    INPUT: G = (V, E)
+  </p>
 
-    {/* 右:标题与档案信息(装饰文本) */}
-    <div class="ai-copy" data-ai-copy aria-hidden="true">
+  <div class="ai-stage">
+    {/* 左:栏目标题、英文名、辅助文案与路径结果(桌面 42%) */}
+    <div class="ai-head">
       <p class="ai-en" data-ai-en>ALGORITHM FIELD NOTES</p>
       <p class="ai-title">
-        <span class="mask"><span class="line" data-ai-l1>演算</span></span>
-        <span class="mask"><span class="line" data-ai-l2>手稿</span></span>
+        <span class="mask">
+          <span class="line" data-ai-l1>演算手稿</span>
+        </span>
       </p>
-      <p class="ai-sub" data-ai-sub>一张可以持续生长的算法地图</p>
-      <dl class="ai-meta">
-        <div data-ai-meta>
-          <dt>FIELD</dt>
-          <dd>ALGORITHMS</dd>
-        </div>
-        <div data-ai-meta>
-          <dt>SERIAL</dt>
-          <dd class="mono-num">FIELD NOTES</dd>
-        </div>
-        <div data-ai-meta>
-          <dt>STATUS</dt>
-          <dd>GROWING</dd>
-        </div>
-      </dl>
-      <span class="ai-stamp" data-ai-stamp>演算中</span>
+      <p class="ai-sub" data-ai-sub>把复杂的问题，写成清晰的路径</p>
+      <div class="ai-result">
+        <p class="ai-rline" data-ai-rdist>dist[E] = 3</p>
+        <p class="ai-rline" data-ai-rpath>path = A → C → D → E</p>
+        <i class="ai-rule" data-ai-rule aria-hidden="true"></i>
+      </div>
     </div>
+
+    {/* 右:图结构与搜索过程(桌面 48%) */}
+    <figure class="ai-fig">
+      <figcaption class="ai-figcap">
+        <span data-ai-figcap>FIG. 01 / SHORTEST PATH</span>
+        <span class="ai-found" data-ai-found>PATH FOUND</span>
+      </figcaption>
+      <div class="ai-paper" data-ai-paper>
+        <i class="ai-refx" data-ai-refx aria-hidden="true"></i>
+        <i class="ai-refy" data-ai-refy aria-hidden="true"></i>
+        <svg
+          class="ai-graph"
+          viewBox="0 0 545 360"
+          fill="none"
+          role="img"
+          aria-label="从 A 到 E 的最短路径为 A、C、D、E,总距离为 3"
+        >
+          {/* 普通边(细线;次序即绘制次序) */}
+          {
+            EDGES.map(([a, b, w]) => {
+              const id = `${a}${b}`;
+              const len = edgeLen(a, b);
+              return (
+                <line
+                  class:list={[
+                    'ai-edge-base',
+                    { 'eb-path': PATH_EDGES.includes(id) },
+                  ]}
+                  data-ai-edge={id}
+                  data-len={len}
+                  x1={N[a].x}
+                  y1={N[a].y}
+                  x2={N[b].x}
+                  y2={N[b].y}
+                  style={`stroke-dasharray:${len};stroke-dashoffset:${len}`}
+                />
+              );
+            })
+          }
+
+          {/* 最短路径高亮层:琥珀推进,逐段转为信号蓝 */}
+          {
+            [
+              ['A', 'C'],
+              ['C', 'D'],
+              ['D', 'E'],
+            ].map(([a, b]) => {
+              const id = `${a}${b}`;
+              const len = edgeLen(a as NodeId, b as NodeId);
+              return (
+                <line
+                  class="ai-hi"
+                  data-ai-hi={id}
+                  data-len={len}
+                  x1={N[a as NodeId].x}
+                  y1={N[a as NodeId].y}
+                  x2={N[b as NodeId].x}
+                  y2={N[b as NodeId].y}
+                  style={`stroke-dasharray:${len};stroke-dashoffset:${len}`}
+                />
+              );
+            })
+          }
+
+          {/* 边权 */}
+          {
+            EDGES.map(([a, b, w]) => {
+              const id = `${a}${b}`;
+              const pos = WEIGHT_POS[id]!;
+              return (
+                <text
+                  class:list={['ai-w', { 'w-path': PATH_EDGES.includes(id) }]}
+                  data-ai-weight={id}
+                  x={pos.x}
+                  y={pos.y}
+                  text-anchor={pos.anchor ?? 'middle'}
+                >
+                  {w}
+                </text>
+              );
+            })
+          }
+
+          {/* 节点(A、B、C、D、E 次序落位) */}
+          {
+            NODE_IDS.map((id) => (
+              <g class="ai-node" data-ai-node={id}>
+                <circle cx={N[id].x} cy={N[id].y} r="22" />
+                <text
+                  class="ai-letter"
+                  data-ai-letter={id}
+                  x={N[id].x}
+                  y={N[id].y}
+                  dominant-baseline="central"
+                  text-anchor="middle"
+                >
+                  {id}
+                </text>
+              </g>
+            ))
+          }
+
+          {/* 起点/终点小型标记 */}
+          <text class="ai-tag" x="56" y="184" text-anchor="end">START</text>
+          <text class="ai-tag" x="524" y="284" text-anchor="start">END</text>
+
+          {/* 距离标签:d[A]=0 初始条件,其余由搜索步骤写出 */}
+          {
+            (Object.keys(DIST_POS) as ('A' | 'C' | 'D' | 'E')[]).map((id) => (
+              <text
+                class="ai-dist"
+                data-ai-dist={id}
+                x={DIST_POS[id].x}
+                y={DIST_POS[id].y}
+                text-anchor="middle"
+              >
+                {`d[${id}] = ${DIST_VAL[id]}`}
+              </text>
+            ))
+          }
+        </svg>
+      </div>
+    </figure>
   </div>
 
   <button type="button" class="ai-skip" data-intro-skip> 跳过开屏 </button>
@@ -112,66 +249,156 @@ const EDGES = [
 </script>
 
 <style is:global>
+  /* 覆盖层为 JS 动态显隐:样式走全局,选择器全部以 .algo-intro 收口 */
   .algo-intro {
+    /* 工程手稿配色(浅色) */
+    --ai-bg: #f3f4ef;
+    --ai-ink: #102a43;
+    --ai-muted: #657383;
+    --ai-accent: #2457e6;
+    --ai-accent-soft: rgba(36, 87, 230, 0.12);
+    --ai-amber: #e89a35;
+    --ai-line: rgba(16, 42, 67, 0.32);
+    --ai-grid: rgba(16, 42, 67, 0.055);
+
     position: fixed;
     inset: 0;
     height: 100dvh;
     z-index: 300;
     display: grid;
-    /* 矮视口(手机横屏)下内容可纵向滚动,而不是被裁切 */
+    /* 矮视口(手机横屏)下内容可纵向滚动;水平居中交给 justify-content */
     overflow-y: auto;
-    background: var(--background, #f4f4ef);
-    color: var(--foreground, #232730);
+    justify-content: center;
+    background: var(--ai-bg);
+    color: var(--ai-ink);
     padding: env(safe-area-inset-top) env(safe-area-inset-right)
       env(safe-area-inset-bottom) env(safe-area-inset-left);
   }
   .algo-intro[hidden] {
     display: none;
   }
+  :root[data-theme='dark'] .algo-intro,
+  html[data-theme='dark'] .algo-intro {
+    --ai-bg: #12181d;
+    --ai-ink: #e4e9ec;
+    --ai-muted: #9aa8b2;
+    --ai-accent: #6f91ff;
+    --ai-accent-soft: rgba(111, 145, 255, 0.16);
+    --ai-amber: #e7ac57;
+    --ai-line: rgba(228, 233, 236, 0.26);
+    --ai-grid: rgba(228, 233, 236, 0.045);
+  }
 
+  /* 极淡工程坐标纸:细小、均匀、静止 */
+  .algo-intro .ai-gridbg {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(to right, var(--ai-grid) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--ai-grid) 1px, transparent 1px),
+      linear-gradient(to right, var(--ai-grid) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--ai-grid) 1px, transparent 1px);
+    background-size:
+      22px 22px,
+      22px 22px,
+      110px 110px,
+      110px 110px;
+  }
+
+  /* 四角定位十字 */
+  .algo-intro .ai-corner {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .algo-intro .ai-corner::before,
+  .algo-intro .ai-corner::after {
+    content: '';
+    position: absolute;
+    background: var(--ai-line);
+  }
+  .algo-intro .ai-corner::before {
+    left: 0;
+    top: 50%;
+    width: 14px;
+    height: 1px;
+    margin-top: -0.5px;
+  }
+  .algo-intro .ai-corner::after {
+    top: 0;
+    left: 50%;
+    width: 1px;
+    height: 14px;
+    margin-left: -0.5px;
+  }
+  .algo-intro .ai-corner.c-tl {
+    top: 18px;
+    left: 18px;
+  }
+  .algo-intro .ai-corner.c-tr {
+    top: 18px;
+    right: 18px;
+  }
+  .algo-intro .ai-corner.c-bl {
+    bottom: 18px;
+    left: 18px;
+  }
+  .algo-intro .ai-corner.c-br {
+    bottom: 18px;
+    right: 18px;
+  }
+
+  /* 图纸小标记 */
+  .algo-intro .ai-meta {
+    position: absolute;
+    margin: 0;
+    font-family: var(--font-mono, monospace);
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    color: var(--ai-muted);
+    opacity: 0;
+  }
+  .algo-intro .ai-vol {
+    left: 24px;
+    bottom: 16px;
+  }
+  .algo-intro .ai-input {
+    right: 24px;
+    top: 70px;
+  }
+
+  /* 桌面:左右不对称构图(左 42% 文案,右 48% 图) */
   .algo-intro .ai-stage {
     margin-block: auto;
     display: grid;
-    grid-template-columns: minmax(0, 10fr) minmax(0, 9fr);
+    grid-template-columns: minmax(0, 42fr) minmax(0, 48fr);
+    justify-content: space-between;
     align-items: center;
-    gap: clamp(1.6rem, 5vw, 3.2rem);
-    width: min(900px, calc(100vw - 3rem));
+    gap: clamp(1.6rem, 4vw, 3rem);
+    width: min(1040px, calc(100vw - 3rem));
   }
 
-  /* 左:坐标纸图板 */
-  .algo-intro .ai-paper {
-    border: 1px solid var(--border, #d8d8d2);
-    background: var(--card, #f4f4ef);
-    padding: clamp(0.8rem, 2vw, 1.2rem);
-  }
-  .algo-intro .ai-paper svg {
-    display: block;
-    width: 100%;
-    height: auto;
-  }
-  /* WAAPI 缩放节点:g 的 origin 用 viewBox 坐标系 */
-  .algo-intro g[data-ai-node] {
-    transform-box: view-box;
-  }
-
-  /* 右:标题 */
-  .algo-intro .ai-copy {
+  .algo-intro .ai-head {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
   }
   .algo-intro .ai-en {
     margin: 0;
-    font-family: var(--font-condensed, sans-serif);
+    font-family: var(--font-mono, monospace);
     font-size: 12.5px;
-    letter-spacing: 0.3em;
-    color: var(--muted-foreground, #6d7280);
+    letter-spacing: 0.28em;
+    color: var(--ai-muted);
   }
   .algo-intro .ai-title {
     margin: 0.9rem 0 0;
-    font-family: var(--font-display, serif);
+    font-family: var(--font-heading, var(--font-display, serif));
     font-weight: 700;
-    line-height: 1.12;
+    line-height: 1.14;
   }
   .algo-intro .ai-title .mask {
     display: block;
@@ -179,64 +406,182 @@ const EDGES = [
   }
   .algo-intro .ai-title .line {
     display: block;
-    font-size: clamp(44px, 7vw, 72px);
+    font-size: clamp(40px, 5vw, 58px);
   }
   .algo-intro .ai-sub {
     margin: 1.05rem 0 0;
     font-size: 15px;
-    color: var(--muted-foreground, #6d7280);
+    color: var(--ai-muted);
   }
-  .algo-intro .ai-meta {
+  .algo-intro .ai-result {
     display: grid;
-    gap: 0.45rem;
-    margin: 1.35rem 0 0;
-    font-size: 12px;
-  }
-  .algo-intro .ai-meta > div {
-    display: flex;
-    gap: 0.9rem;
-    align-items: baseline;
-  }
-  .algo-intro .ai-meta dt {
+    gap: 0.35rem;
+    margin-top: 1.7rem;
     font-family: var(--font-mono, monospace);
-    font-size: 10.5px;
-    letter-spacing: 0.18em;
-    color: var(--muted-foreground, #6d7280);
-    min-width: 5.5em;
+    font-size: 15px;
   }
-  .algo-intro .ai-meta dd {
+  .algo-intro .ai-rline {
     margin: 0;
-    font-family: var(--font-mono, monospace);
-    font-size: 12px;
   }
-  .algo-intro .ai-stamp {
-    display: inline-block;
-    margin-top: 1.5rem;
-    padding: 0.3em 0.7em;
-    border: 1.5px solid var(--algo-amber-deep, #8a6508);
-    border-radius: 3px;
-    color: var(--algo-amber-deep, #8a6508);
-    font-family: var(--font-serif);
-    font-size: 13px;
-    letter-spacing: 0.3em;
-    transform: rotate(-4deg);
+  .algo-intro .ai-rule {
+    display: block;
+    width: 240px;
+    height: 2px;
+    margin-top: 0.8rem;
+    background: var(--ai-accent);
+    transform: scaleX(0);
+    transform-origin: left center;
   }
 
-  /* 跳过按钮 */
+  .algo-intro .ai-fig {
+    margin: 0;
+  }
+  .algo-intro .ai-figcap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 0 0 0.5rem;
+    font-family: var(--font-mono, monospace);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    color: var(--ai-muted);
+  }
+  .algo-intro .ai-found {
+    padding: 0.2em 0.6em;
+    border: 1px solid var(--ai-accent);
+    color: var(--ai-accent);
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    white-space: nowrap;
+  }
+  .algo-intro .ai-paper {
+    position: relative;
+    border: 1px solid var(--ai-line);
+    padding: clamp(0.7rem, 1.6vw, 1.1rem);
+  }
+  /* 图内坐标参考线:两条短线,scaleX/scaleY 绘出 */
+  .algo-intro .ai-refx {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    width: 110px;
+    height: 1px;
+    background: var(--ai-line);
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+  .algo-intro .ai-refy {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    width: 1px;
+    height: 78px;
+    background: var(--ai-line);
+    transform: scaleY(0);
+    transform-origin: center top;
+  }
+  .algo-intro .ai-graph {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* 图元素 */
+  .algo-intro .ai-edge-base {
+    stroke: var(--ai-line);
+    stroke-width: 1.4;
+    transition: opacity 0.25s ease;
+  }
+  .algo-intro.ai-done .ai-edge-base:not(.eb-path) {
+    opacity: 0.5;
+  }
+  .algo-intro .ai-hi {
+    stroke: var(--ai-amber);
+    stroke-width: 2.2;
+    transition:
+      stroke 0.22s ease,
+      stroke-width 0.22s ease;
+  }
+  .algo-intro .ai-hi.is-path {
+    stroke: var(--ai-accent);
+    stroke-width: 2.4;
+  }
+  .algo-intro .ai-node,
+  .algo-intro .ai-w,
+  .algo-intro .ai-dist,
+  .algo-intro .ai-letter {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  .algo-intro .ai-node circle {
+    fill: var(--ai-bg);
+    stroke: var(--ai-ink);
+    stroke-width: 1.6;
+    transition:
+      stroke 0.2s ease,
+      fill 0.2s ease,
+      stroke-width 0.2s ease;
+  }
+  .algo-intro .ai-node.is-current circle {
+    stroke: var(--ai-amber);
+    stroke-width: 2.4;
+  }
+  .algo-intro .ai-node.is-settled circle {
+    stroke: var(--ai-accent);
+    fill: var(--ai-accent-soft);
+  }
+  .algo-intro .ai-node.is-done circle {
+    stroke: var(--ai-accent);
+    stroke-width: 2.6;
+    fill: var(--ai-accent-soft);
+  }
+  .algo-intro .ai-letter {
+    font-family: var(--font-mono, monospace);
+    font-size: 16px;
+    font-weight: 700;
+    fill: var(--ai-ink);
+  }
+  .algo-intro .ai-tag {
+    font-family: var(--font-mono, monospace);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    fill: var(--ai-muted);
+  }
+  .algo-intro .ai-w {
+    font-family: var(--font-mono, monospace);
+    font-size: 13px;
+    fill: var(--ai-muted);
+    transition: fill 0.2s ease;
+  }
+  .algo-intro.ai-done .ai-w.w-path {
+    fill: var(--ai-accent);
+  }
+  .algo-intro .ai-dist {
+    font-family: var(--font-mono, monospace);
+    font-size: 13px;
+    fill: var(--ai-ink);
+    transition: fill 0.2s ease;
+  }
+  .algo-intro .ai-dist.is-current {
+    fill: var(--ai-amber);
+  }
+
+  /* 跳过开屏:右上角小号文字 + 细下划线(触控区仍保持 44px) */
   .algo-intro .ai-skip {
     position: absolute;
+    top: max(14px, env(safe-area-inset-top));
     right: max(20px, env(safe-area-inset-right));
-    bottom: max(20px, env(safe-area-inset-bottom));
     display: inline-flex;
     align-items: center;
     justify-content: center;
     min-width: 44px;
     min-height: 44px;
-    padding: 0.5em 1.1em;
-    border: 1px solid var(--border, #d8d8d2);
-    border-radius: 999px;
-    background: transparent;
-    color: var(--muted-foreground, #6d7280);
+    padding: 0.4rem 0.1rem;
+    background: none;
+    border: none;
+    border-bottom: 1px solid var(--ai-line);
+    color: var(--ai-muted);
     font-family: var(--font-sans, sans-serif);
     font-size: 13px;
     letter-spacing: 0.12em;
@@ -246,20 +591,55 @@ const EDGES = [
       border-color 0.18s ease;
   }
   .algo-intro .ai-skip:hover {
-    color: var(--foreground, #232730);
-    border-color: var(--primary, #3b6ea5);
+    color: var(--ai-ink);
+    border-bottom-color: var(--ai-accent);
+  }
+  .algo-intro .ai-skip:focus-visible {
+    outline: 2px solid var(--ai-accent);
+    outline-offset: 3px;
   }
 
+  /* 移动端:上下构图(标题 → 图 → 距离与路径结果) */
   @media (max-width: 759px) {
     .algo-intro .ai-stage {
       grid-template-columns: 1fr;
-      gap: 1.4rem;
-      width: min(440px, calc(100vw - 2.4rem));
+      grid-template-areas:
+        'en'
+        'title'
+        'sub'
+        'fig'
+        'result';
+      gap: 1.1rem;
+      width: min(430px, calc(100vw - 2.4rem));
+    }
+    .algo-intro .ai-head {
+      display: contents;
+    }
+    .algo-intro .ai-en {
+      grid-area: en;
+    }
+    .algo-intro .ai-title {
+      grid-area: title;
     }
     .algo-intro .ai-title .line {
-      font-size: clamp(38px, 10.5vw, 54px);
+      font-size: 38px;
     }
-    .algo-intro .ai-meta {
+    .algo-intro .ai-sub {
+      grid-area: sub;
+      margin-top: 0;
+    }
+    .algo-intro .ai-fig {
+      grid-area: fig;
+    }
+    .algo-intro .ai-result {
+      grid-area: result;
+      margin-top: 0;
+      font-size: 14px;
+    }
+    /* 减少图纸装饰与非路径边权,保住距离标签可读性 */
+    .algo-intro .ai-vol,
+    .algo-intro .ai-input,
+    .algo-intro .ai-w:not(.w-path) {
       display: none;
     }
   }
