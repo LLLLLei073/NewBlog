@@ -19,6 +19,12 @@ const temporarilyNoindexSlugs = [
 const isNoindexPage = (page) =>
   temporarilyNoindexSlugs.some((slug) => page.endsWith(`/${slug}/`));
 
+/** /categories/<id>/ 与 /blog/<slug>/ 是 meta refresh 迁移桩,不入 sitemap */
+const isLegacyRedirectStub = (page) => {
+  const path = new URL(page).pathname;
+  return path.startsWith('/categories/') || /^\/blog\/.+\/$/.test(path);
+};
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://blog-lllllei.favorys.top',
@@ -27,7 +33,7 @@ export default defineConfig({
     mdx(),
     react(),
     sitemap({
-      filter: (page) => !isNoindexPage(page),
+      filter: (page) => !isNoindexPage(page) && !isLegacyRedirectStub(page),
     }),
   ],
   vite: {

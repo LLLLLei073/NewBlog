@@ -1,0 +1,42 @@
+---
+/**
+ * 其他专栏文章详情:专属命名空间 /others/notes/<slug>/,
+ * 数据来自 blog 内容集合中未归入四大专栏的文章(category 兜底为 others)。
+ * Phase 5 前暂用 BlogPost,之后切换到带抽屉杂记主题的 ColumnPost。
+ */
+import { render } from 'astro:content';
+import BlogPost from '../../../layouts/BlogPost.astro';
+import {
+  buildPostJsonLd,
+  getNotePaths,
+  type NoteProps,
+} from '../../../utils/notes-paths.ts';
+import { getPostCategory } from '../../../utils/categories.ts';
+
+export const getStaticPaths = () => getNotePaths('others');
+
+const { post, newer, older, related, seriesPosts, seriesName } =
+  Astro.props as NoteProps;
+const { Content, headings } = await render(post);
+const rawBody = typeof post.body === 'string' ? post.body : '';
+const jsonLd = buildPostJsonLd(post);
+---
+
+<BlogPost
+  {...post.data}
+  category={getPostCategory(post.data).label}
+  headings={headings}
+  newer={newer}
+  older={older}
+  related={related}
+  rawBody={rawBody}
+  seriesPosts={seriesPosts}
+  seriesName={seriesName}
+>
+  <script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(jsonLd)}
+  />
+  <Content />
+</BlogPost>

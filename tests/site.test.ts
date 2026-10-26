@@ -65,9 +65,17 @@ test('illustrated homepage links to the separate room and keeps static navigatio
   assert.ok(!html.includes('data-coal-root'));
   assert.ok(!html.includes('data-home-chapter'));
   assert.ok(!html.includes('id="theme-toggle"'));
-  for (const category of ['algorithm', 'math', 'music', 'game', 'others']) {
-    assert.ok(html.includes('href="/categories/' + category + '/"'));
+  // 五个专栏均指向独立专栏首页,不再有旧 /categories/ 链接
+  for (const path of [
+    '/algorithm/',
+    '/math/',
+    '/music/',
+    '/game/',
+    '/others/',
+  ]) {
+    assert.ok(html.includes(`href="${path}"`), path);
   }
+  assert.ok(!html.includes('href="/categories/'));
   const room = readFileSync(join(dist, 'room', 'index.html'), 'utf8');
   assert.ok(room.includes('data-room-stage'));
   assert.ok(room.includes('data-coal-root'));
@@ -88,29 +96,70 @@ test('head exposes RSS, locale and complete share image metadata', () => {
   assert.match(html, /<meta name="twitter:image:alt" content="[^"]+">/);
 });
 
+test('legacy category and article urls redirect to new column namespaces', () => {
+  const columnHomes: Record<string, string> = {
+    algorithm: '/algorithm/',
+    math: '/math/',
+    music: '/music/',
+    game: '/game/',
+    others: '/others/',
+  };
+  for (const [id, home] of Object.entries(columnHomes)) {
+    const html = readFileSync(
+      join(dist, 'categories', id, 'index.html'),
+      'utf8',
+    );
+    assert.match(
+      html,
+      new RegExp(`http-equiv="refresh" content="0; url=${home}"`),
+    );
+    assert.match(html, /<meta name="robots" content="noindex, follow">/);
+    assert.ok(
+      html.includes(
+        `rel="canonical" href="https://blog-lllllei.favorys.top${home}"`,
+      ),
+      `${id} canonical must point to ${home}`,
+    );
+  }
+
+  const stub = readFileSync(
+    join(dist, 'blog', 'cf-friend-tracker', 'index.html'),
+    'utf8',
+  );
+  assert.match(
+    stub,
+    /http-equiv="refresh" content="0; url=\/others\/notes\/cf-friend-tracker\/"/,
+  );
+  assert.match(stub, /<meta name="robots" content="noindex, follow">/);
+});
+
 test('placeholder articles are noindex and excluded from sitemap', () => {
-  const noindexSlugs = [
-    'first-post',
-    'second-post',
-    'algorithm-column-intro',
-    'math-column-intro',
-    'music-column-intro',
-    'game-column-intro',
+  const noindexPages: [string, string][] = [
+    ['first-post', join('others', 'notes')],
+    ['second-post', join('others', 'notes')],
+    ['algorithm-column-intro', join('algorithm', 'notes')],
+    ['math-column-intro', join('math', 'notes')],
+    ['music-column-intro', join('music', 'notes')],
+    ['game-column-intro', join('game', 'notes')],
   ];
-  for (const slug of noindexSlugs) {
-    const html = readFileSync(join(dist, 'blog', slug, 'index.html'), 'utf8');
+  for (const [slug, dir] of noindexPages) {
+    const html = readFileSync(join(dist, dir, slug, 'index.html'), 'utf8');
     assert.match(html, /<meta name="robots" content="noindex, follow">/);
   }
 
   const realArticle = readFileSync(
-    join(dist, 'blog', 'cf-friend-tracker', 'index.html'),
+    join(dist, 'others', 'notes', 'cf-friend-tracker', 'index.html'),
     'utf8',
   );
   assert.ok(!realArticle.includes('name="robots" content="noindex'));
 
   const sitemapXml = readFileSync(join(dist, 'sitemap-0.xml'), 'utf8');
-  for (const slug of noindexSlugs) assert.ok(!sitemapXml.includes(slug));
-  assert.ok(sitemapXml.includes('/blog/cf-friend-tracker/'));
+  for (const slug of noindexPages.map(([slug]) => slug))
+    assert.ok(!sitemapXml.includes(slug));
+  assert.ok(sitemapXml.includes('/others/notes/cf-friend-tracker/'));
+  // 迁移桩不入 sitemap
+  assert.ok(!sitemapXml.includes('/blog/cf-friend-tracker/'));
+  assert.ok(!sitemapXml.includes('/categories/'));
 });
 
 test('retirement build unregisters old workers and does not register a new one', () => {
@@ -127,7 +176,7 @@ test('retirement build unregisters old workers and does not register a new one',
 test('KaTeX styles stay on articles instead of the homepage', () => {
   const home = readFileSync(join(dist, 'index.html'), 'utf8');
   const article = readFileSync(
-    join(dist, 'blog', 'cf-friend-tracker', 'index.html'),
+    join(dist, 'others', 'notes', 'cf-friend-tracker', 'index.html'),
     'utf8',
   );
   const cssLinks = (html: string) =>
@@ -153,8 +202,10 @@ test('draft recommendations are filtered before sorting', () => {
 });
 
 test('article structured data is valid JSON', () => {
-  for (const file of htmlFiles().filter((path) =>
-    path.includes(`${join('blog', '')}`),
+  for (const file of htmlFiles().filter(
+    (path) =>
+      path.includes(`${join('blog', '')}`) ||
+      path.includes(`${join('notes', '')}`),
   )) {
     const html = readFileSync(file, 'utf8');
     for (const match of html.matchAll(

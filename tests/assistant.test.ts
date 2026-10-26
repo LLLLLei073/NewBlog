@@ -105,3 +105,14 @@ test('room page embeds only published notes and all room links', () => {
     !readFileSync('dist/about/index.html', 'utf8').includes('data-coal-root'),
   );
 });
+
+test('assistant note index links use column namespaces, not legacy /blog/', () => {
+  const html = readFileSync('dist/room/index.html', 'utf8');
+  // data-index 属性内的 JSON 会被转义为 &quot;href&quot;:&quot;…&quot;
+  assert.ok(
+    html.includes(
+      '&quot;href&quot;:&quot;/others/notes/cf-friend-tracker/&quot;',
+    ),
+  );
+  assert.ok(!html.includes('&quot;href&quot;:&quot;/blog/'));
+});

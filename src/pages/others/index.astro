@@ -1,0 +1,116 @@
+---
+/**
+ * 其他专栏首页(过渡版):Phase 4 将替换为「抽屉杂记」
+ * 软木板式独立界面与开屏动画。先保证 /others/ 路由与全站入口可用。
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import { postHref } from '../../utils/postRoute.ts';
+import { getPostCategory } from '../../utils/categories.ts';
+
+const posts = (await getCollection('blog'))
+  .filter((p) => !p.data.draft && getPostCategory(p.data).id === 'others')
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout
+  title="其他专栏"
+  description="未归入四大专栏的项目记录、随笔与建站笔记。"
+  pageName="others"
+>
+  <section class="container">
+    <div class="page-head">
+      <p class="eyebrow">专栏</p>
+      <h1>其他</h1>
+      <p class="lead">抽屉里的那些事:项目、随笔与建站记录。</p>
+      <p class="count">共 {posts.length} 篇文章</p>
+    </div>
+    <div class="post-list">
+      {
+        posts.map((post) => (
+          <a href={postHref(post.id, post.data.category)} class="post-card">
+            <div class="post-meta">
+              <FormattedDate date={post.data.pubDate} />
+            </div>
+            <h2>{post.data.title}</h2>
+            <p class="desc">{post.data.description}</p>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-head {
+    padding: 2.5rem 0 1.75rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1.25rem;
+  }
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--primary);
+    margin: 0 0 0.65rem;
+  }
+  .page-head h1 {
+    font-size: 2rem;
+    margin: 0 0 0.4rem;
+  }
+  .lead {
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    color: var(--muted-foreground);
+    margin: 0 0 0.4rem;
+  }
+  .count {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--muted-foreground);
+    margin: 0;
+  }
+  .post-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    padding-bottom: 2rem;
+  }
+  .post-card {
+    display: block;
+    padding: 1.25rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition:
+      border-color 0.15s ease,
+      box-shadow 0.15s ease,
+      transform 0.2s ease;
+  }
+  .post-card:hover {
+    text-decoration: none;
+    border-color: var(--brand-300);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+  .post-meta {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--muted-foreground);
+    margin-bottom: 0.4rem;
+  }
+  .post-card h2 {
+    font-size: 1.2rem;
+    margin: 0 0 0.4rem;
+    color: var(--card-foreground);
+  }
+  .desc {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+    line-height: 1.5;
+  }
+</style>

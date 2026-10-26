@@ -10,6 +10,7 @@ import {
   getNotePaths,
   type NoteProps,
 } from '../../../utils/notes-paths.ts';
+import { getPostCategory } from '../../../utils/categories.ts';
 
 export const getStaticPaths = () => getNotePaths('music');
 
@@ -22,6 +23,7 @@ const jsonLd = buildPostJsonLd(post);
 
 <BlogPost
   {...post.data}
+  category={getPostCategory(post.data).label}
   headings={headings}
   newer={newer}
   older={older}

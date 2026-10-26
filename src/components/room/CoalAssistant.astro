@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import { getPostCategory } from '../../utils/categories.ts';
+import { postHref } from '../../utils/postRoute.ts';
 import { ROOM_LINKS } from './config.ts';
 
 const notes = (await getCollection('blog'))
@@ -10,7 +11,7 @@ const notes = (await getCollection('blog'))
     title: post.data.title,
     description: post.data.description,
     category: getPostCategory(post.data).label,
-    href: `/blog/${post.id}/`,
+    href: postHref(post.id, post.data.category),
     pubDate: post.data.pubDate.toISOString(),
   }));
 ---

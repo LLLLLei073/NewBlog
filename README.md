@@ -40,15 +40,17 @@ category: 'algorithm' # 可选：algorithm | math | music | game，不填归入�
 
 ## 专栏
 
-文章按 `category` 前置字段归入五大专栏（`/categories/<id>/`）：
+文章按 `category` 前置字段归入五大专栏，每个专栏都有独立风格首页与
+`/<column>/notes/<slug>/` 文章命名空间；旧 `/categories/<id>/` 与
+`/blog/<slug>/` 地址自动跳转到新地址（`/blog/` 仍保留为全站文章总目录）：
 
-| category | 专栏 | 路径 |
-| --- | --- | --- |
-| `algorithm` | 算法 | `/categories/algorithm/` |
-| `math` | 数学 | `/categories/math/` |
-| `music` | 音乐 | `/categories/music/` |
-| `game` | 游戏 | `/categories/game/` |
-| （不填） | 其他 | `/categories/others/` |
+| category | 专栏 | 专栏首页 | 文章路径 |
+| --- | --- | --- | --- |
+| `algorithm` | 算法 · 演算手稿 | `/algorithm/` | `/algorithm/notes/<slug>/` |
+| `math` | 数学 | `/math/` | `/math/notes/<slug>/` |
+| `music` | 音乐 · 耳朵的私人档案 | `/music/` | `/music/notes/<slug>/` |
+| `game` | 游戏 | `/game/` | `/game/notes/<slug>/` |
+| （不填） | 其他 | `/others/` | `/others/notes/<slug>/` |
 ## 部署
 
 站点通过 GitHub Pages 部署，并绑定自定义域名 `blog-lllllei.favorys.top`：

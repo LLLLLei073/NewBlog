@@ -17,14 +17,8 @@ const isActive = (href: string) => {
 
 const navItems = [
   { href: '/', label: '首页' },
-  // 「音乐」「算法」不进分类页,指向各自专栏首页
-  ...CATEGORIES.map((c) =>
-    c.label === '音乐'
-      ? { href: '/music/', label: c.label }
-      : c.label === '算法'
-        ? { href: '/algorithm/', label: c.label }
-        : { href: c.path, label: c.label },
-  ),
+  // 五个专栏均有独立首页,categories.ts 的 path 即唯一事实来源
+  ...CATEGORIES.map((c) => ({ href: c.path, label: c.label })),
   { href: '/blog', label: '文章' },
   { href: '/room/', label: '小房间' },
   { href: '/archives', label: '归档' },

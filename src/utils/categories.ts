@@ -16,31 +16,31 @@ export const CATEGORIES: readonly CategoryDef[] = [
   {
     id: 'algorithm',
     label: '算法',
-    path: '/categories/algorithm/',
+    path: '/algorithm/',
     description: '算法、数据结构、刷题笔记',
   },
   {
     id: 'math',
     label: '数学',
-    path: '/categories/math/',
+    path: '/math/',
     description: '高等数学、线性代数、概率论',
   },
   {
     id: 'music',
     label: '音乐',
-    path: '/categories/music/',
+    path: '/music/',
     description: '乐理、编曲、乐器演奏',
   },
   {
     id: 'game',
     label: '游戏',
-    path: '/categories/game/',
+    path: '/game/',
     description: '游戏开发、设计、攻略',
   },
   {
     id: 'others',
     label: '其他',
-    path: '/categories/others/',
+    path: '/others/',
     description: '未归入以上专栏的文章',
   },
 ] as const;

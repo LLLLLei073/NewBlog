@@ -1,13 +1,14 @@
 /**
  * 专栏文章路由(/<column>/notes/<slug>/)的共享 getStaticPaths 工厂。
  * 上一篇/下一篇按「栏内」相邻计算;系列与推荐阅读仍在全站范围挑选。
- * 供 algorithm/music/math/game 四个 notes/[slug].astro 复用。
+ * 供 algorithm/music/math/game/others 五个 notes/[slug].astro 复用。
  */
 import { type CollectionEntry, getCollection } from 'astro:content';
 import { SITE_AUTHOR, SITE_AUTHOR_IMAGE, SITE_URL } from '../consts.ts';
+import { getPostCategory } from './categories.ts';
 import { postHref } from './postRoute.ts';
 
-export type ColumnId = 'algorithm' | 'music' | 'math' | 'game';
+export type ColumnId = 'algorithm' | 'music' | 'math' | 'game' | 'others';
 
 export type Nav = { slug: string; title: string; href: string };
 export type Related = {
@@ -42,7 +43,9 @@ export async function getNotePaths(
     .filter((p) => !p.data.draft)
     .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
-  const own = all.filter((p) => p.data.category === column);
+  // others 是未分类文章的兜底专栏,必须按 getPostCategory 归类而不是原始
+  // category 字段匹配,否则未填写 category 的文章会被漏掉。
+  const own = all.filter((p) => getPostCategory(p.data).id === column);
 
   return own.map((post, i) => {
     const newer = i > 0 ? asNav(own[i - 1]) : null;
@@ -113,7 +116,8 @@ export function buildPostJsonLd(post: CollectionEntry<'blog'>) {
       image: new URL(SITE_AUTHOR_IMAGE, SITE_URL).toString(),
     },
     publisher: { '@type': 'Person', name: SITE_AUTHOR, url: SITE_URL },
-    ...(category ? { articleSection: category } : {}),
+    // 结构化数据使用中文栏目名(与旧 /blog/ 完整文章页的规则一致)
+    articleSection: getPostCategory(post.data).label,
     mainEntityOfPage: new URL(href, SITE_URL).toString(),
     ...(heroImage ? { image: new URL(heroImage, SITE_URL).toString() } : {}),
   };

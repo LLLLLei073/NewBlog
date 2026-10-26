@@ -1,139 +1,39 @@
 ---
 /**
- * /blog/<slug>/ 现在只完整渲染未分类文章;
- * 已迁入专栏命名空间(algorithm/music/math/game)的旧地址在此生成
- * 重定向桩(meta refresh + canonical),保住历史外链与 SEO。
+ * /blog/<slug>/ 现在是所有文章旧地址的迁移桩:五个专栏
+ * (algorithm/music/math/game/others)文章均已迁入 /<column>/notes/<slug>/,
+ * 这里统一生成 meta refresh + canonical,保住历史外链与 SEO。
+ * /blog/ 索引仍保留为全站文章总目录。
  */
-import { type CollectionEntry, getCollection, render } from 'astro:content';
-import BlogPost from '../../layouts/BlogPost.astro';
-import { SITE_AUTHOR, SITE_AUTHOR_IMAGE, SITE_URL } from '../../consts.ts';
-import { postHref, isMigrated } from '../../utils/postRoute.ts';
+import { type CollectionEntry, getCollection } from 'astro:content';
+import {
+  SITE_AUTHOR,
+  SITE_AUTHOR_IMAGE,
+  SITE_TITLE,
+  SITE_URL,
+} from '../../consts.ts';
+import { postHref } from '../../utils/postRoute.ts';
 import { getPostCategory } from '../../utils/categories.ts';
 
-type Nav = { slug: string; title: string; href: string };
-type Related = {
-  slug: string;
-  title: string;
-  description: string;
-  pubDate: Date;
-  category: string | null;
-  href: string;
-};
-type SeriesPost = { slug: string; title: string; href: string };
-
 export async function getStaticPaths() {
-  const allPosts = (await getCollection('blog'))
-    .filter((p) => !p.data.draft)
-    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-
-  // 完整页面仅保留未分类文章;邻居也在未分类范围内计算
-  const own = allPosts.filter((p) => !isMigrated(p.data.category));
-
-  const asNav = (p: CollectionEntry<'blog'>): Nav => ({
-    slug: p.id,
-    title: p.data.title,
-    href: postHref(p.id, p.data.category),
-  });
-
-  return allPosts.map((post) => {
-    if (isMigrated(post.data.category)) {
-      // 旧地址 → 重定向桩
-      return {
-        params: { slug: post.id },
-        props: {
-          post,
-          redirect: postHref(post.id, post.data.category),
-          newer: null,
-          older: null,
-          related: [] as Related[],
-          seriesPosts: [] as SeriesPost[],
-          seriesName: null,
-        },
-      };
-    }
-
-    const i = own.findIndex((p) => p.id === post.id);
-    const newer = i > 0 ? own[i - 1] : null;
-    const older = i < own.length - 1 ? own[i + 1] : null;
-
-    // 同系列文章(按发布日期排序,全站范围)
-    const seriesPosts: SeriesPost[] = post.data.series
-      ? allPosts
-          .filter((p) => p.id !== post.id && p.data.series === post.data.series)
-          .map((p) => ({
-            slug: p.id,
-            title: p.data.title,
-            href: postHref(p.id, p.data.category),
-          }))
-      : [];
-
-    // 推荐阅读:先同专栏近邻 3 篇,不够用最近的其他文章补齐
-    const sameCat = allPosts.filter(
-      (p) =>
-        p.id !== post.id &&
-        (p.data.category ?? null) === (post.data.category ?? null),
-    );
-    const otherCat = allPosts.filter(
-      (p) =>
-        p.id !== post.id &&
-        (p.data.category ?? null) !== (post.data.category ?? null),
-    );
-    const related: Related[] = [...sameCat, ...otherCat]
-      .slice(0, 3)
-      .map((p) => ({
-        slug: p.id,
-        title: p.data.title,
-        description: p.data.description,
-        pubDate: p.data.pubDate,
-        category: p.data.category ?? null,
-        href: postHref(p.id, p.data.category),
-      }));
-
-    return {
-      params: { slug: post.id },
-      props: {
-        post,
-        redirect: null as string | null,
-        newer: newer ? asNav(newer) : null,
-        older: older ? asNav(older) : null,
-        related,
-        seriesPosts,
-        seriesName: post.data.series ?? null,
-      },
-    };
-  });
+  const posts = (await getCollection('blog')).filter((p) => !p.data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post, redirect: postHref(post.id, post.data.category) },
+  }));
 }
 
 interface Props {
   post: CollectionEntry<'blog'>;
-  redirect: string | null;
-  newer: Nav | null;
-  older: Nav | null;
-  related: Related[];
-  seriesPosts: SeriesPost[];
-  seriesName: string | null;
+  redirect: string;
 }
 
-const { post, redirect, newer, older, related, seriesPosts, seriesName } =
-  Astro.props;
-
-const { title, description, pubDate, updatedDate, heroImage, category } =
-  post.data;
-const canonical = postHref(post.id, category);
-const canonicalUrl = new URL(canonical, Astro.site ?? SITE_URL).toString();
-const noindex = post.data.noindex ?? false;
+const { post, redirect } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage } = post.data;
+const canonicalUrl = new URL(redirect, Astro.site ?? SITE_URL).toString();
 const categoryLabel = getPostCategory(post.data).label;
 
-let Content: any = null;
-let headings: { depth: number; slug: string; text: string }[] = [];
-if (!redirect) {
-  const rendered = await render(post);
-  Content = rendered.Content;
-  headings = rendered.headings;
-}
-const rawBody = typeof post.body === 'string' ? post.body : '';
-
-// Article 结构化数据(SEO)
+// Article 结构化数据(SEO):与专栏新页面保持同一份规则,中文栏目名
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'BlogPosting',
@@ -148,48 +48,29 @@ const jsonLd = {
     image: new URL(SITE_AUTHOR_IMAGE, SITE_URL).toString(),
   },
   publisher: { '@type': 'Person', name: SITE_AUTHOR, url: SITE_URL },
-  ...(category ? { articleSection: categoryLabel } : {}),
+  articleSection: categoryLabel,
   mainEntityOfPage: canonicalUrl,
   ...(heroImage ? { image: new URL(heroImage, SITE_URL).toString() } : {}),
 };
 ---
 
-{
-  redirect ? (
-    <html lang="zh-CN">
-      <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>{title}</title>
-        <meta name="robots" content="noindex, follow" />
-        <link rel="canonical" href={canonicalUrl} />
-        <meta http-equiv="refresh" content={`0; url=${redirect}`} />
-      </head>
-      <body>
-        <p>
-          本文已迁移到 <a href={redirect}>新地址</a>,正在跳转……
-        </p>
-      </body>
-    </html>
-  ) : (
-    <BlogPost
-      {...post.data}
-      headings={headings}
-      newer={newer}
-      older={older}
-      related={related}
-      rawBody={rawBody}
-      seriesPosts={seriesPosts}
-      seriesName={seriesName}
-      category={categoryLabel}
-      noindex={noindex}
-    >
-      <script
-        is:inline
-        type="application/ld+json"
-        set:html={JSON.stringify(jsonLd)}
-      />
-      <Content />
-    </BlogPost>
-  )
-}
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{`${title} | ${SITE_TITLE}`}</title>
+    <meta name="robots" content="noindex, follow" />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta http-equiv="refresh" content={`0; url=${redirect}`} />
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify(jsonLd)}
+    />
+  </head>
+  <body>
+    <p>
+      本文已迁移到 <a href={redirect}>新地址</a>,正在跳转……
+    </p>
+  </body>
+</html>

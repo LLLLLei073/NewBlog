@@ -1,14 +1,11 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import { postHref } from '../../utils/postRoute';
-import FormattedDate from '../../components/FormattedDate.astro';
-import PostSearch from '../../components/PostSearch.astro';
-import {
-  CATEGORIES,
-  getPostCategory,
-  type CategoryDef,
-} from '../../utils/categories.ts';
-import { getCollection } from 'astro:content';
+/**
+ * /categories/<id>/ 旧分类页已退役:五个专栏都有独立首页后,这里只生成
+ * meta refresh + canonical 迁移桩,保住历史外链与 SEO。静态托管无服务器
+ * 301,与 /blog/<slug>/ 迁移桩保持同一结构。
+ */
+import { CATEGORIES, type CategoryDef } from '../../utils/categories.ts';
+import { SITE_URL } from '../../consts.ts';
 
 export async function getStaticPaths() {
   return CATEGORIES.map((cat) => ({
@@ -22,183 +19,23 @@ interface Props {
 }
 
 const { category } = Astro.props;
-
-const allPosts = (await getCollection('blog'))
-  .filter((p) => !p.data.draft)
-  .filter((p) => getPostCategory(p.data).id === category.id)
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const target = category.path;
+const canonicalUrl = new URL(target, Astro.site ?? SITE_URL).toString();
 ---
 
-<BaseLayout
-  title={`专栏：${category.label}`}
-  description={category.description}
->
-  <section class="container">
-    <div class="page-head">
-      <p class="eyebrow">专栏</p>
-      <h1>{category.label}</h1>
-      <p class="lead">{category.description}</p>
-      <p class="count">共 {allPosts.length} 篇文章</p>
-      <a href="/" class="back">&larr; 返回首页</a>
-    </div>
-
-    {
-      allPosts.length > 0 ? (
-        <>
-          <PostSearch
-            total={allPosts.length}
-            placeholder={`搜索${category.label}专栏的文章...`}
-          />
-          <div class="post-list">
-            {allPosts.map((post) => (
-              <a
-                href={postHref(post.id, post.data.category)}
-                class="post-card"
-                data-search-item
-                data-title={post.data.title}
-                data-desc={post.data.description}
-              >
-                <div class="post-meta">
-                  <FormattedDate date={post.data.pubDate} />
-                </div>
-                <h2>{post.data.title}</h2>
-                <p class="desc">{post.data.description}</p>
-              </a>
-            ))}
-          </div>
-        </>
-      ) : (
-        <p class="empty">这个专栏还没有文章，敬请期待。</p>
-      )
-    }
-  </section>
-</BaseLayout>
-
-<style>
-  .page-head {
-    padding: 2.5rem 0 1.75rem;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 1.25rem;
-  }
-
-  .eyebrow {
-    font-family: var(--font-sans);
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--primary);
-    margin: 0 0 0.65rem;
-  }
-
-  .page-head h1 {
-    font-size: 2rem;
-    margin: 0 0 0.4rem;
-  }
-
-  .lead {
-    font-family: var(--font-sans);
-    font-size: 0.95rem;
-    color: var(--muted-foreground);
-    margin: 0 0 0.4rem;
-  }
-
-  .count {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    color: var(--muted-foreground);
-    margin: 0 0 0.75rem;
-  }
-
-  .back {
-    display: inline-block;
-    font-family: var(--font-sans);
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: var(--muted-foreground);
-    transition: color 0.15s ease;
-  }
-
-  .back:hover {
-    color: var(--primary);
-    text-decoration: none;
-  }
-
-  .post-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.875rem;
-    padding-bottom: 2rem;
-  }
-
-  .post-card {
-    display: block;
-    padding: 1.25rem;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    transition:
-      border-color 0.15s ease,
-      box-shadow 0.15s ease,
-      transform 0.2s ease;
-  }
-
-  .post-card:hover {
-    text-decoration: none;
-    border-color: var(--brand-300);
-    box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
-  }
-
-  .post-meta {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    color: var(--muted-foreground);
-    margin-bottom: 0.4rem;
-  }
-
-  .post-card h2 {
-    font-size: 1.2rem;
-    margin: 0 0 0.4rem;
-    color: var(--card-foreground);
-  }
-
-  .desc {
-    margin: 0;
-    font-size: 0.875rem;
-    color: var(--muted-foreground);
-    line-height: 1.5;
-  }
-
-  .empty {
-    font-family: var(--font-sans);
-    font-size: 0.95rem;
-    color: var(--muted-foreground);
-    font-style: italic;
-    padding: 2rem 0 3rem;
-    text-align: center;
-  }
-
-  @media (max-width: 640px) {
-    .page-head {
-      padding: 1.75rem 0 1.25rem;
-      margin-bottom: 1rem;
-    }
-    .page-head h1 {
-      font-size: 1.6rem;
-    }
-    .post-list {
-      gap: 0.75rem;
-      padding-bottom: 1.5rem;
-    }
-    .post-card {
-      padding: 1rem;
-    }
-    .post-card h2 {
-      font-size: 1.05rem;
-    }
-    .empty {
-      padding: 1.5rem 0 2rem;
-    }
-  }
-</style>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{`专栏：${category.label}`}</title>
+    <meta name="robots" content="noindex, follow" />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+  </head>
+  <body>
+    <p>
+      「{category.label}」专栏已改版,正在前往
+      <a href={target}>新专栏首页</a>……
+    </p>
+  </body>
+</html>

@@ -1,8 +1,8 @@
 /**
  * 各专栏文章的专属命名空间映射。
- * algorithm / music / math / game 专栏文章走 /<column>/notes/<slug>/,
- * 未分类文章留在 /blog/<slug>/。旧 /blog/ 地址由 blog/[...slug].astro
- * 生成重定向桩承接。全站生成文章链接一律经过 postHref。
+ * 五个专栏(algorithm/music/math/game/others)文章全部走 /<column>/notes/<slug>/,
+ * 未分类文章归入 others。旧 /blog/<slug>/ 地址由 blog/[...slug].astro 生成
+ * 重定向桩承接。全站生成文章链接一律经过 postHref。
  */
 
 const NOTE_ROUTES: Record<string, string> = {
@@ -10,15 +10,11 @@ const NOTE_ROUTES: Record<string, string> = {
   music: '/music/notes/',
   math: '/math/notes/',
   game: '/game/notes/',
+  others: '/others/notes/',
 };
 
-/** 文章最终访问地址(带尾斜杠)。 */
+/** 文章最终访问地址(带尾斜杠)。未识别的 category 一律归入其他专栏。 */
 export function postHref(id: string, category?: string | null): string {
-  const prefix = (category && NOTE_ROUTES[category]) || '/blog/';
+  const prefix = (category && NOTE_ROUTES[category]) || NOTE_ROUTES.others!;
   return `${prefix}${id}/`;
-}
-
-/** 该文章是否已迁入专栏命名空间(旧 /blog/ 地址需要重定向)。 */
-export function isMigrated(category?: string | null): boolean {
-  return Boolean(category && NOTE_ROUTES[category]);
 }

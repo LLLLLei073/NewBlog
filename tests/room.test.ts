@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
+import { join } from 'node:path';
 import { ROOM_LINKS } from '../src/components/room/config.ts';
 import {
   roomCycle,
@@ -18,12 +19,12 @@ test('nine destinations and static navigation remain available', () => {
   assert.deepEqual(
     ROOM_LINKS.map((i) => i.href),
     [
-      // 算法已迁入专属专栏「演算手稿」,音乐迁入「耳朵的私人档案」
+      // 五个专栏均已迁入独立首页
       '/algorithm/',
-      '/categories/math/',
+      '/math/',
       '/music/',
-      '/categories/game/',
-      '/categories/others/',
+      '/game/',
+      '/others/',
       '/blog/',
       '/about/',
       '/archives/',
@@ -45,7 +46,10 @@ test('nine destinations and static navigation remain available', () => {
   // 全局音乐播放器(见 src/components/MusicPlayer.astro)随 BaseLayout 挂载
   assert.ok(html.includes('id="music-player"'));
   assert.ok(html.includes('<audio'));
-  const article = readFileSync('dist/blog/second-post/index.html', 'utf8');
+  const article = readFileSync(
+    join('dist', 'others', 'notes', 'second-post', 'index.html'),
+    'utf8',
+  );
   assert.ok(!article.includes('data-room-stage'));
   assert.ok(!article.includes('data-room-home'));
   for (const id of [

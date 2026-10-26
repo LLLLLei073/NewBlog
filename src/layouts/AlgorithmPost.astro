@@ -33,6 +33,7 @@ interface Props {
   description: string;
   pubDate: Date;
   updatedDate?: Date;
+  noindex?: boolean;
   headings?: Heading[];
   newer?: Nav;
   older?: Nav;
@@ -58,6 +59,7 @@ const {
   description,
   pubDate,
   updatedDate,
+  noindex = false,
   headings = [],
   newer = null,
   older = null,
@@ -93,6 +95,7 @@ const updatedISO = (updatedDate ?? pubDate).toISOString().slice(0, 10);
   pageName="algorithm"
   publishedTime={pubDate}
   modifiedTime={updatedDate}
+  noindex={noindex}
 >
   <div class="reading-progress" aria-hidden="true">
     <div class="reading-progress-bar" id="ap-progress"></div>
