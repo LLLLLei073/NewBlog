@@ -19,7 +19,14 @@ import {
 import { isLive2dTap, type TapStart } from '../src/components/live2d/tap.ts';
 
 const dist = join(process.cwd(), 'dist');
-const articlePage = join(dist, 'blog', 'cf-friend-tracker', 'index.html');
+// cf-friend-tracker 已迁入其他专栏命名空间;旧 /blog/ 地址是迁移桩
+const articlePage = join(
+  dist,
+  'others',
+  'notes',
+  'cf-friend-tracker',
+  'index.html',
+);
 const otherPages = ['index.html', 'room/index.html', 'about/index.html'];
 const skipped =
   MODEL === null ? 'config 里 MODEL 仍为 null，模型尚未接入' : false;

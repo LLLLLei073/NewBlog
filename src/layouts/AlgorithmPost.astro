@@ -417,6 +417,7 @@ const updatedISO = (updatedDate ?? pubDate).toISOString().slice(0, 10);
   </div>
 
   <script>
+    import { navigate } from 'astro:transitions/client';
     import { onPageLoad } from '../utils/lifecycle';
 
     function initAlgoPost() {
@@ -452,9 +453,8 @@ const updatedISO = (updatedDate ?? pubDate).toISOString().slice(0, 10);
           )
             return;
           if (e.key === 'ArrowLeft' && newerLink)
-            location.assign(newerLink.href);
-          else if (e.key === 'ArrowRight' && olderLink)
-            location.assign(olderLink.href);
+            navigate(newerLink.href);
+          else if (e.key === 'ArrowRight' && olderLink) navigate(olderLink.href);
         };
         document.addEventListener('keydown', onKey);
         cleanups.push(() => document.removeEventListener('keydown', onKey));
