@@ -11,6 +11,8 @@
 @import './math.css';
 /* ---- 「玩法解剖室」游戏专栏视觉系统(仅 body[data-page='game'] 生效) ---- */
 @import './game.css';
+/* ---- 「抽屉杂记」其他专栏视觉系统(仅 body[data-page='others'] 生效) ---- */
+@import './others.css';
 /* ---- 「演算手稿」React 岛屿的 Tailwind 工具类(无 preflight) ---- */
 @import './algo-tw.css';
 

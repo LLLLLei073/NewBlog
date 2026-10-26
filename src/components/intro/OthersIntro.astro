@@ -1,0 +1,244 @@
+---
+/**
+ * 「抽屉杂记」开屏动画组件:仅挂在其他专栏首页。
+ * 模板服务端渲染(hidden),由 columnIntro 控制器 + othersIntro 时间线
+ * 决定播放;不播放时直接移除节点,不阻塞正文渲染。
+ */
+import { COLUMN } from '../../data/others/column.ts';
+---
+
+<div
+  class="others-intro"
+  data-others-intro
+  hidden
+  role="dialog"
+  aria-modal="true"
+  aria-label="其他专栏开屏动画"
+>
+  <div class="ot-stage">
+    {/* 左:抽屉(装饰) */}
+    <div class="ot-drawer" aria-hidden="true">
+      <div class="ot-drawer-front" data-ot-drawer>
+        <i class="ot-handle"></i>
+      </div>
+      <div class="ot-inside" data-ot-inside>
+        <span class="ot-chip">项目</span>
+        <span class="ot-chip">建站</span>
+        <span class="ot-chip">随笔</span>
+      </div>
+    </div>
+
+    {/* 右:软木板便签(装饰) */}
+    <div class="ot-board" aria-hidden="true">
+      <div class="note-card ot-mini" data-ot-note style="--tilt: -2deg">
+        <i class="pin" aria-hidden="true"></i>
+        <p class="mono-label">项目</p>
+      </div>
+      <div class="note-card ot-mini" data-ot-note style="--tilt: 1.4deg">
+        <i class="pin" aria-hidden="true"></i>
+        <p class="mono-label">建站</p>
+      </div>
+      <div class="note-card ot-mini" data-ot-note style="--tilt: -0.8deg">
+        <i class="pin" aria-hidden="true"></i>
+        <p class="mono-label">随笔</p>
+      </div>
+    </div>
+
+    {/* 标题与印章(装饰文本) */}
+    <div class="ot-copy" data-ot-copy aria-hidden="true">
+      <p class="ot-en" data-ot-en>{COLUMN.en}</p>
+      <p class="ot-title">
+        <span class="mask"><span class="line" data-ot-l1>抽屉</span></span>
+        <span class="mask"><span class="line" data-ot-l2>杂记</span></span>
+      </p>
+      <p class="ot-sub" data-ot-sub>{COLUMN.sub}</p>
+      <span class="o-stamp ot-stamp" data-ot-stamp>随手收录</span>
+    </div>
+  </div>
+
+  <button type="button" class="ot-skip" data-intro-skip>
+    跳过开屏
+  </button>
+</div>
+
+<script>
+  import { onPageLoad } from '../../utils/lifecycle';
+  import { mountOthersIntro, cancelOthersIntroForSwap } from './othersIntro';
+
+  onPageLoad(() => {
+    mountOthersIntro();
+  });
+  // 快速离开专栏:立即取消动画并清理(html 上的滚动锁定会跨 swap 存留)
+  document.addEventListener('astro:before-swap', cancelOthersIntroForSwap);
+</script>
+
+<style is:global>
+  .others-intro {
+    position: fixed;
+    inset: 0;
+    height: 100dvh;
+    z-index: 300;
+    display: grid;
+    place-items: center;
+    background: var(--background, #dfcdae);
+    color: var(--foreground, #3c3125);
+    padding: env(safe-area-inset-top) env(safe-area-inset-right)
+      env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+  .others-intro[hidden] {
+    display: none;
+  }
+
+  .others-intro .ot-stage {
+    display: grid;
+    grid-template-columns: auto minmax(0, 10fr) minmax(0, 9fr);
+    align-items: center;
+    gap: clamp(1.4rem, 4vw, 2.8rem);
+    width: min(940px, calc(100vw - 3rem));
+  }
+
+  /* 左:抽屉 */
+  .others-intro .ot-drawer {
+    position: relative;
+    width: 120px;
+    height: 150px;
+  }
+  .others-intro .ot-drawer-front {
+    position: absolute;
+    inset: 0;
+    background: var(--card, #f6efdd);
+    border: 1px solid var(--border, #c9b391);
+    border-radius: 6px;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 4px 14px -6px rgba(60, 49, 37, 0.35);
+  }
+  .others-intro .ot-handle {
+    width: 44px;
+    height: 10px;
+    border: 3px solid var(--border-400, #b39d7b);
+    border-radius: 999px;
+  }
+  .others-intro .ot-inside {
+    position: absolute;
+    inset: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background: color-mix(in srgb, var(--card, #f6efdd) 60%, transparent);
+    border-radius: 4px;
+  }
+  .others-intro .ot-chip {
+    font-family: var(--font-mono, monospace);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--muted-foreground, #7a6a54);
+  }
+
+  /* 中:三张便签 */
+  .others-intro .ot-board {
+    position: relative;
+    min-height: 220px;
+    border: 1px dashed var(--border-400, #b39d7b);
+    border-radius: 8px;
+  }
+  .others-intro .ot-mini {
+    position: absolute;
+    width: 30%;
+    min-width: 84px;
+    padding: 1.1rem 0.7rem 0.7rem;
+  }
+  .others-intro .ot-mini:nth-child(1) {
+    top: 6%;
+    left: 8%;
+  }
+  .others-intro .ot-mini:nth-child(2) {
+    top: 30%;
+    right: 10%;
+  }
+  .others-intro .ot-mini:nth-child(3) {
+    bottom: 8%;
+    left: 26%;
+  }
+  .others-intro .ot-mini .pin {
+    top: -7px;
+  }
+
+  /* 右:标题 */
+  .others-intro .ot-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .others-intro .ot-en {
+    margin: 0;
+    font-family: var(--font-condensed, sans-serif);
+    font-size: 12.5px;
+    letter-spacing: 0.3em;
+    color: var(--muted-foreground, #7a6a54);
+  }
+  .others-intro .ot-title {
+    margin: 0.9rem 0 0;
+    font-family: var(--font-display, serif);
+    font-weight: 700;
+    line-height: 1.12;
+  }
+  .others-intro .ot-title .mask {
+    display: block;
+    overflow: hidden;
+  }
+  .others-intro .ot-title .line {
+    display: block;
+    font-size: clamp(42px, 7vw, 68px);
+  }
+  .others-intro .ot-sub {
+    margin: 1rem 0 0;
+    font-size: 15px;
+    color: var(--muted-foreground, #7a6a54);
+  }
+  .others-intro .ot-stamp {
+    margin-top: 1.5rem;
+  }
+
+  /* 跳过按钮 */
+  .others-intro .ot-skip {
+    position: absolute;
+    right: max(20px, env(safe-area-inset-right));
+    bottom: max(20px, env(safe-area-inset-bottom));
+    padding: 0.5em 1.1em;
+    border: 1px solid var(--border, #c9b391);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--muted-foreground, #7a6a54);
+    font-family: var(--font-sans, sans-serif);
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    cursor: pointer;
+    transition:
+      color 0.18s ease,
+      border-color 0.18s ease;
+  }
+  .others-intro .ot-skip:hover {
+    color: var(--foreground, #3c3125);
+    border-color: var(--primary, #35618f);
+  }
+
+  @media (max-width: 899px) {
+    .others-intro .ot-stage {
+      grid-template-columns: auto minmax(0, 1fr);
+    }
+    .others-intro .ot-board {
+      display: none;
+    }
+    .others-intro .ot-title .line {
+      font-size: clamp(36px, 10vw, 54px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .others-intro {
+      display: none;
+    }
+  }
+</style>

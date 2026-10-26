@@ -1,0 +1,239 @@
+/* ============================================================
+   「抽屉杂记」其他专栏视觉系统
+   软木板留言板语言:软木棕底 + 牛皮纸/米黄/浅绿便签 + 纸胶带 +
+   图钉,等宽日期戳,卡片轻微确定性旋转。仅在 body[data-page='others']
+   内生效:重定义语义令牌,全站 Header/Footer/播放器自动换装。
+   ============================================================ */
+
+body[data-page='others'] {
+  /* 覆盖全局令牌:软木板 + 墨蓝笔迹 */
+  --background: #dfcdae;
+  --card: #f6efdd;
+  --popover: #f1e7d2;
+  --muted: #d4bf9d;
+  --foreground: #3c3125;
+  --card-foreground: #3c3125;
+  --muted-foreground: #7a6a54;
+  --primary: #35618f; /* 墨蓝 */
+  --primary-foreground: #f6efdd;
+  --secondary: #e9dcc2;
+  --secondary-foreground: #4a3d2d;
+  --accent: rgba(53, 97, 143, 0.1);
+  --accent-foreground: #2b4f77;
+  --border: #c9b391;
+  --border-300: #c9b391;
+  --border-400: #b39d7b;
+  --ring: #35618f;
+  --header-bg: color-mix(in srgb, #dfcdae 94%, transparent);
+
+  /* 品牌色覆盖 */
+  --brand-300: #5b83ae;
+  --brand-400: #44719d;
+  --brand-500: #35618f;
+  --brand-600: #2b4f77;
+  --brand-700: #22405f;
+
+  /* 专栏专属:便签三色与图钉红 */
+  --note-kraft: #e8d5ae;
+  --note-cream: #f6efdd;
+  --note-mint: #dce8d5;
+  --pin-red: #b5432f;
+
+  --card-alpha: 1;
+  --card-border-alpha: 1;
+
+  font-size: 15px;
+  line-height: 1.8;
+
+  background: var(--background);
+  color: var(--foreground);
+}
+
+/* 软木板底纹:细密颗粒 + 极淡木纹横线 */
+body[data-page='others'] {
+  background-image:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0 22px,
+      rgba(122, 106, 84, 0.06) 22px 23px
+    ),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+}
+
+/* 裁掉旋转便签造成的横向溢出 */
+html:has(body[data-page='others']) {
+  overflow-x: clip;
+}
+
+/* 暗色:深胡桃木板 */
+:root[data-theme='dark'] body[data-page='others'],
+html[data-theme='dark'] body[data-page='others'] {
+  --background: #241d15;
+  --card: #2e261b;
+  --popover: #332a1e;
+  --muted: #332a1e;
+  --foreground: #e8ddc9;
+  --card-foreground: #e8ddc9;
+  --muted-foreground: #a4937a;
+  --primary: #85acd4;
+  --primary-foreground: #241d15;
+  --secondary: #332a1e;
+  --secondary-foreground: #cbbfa7;
+  --accent: rgba(133, 172, 212, 0.12);
+  --accent-foreground: #a5c4e2;
+  --border: rgba(232, 221, 201, 0.16);
+  --border-300: rgba(232, 221, 201, 0.16);
+  --border-400: rgba(232, 221, 201, 0.26);
+  --ring: #85acd4;
+  --header-bg: color-mix(in srgb, #241d15 92%, transparent);
+  --brand-300: #a5c4e2;
+  --brand-400: #95b8da;
+  --brand-500: #85acd4;
+  --brand-600: #6b93bd;
+  --brand-700: #557ba3;
+
+  --note-kraft: #3a3122;
+  --note-cream: #38301f;
+  --note-mint: #2c3626;
+  --pin-red: #d3705e;
+
+  /* 关掉全局暗色深空渐变 */
+  background: var(--background);
+  background-image:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0 22px,
+      rgba(232, 221, 201, 0.04) 22px 23px
+    ),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.1'/%3E%3C/svg%3E");
+}
+
+/* 专栏页面不显示全局星空与暗色光晕 */
+body[data-page='others']::before,
+:root[data-theme='dark'] body[data-page='others']::before,
+:root[data-theme='dark'] body[data-page='others']::after,
+html[data-theme='dark'] body[data-page='others']::after {
+  display: none;
+  content: none;
+}
+
+/* ============ 软木板公共构件 ============ */
+
+/* 专栏容器 */
+body[data-page='others'] .others {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: clamp(1.1rem, 4vw, 3rem);
+}
+
+/* 等宽小标 */
+body[data-page='others'] .mono-label {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: var(--muted-foreground);
+}
+
+/* 便签:纸色块 + 顶部图钉 + 轻微旋转(旋转角由内联 --tilt 控制) */
+body[data-page='others'] .note-card {
+  position: relative;
+  display: block;
+  background: var(--note-cream);
+  color: var(--foreground);
+  padding: 1.4rem 1.1rem 1.1rem;
+  box-shadow:
+    0 2px 6px rgba(60, 49, 37, 0.14),
+    0 8px 18px -8px rgba(60, 49, 37, 0.2);
+  transform: rotate(var(--tilt, 0deg));
+  text-decoration: none;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+body[data-page='others'] a.note-card:hover {
+  transform: rotate(0deg) translateY(-3px);
+  box-shadow:
+    0 4px 10px rgba(60, 49, 37, 0.18),
+    0 14px 26px -10px rgba(60, 49, 37, 0.28);
+  text-decoration: none;
+}
+body[data-page='others'] .note-card[data-tone='kraft'] {
+  background: var(--note-kraft);
+}
+body[data-page='others'] .note-card[data-tone='mint'] {
+  background: var(--note-mint);
+}
+
+/* 图钉 */
+body[data-page='others'] .pin {
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  margin-left: -8px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #e08a75, var(--pin-red) 70%);
+  box-shadow: 0 2px 4px rgba(60, 49, 37, 0.4);
+}
+
+/* 纸胶带(左上斜贴) */
+body[data-page='others'] .tape {
+  position: absolute;
+  top: -10px;
+  right: 14%;
+  width: 64px;
+  height: 20px;
+  background: color-mix(in srgb, var(--primary) 26%, white);
+  opacity: 0.75;
+  transform: rotate(-6deg);
+  box-shadow: 0 1px 3px rgba(60, 49, 37, 0.18);
+}
+
+/* 墨蓝印章 */
+body[data-page='others'] .o-stamp {
+  display: inline-block;
+  padding: 0.3em 0.75em;
+  border: 1.5px solid var(--primary);
+  border-radius: 4px;
+  color: var(--primary);
+  font-family: var(--font-serif);
+  font-size: 13px;
+  letter-spacing: 0.28em;
+  transform: rotate(3deg);
+  opacity: 0.9;
+}
+
+/* 页面元素错峰进场 */
+body[data-page='others'] .o-rise {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: o-rise-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+body[data-page='others'] .o-rise.d1 {
+  animation-delay: 0.08s;
+}
+body[data-page='others'] .o-rise.d2 {
+  animation-delay: 0.18s;
+}
+body[data-page='others'] .o-rise.d3 {
+  animation-delay: 0.3s;
+}
+body[data-page='others'] .o-rise.d4 {
+  animation-delay: 0.42s;
+}
+@keyframes o-rise-in {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body[data-page='others'] .o-rise {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

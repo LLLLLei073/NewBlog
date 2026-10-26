@@ -1,116 +1,250 @@
 ---
 /**
- * 其他专栏首页(过渡版):Phase 4 将替换为「抽屉杂记」
- * 软木板式独立界面与开屏动画。先保证 /others/ 路由与全站入口可用。
+ * 「抽屉杂记」其他专栏首页:软木板布局。
+ * hero(左文案 + 右钉着真实文章便签的木板) → 话题标签 → 便签墙。
  */
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import FormattedDate from '../../components/FormattedDate.astro';
+import OthersNav from '../../components/others/OthersNav.astro';
+import PinnedNote from '../../components/others/PinnedNote.astro';
+import OthersIntro from '../../components/intro/OthersIntro.astro';
+import { COLUMN, TOPICS } from '../../data/others/column.ts';
 import { postHref } from '../../utils/postRoute.ts';
 import { getPostCategory } from '../../utils/categories.ts';
 
 const posts = (await getCollection('blog'))
   .filter((p) => !p.data.draft && getPostCategory(p.data).id === 'others')
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const pinned = posts.slice(0, 3);
+
+/* 从描述与标题归纳话题标签(项目/建站/随笔) */
+const tagOf = (title: string, desc: string): string => {
+  const text = `${title}${desc}`;
+  if (/项目|应用|工具|tracker|桌面/.test(text)) return '项目';
+  if (/博客|建站|部署|astro|github/i.test(text)) return '建站';
+  return '随笔';
+};
+
+const fmtDate = (d: Date) =>
+  `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
 ---
 
 <BaseLayout
-  title="其他专栏"
-  description="未归入四大专栏的项目记录、随笔与建站笔记。"
+  title="抽屉杂记"
+  description={COLUMN.intro}
   pageName="others"
 >
-  <section class="container">
-    <div class="page-head">
-      <p class="eyebrow">专栏</p>
-      <h1>其他</h1>
-      <p class="lead">抽屉里的那些事:项目、随笔与建站记录。</p>
-      <p class="count">共 {posts.length} 篇文章</p>
-    </div>
-    <div class="post-list">
-      {
-        posts.map((post) => (
-          <a href={postHref(post.id, post.data.category)} class="post-card">
-            <div class="post-meta">
-              <FormattedDate date={post.data.pubDate} />
-            </div>
-            <h2>{post.data.title}</h2>
-            <p class="desc">{post.data.description}</p>
-          </a>
-        ))
-      }
-    </div>
-  </section>
+  <div class="others others-page">
+    <OthersNav />
+    <OthersIntro />
+
+    <!-- ======== 首屏:木板 ======== -->
+    <section class="hero o-rise" aria-label="专栏介绍">
+      <div class="hero-copy o-rise d1">
+        <p class="hero-kicker mono-label">{COLUMN.en}</p>
+        <h1>{COLUMN.headline}</h1>
+        <p class="hero-sub">「{COLUMN.sub}」</p>
+        <p class="hero-intro">{COLUMN.intro}</p>
+        <div class="hero-cta">
+          <a class="cta-primary" href="/others/notes/">翻看全部便签 →</a>
+        </div>
+        <p class="hero-latest mono-label">
+          板上共 <span class="mono-num">{posts.length}</span> 张便签
+        </p>
+      </div>
+
+      <div class="hero-board o-rise d2" aria-label="最近便签">
+        {
+          pinned.length > 0 ? (
+            pinned.map((p, i) => (
+              <PinnedNote
+                title={p.data.title}
+                desc={p.data.description}
+                date={fmtDate(p.data.pubDate)}
+                tag={tagOf(p.data.title, p.data.description)}
+                href={postHref(p.id, p.data.category)}
+                tone={i}
+                index={i}
+              />
+            ))
+          ) : (
+            <PinnedNote
+              title="第一张便签等你来钉"
+              desc="没归进四大专栏的东西,都会放在这块板上。"
+              tag="开始"
+            />
+          )
+        }
+      </div>
+    </section>
+
+    <!-- ======== 话题标签 ======== -->
+    <section class="topics" aria-label="话题标签">
+      <header class="sec-head o-rise">
+        <h2>板上的标签<span class="mono-label">TAGS</span></h2>
+        <p class="sec-note">{COLUMN.topicsHint}</p>
+      </header>
+      <ul class="topic-list">
+        {
+          TOPICS.map((t, i) => (
+            <li class:list={['o-rise', `d${i + 1}`]}>
+              <span class="topic-tag">{t.tag}</span>
+              <span class="topic-note">{t.note}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <!-- ======== 便签墙入口 ======== -->
+    <section class="wall-entry o-rise" aria-label="便签墙入口">
+      <p>
+        想一篇篇翻?去
+        <a href="/others/notes/">全部便签</a> 按时间看。
+      </p>
+    </section>
+  </div>
 </BaseLayout>
 
 <style>
-  .page-head {
-    padding: 2.5rem 0 1.75rem;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 1.25rem;
+  .others-page {
+    padding-bottom: clamp(3rem, 7vw, 5rem);
   }
-  .eyebrow {
-    font-family: var(--font-sans);
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--primary);
-    margin: 0 0 0.65rem;
+
+  /* ===== 首屏 ===== */
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.4rem;
+    align-items: center;
+    padding: clamp(1.8rem, 4vw, 3.2rem) 0 clamp(2rem, 4vw, 3rem);
+    border-bottom: 1px dashed var(--border-400);
+    margin-bottom: 2.6rem;
   }
-  .page-head h1 {
-    font-size: 2rem;
-    margin: 0 0 0.4rem;
+  @media (min-width: 960px) {
+    .hero {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+      gap: 3rem;
+    }
   }
-  .lead {
-    font-family: var(--font-sans);
-    font-size: 0.95rem;
-    color: var(--muted-foreground);
-    margin: 0 0 0.4rem;
-  }
-  .count {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    color: var(--muted-foreground);
+
+  .hero-kicker {
     margin: 0;
   }
-  .post-list {
+  .hero-copy h1 {
+    margin: 1rem 0 0;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(30px, 4.6vw, 50px);
+    line-height: 1.22;
+    color: var(--foreground);
+  }
+  .hero-sub {
+    margin: 0.9rem 0 0;
+    font-family: var(--font-serif);
+    color: var(--primary);
+    letter-spacing: 0.1em;
+  }
+  .hero-intro {
+    margin: 1.2rem 0 0;
+    max-width: 46ch;
+    font-size: 14.5px;
+    line-height: 1.9;
+    color: var(--muted-foreground);
+  }
+  .hero-cta {
+    margin-top: 1.6rem;
+  }
+  .cta-primary {
+    display: inline-block;
+    padding: 0.62em 1.35em;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    text-decoration: none;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    transition:
+      background-color 0.18s ease,
+      color 0.18s ease;
+  }
+  .cta-primary:hover {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+  .hero-latest {
+    margin: 1.3rem 0 0;
+  }
+
+  .hero-board {
+    position: relative;
+    min-height: 320px;
+    border: 1px dashed var(--border-400);
+    border-radius: 10px;
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 1.6rem 1.2rem;
+    align-content: center;
+  }
+
+  /* ===== 标签 ===== */
+  .sec-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.9rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.4rem;
+  }
+  .sec-head h2 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(22px, 3vw, 30px);
+  }
+  .sec-note {
+    margin: 0;
+    font-size: 13.5px;
+    color: var(--muted-foreground);
+    flex-basis: 100%;
+  }
+
+  .topic-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+  .topic-list li {
     display: flex;
     flex-direction: column;
-    gap: 0.875rem;
-    padding-bottom: 2rem;
-  }
-  .post-card {
-    display: block;
-    padding: 1.25rem;
+    gap: 0.4rem;
+    padding: 1rem 1.1rem;
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: var(--radius);
-    transition:
-      border-color 0.15s ease,
-      box-shadow 0.15s ease,
-      transform 0.2s ease;
+    box-shadow: 0 2px 6px rgba(60, 49, 37, 0.12);
   }
-  .post-card:hover {
-    text-decoration: none;
-    border-color: var(--brand-300);
-    box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
+  .topic-tag {
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-size: 17px;
+    color: var(--primary);
   }
-  .post-meta {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
+  .topic-note {
+    font-size: 13.5px;
+    line-height: 1.8;
     color: var(--muted-foreground);
-    margin-bottom: 0.4rem;
   }
-  .post-card h2 {
-    font-size: 1.2rem;
-    margin: 0 0 0.4rem;
-    color: var(--card-foreground);
-  }
-  .desc {
-    margin: 0;
-    font-size: 0.875rem;
+
+  .wall-entry {
+    margin-top: 2.6rem;
+    text-align: center;
+    font-size: 14.5px;
     color: var(--muted-foreground);
-    line-height: 1.5;
+  }
+  .wall-entry a {
+    color: var(--primary);
+    font-weight: 600;
   }
 </style>

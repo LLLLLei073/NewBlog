@@ -1,111 +1,100 @@
 ---
 /**
- * 其他专栏手记列表(过渡版):Phase 4 将替换为「抽屉杂记」主题版本。
+ * 「抽屉杂记」全部便签:按时间铺开的便签墙。
  */
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import FormattedDate from '../../components/FormattedDate.astro';
+import OthersNav from '../../components/others/OthersNav.astro';
+import PinnedNote from '../../components/others/PinnedNote.astro';
 import { postHref } from '../../utils/postRoute.ts';
 import { getPostCategory } from '../../utils/categories.ts';
 
 const posts = (await getCollection('blog'))
   .filter((p) => !p.data.draft && getPostCategory(p.data).id === 'others')
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const fmtDate = (d: Date) =>
+  `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
 ---
 
 <BaseLayout
-  title="其他手记"
-  description="其他专栏全部手记列表。"
+  title="全部便签 · 抽屉杂记"
+  description="其他专栏全部文章:项目、建站与随笔,按时间钉在板上。"
   pageName="others"
 >
-  <section class="container">
-    <div class="page-head">
-      <p class="eyebrow"><a href="/others/">其他专栏</a> / 手记</p>
-      <h1>全部手记</h1>
-      <p class="count">共 {posts.length} 篇</p>
-    </div>
-    <div class="post-list">
-      {
-        posts.map((post) => (
-          <a href={postHref(post.id, post.data.category)} class="post-card">
-            <div class="post-meta">
-              <FormattedDate date={post.data.pubDate} />
-            </div>
-            <h2>{post.data.title}</h2>
-            <p class="desc">{post.data.description}</p>
-          </a>
-        ))
-      }
-    </div>
-  </section>
+  <div class="others notes-page">
+    <OthersNav />
+
+    <header class="page-head o-rise">
+      <p class="mono-label">NOTE WALL · {posts.length} 张</p>
+      <h1>全部便签</h1>
+      <p class="head-note">
+        抽屉里的东西全在这块板上,按钉上去的时间从新到旧排列。
+      </p>
+    </header>
+
+    {
+      posts.length > 0 ? (
+        <div class="wall o-rise d1">
+          {posts.map((p, i) => (
+            <PinnedNote
+              title={p.data.title}
+              desc={p.data.description}
+              date={fmtDate(p.data.pubDate)}
+              href={postHref(p.id, p.data.category)}
+              tone={i}
+              index={i}
+            />
+          ))}
+        </div>
+      ) : (
+        <p class="empty o-rise d1">板还空着,第一张便签等你来钉。</p>
+      )
+    }
+  </div>
 </BaseLayout>
 
 <style>
-  .page-head {
-    padding: 2.5rem 0 1.75rem;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 1.25rem;
+  .notes-page {
+    padding-top: clamp(2rem, 5vw, 3.2rem);
+    padding-bottom: clamp(3.5rem, 8vw, 5.5rem);
+    max-width: 1020px;
   }
-  .eyebrow {
-    font-family: var(--font-sans);
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--primary);
-    margin: 0 0 0.65rem;
-  }
-  .eyebrow a {
-    color: inherit;
-  }
+
   .page-head h1 {
-    font-size: 2rem;
-    margin: 0 0 0.4rem;
+    margin: 0.7rem 0 0;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(30px, 4vw, 48px);
+    color: var(--foreground);
   }
-  .count {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
+  .head-note {
+    margin: 1rem 0 0;
+    max-width: 50ch;
+    font-size: 14.5px;
+    line-height: 1.9;
     color: var(--muted-foreground);
-    margin: 0;
   }
-  .post-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.875rem;
-    padding-bottom: 2rem;
+
+  .wall {
+    margin-top: 2.4rem;
+    padding: 1.2rem;
+    border: 1px dashed var(--border-400);
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.8rem 1.4rem;
   }
-  .post-card {
-    display: block;
-    padding: 1.25rem;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    transition:
-      border-color 0.15s ease,
-      box-shadow 0.15s ease,
-      transform 0.2s ease;
-  }
-  .post-card:hover {
-    text-decoration: none;
-    border-color: var(--brand-300);
-    box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
-  }
-  .post-meta {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
+  .empty {
+    margin-top: 2rem;
+    padding: 1.4rem 0;
     color: var(--muted-foreground);
-    margin-bottom: 0.4rem;
+    font-size: 14.5px;
   }
-  .post-card h2 {
-    font-size: 1.2rem;
-    margin: 0 0 0.4rem;
-    color: var(--card-foreground);
-  }
-  .desc {
-    margin: 0;
-    font-size: 0.875rem;
-    color: var(--muted-foreground);
-    line-height: 1.5;
+
+  @media (max-width: 480px) {
+    .wall {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

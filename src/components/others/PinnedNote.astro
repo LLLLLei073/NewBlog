@@ -1,0 +1,66 @@
+---
+/**
+ * 「抽屉杂记」便签卡:图钉 + 纸胶带 + 确定性旋转。
+ * 旋转角与便签色按标题 hash 派生,同一篇文章永远是同一张便签。
+ */
+interface Props {
+  title: string;
+  desc?: string;
+  date?: string;
+  tag?: string;
+  href?: string;
+  /** 便签色序号(0 米黄 / 1 牛皮 / 2 浅绿) */
+  tone?: number;
+  /** 额外旋转偏移,避免并排便签同角 */
+  index?: number;
+}
+
+const { title, desc, date, tag, href, tone = 0, index = 0 } = Astro.props;
+
+const hash = [...title].reduce((h, ch) => (h * 31 + ch.codePointAt(0)!) | 0, 7);
+const tilt = (((hash >>> 3) % 5) - 2) * 0.8 + index * 0.4;
+const tones = ['', 'kraft', 'mint'] as const;
+const toneAttr = tones[tone % tones.length];
+const Tag = (href ? 'a' : 'div') as 'a' | 'div';
+---
+
+<Tag
+  class="note-card"
+  href={href}
+  data-tone={toneAttr || undefined}
+  style={`--tilt: ${tilt.toFixed(1)}deg`}
+>
+  <i class="pin" aria-hidden="true"></i>
+  <i class="tape" aria-hidden="true"></i>
+  {tag && <p class="n-tag mono-label">{tag}</p>}
+  <h3 class="n-title">{title}</h3>
+  {desc && <p class="n-desc">{desc}</p>}
+  {date && <p class="n-date mono-label">{date}</p>}
+</Tag>
+
+<style>
+  .n-tag {
+    margin: 0 0 0.35rem;
+    color: var(--primary);
+  }
+  .n-title {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--foreground);
+  }
+  .n-desc {
+    margin: 0.5rem 0 0;
+    font-size: 13.5px;
+    line-height: 1.75;
+    color: var(--muted-foreground);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .n-date {
+    margin: 0.8rem 0 0;
+  }
+</style>
