@@ -40,3 +40,19 @@ test('complexity result count uses only one of the duplicated row layouts', () =
     /if \(hit && row\.closest\('\[data-cx-table\]'\)\) visible\+\+;/,
   );
 });
+
+test('every column intro skip control meets the 44px touch target', () => {
+  for (const name of [
+    'AlgorithmIntro',
+    'MathIntro',
+    'GameIntro',
+    'OthersIntro',
+    'MusicIntro',
+  ]) {
+    const source = readFileSync(
+      `src/components/intro/${name}.astro`,
+      'utf8',
+    );
+    assert.match(source, /min-height:\s*44px/, `${name} 跳过按钮需 ≥44px 高`);
+  }
+});

@@ -81,7 +81,12 @@ const fmtDate = (d: Date) =>
         {
           SECTIONS.map((s, i) => (
             <div class:list={['g-rise', `d${(i % 4) + 1}`]}>
-              <HudCard slot={s.slot} label={s.en} title={s.title} note={s.note} />
+              <HudCard
+                slot={s.slot}
+                label={s.en}
+                title={s.title}
+                note={s.note}
+              />
               <ul class="slot-items">
                 {s.items.map((it) => (
                   <li>{it}</li>
@@ -96,7 +101,9 @@ const fmtDate = (d: Date) =>
     <!-- ======== 存档列表 ======== -->
     <section class="saves" aria-label="手记存档">
       <header class="sec-head g-rise">
-        <h2>存档列表<span class="mono-label">SAVED · {posts.length} 篇</span></h2>
+        <h2>
+          存档列表<span class="mono-label">SAVED · {posts.length} 篇</span>
+        </h2>
         {
           posts.length > 0 && (
             <a href="/game/notes/" class="sec-more">
@@ -220,6 +227,9 @@ const fmtDate = (d: Date) =>
     margin: 0;
     font-family: var(--font-display);
     font-size: clamp(22px, 3vw, 30px);
+  }
+  .sec-head h2 .mono-label {
+    margin-left: 0.65rem;
   }
   .sec-note {
     margin: 0;

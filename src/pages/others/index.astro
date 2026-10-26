@@ -30,11 +30,7 @@ const fmtDate = (d: Date) =>
   `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
 ---
 
-<BaseLayout
-  title="抽屉杂记"
-  description={COLUMN.intro}
-  pageName="others"
->
+<BaseLayout title="抽屉杂记" description={COLUMN.intro} pageName="others">
   <div class="others others-page">
     <OthersNav />
     <OthersIntro />
@@ -200,6 +196,9 @@ const fmtDate = (d: Date) =>
     margin: 0;
     font-family: var(--font-display);
     font-size: clamp(22px, 3vw, 30px);
+  }
+  .sec-head h2 .mono-label {
+    margin-left: 0.65rem;
   }
   .sec-note {
     margin: 0;

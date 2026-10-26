@@ -41,7 +41,9 @@ function play(ctx: TimelineContext): void {
 
   const corners = Array.from(root.querySelectorAll('.mt-corner'));
   const plate = $('[data-mt-plate]');
-  const draws = Array.from(root.querySelectorAll<SVGGeometryElement>('[data-mt-draw]'));
+  const draws = Array.from(
+    root.querySelectorAll<SVGGeometryElement>('[data-mt-draw]'),
+  );
   /* DOM 顺序即绘制顺序:轴、轴、圆、半径、角度弧、正弦 */
   const [axisX, axisY, circle, radius, arc, sine] = draws;
   const en = $('[data-mt-en]');
@@ -180,6 +182,10 @@ function handoff(ctx: TimelineContext): void {
     const to = heroArt.getBoundingClientRect();
     if (from.width > 0 && to.width > 0) {
       heroArt.style.opacity = '0';
+      // 交接被跳过时也要恢复首页元素(清理函数在自然结束/硬取消都会执行)
+      ctx.cleanup(() => {
+        heroArt.style.opacity = '';
+      });
       const dx = to.left + to.width / 2 - (from.left + from.width / 2);
       const dy = to.top + to.height / 2 - (from.top + from.height / 2);
       const s = to.width / from.width;
@@ -191,18 +197,14 @@ function handoff(ctx: TimelineContext): void {
         ],
         { duration: 460, easing: ctx.IN },
       );
-      ctx.animate(
-        plate,
-        [{ opacity: 1 }, { opacity: 0 }],
-        {
-          delay: 240,
-          duration: 220,
-          easing: ctx.OUT,
-        },
-      );
-      setTimeout(() => {
+      ctx.animate(plate, [{ opacity: 1 }, { opacity: 0 }], {
+        delay: 240,
+        duration: 220,
+        easing: ctx.OUT,
+      });
+      ctx.wait(500, () => {
         heroArt.style.opacity = '';
-      }, 500);
+      });
       flipped = true;
     }
   }

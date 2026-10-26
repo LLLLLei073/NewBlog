@@ -96,6 +96,41 @@ test('head exposes RSS, locale and complete share image metadata', () => {
   assert.match(html, /<meta name="twitter:image:alt" content="[^"]+">/);
 });
 
+test('five column homepages keep their own theme, intro and one main landmark', () => {
+  const cases: [string, string][] = [
+    ['algorithm', 'data-algorithm-intro'],
+    ['math', 'data-math-intro'],
+    ['music', 'data-music-intro'],
+    ['game', 'data-game-intro'],
+    ['others', 'data-others-intro'],
+  ];
+  for (const [col, intro] of cases) {
+    const html = readFileSync(join(dist, col, 'index.html'), 'utf8');
+    assert.ok(html.includes(`data-page="${col}"`), `${col} 缺少主题标识`);
+    assert.ok(html.includes(intro), `${col} 缺少开屏挂载点`);
+    assert.equal(
+      (html.match(/<main/g) ?? []).length,
+      1,
+      `${col} main 地标不唯一`,
+    );
+    assert.ok(!html.includes('href="/categories/'), `${col} 仍有旧分类链接`);
+  }
+});
+
+test('column article pages inherit their own theme and back link', () => {
+  const cases: [string, string[], string][] = [
+    ['music', ['music', 'notes', 'music-column-intro'], '返回音乐手记'],
+    ['math', ['math', 'notes', 'math-column-intro'], '返回手记图鉴'],
+    ['game', ['game', 'notes', 'game-column-intro'], '返回手记存档'],
+    ['others', ['others', 'notes', 'cf-friend-tracker'], '返回全部便签'],
+  ];
+  for (const [col, segments, back] of cases) {
+    const html = readFileSync(join(dist, ...segments, 'index.html'), 'utf8');
+    assert.ok(html.includes(`data-page="${col}"`), `${col} 文章页未换装`);
+    assert.ok(html.includes(back), `${col} 文章页返回链接错误`);
+  }
+});
+
 test('legacy category and article urls redirect to new column namespaces', () => {
   const columnHomes: Record<string, string> = {
     algorithm: '/algorithm/',

@@ -56,9 +56,7 @@ import { COLUMN } from '../../data/others/column.ts';
     </div>
   </div>
 
-  <button type="button" class="ot-skip" data-intro-skip>
-    跳过开屏
-  </button>
+  <button type="button" class="ot-skip" data-intro-skip> 跳过开屏 </button>
 </div>
 
 <script>
@@ -79,7 +77,8 @@ import { COLUMN } from '../../data/others/column.ts';
     height: 100dvh;
     z-index: 300;
     display: grid;
-    place-items: center;
+    /* 矮视口(手机横屏)下内容可纵向滚动,而不是被裁切 */
+    overflow-y: auto;
     background: var(--background, #dfcdae);
     color: var(--foreground, #3c3125);
     padding: env(safe-area-inset-top) env(safe-area-inset-right)
@@ -90,6 +89,7 @@ import { COLUMN } from '../../data/others/column.ts';
   }
 
   .others-intro .ot-stage {
+    margin-block: auto;
     display: grid;
     grid-template-columns: auto minmax(0, 10fr) minmax(0, 9fr);
     align-items: center;
@@ -206,6 +206,11 @@ import { COLUMN } from '../../data/others/column.ts';
     position: absolute;
     right: max(20px, env(safe-area-inset-right));
     bottom: max(20px, env(safe-area-inset-bottom));
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
     padding: 0.5em 1.1em;
     border: 1px solid var(--border, #c9b391);
     border-radius: 999px;

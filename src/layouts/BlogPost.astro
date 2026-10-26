@@ -1170,14 +1170,16 @@ const currentPath = Astro.url.pathname;
       if (target.closest('a')) setOpen(false);
     });
 
-    document.addEventListener('pointerdown', (e: PointerEvent) => {
+    // 面板外点击关闭(命名监听,换页时随清理函数移除)
+    const onPointerDown = (e: PointerEvent) => {
       if (
         fab.getAttribute('aria-expanded') === 'true' &&
         !panel.contains(e.target as Node) &&
         !fab.contains(e.target as Node)
       )
         setOpen(false);
-    });
+    };
+    document.addEventListener('pointerdown', onPointerDown);
 
     // Tab 切换：目录 / 文章
     const tabs = Array.from(
@@ -1210,6 +1212,7 @@ const currentPath = Astro.url.pathname;
     mq.addEventListener('change', onMq);
 
     return () => {
+      document.removeEventListener('pointerdown', onPointerDown);
       document.removeEventListener('keydown', onKey);
       mq.removeEventListener('change', onMq);
     };

@@ -111,8 +111,16 @@ const arcD = `M${CX + arcR} ${CY} A${arcR} ${arcR} 0 0 0 ${ax.toFixed(1)} ${ay.t
 
   <!-- 关键点 -->
   <circle cx={CX} cy={CY} r="2.4" fill="currentColor"></circle>
-  <circle cx={px.toFixed(1)} cy={py.toFixed(1)} r="3" fill="var(--math-vermilion, #b23a2e)"></circle>
-  <circle cx={xs.toFixed(1)} cy={sy.toFixed(1)} r="3" fill="var(--primary, #31469e)"></circle>
+  <circle
+    cx={px.toFixed(1)}
+    cy={py.toFixed(1)}
+    r="3"
+    fill="var(--math-vermilion, #b23a2e)"></circle>
+  <circle
+    cx={xs.toFixed(1)}
+    cy={sy.toFixed(1)}
+    r="3"
+    fill="var(--primary, #31469e)"></circle>
 
   <!-- θ 标注 -->
   <text
@@ -121,7 +129,8 @@ const arcD = `M${CX + arcR} ${CY} A${arcR} ${arcR} 0 0 0 ${ax.toFixed(1)} ${ay.t
     font-size="12"
     font-style="italic"
     fill="currentColor"
-    opacity="0.7">θ</text>
+    opacity="0.7">θ</text
+  >
 </svg>
 
 <style>

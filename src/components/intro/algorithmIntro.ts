@@ -20,7 +20,9 @@ import {
 const STORAGE_KEY = 'algorithm-column-intro-v1';
 
 export function isAlgorithmHome(): boolean {
-  return location.pathname === '/algorithm/' || location.pathname === '/algorithm';
+  return (
+    location.pathname === '/algorithm/' || location.pathname === '/algorithm'
+  );
 }
 
 export function mountAlgorithmIntro(): void {
@@ -174,6 +176,10 @@ function handoff(ctx: TimelineContext): void {
     const to = heroRight.getBoundingClientRect();
     if (from.width > 0 && to.width > 0) {
       heroRight.style.opacity = '0';
+      // 交接被跳过时也要恢复首页元素(清理函数在自然结束/硬取消都会执行)
+      ctx.cleanup(() => {
+        heroRight.style.opacity = '';
+      });
       const dx = to.left + to.width / 2 - (from.left + from.width / 2);
       const dy = to.top + to.height / 2 - (from.top + from.height / 2);
       const s = Math.min(to.width / from.width, to.height / from.height);
@@ -185,9 +191,9 @@ function handoff(ctx: TimelineContext): void {
         ],
         { duration: 460, easing: ctx.IN },
       );
-      window.setTimeout(() => {
+      ctx.wait(500, () => {
         heroRight.style.opacity = '';
-      }, 500);
+      });
       flipped = true;
     }
   }

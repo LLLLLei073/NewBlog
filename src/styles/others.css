@@ -13,8 +13,8 @@ body[data-page='others'] {
   --muted: #d4bf9d;
   --foreground: #3c3125;
   --card-foreground: #3c3125;
-  --muted-foreground: #7a6a54;
-  --primary: #35618f; /* 墨蓝 */
+  --muted-foreground: #65533f; /* 软木板次要文字:对木底 ≥4.5:1 */
+  --primary: #2b4f77; /* 墨蓝(对木底 ≥4.5:1) */
   --primary-foreground: #f6efdd;
   --secondary: #e9dcc2;
   --secondary-foreground: #4a3d2d;
@@ -23,15 +23,15 @@ body[data-page='others'] {
   --border: #c9b391;
   --border-300: #c9b391;
   --border-400: #b39d7b;
-  --ring: #35618f;
+  --ring: #2b4f77;
   --header-bg: color-mix(in srgb, #dfcdae 94%, transparent);
 
   /* 品牌色覆盖 */
   --brand-300: #5b83ae;
-  --brand-400: #44719d;
-  --brand-500: #35618f;
-  --brand-600: #2b4f77;
-  --brand-700: #22405f;
+  --brand-400: #35618f;
+  --brand-500: #2b4f77;
+  --brand-600: #22405f;
+  --brand-700: #1a334c;
 
   /* 专栏专属:便签三色与图钉红 */
   --note-kraft: #e8d5ae;
@@ -74,7 +74,7 @@ html[data-theme='dark'] body[data-page='others'] {
   --muted: #332a1e;
   --foreground: #e8ddc9;
   --card-foreground: #e8ddc9;
-  --muted-foreground: #a4937a;
+  --muted-foreground: #b3a28a; /* 便签深底次要文字 ≥4.5:1 */
   --primary: #85acd4;
   --primary-foreground: #241d15;
   --secondary: #332a1e;

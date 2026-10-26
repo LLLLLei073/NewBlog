@@ -56,7 +56,9 @@ const EDGES = [
                 cx={n.x}
                 cy={n.y}
                 r={n.r}
-                fill={i === 3 ? 'var(--primary, #3b6ea5)' : 'var(--card, #f4f4ef)'}
+                fill={
+                  i === 3 ? 'var(--primary, #3b6ea5)' : 'var(--card, #f4f4ef)'
+                }
                 stroke="var(--primary, #3b6ea5)"
                 stroke-width="1.6"
               />
@@ -92,9 +94,7 @@ const EDGES = [
     </div>
   </div>
 
-  <button type="button" class="ai-skip" data-intro-skip>
-    跳过开屏
-  </button>
+  <button type="button" class="ai-skip" data-intro-skip> 跳过开屏 </button>
 </div>
 
 <script>
@@ -118,7 +118,8 @@ const EDGES = [
     height: 100dvh;
     z-index: 300;
     display: grid;
-    place-items: center;
+    /* 矮视口(手机横屏)下内容可纵向滚动,而不是被裁切 */
+    overflow-y: auto;
     background: var(--background, #f4f4ef);
     color: var(--foreground, #232730);
     padding: env(safe-area-inset-top) env(safe-area-inset-right)
@@ -129,6 +130,7 @@ const EDGES = [
   }
 
   .algo-intro .ai-stage {
+    margin-block: auto;
     display: grid;
     grid-template-columns: minmax(0, 10fr) minmax(0, 9fr);
     align-items: center;
@@ -225,6 +227,11 @@ const EDGES = [
     position: absolute;
     right: max(20px, env(safe-area-inset-right));
     bottom: max(20px, env(safe-area-inset-bottom));
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
     padding: 0.5em 1.1em;
     border: 1px solid var(--border, #d8d8d2);
     border-radius: 999px;

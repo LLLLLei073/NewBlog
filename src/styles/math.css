@@ -13,7 +13,7 @@ body[data-page='math'] {
   --muted: #ece9df;
   --foreground: #232c4d; /* 群青墨 */
   --card-foreground: #232c4d;
-  --muted-foreground: #6e7191;
+  --muted-foreground: #646887; /* 展墙次要文字:对骨白底 ≥4.5:1 */
   --primary: #31469e; /* 群青 */
   --primary-foreground: #f6f4ee;
   --secondary: #ece9df;

@@ -55,9 +55,7 @@ const fmtDate = (d: Date) =>
           <p class="hero-sub">「{COLUMN.sub}」</p>
           <p class="hero-intro">{COLUMN.intro}</p>
           <div class="hero-cta">
-            <a class="cta-primary" href="/math/notes/">
-              进入手记图版 →
-            </a>
+            <a class="cta-primary" href="/math/notes/"> 进入手记图版 → </a>
           </div>
           <p class="hero-latest mono-label">
             图鉴更新 <span class="mono-num">{COLUMN.updated}</span>
@@ -96,7 +94,9 @@ const fmtDate = (d: Date) =>
     <!-- ======== 最近手记 ======== -->
     <section class="recent" aria-label="最近手记">
       <header class="sec-head m-rise">
-        <h2>最近手记<span class="mono-label">RECENT · {posts.length} 篇</span></h2>
+        <h2>
+          最近手记<span class="mono-label">RECENT · {posts.length} 篇</span>
+        </h2>
         {
           posts.length > 0 && (
             <a href="/math/notes/" class="sec-more">
@@ -124,9 +124,7 @@ const fmtDate = (d: Date) =>
             ))}
           </ul>
         ) : (
-          <p class="empty m-rise d1">
-            第一批图版正在装裱,先看看展位目录。
-          </p>
+          <p class="empty m-rise d1">第一批图版正在装裱,先看看展位目录。</p>
         )
       }
     </section>
@@ -187,6 +185,7 @@ const fmtDate = (d: Date) =>
     font-size: clamp(30px, 4.6vw, 52px);
     line-height: 1.22;
     color: var(--foreground);
+    text-wrap: balance;
   }
   .hero-sub {
     margin: 0.9rem 0 0;
@@ -236,6 +235,9 @@ const fmtDate = (d: Date) =>
     margin: 0;
     font-family: var(--font-display);
     font-size: clamp(22px, 3vw, 30px);
+  }
+  .sec-head h2 .mono-label {
+    margin-left: 0.65rem;
   }
   .sec-note {
     margin: 0;

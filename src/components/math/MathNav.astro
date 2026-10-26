@@ -24,7 +24,9 @@ const items = [
             class:list={['nav-item', { active: item.active }]}
             aria-current={item.active ? 'page' : undefined}
           >
-            <span class="no" aria-hidden="true">{item.no}</span>
+            <span class="no" aria-hidden="true">
+              {item.no}
+            </span>
             {item.label}
           </a>
         ))

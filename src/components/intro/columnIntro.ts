@@ -23,6 +23,8 @@ export interface TimelineContext {
   wait: (ms: number, fn: () => void) => void;
   /** 窗口尺寸已变化:共享元素测量(FLIP)应降级为交叉淡化 */
   degraded: () => boolean;
+  /** 登记清理函数:自然收尾与换页硬取消都会执行(如恢复首页元素样式) */
+  cleanup(fn: () => void): void;
   /** 触发本专栏的交接阶段(时间线末尾用 ctx.wait(...) 调度调用) */
   handoff: () => void;
   /** 交接淡出完成后收尾(handoff 的最后一步) */
@@ -153,9 +155,7 @@ function createController(
     e.stopPropagation();
     finish(true);
   }
-  cleanups.push(() =>
-    skipBtn?.removeEventListener('click', onSkipClick),
-  );
+  cleanups.push(() => skipBtn?.removeEventListener('click', onSkipClick));
 
   /* ---- 减少动态效果:动画期间开启则立即结束 ---- */
   const rmQuery = matchMedia('(prefers-reduced-motion: reduce)');
@@ -177,6 +177,7 @@ function createController(
     animate,
     wait,
     degraded: () => isDegraded,
+    cleanup: (fn) => cleanups.push(fn),
     handoff: () => handoff(),
     finish: () => finish(false),
     IN: 'cubic-bezier(0.22, 1, 0.36, 1)',
@@ -196,12 +197,15 @@ function createController(
     if (finished) return;
     finished = true;
     timers.forEach((id) => window.clearTimeout(id));
+    timers.length = 0;
     if (fast) {
       animate(root, [{ opacity: 1 }, { opacity: 0 }], {
         duration: 150,
         easing: 'linear',
       });
-      window.setTimeout(finalize, 170);
+      // 延迟收尾也登记进 timers:若这 170ms 内发生换页,
+      // hardCancel 会清掉它并立即接管清理,避免旧定时器跑到新页面。
+      timers.push(window.setTimeout(finalize, 170));
     } else {
       finalize();
     }
@@ -227,9 +231,12 @@ function createController(
   }
 
   function hardCancel(): void {
-    if (finished) return;
+    // 幂等:跳过后 170ms 收尾窗口内换页时,finished 已为 true 但
+    // 延迟 finalize 尚未执行,这里必须立即接管全部清理(含 active),
+    // 否则残留的滚动锁/监听器会带进新页面,并阻塞下一个专栏开屏。
     finished = true;
     timers.forEach((id) => window.clearTimeout(id));
+    timers.length = 0;
     anims.forEach((a) => a.cancel());
     root.remove();
     html.style.overflow = '';

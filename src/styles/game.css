@@ -15,7 +15,7 @@ body[data-page='game'] {
   --foreground: #1b2330;
   --card-foreground: #1b2330;
   --muted-foreground: #5d6570;
-  --primary: #157f4b; /* 信号绿(可读深绿) */
+  --primary: #0f6a3c; /* 信号绿(对米灰底 ≥4.5:1) */
   --primary-foreground: #f2f4ec;
   --secondary: #e0e4d7;
   --secondary-foreground: #2a3444;
@@ -24,19 +24,19 @@ body[data-page='game'] {
   --border: #d3d8c8;
   --border-300: #d3d8c8;
   --border-400: #bfc5b2;
-  --ring: #157f4b;
+  --ring: #0f6a3c;
   --header-bg: color-mix(in srgb, #ebeee5 94%, transparent);
 
   /* 品牌色覆盖 */
   --brand-300: #2aa06a;
-  --brand-400: #1f9159;
-  --brand-500: #157f4b;
-  --brand-600: #0f6a3c;
-  --brand-700: #0b5530;
+  --brand-400: #137446;
+  --brand-500: #0f6a3c;
+  --brand-600: #0b5530;
+  --brand-700: #084224;
 
   /* 专栏专属:珊瑚橙(START/高亮)与紫罗兰(次级标记) */
-  --game-coral: #d75a3c;
-  --game-violet: #6d5bd0;
+  --game-coral: #b4442b;
+  --game-violet: #5a46b8;
   --game-hud: #1b2330;
 
   --card-alpha: 1;
@@ -130,7 +130,8 @@ body[data-page='game'] .hud-card {
 body[data-page='game'] .hud-card:hover {
   border-color: var(--primary);
   transform: translateY(-3px);
-  box-shadow: 0 6px 22px -10px color-mix(in srgb, var(--primary) 45%, transparent);
+  box-shadow: 0 6px 22px -10px
+    color-mix(in srgb, var(--primary) 45%, transparent);
 }
 body[data-page='game'] .hud-card::before,
 body[data-page='game'] .hud-card::after {

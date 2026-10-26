@@ -5,10 +5,10 @@
  * 未播过(sessionStorage: game-column-intro-v1)、reduced-motion 直接
  * 进正文、可跳过、before-swap 硬清理。无音频自动播放。
  *
- * 时间线(约 2500ms,WAAPI,只动 transform/opacity):
+ * 时间线(约 2440ms,WAAPI,只动 transform/opacity):
  * 0-160 深炭底淡入 → 240-1040 HUD 引导行逐条打印 → 1100 起像素光标
  * 闪烁 → 1300-1740 标题两行遮罩 + 副标 → 1800 PRESS START 落章 →
- * 1980 起与首页 hero 存档槽共享元素交接(FLIP,失败退化交叉淡化)。
+ * 1900 起与首页 hero 存档槽共享元素交接(FLIP,失败退化交叉淡化)。
  */
 
 import {
@@ -122,8 +122,8 @@ function play(ctx: TimelineContext): void {
     { delay: 1800, duration: 200, easing: ctx.STAMP },
   );
 
-  /* 1980 起交接 */
-  wait(1980, () => ctx.handoff());
+  /* 1900 起交接(1900+540=2440ms,守住 2.5s 上限) */
+  wait(1900, () => ctx.handoff());
 }
 
 function handoff(ctx: TimelineContext): void {
@@ -168,6 +168,10 @@ function handoff(ctx: TimelineContext): void {
     const to = heroSlot.getBoundingClientRect();
     if (from.width > 0 && to.width > 0) {
       heroSlot.style.opacity = '0';
+      // 交接被跳过时也要恢复首页元素(清理函数在自然结束/硬取消都会执行)
+      ctx.cleanup(() => {
+        heroSlot.style.opacity = '';
+      });
       const dx = to.left + to.width / 2 - (from.left + from.width / 2);
       const dySlot = to.top + to.height / 2 - (from.top + from.height / 2);
       animate(
@@ -178,9 +182,9 @@ function handoff(ctx: TimelineContext): void {
         ],
         { duration: 440, easing: ctx.IN },
       );
-      window.setTimeout(() => {
+      ctx.wait(480, () => {
         heroSlot.style.opacity = '';
-      }, 480);
+      });
       inserted = true;
     }
   }
