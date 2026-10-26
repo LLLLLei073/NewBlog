@@ -39,6 +39,12 @@ interface Props {
   category: string;
   noindex?: boolean;
   structuredData?: Record<string, unknown>;
+  /** 专栏主题标识:渲染为 body[data-page],文章页随专栏换装 */
+  pageName?: string;
+  /** 返回链接:专栏文章页指回各自列表页 */
+  backHref?: string;
+  /** 返回链接文案 */
+  backLabel?: string;
 }
 
 const {
@@ -57,6 +63,9 @@ const {
   category,
   noindex = false,
   structuredData,
+  pageName,
+  backHref = '/blog',
+  backLabel = '文章列表',
 } = Astro.props;
 
 const toc = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
@@ -83,6 +92,7 @@ const currentPath = Astro.url.pathname;
   modifiedTime={updatedDate}
   noindex={noindex}
   structuredData={structuredData}
+  pageName={pageName}
 >
   <div class="reading-progress" aria-hidden="true">
     <div class="reading-progress-bar" id="reading-progress-bar"></div>
@@ -116,7 +126,7 @@ const currentPath = Astro.url.pathname;
 
     <!-- 主内容区 -->
     <article class="post-main">
-      <a href="/blog" class="back">&larr; 返回文章列表</a>
+      <a href={backHref} class="back">&larr; 返回{backLabel}</a>
 
       <header class="article-head">
         <h1>{title}</h1>

@@ -24,6 +24,9 @@ const jsonLd = buildPostJsonLd(post);
 <BlogPost
   {...post.data}
   category={getPostCategory(post.data).label}
+  pageName="math"
+  backHref="/math/notes/"
+  backLabel="手记图鉴"
   headings={headings}
   newer={newer}
   older={older}

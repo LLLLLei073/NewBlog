@@ -1,0 +1,265 @@
+---
+/**
+ * 「演算手稿」开屏动画组件:仅挂在算法专栏首页。
+ * 模板服务端渲染(hidden),由 columnIntro 控制器 + algorithmIntro 时间线
+ * 决定播放;不播放时直接移除节点,不阻塞正文渲染。
+ * 底纹复用 algo.css 的坐标纸,节点-边图自绘(与首页 GraphFigure 同语言)。
+ */
+
+// 迷你节点-边图:与 hero 的 GraphFigure 同一"坐标纸 + 图论"语言
+const NODES = [
+  { x: 56, y: 128, r: 9 },
+  { x: 138, y: 62, r: 12 },
+  { x: 148, y: 168, r: 8 },
+  { x: 232, y: 96, r: 14 },
+  { x: 236, y: 196, r: 9 },
+];
+const EDGES = [
+  [0, 1],
+  [0, 2],
+  [1, 3],
+  [2, 4],
+  [1, 2],
+];
+---
+
+<div
+  class="algo-intro"
+  data-algorithm-intro
+  hidden
+  role="dialog"
+  aria-modal="true"
+  aria-label="算法专栏开屏动画"
+>
+  <div class="ai-stage">
+    {/* 左:坐标纸上的节点-边图(装饰) */}
+    <div class="ai-paper grid-paper" data-ai-paper aria-hidden="true">
+      <svg viewBox="0 0 292 256" fill="none">
+        {
+          EDGES.map(([a, b]) => (
+            <line
+              data-ai-edge
+              x1={NODES[a]!.x}
+              y1={NODES[a]!.y}
+              x2={NODES[b]!.x}
+              y2={NODES[b]!.y}
+              stroke="var(--algo-amber, #b8860b)"
+              stroke-width="1.4"
+              opacity="0.75"
+            />
+          ))
+        }
+        {
+          NODES.map((n, i) => (
+            <g data-ai-node style={`transform-origin: ${n.x}px ${n.y}px`}>
+              <circle
+                cx={n.x}
+                cy={n.y}
+                r={n.r}
+                fill={i === 3 ? 'var(--primary, #3b6ea5)' : 'var(--card, #f4f4ef)'}
+                stroke="var(--primary, #3b6ea5)"
+                stroke-width="1.6"
+              />
+            </g>
+          ))
+        }
+      </svg>
+    </div>
+
+    {/* 右:标题与档案信息(装饰文本) */}
+    <div class="ai-copy" data-ai-copy aria-hidden="true">
+      <p class="ai-en" data-ai-en>ALGORITHM FIELD NOTES</p>
+      <p class="ai-title">
+        <span class="mask"><span class="line" data-ai-l1>演算</span></span>
+        <span class="mask"><span class="line" data-ai-l2>手稿</span></span>
+      </p>
+      <p class="ai-sub" data-ai-sub>一张可以持续生长的算法地图</p>
+      <dl class="ai-meta">
+        <div data-ai-meta>
+          <dt>FIELD</dt>
+          <dd>ALGORITHMS</dd>
+        </div>
+        <div data-ai-meta>
+          <dt>SERIAL</dt>
+          <dd class="mono-num">FIELD NOTES</dd>
+        </div>
+        <div data-ai-meta>
+          <dt>STATUS</dt>
+          <dd>GROWING</dd>
+        </div>
+      </dl>
+      <span class="ai-stamp" data-ai-stamp>演算中</span>
+    </div>
+  </div>
+
+  <button type="button" class="ai-skip" data-intro-skip>
+    跳过开屏
+  </button>
+</div>
+
+<script>
+  import { onPageLoad } from '../../utils/lifecycle';
+  import {
+    mountAlgorithmIntro,
+    cancelAlgorithmIntroForSwap,
+  } from './algorithmIntro';
+
+  onPageLoad(() => {
+    mountAlgorithmIntro();
+  });
+  // 快速离开专栏:立即取消动画并清理(html 上的滚动锁定会跨 swap 存留)
+  document.addEventListener('astro:before-swap', cancelAlgorithmIntroForSwap);
+</script>
+
+<style is:global>
+  .algo-intro {
+    position: fixed;
+    inset: 0;
+    height: 100dvh;
+    z-index: 300;
+    display: grid;
+    place-items: center;
+    background: var(--background, #f4f4ef);
+    color: var(--foreground, #232730);
+    padding: env(safe-area-inset-top) env(safe-area-inset-right)
+      env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+  .algo-intro[hidden] {
+    display: none;
+  }
+
+  .algo-intro .ai-stage {
+    display: grid;
+    grid-template-columns: minmax(0, 10fr) minmax(0, 9fr);
+    align-items: center;
+    gap: clamp(1.6rem, 5vw, 3.2rem);
+    width: min(900px, calc(100vw - 3rem));
+  }
+
+  /* 左:坐标纸图板 */
+  .algo-intro .ai-paper {
+    border: 1px solid var(--border, #d8d8d2);
+    background: var(--card, #f4f4ef);
+    padding: clamp(0.8rem, 2vw, 1.2rem);
+  }
+  .algo-intro .ai-paper svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  /* WAAPI 缩放节点:g 的 origin 用 viewBox 坐标系 */
+  .algo-intro g[data-ai-node] {
+    transform-box: view-box;
+  }
+
+  /* 右:标题 */
+  .algo-intro .ai-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .algo-intro .ai-en {
+    margin: 0;
+    font-family: var(--font-condensed, sans-serif);
+    font-size: 12.5px;
+    letter-spacing: 0.3em;
+    color: var(--muted-foreground, #6d7280);
+  }
+  .algo-intro .ai-title {
+    margin: 0.9rem 0 0;
+    font-family: var(--font-display, serif);
+    font-weight: 700;
+    line-height: 1.12;
+  }
+  .algo-intro .ai-title .mask {
+    display: block;
+    overflow: hidden;
+  }
+  .algo-intro .ai-title .line {
+    display: block;
+    font-size: clamp(44px, 7vw, 72px);
+  }
+  .algo-intro .ai-sub {
+    margin: 1.05rem 0 0;
+    font-size: 15px;
+    color: var(--muted-foreground, #6d7280);
+  }
+  .algo-intro .ai-meta {
+    display: grid;
+    gap: 0.45rem;
+    margin: 1.35rem 0 0;
+    font-size: 12px;
+  }
+  .algo-intro .ai-meta > div {
+    display: flex;
+    gap: 0.9rem;
+    align-items: baseline;
+  }
+  .algo-intro .ai-meta dt {
+    font-family: var(--font-mono, monospace);
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    color: var(--muted-foreground, #6d7280);
+    min-width: 5.5em;
+  }
+  .algo-intro .ai-meta dd {
+    margin: 0;
+    font-family: var(--font-mono, monospace);
+    font-size: 12px;
+  }
+  .algo-intro .ai-stamp {
+    display: inline-block;
+    margin-top: 1.5rem;
+    padding: 0.3em 0.7em;
+    border: 1.5px solid var(--algo-amber-deep, #8a6508);
+    border-radius: 3px;
+    color: var(--algo-amber-deep, #8a6508);
+    font-family: var(--font-serif);
+    font-size: 13px;
+    letter-spacing: 0.3em;
+    transform: rotate(-4deg);
+  }
+
+  /* 跳过按钮 */
+  .algo-intro .ai-skip {
+    position: absolute;
+    right: max(20px, env(safe-area-inset-right));
+    bottom: max(20px, env(safe-area-inset-bottom));
+    padding: 0.5em 1.1em;
+    border: 1px solid var(--border, #d8d8d2);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--muted-foreground, #6d7280);
+    font-family: var(--font-sans, sans-serif);
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    cursor: pointer;
+    transition:
+      color 0.18s ease,
+      border-color 0.18s ease;
+  }
+  .algo-intro .ai-skip:hover {
+    color: var(--foreground, #232730);
+    border-color: var(--primary, #3b6ea5);
+  }
+
+  @media (max-width: 759px) {
+    .algo-intro .ai-stage {
+      grid-template-columns: 1fr;
+      gap: 1.4rem;
+      width: min(440px, calc(100vw - 2.4rem));
+    }
+    .algo-intro .ai-title .line {
+      font-size: clamp(38px, 10.5vw, 54px);
+    }
+    .algo-intro .ai-meta {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .algo-intro {
+      display: none;
+    }
+  }
+</style>

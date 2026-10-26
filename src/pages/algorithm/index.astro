@@ -8,6 +8,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import AlgoNav from '../../components/algo/AlgoNav.astro';
 import GraphFigure from '../../components/algo/GraphFigure.astro';
 import RecursionSketch from '../../components/algo/RecursionSketch.astro';
+import AlgorithmIntro from '../../components/intro/AlgorithmIntro.astro';
 import { COLUMN } from '../../data/algorithm/column.ts';
 import {
   DIFFICULTY_LABEL,
@@ -41,6 +42,7 @@ const latestDate = latest
 >
   <div class="algo ap-home">
     <AlgoNav />
+    <AlgorithmIntro />
 
     <!-- ======== 首屏 ======== -->
     <section class="hero grid-paper grid-paper-fade" aria-label="专栏介绍">

@@ -36,7 +36,14 @@ const nodes: KmNode[] = MAP_NODES.map((n) => ({
   intro: n.intro,
   order: [...n.order],
   mistakes: [...n.mistakes],
-  next: { ...n.next },
+  next: {
+    label: n.next.label,
+    // noteSlug 是数据层字段:在页面层转成真实文章链接供岛屿渲染
+    ...(n.next.noteSlug
+      ? { href: `/algorithm/notes/${n.next.noteSlug}/` }
+      : {}),
+    ...(n.next.mapNode ? { mapNode: n.next.mapNode } : {}),
+  },
 }));
 const edges: KmEdge[] = MAP_EDGES.map((e) => ({ ...e }));
 ---

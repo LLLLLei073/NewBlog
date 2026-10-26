@@ -24,6 +24,9 @@ const jsonLd = buildPostJsonLd(post);
 <BlogPost
   {...post.data}
   category={getPostCategory(post.data).label}
+  pageName="game"
+  backHref="/game/notes/"
+  backLabel="手记存档"
   headings={headings}
   newer={newer}
   older={older}

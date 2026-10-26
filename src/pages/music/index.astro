@@ -39,7 +39,8 @@ const cardTilt = (e: Entry, i: number) =>
     <ArchiveNav />
     <MusicIntro />
 
-    <main class="arch home">
+    <!-- BaseLayout 已有唯一 <main>,内部用 div 保持地标唯一 -->
+    <div class="arch home">
       <!-- ===== 首屏:不对称三段 ===== -->
       <section class="hero rise" aria-label="最近反复播放">
         <aside class="hero-meta">
@@ -216,7 +217,7 @@ const cardTilt = (e: Entry, i: number) =>
           <a href="/about/">关于我</a>
         </p>
       </footer>
-    </main>
+    </div>
   </div>
 </BaseLayout>
 
