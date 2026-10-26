@@ -1,0 +1,205 @@
+/* ============================================================
+   「形与数」数学专栏视觉系统
+   美术馆/图鉴语言:骨白展墙 + 群青墨 + 朱砂印章,衬线大标题、
+   几何图版构图。仅在 body[data-page='math'] 内生效:重定义语义
+   令牌,全站 Header/Footer/播放器自动换装。暗色为群青夜底。
+   ============================================================ */
+
+body[data-page='math'] {
+  /* 覆盖全局令牌:骨白展墙 + 群青墨 */
+  --background: #f6f4ee;
+  --card: #f9f7f1;
+  --popover: #efece2;
+  --muted: #ece9df;
+  --foreground: #232c4d; /* 群青墨 */
+  --card-foreground: #232c4d;
+  --muted-foreground: #6e7191;
+  --primary: #31469e; /* 群青 */
+  --primary-foreground: #f6f4ee;
+  --secondary: #ece9df;
+  --secondary-foreground: #3a4470;
+  --accent: rgba(49, 70, 158, 0.07);
+  --accent-foreground: #31469e;
+  --border: #dcd7c7;
+  --border-300: #dcd7c7;
+  --border-400: #c9c3b0;
+  --ring: #31469e;
+  --header-bg: color-mix(in srgb, #f6f4ee 94%, transparent);
+
+  /* 群青品牌色覆盖 */
+  --brand-300: #5a6ec8;
+  --brand-400: #4457b4;
+  --brand-500: #31469e;
+  --brand-600: #28387f;
+  --brand-700: #1f2c66;
+
+  /* 专栏专属:朱砂(印章/图版号)与展墙画框线 */
+  --math-vermilion: #b23a2e;
+  --math-frame: #dcd7c7;
+
+  /* 专栏内不做玻璃拟态 */
+  --card-alpha: 1;
+  --card-border-alpha: 1;
+
+  /* 图鉴衬线:标题沿用全站中文衬线栈,保持字形沉稳 */
+  --font-condensed:
+    'Bahnschrift', 'Segoe UI Variable Display', 'Avenir Next Condensed',
+    'Arial Narrow', sans-serif;
+
+  font-size: 15px;
+  line-height: 1.8;
+
+  background: var(--background);
+  color: var(--foreground);
+}
+
+/* 裁掉图版旋转造成的横向溢出(必须挂在 html 视口上) */
+html:has(body[data-page='math']) {
+  overflow-x: clip;
+}
+
+/* 暗色:群青夜 + 象牙字 */
+:root[data-theme='dark'] body[data-page='math'],
+html[data-theme='dark'] body[data-page='math'] {
+  --background: #141831;
+  --card: #171c39;
+  --popover: #1b203f;
+  --muted: #1b203f;
+  --foreground: #e6e4da;
+  --card-foreground: #e6e4da;
+  --muted-foreground: #a0a3bd;
+  --primary: #93a5ea;
+  --primary-foreground: #141831;
+  --secondary: #1b203f;
+  --secondary-foreground: #c9cadd;
+  --accent: rgba(147, 165, 234, 0.12);
+  --accent-foreground: #aab8ef;
+  --border: rgba(230, 228, 218, 0.14);
+  --border-300: rgba(230, 228, 218, 0.14);
+  --border-400: rgba(230, 228, 218, 0.24);
+  --ring: #93a5ea;
+  --header-bg: color-mix(in srgb, #141831 92%, transparent);
+  --brand-300: #aab8ef;
+  --brand-400: #9dacec;
+  --brand-500: #93a5ea;
+  --brand-600: #7c8fd8;
+  --brand-700: #6678c0;
+
+  --math-vermilion: #d3705e;
+  --math-frame: rgba(230, 228, 218, 0.16);
+
+  /* 关掉全局暗色深空渐变 */
+  background: var(--background);
+  background-image: none;
+}
+
+/* 专栏页面不显示全局星空与暗色光晕 */
+body[data-page='math']::before,
+:root[data-theme='dark'] body[data-page='math']::before,
+:root[data-theme='dark'] body[data-page='math']::after,
+html[data-theme='dark'] body[data-page='math']::after {
+  display: none;
+  content: none;
+}
+
+/* ============ 展墙公共构件 ============ */
+
+/* 专栏容器:最大 1200px,比正文类页面更接近画册 */
+body[data-page='math'] .math {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: clamp(1.1rem, 4vw, 3rem);
+}
+
+/* 等宽小标(英文图鉴标签) */
+body[data-page='math'] .mono-label {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: var(--muted-foreground);
+}
+
+/* 图版号:朱砂罗马数字 */
+body[data-page='math'] .plate-no {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--math-vermilion);
+}
+
+/* 图版画框:细框 + 角标 + 微投影,像装裱中的定理图版 */
+body[data-page='math'] .m-plate {
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--math-frame);
+  padding: clamp(1rem, 2.5vw, 1.6rem);
+  box-shadow: var(--shadow-sm);
+}
+body[data-page='math'] .m-plate::before,
+body[data-page='math'] .m-plate::after {
+  content: '';
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: var(--math-vermilion);
+  border-style: solid;
+  opacity: 0.55;
+  pointer-events: none;
+}
+body[data-page='math'] .m-plate::before {
+  top: 6px;
+  left: 6px;
+  border-width: 1px 0 0 1px;
+}
+body[data-page='math'] .m-plate::after {
+  bottom: 6px;
+  right: 6px;
+  border-width: 0 1px 1px 0;
+}
+
+/* 朱砂印章 */
+body[data-page='math'] .m-stamp {
+  display: inline-block;
+  padding: 0.32em 0.7em;
+  border: 1.5px solid var(--math-vermilion);
+  border-radius: 3px;
+  color: var(--math-vermilion);
+  font-family: var(--font-serif);
+  font-size: 13px;
+  letter-spacing: 0.32em;
+  transform: rotate(-4deg);
+}
+
+/* 页面元素错峰进场 */
+body[data-page='math'] .m-rise {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: m-rise-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+body[data-page='math'] .m-rise.d1 {
+  animation-delay: 0.08s;
+}
+body[data-page='math'] .m-rise.d2 {
+  animation-delay: 0.18s;
+}
+body[data-page='math'] .m-rise.d3 {
+  animation-delay: 0.3s;
+}
+body[data-page='math'] .m-rise.d4 {
+  animation-delay: 0.42s;
+}
+@keyframes m-rise-in {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body[data-page='math'] .m-rise {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -7,6 +7,8 @@
 @import './archive.css';
 /* ---- 「演算手稿」算法专栏视觉系统(仅 body[data-page='algorithm'] 生效) ---- */
 @import './algo.css';
+/* ---- 「形与数」数学专栏视觉系统(仅 body[data-page='math'] 生效) ---- */
+@import './math.css';
 /* ---- 「演算手稿」React 岛屿的 Tailwind 工具类(无 preflight) ---- */
 @import './algo-tw.css';
 

@@ -1,110 +1,164 @@
 ---
 /**
- * 数学专栏手记列表(过渡版):Phase 2 将替换为「形与数」主题版本。
+ * 「形与数」手记图版列表:图版编号 + 标题 + 摘要的展墙索引。
  */
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import FormattedDate from '../../components/FormattedDate.astro';
+import MathNav from '../../components/math/MathNav.astro';
 import { postHref } from '../../utils/postRoute.ts';
 
 const posts = (await getCollection('blog'))
   .filter((p) => !p.data.draft && p.data.category === 'math')
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const ROMAN = ['Ⅰ', 'Ⅱ', 'Ⅲ', 'Ⅳ', 'Ⅴ', 'Ⅵ', 'Ⅶ', 'Ⅷ', 'Ⅸ', 'Ⅹ'];
+const roman = (i: number) => ROMAN[i] ?? String(i + 1);
+
+const fmtDate = (d: Date) =>
+  `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
 ---
 
 <BaseLayout
-  title="数学手记"
-  description="数学专栏全部手记列表。"
+  title="数学手记 · 形与数"
+  description="数学专栏手记图版:先给直觉,再给公式,最后给应用。"
   pageName="math"
 >
-  <section class="container">
-    <div class="page-head">
-      <p class="eyebrow"><a href="/math/">数学专栏</a> / 手记</p>
-      <h1>全部手记</h1>
-      <p class="count">共 {posts.length} 篇</p>
-    </div>
-    <div class="post-list">
-      {
-        posts.map((post) => (
-          <a href={postHref(post.id, post.data.category)} class="post-card">
-            <div class="post-meta">
-              <FormattedDate date={post.data.pubDate} />
-            </div>
-            <h2>{post.data.title}</h2>
-            <p class="desc">{post.data.description}</p>
-          </a>
-        ))
-      }
-    </div>
-  </section>
+  <div class="math notes-page">
+    <MathNav />
+
+    <header class="page-head m-rise">
+      <p class="mono-label">PLATE INDEX · {posts.length} 篇</p>
+      <h1>手记图版</h1>
+      <p class="head-note">
+        每一篇手记都是一张图版:先看见形状,再写下公式,最后交给应用。
+      </p>
+    </header>
+
+    {
+      posts.length > 0 ? (
+        <ol class="plate-list m-rise d1">
+          {posts.map((p, i) => (
+            <li>
+              <a href={postHref(p.id, p.data.category)} class="plate-row">
+                <span class="plate-no p-no">{roman(i)}</span>
+                <span class="p-main">
+                  <strong>{p.data.title}</strong>
+                  <span class="p-desc">{p.data.description}</span>
+                </span>
+                <span class="p-side">
+                  <span class="mono-num">{fmtDate(p.data.pubDate)}</span>
+                  <span class="p-arrow" aria-hidden="true">
+                    →
+                  </span>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <p class="empty m-rise d1">图鉴正在装裱,第一批手记快好了。</p>
+      )
+    }
+  </div>
 </BaseLayout>
 
 <style>
-  .page-head {
-    padding: 2.5rem 0 1.75rem;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 1.25rem;
+  .notes-page {
+    padding-top: clamp(2rem, 5vw, 3.2rem);
+    padding-bottom: clamp(3.5rem, 8vw, 5.5rem);
+    max-width: 960px;
   }
-  .eyebrow {
-    font-family: var(--font-sans);
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--primary);
-    margin: 0 0 0.65rem;
-  }
-  .eyebrow a {
-    color: inherit;
-  }
+
   .page-head h1 {
-    font-size: 2rem;
-    margin: 0 0 0.4rem;
+    margin: 0.7rem 0 0;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(30px, 4vw, 48px);
+    color: var(--foreground);
   }
-  .count {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
+  .head-note {
+    margin: 1rem 0 0;
+    max-width: 50ch;
+    font-size: 14.5px;
+    line-height: 1.9;
     color: var(--muted-foreground);
-    margin: 0;
   }
-  .post-list {
+
+  .plate-list {
+    list-style: none;
+    margin: 2.4rem 0 0;
+    padding: 0;
+    border-top: 1px solid var(--border);
+  }
+  .plate-row {
+    display: grid;
+    grid-template-columns: 3.2rem 1fr auto;
+    gap: 1.1rem;
+    align-items: baseline;
+    padding: 1.15rem 0.4rem;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+    color: inherit;
+    transition: background-color 0.18s ease;
+  }
+  .plate-row:hover {
+    background: var(--accent);
+  }
+  .p-no {
+    font-size: 14px;
+  }
+  .p-main {
     display: flex;
     flex-direction: column;
-    gap: 0.875rem;
-    padding-bottom: 2rem;
+    gap: 0.28rem;
+    min-width: 0;
   }
-  .post-card {
-    display: block;
-    padding: 1.25rem;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
+  .p-main strong {
+    font-family: var(--font-serif);
+    font-size: 16.5px;
+    color: var(--foreground);
+  }
+  .p-desc {
+    font-size: 13.5px;
+    line-height: 1.75;
+    color: var(--muted-foreground);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .p-side {
+    display: flex;
+    align-items: baseline;
+    gap: 0.9rem;
+    font-size: 12px;
+    color: var(--muted-foreground);
+  }
+  .p-arrow {
+    color: var(--primary);
+    opacity: 0;
+    transform: translateX(-6px);
     transition:
-      border-color 0.15s ease,
-      box-shadow 0.15s ease,
+      opacity 0.2s ease,
       transform 0.2s ease;
   }
-  .post-card:hover {
-    text-decoration: none;
-    border-color: var(--brand-300);
-    box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
+  .plate-row:hover .p-arrow {
+    opacity: 1;
+    transform: none;
   }
-  .post-meta {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
+  .empty {
+    margin-top: 2rem;
+    padding: 1.4rem 0;
     color: var(--muted-foreground);
-    margin-bottom: 0.4rem;
+    font-size: 14.5px;
   }
-  .post-card h2 {
-    font-size: 1.2rem;
-    margin: 0 0 0.4rem;
-    color: var(--card-foreground);
-  }
-  .desc {
-    margin: 0;
-    font-size: 0.875rem;
-    color: var(--muted-foreground);
-    line-height: 1.5;
+
+  @media (max-width: 640px) {
+    .plate-row {
+      grid-template-columns: 2.4rem 1fr;
+    }
+    .p-side {
+      display: none;
+    }
   }
 </style>

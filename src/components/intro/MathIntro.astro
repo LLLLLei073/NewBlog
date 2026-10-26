@@ -1,0 +1,261 @@
+---
+/**
+ * 「形与数」开屏动画组件:仅挂在数学专栏首页。
+ * 模板服务端渲染(hidden),由 columnIntro 控制器 + mathIntro 时间线
+ * 决定播放;不播放时直接移除节点,不阻塞正文渲染。
+ */
+import GeometryPlate from '../math/GeometryPlate.astro';
+import { COLUMN } from '../../data/math/column.ts';
+---
+
+<div
+  class="math-intro"
+  data-math-intro
+  hidden
+  role="dialog"
+  aria-modal="true"
+  aria-label="数学专栏开屏动画"
+>
+  {/* 展墙四角定位线(装饰) */}
+  <i class="mt-corner c-tl" aria-hidden="true"></i>
+  <i class="mt-corner c-tr" aria-hidden="true"></i>
+  <i class="mt-corner c-bl" aria-hidden="true"></i>
+  <i class="mt-corner c-br" aria-hidden="true"></i>
+
+  <div class="mt-stage">
+    {/* 左:定理图版(与首页 hero 同一份 GeometryPlate,保证交接一致) */}
+    <div class="mt-plate m-plate" data-mt-plate>
+      <p class="mt-cap">
+        <span class="plate-no">PLATE Ⅰ</span>
+        <span class="mono-label">单位圆与正弦</span>
+      </p>
+      <div class="mt-art" data-mt-art>
+        <GeometryPlate />
+      </div>
+    </div>
+
+    {/* 右:标题与图鉴信息(装饰文本,屏幕阅读器不逐项朗读) */}
+    <div class="mt-copy" data-mt-copy aria-hidden="true">
+      <p class="mt-en" data-mt-en>{COLUMN.en}</p>
+      <p class="mt-title">
+        <span class="mask"><span class="line" data-mt-l1>形与数</span></span>
+        <span class="mask"><span class="line sub" data-mt-l2>直觉图鉴</span></span>
+      </p>
+      <p class="mt-sub" data-mt-sub>先看见形状,再写下公式</p>
+      <dl class="mt-meta">
+        <div data-mt-meta>
+          <dt>PLATE</dt>
+          <dd class="mono-num">Ⅰ</dd>
+        </div>
+        <div data-mt-meta>
+          <dt>COLLECTION</dt>
+          <dd>INTUITION FIRST</dd>
+        </div>
+        <div data-mt-meta>
+          <dt>UPDATED</dt>
+          <dd class="mono-num">{COLUMN.updated}</dd>
+        </div>
+      </dl>
+      <span class="m-stamp mt-stamp" data-mt-stamp>直觉先行</span>
+    </div>
+  </div>
+
+  <button type="button" class="mt-skip" data-intro-skip>
+    跳过开屏
+  </button>
+</div>
+
+<script>
+  import { onPageLoad } from '../../utils/lifecycle';
+  import { mountMathIntro, cancelMathIntroForSwap } from './mathIntro';
+
+  onPageLoad(() => {
+    mountMathIntro();
+  });
+  // 快速离开专栏:立即取消动画并清理(html 上的滚动锁定会跨 swap 存留)
+  document.addEventListener('astro:before-swap', cancelMathIntroForSwap);
+</script>
+
+<style is:global>
+  /* 覆盖层为 JS 动态显隐:样式走全局,选择器全部以 .math-intro 收口 */
+  .math-intro {
+    position: fixed;
+    inset: 0;
+    height: 100dvh;
+    z-index: 300;
+    display: grid;
+    place-items: center;
+    background: var(--background, #f6f4ee);
+    color: var(--foreground, #232c4d);
+    padding: env(safe-area-inset-top) env(safe-area-inset-right)
+      env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+  .math-intro[hidden] {
+    display: none;
+  }
+
+  /* 展墙四角定位线 */
+  .math-intro .mt-corner {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    opacity: 0;
+    border-color: var(--math-vermilion, #b23a2e);
+    border-style: solid;
+    pointer-events: none;
+  }
+  .math-intro .mt-corner.c-tl {
+    top: 18px;
+    left: 18px;
+    border-width: 1px 0 0 1px;
+  }
+  .math-intro .mt-corner.c-tr {
+    top: 18px;
+    right: 18px;
+    border-width: 1px 1px 0 0;
+  }
+  .math-intro .mt-corner.c-bl {
+    bottom: 18px;
+    left: 18px;
+    border-width: 0 0 1px 1px;
+  }
+  .math-intro .mt-corner.c-br {
+    bottom: 18px;
+    right: 18px;
+    border-width: 0 1px 1px 0;
+  }
+
+  .math-intro .mt-stage {
+    display: grid;
+    grid-template-columns: minmax(0, 11fr) minmax(0, 9fr);
+    align-items: center;
+    gap: clamp(1.6rem, 5vw, 3.4rem);
+    width: min(920px, calc(100vw - 3rem));
+    max-height: calc(100dvh - 6rem);
+  }
+
+  /* 左:图版 */
+  .math-intro .mt-plate {
+    padding: clamp(0.9rem, 2.2vw, 1.4rem);
+  }
+  .math-intro .mt-cap {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 0 0 0.6rem;
+  }
+  .math-intro .mt-art {
+    opacity: 1;
+  }
+
+  /* 右:图鉴信息 */
+  .math-intro .mt-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .math-intro .mt-en {
+    margin: 0;
+    font-family: var(--font-condensed, sans-serif);
+    font-size: 12.5px;
+    letter-spacing: 0.3em;
+    color: var(--muted-foreground, #6e7191);
+  }
+  .math-intro .mt-title {
+    margin: 0.9rem 0 0;
+    font-family: var(--font-display, serif);
+    font-weight: 700;
+    line-height: 1.12;
+  }
+  .math-intro .mt-title .mask {
+    display: block;
+    overflow: hidden;
+  }
+  .math-intro .mt-title .line {
+    display: block;
+    font-size: clamp(44px, 7vw, 74px);
+  }
+  .math-intro .mt-title .line.sub {
+    font-size: clamp(22px, 3.4vw, 34px);
+    letter-spacing: 0.5em;
+    color: var(--primary, #31469e);
+  }
+  .math-intro .mt-sub {
+    margin: 1.1rem 0 0;
+    font-size: 15px;
+    color: var(--muted-foreground, #6e7191);
+  }
+  .math-intro .mt-meta {
+    display: grid;
+    gap: 0.45rem;
+    margin: 1.4rem 0 0;
+    font-size: 12px;
+  }
+  .math-intro .mt-meta > div {
+    display: flex;
+    gap: 0.9rem;
+    align-items: baseline;
+  }
+  .math-intro .mt-meta dt {
+    font-family: var(--font-mono, monospace);
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    color: var(--muted-foreground, #6e7191);
+    min-width: 6.5em;
+  }
+  .math-intro .mt-meta dd {
+    margin: 0;
+    font-family: var(--font-mono, monospace);
+    font-size: 12px;
+  }
+  .math-intro .mt-stamp {
+    margin-top: 1.6rem;
+  }
+
+  /* 跳过按钮:唯一可聚焦元素 */
+  .math-intro .mt-skip {
+    position: absolute;
+    right: max(20px, env(safe-area-inset-right));
+    bottom: max(20px, env(safe-area-inset-bottom));
+    padding: 0.5em 1.1em;
+    border: 1px solid var(--border, #dcd7c7);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--muted-foreground, #6e7191);
+    font-family: var(--font-sans, sans-serif);
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    cursor: pointer;
+    transition:
+      color 0.18s ease,
+      border-color 0.18s ease;
+  }
+  .math-intro .mt-skip:hover {
+    color: var(--foreground, #232c4d);
+    border-color: var(--primary, #31469e);
+  }
+
+  @media (max-width: 759px) {
+    .math-intro .mt-stage {
+      grid-template-columns: 1fr;
+      gap: 1.4rem;
+      width: min(440px, calc(100vw - 2.4rem));
+    }
+    .math-intro .mt-title .line {
+      font-size: clamp(36px, 10vw, 52px);
+    }
+    .math-intro .mt-meta {
+      display: none;
+    }
+    .math-intro .mt-stamp {
+      margin-top: 1rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .math-intro {
+      display: none;
+    }
+  }
+</style>
