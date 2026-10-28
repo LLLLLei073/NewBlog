@@ -1,92 +1,37 @@
 ---
 /**
- * 「抽屉杂记」专栏内部导航:软木板细线,当前项墨蓝下划线;
- * 右侧标签「F.」(→ /about)。
+ * 「抽屉杂记」专栏内部导航:右侧符号栏(✦/✎),
+ * 悬浮显示具体名称;底部个人标记「F.」(→ /about);移动端收为
+ * 顶部一条。
  */
+import ColumnRail from '../ColumnRail.astro';
+
 const path = Astro.url.pathname;
 const is = {
   home: path === '/others/' || path === '/others',
   notes: path.startsWith('/others/notes'),
 };
 const items = [
-  { href: '/others/', label: '首页', active: is.home },
-  { href: '/others/notes/', label: '全部便签', active: is.notes },
+  { href: '/others/', glyph: '✦', label: '首页', active: is.home },
+  { href: '/others/notes/', glyph: '✎', label: '全部便签', active: is.notes },
 ];
 ---
 
-<nav class="others-nav" aria-label="专栏导航">
-  <div class="others">
-    <div class="links">
-      {
-        items.map((item) => (
-          <a
-            href={item.href}
-            class:list={['nav-item', { active: item.active }]}
-            aria-current={item.active ? 'page' : undefined}
-          >
-            {item.label}
-          </a>
-        ))
-      }
-    </div>
-    <a href="/about/" class="mark" title="关于我">F.</a>
-  </div>
-</nav>
-
-<style>
-  .others-nav {
-    border-bottom: 1px solid var(--border);
-    margin-top: clamp(0.75rem, 2vw, 1.25rem);
-  }
-  .others-nav .others {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-  }
-  .links {
-    display: flex;
-    gap: clamp(1.1rem, 3vw, 2rem);
-    overflow-x: auto;
-  }
-  .nav-item {
-    position: relative;
-    display: inline-block;
-    padding: 0.55rem 0 0.7rem;
-    color: var(--muted-foreground);
-    text-decoration: none;
-    font-size: 0.85rem;
-    letter-spacing: 0.08em;
-    white-space: nowrap;
-    transition: color 0.18s ease;
-  }
-  .nav-item::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -1px;
-    width: 0;
-    height: 2px;
-    background: var(--primary);
-    transition: width 0.22s ease;
-  }
-  .nav-item:hover {
-    color: var(--foreground);
-  }
-  .nav-item.active {
-    color: var(--primary);
-  }
-  .nav-item.active::after {
-    width: 1.6em;
-  }
-  .mark {
-    font-family: var(--font-serif);
-    font-weight: 700;
-    font-size: 1.02rem;
-    color: var(--foreground);
-    text-decoration: none;
-  }
-  .mark:hover {
-    color: var(--primary);
-  }
-</style>
+<ColumnRail
+  theme="others"
+  railLabel="抽屉杂记导航"
+  brand={{ cn: '抽屉杂记', en: 'DRAWER NOTES' }}
+  items={items}
+>
+  <a
+    slot="utils"
+    class="crail-item crail-mark"
+    href="/about/"
+    aria-label="关于我"
+    data-label="关于我">F.</a
+  >
+  <a slot="panel-extra" class="crail-panel-link" href="/about/">
+    <span class="crail-panel-glyph" aria-hidden="true">F.</span>
+    关于我
+  </a>
+</ColumnRail>

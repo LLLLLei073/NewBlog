@@ -1,0 +1,147 @@
+---
+/**
+ * 首页主视觉:主推《我的世界》机械动力整合包。
+ * 截图(占位插画,待真实截图替换)带奶油白粗边与约 2 度倾斜,
+ * 叠 WORLD IN PROGRESS 标签与记录日期;旁侧奶油白评论卡:
+ * 私人建造记录 + 「阅读建造手记 / 查看这个世界」入口。
+ * 不虚构基地名称、机器数量与世界进度。
+ */
+import GameFigure from './GameFigure.astro';
+import PixelIcon from './PixelIcon.astro';
+import { GAME_BY_SLUG } from '../../data/game/games.ts';
+
+interface Props {
+  /** 最近一篇建造手记的访问地址(没有则为 null) */
+  articleHref: string | null;
+  /** 手记记录日期(格式化字符串) */
+  date: string | null;
+}
+const { articleHref, date } = Astro.props;
+const game = GAME_BY_SLUG['minecraft-create']!;
+---
+
+<section class="ghero" aria-label={`当前主推:${game.title}`}>
+  <div class="ghero-figure gg-tilt-l" data-gg-hero-figure>
+    <span class="ghero-slot-chip gg-chip gg-chip--ink">SLOT {game.slot}</span>
+    <GameFigure
+      art={game.art}
+      alt={`${game.title}的占位插画:齿轮、传动带与产线(等待真实基地截图)`}
+      timecode={date ? `REC ${date}` : 'REC --/--/--'}
+      label="WORLD IN PROGRESS"
+      tape="tl"
+    />
+  </div>
+
+  <aside class="ghero-copy gg-card gg-tilt-r">
+    <p class="ghero-chips">
+      <span class="gg-chip gg-chip--acid">
+        <PixelIcon name="gear" size={13} class="ghero-gear" />
+        {game.statusLabel}
+      </span>
+      <span class="gg-chip">最近记录 {date ?? '待整理'}</span>
+    </p>
+    <h2 class="ghero-title">{game.title}</h2>
+    <p class="ghero-quote">
+      「从第一台机器开始，基地逐渐有了自己的运转方式。」
+    </p>
+    <p class="ghero-note">
+      私人建造记录 · {game.quote}
+    </p>
+    <div class="ghero-cta">
+      {
+        articleHref ? (
+          <a class="gg-btn gg-btn--acid" href={articleHref}>
+            阅读建造手记 →
+          </a>
+        ) : (
+          <span class="gg-chip">建造手记整理中</span>
+        )
+      }
+      <a class="gg-btn" href={`/game/playing/#${game.slug}`}>查看这个世界</a>
+    </div>
+  </aside>
+</section>
+
+<style>
+  .ghero {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    align-items: center;
+    gap: clamp(1.4rem, 4vw, 3rem);
+    padding: clamp(0.6rem, 2vw, 1.6rem) 0 clamp(1.6rem, 4vw, 2.8rem);
+  }
+  .ghero-figure {
+    position: relative;
+  }
+  .ghero-slot-chip {
+    position: absolute;
+    top: -14px;
+    right: 16px;
+    z-index: 2;
+    transform: rotate(2deg);
+  }
+
+  .ghero-copy {
+    padding: clamp(1.1rem, 2.6vw, 1.8rem) clamp(1.2rem, 2.8vw, 2rem);
+  }
+  .ghero-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    margin: 0 0 0.9rem;
+  }
+  .ghero-gear {
+    animation: ghero-gear-spin 1.8s cubic-bezier(0.3, 0, 0.2, 1) 0.6s 1;
+  }
+  @keyframes ghero-gear-spin {
+    to {
+      transform: rotate(180deg);
+    }
+  }
+  .ghero-title {
+    margin: 0;
+    font-family: var(--g-disp);
+    font-weight: 900;
+    font-size: clamp(26px, 3.6vw, 40px);
+    line-height: 1.25;
+    color: var(--gg-ink);
+  }
+  .ghero-quote {
+    margin: 0.9rem 0 0;
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--gg-ink);
+  }
+  .ghero-note {
+    margin: 0.7rem 0 0;
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: var(--gg-gray);
+  }
+  .ghero-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 1.2rem;
+  }
+
+  @media (max-width: 860px) {
+    .ghero {
+      grid-template-columns: 1fr;
+      gap: 1.6rem;
+    }
+    .ghero-figure {
+      transform: rotate(-1.2deg);
+    }
+    .ghero-copy {
+      transform: rotate(0.8deg);
+      margin-top: -0.4rem;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ghero-gear {
+      animation: none;
+    }
+  }
+</style>

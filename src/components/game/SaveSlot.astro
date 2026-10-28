@@ -1,0 +1,242 @@
+---
+/**
+ * 记忆卡存档槽:左侧油墨竖排 MEMORY CARD 轨 + 槽位号,
+ * 右侧封面缩略图、游戏名、最近记录日期、当前状态、私人短评
+ * (hover/聚焦时显现批注;触屏常显)与记录入口。
+ */
+import GameFigure from './GameFigure.astro';
+import PixelIcon from './PixelIcon.astro';
+import type { GameRecord } from '../../data/game/games.ts';
+import {
+  PLAY_STATUS_LABEL,
+  PLAY_STATUS_TONE,
+} from '../../data/game/games.ts';
+
+interface Props {
+  game: GameRecord;
+  /** 最近记录日期(格式化字符串,无则 null) */
+  date: string | null;
+  /** 记录入口:有真实内容的是链接,否则为占位说明 */
+  entries: { label: string; href: string | null }[];
+}
+const { game, date, entries } = Astro.props;
+const tone = PLAY_STATUS_TONE[game.status];
+const SLOT_ICON = {
+  '01': 'gear',
+  '02': 'leaf',
+  '03': 'chat',
+} as const;
+---
+
+<article class="slot gg-card" data-save-slot={game.slug} aria-label={`存档槽 ${game.slot}:${game.title}`}>
+  <div class="slot-rail" aria-hidden="true">
+    <span class="slot-rail-label">
+      <i></i><i></i><i></i>
+      <span class="slot-rail-text">MEMORY CARD</span>
+    </span>
+    <span class="slot-rail-no">{game.slot}</span>
+  </div>
+
+  <div class="slot-body">
+    <div class="slot-cover">
+      <GameFigure
+        art={game.art}
+        alt={`${game.title}的占位插画(等待真实画面)`}
+        timecode={date ? date : undefined}
+      />
+    </div>
+
+    <h3 class="slot-title">{game.title}</h3>
+    <p class="slot-en">{game.titleEn}</p>
+
+    <p class="slot-meta">
+      <span
+        class:list={['gg-chip', `gg-chip--${tone === 'coral' ? 'coral' : tone}`]}
+      >
+        <PixelIcon name={SLOT_ICON[game.slot]} size={12} />
+        {game.statusLabel || PLAY_STATUS_LABEL[game.status]}
+      </span>
+      <span class="slot-date">
+        LAST PLAYED <time>{date ?? '待记录'}</time>
+      </span>
+    </p>
+
+    <p class="slot-note">
+      <span class="slot-note-mark" aria-hidden="true">▶</span>
+      {game.quote}
+    </p>
+
+    <p class="slot-entries">
+      {
+        entries.map((e) =>
+          e.href ? (
+            <a class="slot-entry" href={e.href}>
+              {e.label} →
+            </a>
+          ) : (
+            <span class="slot-entry slot-entry--todo">{e.label}</span>
+          ),
+        )
+      }
+    </p>
+  </div>
+</article>
+
+<style>
+  .slot {
+    display: grid;
+    grid-template-columns: 46px minmax(0, 1fr);
+    height: 100%;
+  }
+  .slot-rail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.8rem;
+    padding: 0.7rem 0 0.8rem;
+    background: var(--gg-ink);
+    color: var(--gg-cream);
+  }
+  .slot-rail-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+  .slot-rail-label i {
+    width: 8px;
+    height: 8px;
+    background: rgba(244, 239, 216, 0.4);
+  }
+  .slot-rail-text {
+    margin-top: 0.5rem;
+    writing-mode: vertical-rl;
+    font-family: var(--g-mono);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: rgba(244, 239, 216, 0.85);
+  }
+  .slot-rail-no {
+    font-family: var(--g-cond);
+    font-weight: 800;
+    font-size: 26px;
+    color: var(--gg-acid);
+  }
+
+  .slot-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    padding: 0.9rem 1rem 1.05rem;
+  }
+  .slot-cover :global(.gg-frame) {
+    box-shadow: 3px 3px 0 0 var(--gg-ink);
+    padding: 7px;
+  }
+  .slot-title {
+    margin: 0.2rem 0 0;
+    font-family: var(--g-disp);
+    font-weight: 900;
+    font-size: clamp(19px, 2vw, 24px);
+    line-height: 1.35;
+    color: var(--gg-ink);
+  }
+  .slot-en {
+    margin: 0;
+    font-family: var(--g-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.22em;
+    color: var(--gg-gray);
+  }
+  .slot-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.9rem;
+    margin: 0.2rem 0 0;
+  }
+  .slot-date {
+    font-family: var(--g-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.1em;
+    color: var(--gg-gray);
+  }
+  .slot-date time {
+    color: var(--gg-ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* 私人批注:hover / 聚焦时显现;触屏环境常显 */
+  .slot-note {
+    display: flex;
+    gap: 0.5em;
+    margin: 0.35rem 0 0;
+    padding: 0.5em 0.7em;
+    border: 2px dashed rgba(21, 21, 21, 0.35);
+    background: rgba(231, 240, 91, 0.4);
+    color: var(--gg-ink);
+    font-size: 13.5px;
+    line-height: 1.7;
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease;
+  }
+  @media (hover: hover) {
+    .slot-note {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    .slot:hover .slot-note,
+    .slot:focus-within .slot-note {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  .slot-note-mark {
+    color: var(--gg-coral);
+    flex: none;
+  }
+
+  .slot-entries {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.1rem;
+    margin: 0.55rem 0 0;
+  }
+  .slot-entry {
+    font-family: var(--g-disp);
+    font-weight: 800;
+    font-size: 13.5px;
+    letter-spacing: 0.05em;
+    color: var(--gg-ink);
+    text-decoration: underline;
+    text-decoration-color: var(--gg-coral);
+    text-decoration-thickness: 2.5px;
+    text-underline-offset: 3px;
+    padding: 0.2rem 0;
+  }
+  a.slot-entry:hover {
+    background: var(--gg-acid);
+    text-decoration-color: transparent;
+  }
+  .slot-entry--todo {
+    color: var(--gg-gray);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  @media (max-width: 720px) {
+    .slot {
+      grid-template-columns: 38px minmax(0, 1fr);
+    }
+    .slot-rail-text {
+      font-size: 9px;
+    }
+    .slot-rail-no {
+      font-size: 22px;
+    }
+  }
+</style>

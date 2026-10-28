@@ -1,331 +1,312 @@
 ---
 /**
- * 「玩法解剖室 · PLAYLAB」游戏专栏首页:SELECT GAME 式布局。
- * hero(左文案 + 右 CONTINUE 存档槽) → 四个存档槽区块 → 存档列表。
+ * 「存档之外 · BEYOND THE SAVE FILE」专栏首页:
+ * 印刷封面拼贴首屏(标题 + 主视觉)→ 三个记忆卡存档槽 →
+ * 珊瑚色动态信息条 → 最新手记。首屏主推《我的世界》机械动力
+ * 整合包;开屏动画仅在本页挂载(会话一次)。
  */
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import GameNav from '../../components/game/GameNav.astro';
-import HudCard from '../../components/game/HudCard.astro';
 import GameIntro from '../../components/intro/GameIntro.astro';
-import { COLUMN, SECTIONS } from '../../data/game/column.ts';
+import GameMasthead from '../../components/game/GameMasthead.astro';
+import GameHero from '../../components/game/GameHero.astro';
+import SaveSlot from '../../components/game/SaveSlot.astro';
+import NowPlayingTicker from '../../components/game/NowPlayingTicker.astro';
+import type { TickerItem } from '../../components/game/NowPlayingTicker.astro';
+import PixelIcon from '../../components/game/PixelIcon.astro';
+import { COLUMN } from '../../data/game/column.ts';
+import { GAMES } from '../../data/game/games.ts';
+import { getGameArticleMeta } from '../../data/game/articles.ts';
 import { postHref } from '../../utils/postRoute.ts';
 
 const posts = (await getCollection('blog'))
   .filter((p) => !p.data.draft && p.data.category === 'game')
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-const latest = posts[0];
-const recent = posts.slice(0, 5);
 
 const fmtDate = (d: Date) =>
-  `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
+  `${d.getFullYear()}/${String(d.getMonth() + 1).padStart(2, '0')}/${String(
+    d.getDate(),
+  ).padStart(2, '0')}`;
+
+/* 每款游戏最近一次记录 = 它最新一篇手记的发布日期(无手记则空缺) */
+const latestByGame = new Map<string, (typeof posts)[number]>();
+for (const p of posts) {
+  const meta = getGameArticleMeta(p.id);
+  if (meta?.game && !latestByGame.has(meta.game)) {
+    latestByGame.set(meta.game, p);
+  }
+}
+const dateOf = (slug: string) => {
+  const p = latestByGame.get(slug);
+  return p ? fmtDate(p.data.pubDate) : null;
+};
+const articleOf = (slug: string) => {
+  const p = latestByGame.get(slug);
+  return p ? postHref(p.id, p.data.category) : null;
+};
+
+const mc = GAMES[0]!;
+const mcArticle = articleOf(mc.slug);
+const updated = posts[0]
+  ? fmtDate(posts[0]!.data.pubDate)
+  : fmtDate(new Date());
+
+const recent = posts.slice(0, 5);
+
+const ticker: TickerItem[] = [
+  {
+    icon: 'gear',
+    label: '持续建造',
+    text: '《我的世界》机械动力整合包',
+    href: `/game/playing/#${mc.slug}`,
+  },
+  {
+    icon: 'leaf',
+    label: '最近生存记录',
+    text: '《绿色地狱》',
+    href: '/game/playing/#green-hell',
+  },
+  {
+    icon: 'chat',
+    label: '最新游戏手记',
+    text: posts[0]?.data.title ?? '整理中',
+    href: posts[0] ? postHref(posts[0].id, posts[0].data.category) : undefined,
+  },
+  {
+    icon: 'star',
+    label: '当前收藏',
+    text: `${GAMES.length} 款作品`,
+    href: '/game/collection/',
+  },
+];
+
+const slotEntries: Record<
+  string,
+  { label: string; href: string | null }[]
+> = {
+  'minecraft-create': [
+    { label: '阅读建造手记', href: mcArticle },
+    { label: '世界档案', href: `/game/playing/#minecraft-create` },
+  ],
+  'green-hell': [
+    { label: '生存记录', href: `/game/playing/#green-hell` },
+    { label: '手记整理中', href: null },
+  ],
+  'no-game-series': [
+    { label: '系列入口', href: `/game/playing/#no-game-series` },
+    { label: '手记整理中', href: null },
+  ],
+};
 ---
 
 <BaseLayout
-  title="玩法解剖室 · PLAYLAB"
+  title={`存档之外 · ${COLUMN.en}`}
   description={COLUMN.intro}
   pageName="game"
 >
-  <div class="game game-page">
+  <div class="gg-wrap game-page">
     <GameNav />
     <GameIntro />
 
-    <!-- ======== 首屏:SELECT GAME ======== -->
-    <section class="hero g-rise" aria-label="专栏介绍">
-      <div class="hero-copy g-rise d1">
-        <p class="hero-kicker">
-          <span class="k-no">[01]</span>
-          <span class="mono-label">{COLUMN.en}</span>
-        </p>
-        <h1>{COLUMN.headline}</h1>
-        <p class="hero-sub">「{COLUMN.sub}」</p>
-        <p class="hero-intro">{COLUMN.intro}</p>
-        <div class="hero-cta">
-          <a class="cta-primary" href="/game/notes/">进入手记存档 →</a>
-        </div>
-        <p class="hero-latest mono-label">
-          SAVE UPDATED <span class="mono-num">{COLUMN.updated}</span>
-        </p>
-      </div>
+    <GameMasthead updated={updated} />
 
-      <div class="hero-slot g-rise d2">
-        {
-          latest ? (
-            <HudCard
-              slot="CONTINUE"
-              label="LATEST SAVE"
-              title={latest.data.title}
-              note={latest.data.description}
-              meta={`${fmtDate(latest.data.pubDate)} · READ →`}
-              href={postHref(latest.id, latest.data.category)}
-            />
-          ) : (
-            <HudCard
-              slot="NEW GAME"
-              label="EMPTY"
-              title="第一个存档位虚位以待"
-              note="从做一个小游戏或拆一个机制开始。"
-            />
-          )
-        }
-      </div>
-    </section>
+    <GameHero articleHref={mcArticle} date={dateOf('minecraft-create')} />
 
-    <!-- ======== 四个存档槽 ======== -->
-    <section class="slots" aria-label="内容板块">
-      <header class="sec-head g-rise">
-        <h2>SELECT<span class="mono-label">GAME MODES</span></h2>
-        <p class="sec-note">{COLUMN.sectionsHint}</p>
+    <!-- ===== 三个记忆卡存档槽 ===== -->
+    <section class="slots" aria-label="记忆卡存档槽">
+      <header class="gg-sec gg-rise">
+        <h2>记忆卡存档槽</h2>
+        <span class="gg-sec-en">MEMORY CARD SLOTS</span>
+        <a class="gg-sec-more" href="/game/playing/">进入正在游玩 →</a>
       </header>
       <div class="slots-grid">
         {
-          SECTIONS.map((s, i) => (
-            <div class:list={['g-rise', `d${(i % 4) + 1}`]}>
-              <HudCard
-                slot={s.slot}
-                label={s.en}
-                title={s.title}
-                note={s.note}
+          GAMES.map((game, i) => (
+            <div class:list={['gg-rise', `d${(i % 3) + 1}`]}>
+              <SaveSlot
+                game={game}
+                date={dateOf(game.slug)}
+                entries={slotEntries[game.slug] ?? []}
               />
-              <ul class="slot-items">
-                {s.items.map((it) => (
-                  <li>{it}</li>
-                ))}
-              </ul>
             </div>
           ))
         }
       </div>
     </section>
 
-    <!-- ======== 存档列表 ======== -->
-    <section class="saves" aria-label="手记存档">
-      <header class="sec-head g-rise">
-        <h2>
-          存档列表<span class="mono-label">SAVED · {posts.length} 篇</span>
-        </h2>
+    <div class="gg-rise d1">
+      <NowPlayingTicker items={ticker} />
+    </div>
+
+    <!-- ===== 最新手记 ===== -->
+    <section class="recent" aria-label="最新游戏手记">
+      <header class="gg-sec gg-rise">
+        <h2>最新手记</h2>
+        <span class="gg-sec-en">LATEST NOTES · {posts.length} 篇</span>
         {
           posts.length > 0 && (
-            <a href="/game/notes/" class="sec-more">
-              查看全部 →
+            <a class="gg-sec-more" href="/game/notes/">
+              全部手记 →
             </a>
           )
         }
       </header>
       {
         recent.length > 0 ? (
-          <ul class="saves-list g-rise d1">
-            {recent.map((p, i) => (
-              <li>
-                <a href={postHref(p.id, p.data.category)} class="save-row">
-                  <span class="mono-num s-no">
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                  <span class="s-main">
-                    <strong>{p.data.title}</strong>
-                    <span class="s-desc">{p.data.description}</span>
-                  </span>
-                  <span class="mono-num s-date">{fmtDate(p.data.pubDate)}</span>
-                </a>
-              </li>
-            ))}
+          <ul class="recent-list gg-rise d1">
+            {recent.map((p) => {
+              const meta = getGameArticleMeta(p.id);
+              const game = meta?.game ?? null;
+              return (
+                <li>
+                  <a
+                    href={postHref(p.id, p.data.category)}
+                    class="recent-row"
+                  >
+                    <PixelIcon
+                      name={game === 'green-hell' ? 'leaf' : game === 'no-game-series' ? 'chat' : 'gear'}
+                      size={15}
+                    />
+                    <span class="r-main">
+                      <strong>{p.data.title}</strong>
+                      <span class="r-desc">{p.data.description}</span>
+                    </span>
+                    <span class="r-date">{fmtDate(p.data.pubDate)}</span>
+                  </a>
+                </li>
+              );
+            })}
           </ul>
         ) : (
-          <p class="empty g-rise d1">还没有存档,NEW GAME 等你开始。</p>
+          <p class="gg-empty">
+            <strong>手记存档为空</strong>第一篇手记正在路上。
+          </p>
         )
       }
     </section>
+
+    <footer class="page-end">
+      <span class="mono-label">{COLUMN.en} · {COLUMN.sticker}</span>
+      <nav class="end-links" aria-label="更多栏目入口">
+        <a href="/game/playing/">正在游玩</a>
+        <a href="/game/collection/">收藏架</a>
+        <a href="/game/review/">年度回顾</a>
+      </nav>
+    </footer>
   </div>
 </BaseLayout>
 
 <style>
   .game-page {
-    padding-bottom: clamp(3rem, 7vw, 5rem);
-  }
-
-  /* ===== 首屏 ===== */
-  .hero {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 2.2rem;
-    align-items: center;
-    padding: clamp(1.8rem, 4vw, 3.2rem) 0 clamp(2rem, 4vw, 3rem);
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 2.6rem;
-  }
-  @media (min-width: 960px) {
-    .hero {
-      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
-      gap: 3rem;
-    }
-  }
-
-  .hero-kicker {
-    display: flex;
-    align-items: baseline;
-    gap: 0.6rem;
-    margin: 0;
-  }
-  .k-no {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--game-violet);
-  }
-  .hero-copy h1 {
-    margin: 1rem 0 0;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: clamp(30px, 4.6vw, 52px);
-    line-height: 1.22;
-    color: var(--foreground);
-  }
-  .hero-sub {
-    margin: 0.9rem 0 0;
-    font-family: var(--font-serif);
-    color: var(--game-coral);
-    letter-spacing: 0.1em;
-  }
-  .hero-intro {
-    margin: 1.2rem 0 0;
-    max-width: 46ch;
-    font-size: 14.5px;
-    line-height: 1.9;
-    color: var(--muted-foreground);
-  }
-  .hero-cta {
-    margin-top: 1.6rem;
-  }
-  .cta-primary {
-    display: inline-block;
-    padding: 0.62em 1.35em;
-    border: 1px solid var(--primary);
-    color: var(--primary);
-    text-decoration: none;
-    font-size: 14px;
-    letter-spacing: 0.1em;
-    transition:
-      background-color 0.18s ease,
-      color 0.18s ease;
-  }
-  .cta-primary:hover {
-    background: var(--primary);
-    color: var(--primary-foreground);
-  }
-  .hero-latest {
-    margin: 1.3rem 0 0;
-  }
-
-  /* ===== 存档槽 ===== */
-  .sec-head {
-    display: flex;
-    align-items: baseline;
-    gap: 0.9rem;
-    flex-wrap: wrap;
-    margin-bottom: 1.4rem;
-  }
-  .sec-head h2 {
-    margin: 0;
-    font-family: var(--font-display);
-    font-size: clamp(22px, 3vw, 30px);
-  }
-  .sec-head h2 .mono-label {
-    margin-left: 0.65rem;
-  }
-  .sec-note {
-    margin: 0;
-    font-size: 13.5px;
-    color: var(--muted-foreground);
-    flex-basis: 100%;
-  }
-  .sec-more {
-    margin-left: auto;
-    color: var(--primary);
-    text-decoration: none;
-    font-size: 14px;
-  }
-  .sec-more:hover {
-    text-decoration: underline;
+    padding-bottom: clamp(2.4rem, 6vw, 4rem);
   }
 
   .slots {
-    margin-bottom: 2.8rem;
+    padding: clamp(1.6rem, 4vw, 2.6rem) 0 clamp(1.6rem, 4vw, 2.4rem);
   }
   .slots-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1rem, 2.4vw, 1.6rem);
   }
-  .slot-items {
-    margin: 0.6rem 0 0;
-    padding: 0 0 0 1.1em;
-    display: grid;
-    gap: 0.28rem;
-    font-size: 13px;
-    line-height: 1.7;
-    color: var(--muted-foreground);
+  @media (max-width: 980px) {
+    .slots-grid {
+      grid-template-columns: 1fr;
+      max-width: 560px;
+    }
   }
 
-  /* ===== 存档列表 ===== */
-  .saves-list {
+  .recent {
+    padding: clamp(1.8rem, 4vw, 2.8rem) 0 0.6rem;
+  }
+  .recent-list {
     list-style: none;
     margin: 0;
     padding: 0;
-    border-top: 1px solid var(--border);
+    border-top: 3px solid var(--gg-ink);
   }
-  .save-row {
+  .recent-row {
     display: grid;
-    grid-template-columns: 3rem 1fr auto;
-    gap: 1.1rem;
+    grid-template-columns: auto 1fr auto;
+    gap: 1rem;
     align-items: baseline;
-    padding: 1.05rem 0.4rem;
-    border-bottom: 1px solid var(--border);
+    padding: 1rem 0.5rem;
+    border-bottom: 2px solid rgba(244, 239, 216, 0.3);
+    color: var(--gg-cream);
     text-decoration: none;
-    color: inherit;
-    transition: background-color 0.18s ease;
+    transition: background-color 0.15s ease;
   }
-  .save-row:hover {
-    background: var(--accent);
+  .recent-row:hover {
+    background: rgba(244, 239, 216, 0.1);
   }
-  .s-no {
-    font-size: 12px;
-    color: var(--game-coral);
+  .recent-row :global(.px-icon) {
+    color: var(--gg-acid);
+    align-self: center;
   }
-  .s-main {
+  .r-main {
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
     min-width: 0;
   }
-  .s-main strong {
-    font-family: var(--font-serif);
-    font-size: 16px;
-    color: var(--foreground);
+  .r-main strong {
+    font-family: var(--g-disp);
+    font-weight: 800;
+    font-size: 16.5px;
+    line-height: 1.5;
   }
-  .s-desc {
+  .r-desc {
     font-size: 13.5px;
-    line-height: 1.75;
-    color: var(--muted-foreground);
+    line-height: 1.7;
+    color: var(--gg-cream-dim);
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
-  .s-date {
+  .r-date {
+    font-family: var(--g-mono);
     font-size: 12px;
-    color: var(--muted-foreground);
+    letter-spacing: 0.08em;
+    color: var(--gg-cream-dim);
+    font-variant-numeric: tabular-nums;
   }
-  .empty {
-    padding: 1.4rem 0;
-    color: var(--muted-foreground);
-    font-size: 14.5px;
-  }
-
   @media (max-width: 640px) {
-    .save-row {
-      grid-template-columns: 2.4rem 1fr;
+    .recent-row {
+      grid-template-columns: auto 1fr;
     }
-    .s-date {
+    .r-date {
       display: none;
     }
+  }
+
+  .page-end {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: clamp(1.8rem, 4vw, 2.6rem);
+    padding-top: 1.1rem;
+    border-top: 3px solid var(--gg-ink);
+  }
+  .page-end .mono-label {
+    color: var(--gg-cream-dim);
+  }
+  .end-links {
+    display: flex;
+    gap: 1.3rem;
+  }
+  .end-links a {
+    color: var(--gg-cream);
+    text-decoration: none;
+    font-family: var(--g-disp);
+    font-weight: 700;
+    font-size: 14px;
+    padding: 0.3rem 0;
+  }
+  .end-links a:hover {
+    color: var(--gg-acid);
   }
 </style>

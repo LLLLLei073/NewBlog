@@ -1,227 +1,684 @@
 /* ============================================================
-   「玩法解剖室 · PLAYLAB」游戏专栏视觉系统
-   街机/debug HUD 语言:深炭底 + 信号绿/珊瑚橙/紫罗兰,等宽字点缀、
-   HUD 边框与存档槽卡片,扫描线极淡且仅暗色。仅在
-   body[data-page='game'] 内生效:重定义语义令牌,全站 Header/
-   Footer/播放器自动换装。亮色为米灰主机面板变体。
+   「存档之外 · BEYOND THE SAVE FILE」游戏专栏视觉系统
+   早期独立游戏杂志语言:高饱和钴蓝底 + 奶油白印刷块 + 油墨黑
+   粗边与错位阴影 + 酸性黄/珊瑚橙贴纸,半调网点与像素小装饰。
+   仅在 body[data-page='game'] 内生效:重定义语义令牌,全站
+   Header/Footer/播放器自动换装。亮暗主题共用同一套钴蓝外观,
+   暗色只是更深的蓝,不改变印刷语言。
    ============================================================ */
 
 body[data-page='game'] {
-  /* 覆盖全局令牌:米灰主机面板(亮色) */
-  --background: #ebeee5;
-  --card: #f2f4ec;
-  --popover: #e3e7da;
-  --muted: #e0e4d7;
-  --foreground: #1b2330;
-  --card-foreground: #1b2330;
-  --muted-foreground: #5d6570;
-  --primary: #0f6a3c; /* 信号绿(对米灰底 ≥4.5:1) */
-  --primary-foreground: #f2f4ec;
-  --secondary: #e0e4d7;
-  --secondary-foreground: #2a3444;
-  --accent: rgba(21, 127, 75, 0.09);
-  --accent-foreground: #0f6a3c;
-  --border: #d3d8c8;
-  --border-300: #d3d8c8;
-  --border-400: #bfc5b2;
-  --ring: #0f6a3c;
-  --header-bg: color-mix(in srgb, #ebeee5 94%, transparent);
+  /* 覆盖全局令牌:钴蓝底 + 奶油白印刷 */
+  --background: #3543c5;
+  --card: #f4efd8;
+  --popover: #f4efd8;
+  --muted: rgba(244, 239, 216, 0.14);
+  --foreground: #f4efd8; /* 蓝底上的文字用奶油白 */
+  --card-foreground: #151515; /* 奶油白卡上的文字用油墨黑 */
+  --muted-foreground: rgba(244, 239, 216, 0.75);
+  --primary: #e7f05b; /* 酸性黄 */
+  --primary-foreground: #151515;
+  --secondary: rgba(244, 239, 216, 0.14);
+  --secondary-foreground: #f4efd8;
+  --accent: rgba(231, 240, 91, 0.18);
+  --accent-foreground: #e7f05b;
+  --border: rgba(244, 239, 216, 0.32);
+  --border-300: rgba(244, 239, 216, 0.32);
+  --border-400: rgba(244, 239, 216, 0.5);
+  --ring: #e7f05b;
+  --header-bg: color-mix(in srgb, #3543c5 92%, transparent);
 
-  /* 品牌色覆盖 */
-  --brand-300: #2aa06a;
-  --brand-400: #137446;
-  --brand-500: #0f6a3c;
-  --brand-600: #0b5530;
-  --brand-700: #084224;
+  /* 品牌色收拢进酸性黄家族(Header 活动块 = 黄底黑字) */
+  --brand-100: #e7f05b;
+  --brand-200: #edf384;
+  --brand-300: #e7f05b;
+  --brand-400: #d8e143;
+  --brand-500: #b9c22e;
+  --brand-600: #8d9620;
+  --brand-700: #3e4210;
 
-  /* 专栏专属:珊瑚橙(START/高亮)与紫罗兰(次级标记) */
-  --game-coral: #b4442b;
-  --game-violet: #5a46b8;
-  --game-hud: #1b2330;
+  /* 专栏专属色板 */
+  --gg-blue: #3543c5;
+  --gg-blue-deep: #2b37a8;
+  --gg-cream: #f4efd8;
+  --gg-cream-dim: rgba(244, 239, 216, 0.75);
+  --gg-cream-faint: rgba(244, 239, 216, 0.32);
+  --gg-ink: #151515;
+  --gg-gray: #4b4a43; /* 奶油白上的次级文字 */
+  --gg-acid: #e7f05b;
+  --gg-coral: #ff7058;
+  --gg-lake: #3e8e7e; /* 低饱和湖绿状态色 */
+  --gg-lake-ink: #23574c; /* 奶油白上达 AA 的湖绿文字 */
+
+  /* 印刷构件参数 */
+  --gg-bw: 3px; /* 粗黑边 */
+  --gg-bw-thin: 2px;
+  --gg-shadow: 6px 6px 0 0 var(--gg-ink);
+  --gg-shadow-sm: 4px 4px 0 0 var(--gg-ink);
+
+  /* 字体:中文粗黑体 / 压缩英文标题 / 等宽时间码 */
+  --g-disp:
+    'HarmonyOS Sans SC', 'MiSans', 'PingFang SC', 'Source Han Sans SC',
+    'Noto Sans SC', 'Microsoft YaHei UI', 'Microsoft YaHei', sans-serif;
+  --g-cond:
+    'Bahnschrift SemiCondensed', 'Bahnschrift', 'Arial Narrow',
+    'Avenir Next Condensed', 'Helvetica Neue', Arial, sans-serif;
+  --g-mono: var(--font-mono);
 
   --card-alpha: 1;
   --card-border-alpha: 1;
 
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.8;
 
   background: var(--background);
+  background-image: none;
   color: var(--foreground);
 }
 
-/* 裁掉旋转卡片造成的横向溢出 */
-html:has(body[data-page='game']) {
-  overflow-x: clip;
-}
-
-/* 暗色:深炭底 + 霓虹三色(专栏的招牌形态) */
+/* 暗色主题:同一印刷语言,底色换成更深的钴蓝 */
 :root[data-theme='dark'] body[data-page='game'],
 html[data-theme='dark'] body[data-page='game'] {
-  --background: #101318;
-  --card: #151922;
-  --popover: #181d28;
-  --muted: #181d28;
-  --foreground: #dfe6df;
-  --card-foreground: #dfe6df;
-  --muted-foreground: #8d97a3;
-  --primary: #45d483;
-  --primary-foreground: #101318;
-  --secondary: #181d28;
-  --secondary-foreground: #b9c4c9;
-  --accent: rgba(69, 212, 131, 0.1);
-  --accent-foreground: #6fe3a1;
-  --border: rgba(223, 230, 223, 0.14);
-  --border-300: rgba(223, 230, 223, 0.14);
-  --border-400: rgba(223, 230, 223, 0.24);
-  --ring: #45d483;
-  --header-bg: color-mix(in srgb, #101318 92%, transparent);
-  --brand-300: #6fe3a1;
-  --brand-400: #58dc91;
-  --brand-500: #45d483;
-  --brand-600: #34b56c;
-  --brand-700: #259257;
-
-  --game-coral: #ff8667;
-  --game-violet: #b3a3f5;
-  --game-hud: #dfe6df;
-
-  /* 关掉全局暗色深空渐变 */
+  --background: #2b37a8;
+  --header-bg: color-mix(in srgb, #2b37a8 92%, transparent);
   background: var(--background);
   background-image: none;
 }
 
+/* 裁掉贴纸/倾斜卡片造成的横向溢出 */
+html:has(body[data-page='game']) {
+  overflow-x: clip;
+}
+
 /* 专栏页面不显示全局星空与暗色光晕 */
 body[data-page='game']::before,
+body[data-page='game']::after,
 :root[data-theme='dark'] body[data-page='game']::before,
 :root[data-theme='dark'] body[data-page='game']::after,
+html[data-theme='dark'] body[data-page='game']::before,
 html[data-theme='dark'] body[data-page='game']::after {
   display: none;
   content: none;
 }
 
-/* ============ HUD 公共构件 ============ */
+body[data-page='game'] main {
+  position: relative;
+}
+
+/* ============ 全站 Header 在钴蓝底上的换装 ============
+   Header 的品牌/RSS/主题开关/移动菜单使用 popover、muted 等
+   令牌;游戏专栏的卡片令牌是奶油白底黑字,直接套会让 Header
+   文字消失,这里按组件显式覆盖。 */
+body[data-page='game'] header .brand {
+  color: var(--gg-cream);
+}
+/* 活动导航块:酸性黄底 + 油墨字;暗色全局规则会给 acid 同族文字色,
+   在黄底上不可读,这里显式压回 */
+body[data-page='game'] header .nav-links a.active,
+:root[data-theme='dark'] body[data-page='game'] header .nav-links a.active,
+html[data-theme='dark'] body[data-page='game'] header .nav-links a.active {
+  background: var(--gg-acid);
+  color: var(--gg-ink);
+}
+body[data-page='game'] header .rss-link {
+  color: var(--gg-cream-dim);
+}
+body[data-page='game'] header .rss-link:hover {
+  background: rgba(244, 239, 216, 0.14);
+  color: var(--gg-cream);
+}
+body[data-page='game'] header .rss-link.active {
+  background: var(--gg-acid);
+  color: var(--gg-ink);
+}
+body[data-page='game'] header #theme-toggle,
+body[data-page='game'] header .menu-toggle {
+  background: rgba(244, 239, 216, 0.14);
+  border-color: rgba(244, 239, 216, 0.4);
+  color: var(--gg-cream);
+}
+body[data-page='game'] header #theme-toggle:hover,
+body[data-page='game'] header .menu-toggle:hover {
+  background: var(--gg-acid);
+  border-color: var(--gg-ink);
+  color: var(--gg-ink);
+}
+body[data-page='game'] header .menu-bar {
+  background: var(--gg-cream);
+}
+body[data-page='game'] header .mobile-menu {
+  background: var(--gg-ink);
+}
+body[data-page='game'] header .mobile-link {
+  background: transparent;
+  border-color: rgba(244, 239, 216, 0.3);
+  color: rgba(244, 239, 216, 0.88);
+}
+body[data-page='game'] header .mobile-link:hover {
+  background: rgba(244, 239, 216, 0.12);
+  color: var(--gg-cream);
+}
+body[data-page='game'] header .mobile-link.active {
+  background: var(--gg-acid);
+  border-color: var(--gg-ink);
+  color: var(--gg-ink);
+}
+body[data-page='game'] header .mobile-rss {
+  color: var(--gg-cream-dim);
+}
+body[data-page='game'] header .mobile-rss:hover {
+  background: rgba(244, 239, 216, 0.12);
+  color: var(--gg-cream);
+}
+
+/* ============ 通用构件(专栏内全局可用,gg- 前缀) ============ */
 
 /* 专栏容器 */
-body[data-page='game'] .game {
-  max-width: 1200px;
+body[data-page='game'] .gg-wrap {
+  max-width: 1240px;
   margin-inline: auto;
   padding-inline: clamp(1.1rem, 4vw, 3rem);
 }
 
-/* 等宽小标 */
-body[data-page='game'] .mono-label {
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  color: var(--muted-foreground);
+/* 半调网点:油墨点(奶油白上)/ 奶油点(钴蓝上) */
+body[data-page='game'] .gg-halftone {
+  background-image: radial-gradient(
+    rgba(21, 21, 21, 0.3) 1.2px,
+    transparent 1.4px
+  );
+  background-size: 9px 9px;
+}
+body[data-page='game'] .gg-halftone-cream {
+  background-image: radial-gradient(
+    rgba(244, 239, 216, 0.4) 1.2px,
+    transparent 1.4px
+  );
+  background-size: 10px 10px;
 }
 
-/* HUD 槽位卡:细框 + 四角 L 形缺口 */
-body[data-page='game'] .hud-card {
-  position: relative;
-  background: var(--card);
-  border: 1px solid var(--border);
+/* 印刷卡:奶油白 + 粗黑边 + 错位黑阴影 */
+body[data-page='game'] .gg-card {
+  background: var(--gg-cream);
+  color: var(--gg-ink);
+  border: var(--gg-bw) solid var(--gg-ink);
+  box-shadow: var(--gg-shadow);
+}
+body[data-page='game'] .gg-card--flat {
+  box-shadow: none;
+}
+body[data-page='game'] .gg-card--sm {
+  border-width: var(--gg-bw-thin);
+  box-shadow: var(--gg-shadow-sm);
+}
+
+/* 小签:编号、标签、状态(一律带文字,不只靠颜色) */
+body[data-page='game'] .gg-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.28em 0.75em;
+  border: var(--gg-bw-thin) solid var(--gg-ink);
+  background: var(--gg-cream);
+  color: var(--gg-ink);
+  font-family: var(--g-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+body[data-page='game'] .gg-chip--acid {
+  background: var(--gg-acid);
+}
+body[data-page='game'] .gg-chip--coral {
+  background: var(--gg-coral);
+}
+body[data-page='game'] .gg-chip--ink {
+  background: var(--gg-ink);
+  color: var(--gg-cream);
+}
+body[data-page='game'] .gg-chip--lake {
+  background: #d9e7de;
+  color: var(--gg-lake-ink);
+}
+body[data-page='game'] .gg-chip--ghost {
+  background: transparent;
+  border-color: var(--gg-ink);
+}
+
+/* 时间码:等宽 + 固定数字宽 */
+body[data-page='game'] .gg-timecode {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2em 0.6em;
+  background: var(--gg-ink);
+  color: var(--gg-cream);
+  font-family: var(--g-mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* 按钮:奶油白印刷块,hover 错位 2-4px + 阴影加深 */
+body[data-page='game'] .gg-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  min-height: 44px;
+  padding: 0.55em 1.3em;
+  background: var(--gg-cream);
+  color: var(--gg-ink);
+  border: var(--gg-bw) solid var(--gg-ink);
+  box-shadow: var(--gg-shadow-sm);
+  font-family: var(--g-disp);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  cursor: pointer;
   transition:
-    border-color 0.2s ease,
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+    transform 0.16s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.16s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.16s ease;
 }
-body[data-page='game'] .hud-card:hover {
-  border-color: var(--primary);
-  transform: translateY(-3px);
-  box-shadow: 0 6px 22px -10px
-    color-mix(in srgb, var(--primary) 45%, transparent);
+body[data-page='game'] .gg-btn:hover,
+body[data-page='game'] .gg-btn:focus-visible {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0 0 var(--gg-ink);
 }
-body[data-page='game'] .hud-card::before,
-body[data-page='game'] .hud-card::after {
-  content: '';
+body[data-page='game'] .gg-btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0 0 var(--gg-ink);
+}
+body[data-page='game'] .gg-btn--acid {
+  background: var(--gg-acid);
+}
+body[data-page='game'] .gg-btn--ink {
+  background: var(--gg-ink);
+  color: var(--gg-cream);
+}
+body[data-page='game'] .gg-btn--sm {
+  min-height: 44px;
+  padding: 0.3em 0.9em;
+  font-size: 13.5px;
+  border-width: var(--gg-bw-thin);
+}
+
+/* 贴纸:酸性黄/珊瑚橙,粗边 + 小错位阴影,允许一个静置角度 */
+body[data-page='game'] .gg-sticker {
+  display: inline-block;
+  padding: 0.42em 1em;
+  background: var(--gg-acid);
+  color: var(--gg-ink);
+  border: var(--gg-bw) solid var(--gg-ink);
+  box-shadow: 3px 3px 0 0 var(--gg-ink);
+  font-family: var(--g-cond);
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: 0.14em;
+  white-space: nowrap;
+}
+body[data-page='game'] .gg-sticker--coral {
+  background: var(--gg-coral);
+}
+
+/* 胶带:半透明斜贴,压在截图/卡片角上 */
+body[data-page='game'] .gg-tape {
   position: absolute;
-  width: 10px;
-  height: 10px;
-  border-color: var(--game-coral);
-  border-style: solid;
-  opacity: 0.85;
+  width: 84px;
+  height: 26px;
+  background: rgba(244, 239, 216, 0.5);
+  border: 1px solid rgba(21, 21, 21, 0.18);
+  box-shadow: 0 1px 2px rgba(21, 21, 21, 0.12);
   pointer-events: none;
 }
-body[data-page='game'] .hud-card::before {
-  top: -1px;
-  left: -1px;
-  border-width: 2px 0 0 2px;
-}
-body[data-page='game'] .hud-card::after {
-  bottom: -1px;
-  right: -1px;
-  border-width: 0 2px 2px 0;
+
+/* 黄色便签 */
+body[data-page='game'] .gg-sticky {
+  position: relative;
+  display: block;
+  padding: 1rem 1.15rem;
+  background: var(--gg-acid);
+  border: var(--gg-bw-thin) solid var(--gg-ink);
+  box-shadow: var(--gg-shadow-sm);
+  color: var(--gg-ink);
+  font-size: 15px;
+  line-height: 1.75;
+  transform: rotate(-1.2deg);
 }
 
-/* START 徽章(珊瑚橙) */
-body[data-page='game'] .start-badge {
-  display: inline-block;
-  padding: 0.3em 0.9em;
-  border: 1.5px solid var(--game-coral);
-  color: var(--game-coral);
-  font-family: var(--font-mono);
-  font-size: 12.5px;
-  font-weight: 500;
-  letter-spacing: 0.3em;
+/* 截图画框:奶油白粗边,图片保持原始比例不拉伸 */
+body[data-page='game'] .gg-frame {
+  position: relative;
+  background: var(--gg-cream);
+  border: var(--gg-bw) solid var(--gg-ink);
+  box-shadow: var(--gg-shadow);
+  padding: 10px;
+}
+body[data-page='game'] .gg-frame > img,
+body[data-page='game'] .gg-frame > svg {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
-/* 像素方块光标 */
-body[data-page='game'] .px-cursor {
-  display: inline-block;
-  width: 0.58em;
-  height: 1em;
-  margin-left: 0.15em;
-  vertical-align: -0.12em;
-  background: var(--primary);
+/* 轻微倾斜工具(1-3 度) */
+body[data-page='game'] .gg-tilt-l {
+  transform: rotate(-1.8deg);
+}
+body[data-page='game'] .gg-tilt-l2 {
+  transform: rotate(-2.4deg);
+}
+body[data-page='game'] .gg-tilt-r {
+  transform: rotate(1.5deg);
+}
+
+/* 区块标题:中文粗黑 + 英文等宽小签 */
+body[data-page='game'] .gg-sec {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  flex-wrap: wrap;
+  margin: 0 0 1.3rem;
+}
+body[data-page='game'] .gg-sec h2 {
+  margin: 0;
+  font-family: var(--g-disp);
+  font-weight: 900;
+  font-size: clamp(24px, 3.4vw, 34px);
+  letter-spacing: 0.02em;
+  color: var(--gg-cream);
+}
+body[data-page='game'] .gg-sec .gg-sec-en {
+  font-family: var(--g-mono);
+  font-size: 12px;
+  letter-spacing: 0.24em;
+  color: var(--gg-cream-dim);
+}
+body[data-page='game'] .gg-sec .gg-sec-more {
+  margin-left: auto;
+  color: var(--gg-acid);
+  font-size: 14px;
+  text-decoration: none;
+  padding: 0.35rem 0;
+}
+body[data-page='game'] .gg-sec .gg-sec-more:hover {
+  text-decoration: underline;
 }
 
 /* 页面元素错峰进场 */
-body[data-page='game'] .g-rise {
+body[data-page='game'] .gg-rise {
   opacity: 0;
-  transform: translateY(14px);
-  animation: g-rise-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  transform: translateY(16px);
+  animation: gg-rise-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
-body[data-page='game'] .g-rise.d1 {
+body[data-page='game'] .gg-rise.d1 {
   animation-delay: 0.08s;
 }
-body[data-page='game'] .g-rise.d2 {
+body[data-page='game'] .gg-rise.d2 {
   animation-delay: 0.18s;
 }
-body[data-page='game'] .g-rise.d3 {
+body[data-page='game'] .gg-rise.d3 {
   animation-delay: 0.3s;
 }
-body[data-page='game'] .g-rise.d4 {
+body[data-page='game'] .gg-rise.d4 {
   animation-delay: 0.42s;
 }
-@keyframes g-rise-in {
+@keyframes gg-rise-in {
   to {
     opacity: 1;
     transform: none;
   }
 }
 
-/* 扫描线:仅暗色,极淡 */
-:root[data-theme='dark'] body[data-page='game'] .game::after,
-html[data-theme='dark'] body[data-page='game'] .game::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 3;
-  pointer-events: none;
-  opacity: 0.05;
-  background-image: repeating-linear-gradient(
-    to bottom,
-    transparent 0 2px,
-    rgba(223, 230, 223, 0.5) 2px 3px
-  );
+/* 章节锚点:给吸顶导航留出滚动空间 */
+body[data-page='game'] .gg-anchor {
+  display: block;
+  height: 0;
+  scroll-margin-top: calc(var(--header-height, 56px) + 96px);
 }
 
+/* ============ 手记正文排版(回放式文章页) ============ */
+
+body[data-page='game'] .gg-prose {
+  color: var(--gg-ink);
+  font-size: 16.5px;
+  line-height: 1.85;
+}
+body[data-page='game'] .gg-prose > * {
+  max-width: 68ch;
+  margin-inline: auto;
+}
+body[data-page='game'] .gg-prose p {
+  margin: 1.1em 0;
+}
+body[data-page='game'] .gg-prose h2,
+body[data-page='game'] .gg-prose h3,
+body[data-page='game'] .gg-prose h4 {
+  font-family: var(--g-disp);
+  font-weight: 900;
+  line-height: 1.3;
+  color: var(--gg-ink);
+  scroll-margin-top: calc(var(--header-height, 56px) + 120px);
+}
+body[data-page='game'] .gg-prose h2 {
+  margin: 2.2em auto 0.9em;
+  font-size: clamp(23px, 3vw, 28px);
+  padding-left: 0.65em;
+  border-left: 8px solid var(--gg-acid);
+}
+body[data-page='game'] .gg-prose h3 {
+  margin: 1.8em auto 0.7em;
+  font-size: 19.5px;
+}
+body[data-page='game'] .gg-prose a {
+  color: var(--gg-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--gg-coral);
+  text-decoration-thickness: 2.5px;
+  text-underline-offset: 3px;
+}
+body[data-page='game'] .gg-prose a:hover {
+  background: var(--gg-acid);
+  text-decoration-color: transparent;
+}
+body[data-page='game'] .gg-prose strong {
+  font-weight: 800;
+  background: linear-gradient(transparent 62%, rgba(231, 240, 91, 0.9) 62%);
+}
+body[data-page='game'] .gg-prose ul,
+body[data-page='game'] .gg-prose ol {
+  margin: 1.1em auto;
+  padding-left: 1.5em;
+}
+body[data-page='game'] .gg-prose ul li,
+body[data-page='game'] .gg-prose ol li {
+  margin: 0.45em 0;
+}
+body[data-page='game'] .gg-prose ul li::marker {
+  color: var(--gg-coral);
+}
+body[data-page='game'] .gg-prose ol li::marker {
+  font-family: var(--g-mono);
+  color: var(--gg-coral);
+  font-weight: 600;
+}
+body[data-page='game'] .gg-prose blockquote {
+  margin: 1.4em auto;
+  padding: 0.9em 1.2em;
+  border: var(--gg-bw-thin) solid var(--gg-ink);
+  border-left-width: 8px;
+  background: var(--gg-cream);
+  box-shadow: var(--gg-shadow-sm);
+  color: var(--gg-ink);
+}
+body[data-page='game'] .gg-prose blockquote p {
+  margin: 0.35em 0;
+}
+body[data-page='game'] .gg-prose code {
+  font-family: var(--g-mono);
+  font-size: 0.85em;
+  background: rgba(21, 21, 21, 0.07);
+  border: 1px solid rgba(21, 21, 21, 0.22);
+  padding: 0.12em 0.4em;
+}
+body[data-page='game'] .gg-prose pre {
+  border: var(--gg-bw) solid var(--gg-ink);
+  box-shadow: var(--gg-shadow-sm);
+  background: var(--gg-ink);
+  color: var(--gg-cream);
+  padding: 1rem 1.2rem;
+  overflow-x: auto;
+}
+body[data-page='game'] .gg-prose pre code {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  font-size: 13.5px;
+}
+body[data-page='game'] .gg-prose img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: var(--gg-bw) solid var(--gg-ink);
+  box-shadow: var(--gg-shadow-sm);
+}
+body[data-page='game'] .gg-prose hr {
+  border: 0;
+  border-top: 3px dashed rgba(21, 21, 21, 0.4);
+  margin: 2.4em auto;
+  max-width: 68ch;
+}
+body[data-page='game'] .gg-prose table {
+  margin: 1.4em auto;
+  border-collapse: collapse;
+  border: var(--gg-bw) solid var(--gg-ink);
+  background: var(--gg-cream);
+  font-size: 15px;
+  max-width: 100%;
+}
+body[data-page='game'] .gg-prose th,
+body[data-page='game'] .gg-prose td {
+  border: 1.5px solid var(--gg-ink);
+  padding: 0.5em 0.9em;
+  text-align: left;
+}
+body[data-page='game'] .gg-prose th {
+  background: var(--gg-acid);
+  font-family: var(--g-disp);
+}
+
+/* 正文里的黄色便签(手记中直接写 <aside class="gg-sticky">) */
+body[data-page='game'] .gg-prose aside.gg-sticky {
+  max-width: 44ch;
+  margin: 1.8em auto;
+}
+
+/* ============ 剧透保护(SpoilerGate) ============ */
+
+/* <details class="gg-spoiler"> 原生支持键盘与读屏;会话内确认
+   状态由文章页脚本写 sessionStorage 恢复。 */
+body[data-page='game'] .gg-prose details.gg-spoiler,
+body[data-page='game'] details.gg-spoiler {
+  margin: 1.6em auto;
+  max-width: 68ch;
+  border: var(--gg-bw) solid var(--gg-ink);
+  background: var(--gg-cream);
+  box-shadow: var(--gg-shadow-sm);
+  scroll-margin-top: calc(var(--header-height, 56px) + 120px);
+}
+body[data-page='game'] details.gg-spoiler > summary {
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+  min-height: 44px;
+  padding: 0.6em 1em;
+  cursor: pointer;
+  font-family: var(--g-disp);
+  font-weight: 800;
+  font-size: 15.5px;
+  color: var(--gg-ink);
+  list-style: none;
+  background: var(--gg-coral);
+}
+body[data-page='game'] details.gg-spoiler > summary::-webkit-details-marker {
+  display: none;
+}
+body[data-page='game'] details.gg-spoiler > summary .gg-spoiler-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border: 2px solid var(--gg-ink);
+  background: var(--gg-cream);
+  font-family: var(--g-mono);
+  font-size: 14px;
+}
+body[data-page='game'] details.gg-spoiler > summary .gg-spoiler-hint {
+  margin-left: auto;
+  font-family: var(--g-mono);
+  font-weight: 500;
+  font-size: 11.5px;
+  letter-spacing: 0.1em;
+  color: var(--gg-ink);
+  text-align: right;
+}
+body[data-page='game'] details.gg-spoiler[open] > summary {
+  background: var(--gg-acid);
+}
+body[data-page='game'] details.gg-spoiler > .gg-spoiler-body {
+  padding: 0.4em 1.2em 1em;
+}
+/* 展开后的剧透正文:左侧警示条 + 说明文字(不只靠视觉模糊) */
+body[data-page='game'] details.gg-spoiler > .gg-spoiler-body > p:first-child {
+  margin-top: 0.6em;
+}
+
+/* ============ 空状态与占位说明 ============ */
+body[data-page='game'] .gg-empty {
+  display: grid;
+  gap: 0.35rem;
+  justify-items: start;
+  padding: 1.2rem 1.3rem;
+  border: 2px dashed var(--gg-ink);
+  background: rgba(244, 239, 216, 0.6);
+  color: var(--gg-gray);
+  font-size: 14.5px;
+  line-height: 1.75;
+}
+body[data-page='game'] .gg-empty strong {
+  color: var(--gg-ink);
+  font-family: var(--g-disp);
+  font-weight: 800;
+}
+
+/* ============ 动效降级 ============ */
 @media (prefers-reduced-motion: reduce) {
-  body[data-page='game'] .g-rise {
+  body[data-page='game'] .gg-rise {
     animation: none;
     opacity: 1;
     transform: none;
+  }
+  body[data-page='game'] .gg-btn,
+  body[data-page='game'] .gg-btn:hover,
+  body[data-page='game'] .gg-btn:active,
+  body[data-page='game'] .gg-btn:focus-visible {
+    transform: none;
+    transition: none;
+  }
+  body[data-page='game'] html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ============ 右侧符号栏(ColumnRail)内容让位 ============ */
+@media (min-width: 960px) {
+  body[data-page='game'] .gg-wrap {
+    margin-right: var(--rail-w, 78px);
   }
 }

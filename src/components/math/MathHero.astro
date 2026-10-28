@@ -1,0 +1,154 @@
+---
+/**
+ * 首屏:左侧细字重标题区 + 右侧环面数学对象。
+ * 接近全视口;标题/图形挂 data 钩子供开屏动画交接。
+ */
+import { COLUMN } from '../../data/math/column.ts';
+import ParametricSurface from './ParametricSurface.astro';
+---
+
+<section class="hero" aria-label="数学观象台介绍">
+  <div class="hero-copy m-rise">
+    <p class="hero-kicker mono-label">{COLUMN.en}</p>
+    <h1 class="hero-title" data-mo-hero-title>{COLUMN.name}</h1>
+    <p class="hero-claim">{COLUMN.claim}</p>
+    <p class="hero-intro">{COLUMN.intro}</p>
+    <a class="explore" href="/math/topics/" aria-label="探索:进入观测主题">
+      <svg
+        class="ex-arrow"
+        width="30"
+        height="12"
+        viewBox="0 0 30 12"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.4"
+        stroke-linecap="round"
+        aria-hidden="true"
+      >
+        <line x1="1" y1="6" x2="27" y2="6"></line>
+        <polyline points="22,1 28,6 22,11" fill="none"></polyline>
+      </svg>
+      <span class="ex-cn">探索</span>
+      <span class="mono-label">EXPLORE</span>
+    </a>
+    <p class="hero-meta">
+      <span class="mono-label">{COLUMN.observation}</span>
+      <span class="mono-num">更新 {COLUMN.updated}</span>
+    </p>
+  </div>
+  <div class="hero-figure m-rise d1" data-mo-hero-figure>
+    <ParametricSurface />
+  </div>
+</section>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.4rem;
+    align-items: center;
+    padding-block: clamp(1.6rem, 4vw, 3rem) clamp(1.4rem, 3vw, 2.2rem);
+    min-height: min(72svh, 720px);
+  }
+  @media (min-width: 1024px) {
+    .hero {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+      gap: clamp(2rem, 5vw, 4.5rem);
+    }
+  }
+
+  .hero-kicker {
+    margin: 0;
+    color: var(--primary);
+    letter-spacing: 0.42em;
+  }
+  .hero-title {
+    margin: 1.1rem 0 0;
+    font-family: var(--font-hei);
+    font-weight: 300;
+    font-size: clamp(44px, 7.2vw, 84px);
+    line-height: 1.14;
+    letter-spacing: 0.055em;
+    color: var(--foreground);
+    text-wrap: balance;
+  }
+  .hero-claim {
+    margin: 1.2rem 0 0;
+    font-family: var(--font-hei);
+    font-weight: 300;
+    font-size: clamp(23px, 3.2vw, 42px);
+    line-height: 1.4;
+    letter-spacing: 0.08em;
+    color: var(--secondary-foreground);
+  }
+  .hero-intro {
+    margin: 1.4rem 0 0;
+    max-width: 36em;
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--muted-foreground);
+  }
+
+  /* 大型细线圆形探索按钮 */
+  .explore {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    width: 148px;
+    aspect-ratio: 1;
+    margin-top: 2rem;
+    border: 1px solid var(--border-400);
+    border-radius: 50%;
+    color: var(--secondary-foreground);
+    text-decoration: none;
+    transition:
+      color 0.22s ease,
+      border-color 0.22s ease;
+  }
+  .explore .ex-arrow {
+    transition: transform 0.22s ease;
+  }
+  .explore .ex-cn {
+    font-family: var(--font-hei);
+    font-weight: 300;
+    font-size: 19px;
+    letter-spacing: 0.3em;
+    text-indent: 0.3em;
+  }
+  .explore:hover,
+  .explore:focus-visible {
+    color: var(--primary);
+    border-color: var(--primary);
+  }
+  .explore:hover .ex-arrow {
+    transform: translateX(4px);
+  }
+
+  .hero-meta {
+    display: flex;
+    align-items: baseline;
+    gap: 1.4rem;
+    margin: 2.2rem 0 0;
+  }
+
+  .hero-figure {
+    position: relative;
+    min-height: 320px;
+  }
+  @media (max-width: 759px) {
+    .hero {
+      min-height: 0;
+    }
+    .hero-figure {
+      min-height: 300px;
+      order: -1;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .explore .ex-arrow {
+      transition: none;
+    }
+  }
+</style>

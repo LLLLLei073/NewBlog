@@ -1,0 +1,111 @@
+---
+/**
+ * 首页底部信息条:珊瑚色横条,静态排布(不滚动,减少动态
+ * 效果下同样静止)。展示当前建造、最近生存记录、最新手记
+ * 与收藏数量——全部来自真实数据,空缺时如实显示。
+ */
+import PixelIcon from './PixelIcon.astro';
+
+export interface TickerItem {
+  icon: 'gear' | 'leaf' | 'chat' | 'star';
+  label: string;
+  text: string;
+  href?: string;
+}
+
+interface Props {
+  items: TickerItem[];
+}
+const { items } = Astro.props;
+---
+
+<aside class="ticker" aria-label="专栏动态">
+  <span class="ticker-head">
+    <PixelIcon name="play" size={11} />
+    NOW PLAYING
+  </span>
+  <ul class="ticker-list">
+    {
+      items.map((it) => (
+        <li>
+          <PixelIcon name={it.icon} size={13} />
+          <span class="ticker-label">{it.label}</span>
+          {it.href ? (
+            <a href={it.href}>{it.text}</a>
+          ) : (
+            <span class="ticker-plain">{it.text}</span>
+          )}
+        </li>
+      ))
+    }
+  </ul>
+</aside>
+
+<style>
+  .ticker {
+    display: flex;
+    align-items: stretch;
+    border-top: 3px solid var(--gg-ink);
+    border-bottom: 3px solid var(--gg-ink);
+    background: var(--gg-coral);
+    color: var(--gg-ink);
+    box-shadow: 0 3px 0 rgba(21, 21, 21, 0.25);
+  }
+  .ticker-head {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    flex: none;
+    padding: 0.6rem 1rem;
+    background: var(--gg-ink);
+    color: var(--gg-cream);
+    font-family: var(--g-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.2em;
+    white-space: nowrap;
+  }
+  .ticker-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem 1.6rem;
+    list-style: none;
+    margin: 0;
+    padding: 0.6rem 1.1rem;
+  }
+  .ticker-list li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+  .ticker-label {
+    font-family: var(--g-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.1em;
+    color: rgba(21, 21, 21, 0.72);
+    white-space: nowrap;
+  }
+  .ticker-list a {
+    color: var(--gg-ink);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .ticker-list a:hover {
+    background: var(--gg-cream);
+  }
+  .ticker-plain {
+    font-weight: 700;
+  }
+
+  @media (max-width: 640px) {
+    .ticker {
+      flex-direction: column;
+    }
+    .ticker-head {
+      border-bottom: 2px solid rgba(21, 21, 21, 0.35);
+    }
+  }
+</style>

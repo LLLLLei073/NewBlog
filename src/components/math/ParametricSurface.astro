@@ -1,0 +1,92 @@
+---
+/**
+ * 首屏数学对象:可缓慢旋转的环面参数曲面线框(Canvas,无 3D 引擎)。
+ * 参数方程以 KaTeX 语义化渲染在角落;canvas 自带中文描述,
+ * 角落公式对屏幕阅读器隐藏避免重复朗读。
+ */
+import katex from 'katex';
+import 'katex/dist/katex.min.css';
+
+const tex = (s: string) =>
+  katex.renderToString(s, { throwOnError: false, displayMode: false });
+const eqs = [
+  'x=(R+r\\cos v)\\cos u',
+  'y=(R+r\\cos v)\\sin u',
+  'z=r\\sin v',
+].map(tex);
+const domain = tex('R>r>0,\\;\\; u,v\\in[0,2\\pi)');
+---
+
+<figure class="psurface" data-psurface>
+  <canvas
+    data-torus-canvas
+    role="img"
+    aria-label="缓慢旋转的环面参数曲面线框:参数方程 x=(R+r·cos v)·cos u,y=(R+r·cos v)·sin u,z=r·sin v,其中 R 大于 r 大于 0,u、v 取遍 0 到 2π;一条黄绿色参数曲线随旋转缓慢移动,鼠标移动只带来轻微的观察角度变化。"
+  ></canvas>
+  <figcaption class="ps-cap">
+    <span class="ps-eqs" aria-hidden="true">
+      <span class="ps-eq formula-scroll" set:html={eqs[0]} />
+      <span class="ps-eq formula-scroll" set:html={eqs[1]} />
+      <span class="ps-eq formula-scroll" set:html={eqs[2]} />
+    </span>
+    <span class="ps-domain" aria-hidden="true" set:html={domain} />
+  </figcaption>
+</figure>
+
+<script>
+  import { onPageLoad } from '../../utils/lifecycle';
+  import { mountTorus } from './torus';
+  onPageLoad(() => mountTorus());
+</script>
+
+<style>
+  .psurface {
+    position: relative;
+    width: 100%;
+    margin: 0;
+    aspect-ratio: 10 / 9;
+  }
+  .psurface canvas {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .ps-cap {
+    position: absolute;
+    top: 0.2rem;
+    left: 0.2rem;
+    display: grid;
+    gap: 0.12rem;
+    max-width: 60%;
+    pointer-events: none;
+  }
+  .ps-eq {
+    display: block;
+    width: max-content;
+    max-width: 100%;
+    font-size: 13px;
+    color: var(--secondary-foreground);
+    opacity: 0.9;
+  }
+  .ps-eq :global(.katex) {
+    font-size: 0.95em;
+  }
+  .ps-domain {
+    margin-top: 0.25rem;
+    font-size: 12px;
+    color: var(--muted-foreground);
+  }
+  .ps-domain :global(.katex) {
+    font-size: 0.9em;
+  }
+  @media (max-width: 759px) {
+    .ps-cap {
+      max-width: 78%;
+    }
+    .ps-eq {
+      font-size: 12px;
+    }
+  }
+</style>

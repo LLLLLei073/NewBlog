@@ -1,0 +1,196 @@
+---
+/**
+ * 首页标题区:印刷封面式拼贴——小号英文刊名、超大中文标题
+ * (两行错位)、WORLD IN PROGRESS 贴纸、黑色条带主张、玩家标记
+ * 与最近更新日期。标题/贴纸挂 data 钩子供开屏交接。
+ */
+import PixelIcon from './PixelIcon.astro';
+import { COLUMN } from '../../data/game/column.ts';
+
+interface Props {
+  /** 最近更新日期(格式化字符串) */
+  updated: string;
+}
+const { updated } = Astro.props;
+---
+
+<header class="mast" aria-label={`${COLUMN.name} · ${COLUMN.en}`}>
+  <i class="mast-dots d1 gg-halftone-cream" aria-hidden="true"></i>
+  <i class="mast-dots d2 gg-halftone-cream" aria-hidden="true"></i>
+  <i class="mast-cross c1" aria-hidden="true">+</i>
+  <i class="mast-cross c2" aria-hidden="true">+</i>
+
+  <p class="mast-en">
+    <PixelIcon name="play" size={13} />
+    <span>{COLUMN.en}</span>
+  </p>
+
+  <div class="mast-row">
+    <h1 class="mast-title" data-gg-hero-title>
+      <span class="line">{COLUMN.nameLines[0]}</span>
+      <span class="line l2">{COLUMN.nameLines[1]}</span>
+    </h1>
+    <span class="mast-sticker gg-sticker" data-gg-hero-sticker>
+      {COLUMN.sticker}
+    </span>
+  </div>
+
+  <p class="mast-claim">
+    <span class="strip">{COLUMN.claimFull}</span>
+  </p>
+
+  <div class="mast-meta">
+    <span class="mast-player">
+      <PixelIcon name="heart" size={13} />
+      {COLUMN.player}
+    </span>
+    <span class="mast-updated">
+      最近更新 <time>{updated}</time>
+    </span>
+    <span class="mast-kicker">{COLUMN.kicker}</span>
+  </div>
+</header>
+
+<style>
+  .mast {
+    position: relative;
+    padding: clamp(1.6rem, 4.5vw, 3.4rem) 0 clamp(1.4rem, 3vw, 2.2rem);
+  }
+  .mast-dots {
+    position: absolute;
+    pointer-events: none;
+  }
+  .mast-dots.d1 {
+    top: 1.2rem;
+    right: 4%;
+    width: 120px;
+    height: 84px;
+  }
+  .mast-dots.d2 {
+    bottom: 0.4rem;
+    left: 55%;
+    width: 96px;
+    height: 64px;
+    opacity: 0.7;
+  }
+  .mast-cross {
+    position: absolute;
+    font-family: var(--g-mono);
+    font-size: 22px;
+    color: var(--gg-acid);
+    pointer-events: none;
+  }
+  .mast-cross.c1 {
+    top: 3.2rem;
+    left: 2%;
+  }
+  .mast-cross.c2 {
+    bottom: 3rem;
+    right: 24%;
+  }
+
+  .mast-en {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+    margin: 0;
+    font-family: var(--g-mono);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.34em;
+    color: var(--gg-acid);
+  }
+
+  .mast-row {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+  }
+  .mast-title {
+    margin: 0.4rem 0 0;
+    font-family: var(--g-disp);
+    font-weight: 900;
+    font-size: clamp(64px, 12.5vw, 144px);
+    line-height: 1.04;
+    letter-spacing: 0.01em;
+    color: var(--gg-cream);
+    text-shadow: 0.055em 0.055em 0 var(--gg-ink);
+  }
+  .mast-title .line {
+    display: block;
+  }
+  .mast-title .l2 {
+    margin-left: clamp(1.6rem, 8vw, 6.5rem);
+    margin-top: -0.08em;
+  }
+  .mast-sticker {
+    align-self: flex-start;
+    margin: clamp(0.8rem, 3vw, 2.2rem) 0 0 clamp(-0.6rem, -1vw, -0.2rem);
+    transform: rotate(7deg);
+    font-size: clamp(13px, 1.6vw, 17px);
+    z-index: 2;
+  }
+
+  .mast-claim {
+    margin: clamp(1rem, 2.6vw, 1.6rem) 0 0;
+  }
+  .mast-claim .strip {
+    display: inline-block;
+    padding: 0.34em 0.9em;
+    background: var(--gg-ink);
+    color: var(--gg-cream);
+    font-family: var(--g-disp);
+    font-weight: 700;
+    font-size: clamp(15px, 2vw, 20px);
+    letter-spacing: 0.14em;
+    transform: rotate(-0.6deg);
+  }
+
+  .mast-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.7rem 1.3rem;
+    margin-top: clamp(1rem, 2.4vw, 1.5rem);
+  }
+  .mast-player {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.32em 0.85em;
+    background: var(--gg-ink);
+    color: var(--gg-cream);
+    font-family: var(--g-mono);
+    font-size: 12.5px;
+    letter-spacing: 0.18em;
+  }
+  .mast-player :global(.px-icon) {
+    color: var(--gg-coral);
+  }
+  .mast-updated {
+    font-family: var(--g-mono);
+    font-size: 12.5px;
+    letter-spacing: 0.12em;
+    color: var(--gg-cream-dim);
+  }
+  .mast-updated time {
+    color: var(--gg-cream);
+    font-variant-numeric: tabular-nums;
+  }
+  .mast-kicker {
+    font-size: 13.5px;
+    letter-spacing: 0.06em;
+    color: var(--gg-cream-dim);
+  }
+
+  @media (max-width: 720px) {
+    .mast-dots.d2,
+    .mast-cross.c2 {
+      display: none;
+    }
+    .mast-sticker {
+      transform: rotate(6deg);
+      margin-left: -0.4rem;
+    }
+  }
+</style>

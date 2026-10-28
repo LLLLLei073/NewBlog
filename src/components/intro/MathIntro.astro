@@ -1,11 +1,19 @@
 ---
 /**
- * 「形与数」开屏动画组件:仅挂在数学专栏首页。
- * 模板服务端渲染(hidden),由 columnIntro 控制器 + mathIntro 时间线
- * 决定播放;不播放时直接移除节点,不阻塞正文渲染。
+ * 「数学观象台」开屏动画:构造单位圆,抵达欧拉公式。
+ * 左侧标题、右侧单位圆构图,底部四步进度;模板 SSR 输出但 hidden,
+ * 由 columnIntro 控制器 + mathIntro 时间线决定播放,不播放时移除节点。
  */
-import GeometryPlate from '../math/GeometryPlate.astro';
-import { COLUMN } from '../../data/math/column.ts';
+import katex from 'katex';
+import 'katex/dist/katex.min.css';
+
+const tex = (s: string) =>
+  katex.renderToString(s, { throwOnError: false, displayMode: false });
+const fLhs = tex('e^{i\\theta}');
+const fRhs = tex('\\cos\\theta+i\\sin\\theta');
+const identity = tex('e^{i\\pi}+1=0');
+
+const STEPS = ['构造圆与坐标', '定义三角函数', '建立欧拉公式', '进入观象台'];
 ---
 
 <div
@@ -14,55 +22,99 @@ import { COLUMN } from '../../data/math/column.ts';
   hidden
   role="dialog"
   aria-modal="true"
-  aria-label="数学专栏开屏动画"
+  aria-label="数学专栏开屏动画:构造单位圆,抵达欧拉公式"
 >
-  {/* 展墙四角定位线(装饰) */}
-  <i class="mt-corner c-tl" aria-hidden="true"></i>
-  <i class="mt-corner c-tr" aria-hidden="true"></i>
-  <i class="mt-corner c-bl" aria-hidden="true"></i>
-  <i class="mt-corner c-br" aria-hidden="true"></i>
+  {/* 展厅定位点与细线(装饰) */}
+  <i class="mi-corner c-tl" data-mi-corner aria-hidden="true"></i>
+  <i class="mi-corner c-tr" data-mi-corner aria-hidden="true"></i>
+  <i class="mi-corner c-bl" data-mi-corner aria-hidden="true"></i>
+  <i class="mi-corner c-br" data-mi-corner aria-hidden="true"></i>
+  <i class="mi-dot d1" data-mi-dot aria-hidden="true"></i>
+  <i class="mi-dot d2" data-mi-dot aria-hidden="true"></i>
+  <i class="mi-dot d3" data-mi-dot aria-hidden="true"></i>
+  <i class="mi-dot d4" data-mi-dot aria-hidden="true"></i>
 
-  <div class="mt-stage">
-    {/* 左:定理图版(与首页 hero 同一份 GeometryPlate,保证交接一致) */}
-    <div class="mt-plate m-plate" data-mt-plate>
-      <p class="mt-cap">
-        <span class="plate-no">PLATE Ⅰ</span>
-        <span class="mono-label">单位圆与正弦</span>
+  <div class="mi-stage">
+    {/* 左:标题区(装饰文本,读屏由 dialog label 表达) */}
+    <div class="mi-copy" data-mi-copy aria-hidden="true">
+      <p class="mi-en" data-mi-en>MATH OBSERVATORY</p>
+      <p class="mi-title">
+        <span class="mask"><span class="line" data-mi-title
+          >数学观象台</span
+        ></span>
       </p>
-      <div class="mt-art" data-mt-art>
-        <GeometryPlate />
-      </div>
+      <p class="mi-sub" data-mi-sub>看见那些无法直接看见的结构</p>
     </div>
 
-    {/* 右:标题与图鉴信息(装饰文本,屏幕阅读器不逐项朗读) */}
-    <div class="mt-copy" data-mt-copy aria-hidden="true">
-      <p class="mt-en" data-mt-en>{COLUMN.en}</p>
-      <p class="mt-title">
-        <span class="mask"><span class="line" data-mt-l1>形与数</span></span>
-        <span class="mask"
-          ><span class="line sub" data-mt-l2>直觉图鉴</span></span
-        >
-      </p>
-      <p class="mt-sub" data-mt-sub>先看见形状,再写下公式</p>
-      <dl class="mt-meta">
-        <div data-mt-meta>
-          <dt>PLATE</dt>
-          <dd class="mono-num">Ⅰ</dd>
+    {/* 右:单位圆展台 */}
+    <div class="mi-figure" data-mi-figure aria-hidden="true">
+      <span class="mi-theta-val mono-num" data-mi-theta-val>θ = 0.00</span>
+      <svg viewBox="0 0 460 400">
+        {/* 坐标轴:DOM 顺序即绘制顺序 */}
+        <line data-mi-draw x1="200" y1="200" x2="444" y2="200" class="ax" />
+        <line data-mi-draw x1="200" y1="200" x2="30" y2="200" class="ax" />
+        <line data-mi-draw x1="200" y1="200" x2="200" y2="30" class="ax" />
+        <line data-mi-draw x1="200" y1="200" x2="200" y2="380" class="ax" />
+        <polyline data-mi-arrow points="436,195 444,200 436,205" class="ax" />
+        <polyline data-mi-arrow points="195,38 200,30 205,38" class="ax" />
+        <text data-mi-axlabel x="438" y="186" class="lbl" text-anchor="end">x</text>
+        <text data-mi-axlabel x="212" y="40" class="lbl">y</text>
+        <text data-mi-axlabel x="190" y="218" class="lbl" text-anchor="end">O</text>
+        <line data-mi-tick x1="330" y1="196" x2="330" y2="204" class="ax" />
+        <line data-mi-tick x1="70" y1="196" x2="70" y2="204" class="ax" />
+        <text data-mi-axlabel x="330" y="222" class="lbl" text-anchor="middle">1</text>
+        <text data-mi-axlabel x="70" y="222" class="lbl" text-anchor="middle">−1</text>
+
+        {/* 单位圆:自 (1,0) 逆时针 */}
+        <path
+          data-mi-draw
+          d="M 330,200 A 130,130 0 1 0 329.99,199.99"
+          class="circ"
+        />
+
+        {/* 投影(位置由时间线驱动) */}
+        <line data-mi-cosline x1="330" y1="200" x2="330" y2="200" class="proj mi-late" />
+        <line data-mi-sinline x1="200" y1="200" x2="330" y2="200" class="proj mi-late" />
+        <text data-mi-coslabel x="330" y="217" class="lbl acc" text-anchor="middle">cos θ</text>
+        <text data-mi-sinlabel x="265" y="193" class="lbl acc" text-anchor="middle">sin θ</text>
+
+        {/* 角度弧、θ 与半径 */}
+        <path data-mi-arc d="" class="arcp" opacity="0" />
+        <text data-mi-theta-label x="238" y="182" class="lbl theta">θ</text>
+        <line data-mi-draw x1="200" y1="200" x2="330" y2="200" class="rad" />
+        <text data-mi-rlabel x="268" y="188" class="lbl acc">1</text>
+        <circle data-mi-peak cx="200" cy="70" r="9" class="peak" opacity="0" />
+        <circle data-mi-point cx="330" cy="200" r="5.5" class="pt" opacity="0" />
+      </svg>
+
+      {/* 圆下方:通用公式 → 欧拉恒等式 */}
+      <div class="mi-formulas">
+        <p class="mi-formula" data-mi-formula>
+          <span class="mi-fp" data-mi-fp set:html={fLhs} />
+          <span class="mi-fp mi-eq" data-mi-fp>=</span>
+          <span class="mi-fp" data-mi-fp set:html={fRhs} />
+        </p>
+        <div class="mi-identity" data-mi-identity>
+          <span class="mi-id" set:html={identity} />
+          <span class="mi-id-line" data-mi-idline></span>
         </div>
-        <div data-mt-meta>
-          <dt>COLLECTION</dt>
-          <dd>INTUITION FIRST</dd>
-        </div>
-        <div data-mt-meta>
-          <dt>UPDATED</dt>
-          <dd class="mono-num">{COLUMN.updated}</dd>
-        </div>
-      </dl>
-      <span class="m-stamp mt-stamp" data-mt-stamp>直觉先行</span>
+      </div>
     </div>
   </div>
 
-  <button type="button" class="mt-skip" data-intro-skip> 跳过开屏 </button>
+  {/* 底部:四步进度 */}
+  <ol class="mi-steps" aria-hidden="true">
+    {
+      STEPS.map((label, i) => (
+        <li data-mi-step class:list={[{ 'is-current': i === 0 }]}>
+          <span class="ms-no">{i + 1}</span>
+          <span class="ms-label">{label}</span>
+        </li>
+      ))
+    }
+  </ol>
+
+  <button type="button" class="mi-skip" data-intro-skip>跳过开屏</button>
 </div>
 
 <script>
@@ -84,11 +136,9 @@ import { COLUMN } from '../../data/math/column.ts';
     height: 100dvh;
     z-index: 300;
     display: grid;
-    /* 矮视口(手机横屏)下内容可纵向滚动;水平居中交给 justify-content */
     overflow-y: auto;
-    justify-content: center;
-    background: var(--background, #f6f4ee);
-    color: var(--foreground, #232c4d);
+    background: #111310;
+    color: #ecece2;
     padding: env(safe-area-inset-top) env(safe-area-inset-right)
       env(safe-area-inset-bottom) env(safe-area-inset-left);
   }
@@ -96,140 +146,301 @@ import { COLUMN } from '../../data/math/column.ts';
     display: none;
   }
 
-  /* 展墙四角定位线 */
-  .math-intro .mt-corner {
+  /* 定位点与角标 */
+  .math-intro .mi-corner {
     position: absolute;
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
     opacity: 0;
-    border-color: var(--math-vermilion, #b23a2e);
+    border-color: rgba(236, 236, 226, 0.35);
     border-style: solid;
     pointer-events: none;
   }
-  .math-intro .mt-corner.c-tl {
+  .math-intro .mi-corner.c-tl {
     top: 18px;
     left: 18px;
     border-width: 1px 0 0 1px;
   }
-  .math-intro .mt-corner.c-tr {
+  .math-intro .mi-corner.c-tr {
     top: 18px;
     right: 18px;
     border-width: 1px 1px 0 0;
   }
-  .math-intro .mt-corner.c-bl {
+  .math-intro .mi-corner.c-bl {
     bottom: 18px;
     left: 18px;
     border-width: 0 0 1px 1px;
   }
-  .math-intro .mt-corner.c-br {
+  .math-intro .mi-corner.c-br {
     bottom: 18px;
     right: 18px;
     border-width: 0 1px 1px 0;
   }
+  .math-intro .mi-dot {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: rgba(236, 236, 226, 0.4);
+    opacity: 0;
+    pointer-events: none;
+  }
+  .math-intro .mi-dot.d1 {
+    top: 22%;
+    left: 8%;
+  }
+  .math-intro .mi-dot.d2 {
+    top: 64%;
+    left: 4%;
+  }
+  .math-intro .mi-dot.d3 {
+    top: 30%;
+    right: 6%;
+  }
+  .math-intro .mi-dot.d4 {
+    bottom: 26%;
+    right: 10%;
+  }
 
-  .math-intro .mt-stage {
+  .math-intro .mi-stage {
     margin-block: auto;
     display: grid;
-    grid-template-columns: minmax(0, 11fr) minmax(0, 9fr);
+    grid-template-columns: minmax(0, 10fr) minmax(0, 9fr);
     align-items: center;
     gap: clamp(1.6rem, 5vw, 3.4rem);
-    width: min(920px, calc(100vw - 3rem));
+    width: min(980px, calc(100vw - 3rem));
+    padding-bottom: 3.4rem;
   }
 
-  /* 左:图版 */
-  .math-intro .mt-plate {
-    padding: clamp(0.9rem, 2.2vw, 1.4rem);
-  }
-  .math-intro .mt-cap {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 1rem;
-    margin: 0 0 0.6rem;
-  }
-  .math-intro .mt-art {
-    opacity: 1;
-  }
-
-  /* 右:图鉴信息 */
-  .math-intro .mt-copy {
+  /* 左:标题 */
+  .math-intro .mi-copy {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
   }
-  .math-intro .mt-en {
+  .math-intro .mi-en {
     margin: 0;
-    font-family: var(--font-condensed, sans-serif);
+    font-family: var(--font-en, 'Bahnschrift', 'Segoe UI', sans-serif);
     font-size: 12.5px;
-    letter-spacing: 0.3em;
-    color: var(--muted-foreground, #6e7191);
+    letter-spacing: 0.4em;
+    color: #d7ef72;
   }
-  .math-intro .mt-title {
-    margin: 0.9rem 0 0;
-    font-family: var(--font-display, serif);
-    font-weight: 700;
+  .math-intro .mi-title {
+    margin: 1rem 0 0;
+    font-family: var(--font-hei, 'Noto Sans SC', sans-serif);
+    font-weight: 300;
     line-height: 1.12;
   }
-  .math-intro .mt-title .mask {
+  .math-intro .mi-title .mask {
     display: block;
     overflow: hidden;
   }
-  .math-intro .mt-title .line {
+  .math-intro .mi-title .line {
     display: block;
-    font-size: clamp(44px, 7vw, 74px);
+    font-size: clamp(42px, 6.6vw, 70px);
+    letter-spacing: 0.08em;
   }
-  .math-intro .mt-title .line.sub {
-    font-size: clamp(22px, 3.4vw, 34px);
-    letter-spacing: 0.5em;
-    color: var(--primary, #31469e);
-  }
-  .math-intro .mt-sub {
-    margin: 1.1rem 0 0;
+  .math-intro .mi-sub {
+    margin: 1.2rem 0 0;
     font-size: 15px;
-    color: var(--muted-foreground, #6e7191);
-  }
-  .math-intro .mt-meta {
-    display: grid;
-    gap: 0.45rem;
-    margin: 1.4rem 0 0;
-    font-size: 12px;
-  }
-  .math-intro .mt-meta > div {
-    display: flex;
-    gap: 0.9rem;
-    align-items: baseline;
-  }
-  .math-intro .mt-meta dt {
-    font-family: var(--font-mono, monospace);
-    font-size: 10.5px;
-    letter-spacing: 0.18em;
-    color: var(--muted-foreground, #6e7191);
-    min-width: 6.5em;
-  }
-  .math-intro .mt-meta dd {
-    margin: 0;
-    font-family: var(--font-mono, monospace);
-    font-size: 12px;
-  }
-  .math-intro .mt-stamp {
-    margin-top: 1.6rem;
+    letter-spacing: 0.06em;
+    color: #9ca095;
   }
 
-  /* 跳过按钮:唯一可聚焦元素 */
-  .math-intro .mt-skip {
+  /* 右:单位圆 */
+  .math-intro .mi-figure {
+    position: relative;
+  }
+  .math-intro .mi-theta-val {
     position: absolute;
+    top: 0.1rem;
+    left: 0.15rem;
+    font-size: 12px;
+    color: #9ca095;
+    font-variant-numeric: tabular-nums;
+  }
+  .math-intro .mi-figure svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .math-intro .ax {
+    stroke: rgba(236, 236, 226, 0.24);
+    stroke-width: 1;
+    fill: none;
+  }
+  .math-intro .circ {
+    fill: none;
+    stroke: rgba(236, 236, 226, 0.55);
+    stroke-width: 1.3;
+  }
+  .math-intro .lbl {
+    font-family: var(--font-math, Georgia, serif);
+    font-style: italic;
+    font-size: 15px;
+    fill: #9ca095;
+  }
+  .math-intro .lbl.acc {
+    fill: #c6cabd;
+  }
+  .math-intro .lbl.theta {
+    fill: #d7ef72;
+    font-size: 16px;
+  }
+  .math-intro .proj {
+    stroke: rgba(156, 160, 149, 0.85);
+    stroke-width: 1;
+    stroke-dasharray: 4 3;
+    opacity: 0;
+  }
+  /* 投影标注随旋转阶段淡入,初始隐藏 */
+  .math-intro [data-mi-coslabel],
+  .math-intro [data-mi-sinlabel] {
+    opacity: 0;
+  }
+  .math-intro .arcp {
+    fill: none;
+    stroke: #d7ef72;
+    stroke-width: 1.2;
+  }
+  .math-intro .rad {
+    stroke: #d7ef72;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+  }
+  .math-intro .pt {
+    fill: #d7ef72;
+  }
+  .math-intro .peak {
+    fill: none;
+    stroke: #d7ef72;
+    stroke-width: 1.4;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  /* 圆下方公式 */
+  .math-intro .mi-formulas {
+    display: grid;
+    justify-items: center;
+    gap: 0.5rem;
+    margin-top: 0.4rem;
+  }
+  .math-intro .mi-formula {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4em;
+    margin: 0;
+    font-size: clamp(20px, 2.6vw, 27px);
+    color: #ecece2;
+    transition: opacity 0.25s ease;
+  }
+  .math-intro .mi-fp {
+    opacity: 0;
+  }
+  .math-intro .mi-fp .katex {
+    font-size: 1em;
+  }
+  .math-intro .mi-eq {
+    font-family: var(--font-math, Georgia, serif);
+    color: #9ca095;
+  }
+  .math-intro .mi-identity {
+    display: grid;
+    justify-items: center;
+    gap: 0.4rem;
+    opacity: 0;
+    transition: opacity 0.26s ease;
+  }
+  .math-intro .mi-id {
+    font-size: clamp(28px, 3.6vw, 38px);
+    color: #d7ef72;
+  }
+  .math-intro .mi-id .katex {
+    font-size: 1em;
+  }
+  .math-intro .mi-id-line {
+    width: 72%;
+    height: 1px;
+    background: #d7ef72;
+    transform: scaleX(0);
+    transform-origin: center;
+  }
+
+  /* 底部四步进度 */
+  .math-intro .mi-steps {
+    position: absolute;
+    left: max(2rem, env(safe-area-inset-left));
+    right: max(2rem, env(safe-area-inset-right));
+    bottom: max(1.4rem, env(safe-area-inset-bottom));
+    display: flex;
+    gap: clamp(1rem, 3.5vw, 2.6rem);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+  }
+  .math-intro .mi-steps li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: #9ca095;
+    opacity: 0.42;
+    transition:
+      opacity 0.25s ease,
+      color 0.25s ease;
+  }
+  .math-intro .mi-steps li.is-current {
+    opacity: 1;
+    color: #ecece2;
+  }
+  .math-intro .mi-steps li.is-done {
+    opacity: 0.8;
+    color: #9ca095;
+  }
+  .math-intro .ms-no {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border: 1px solid rgba(236, 236, 226, 0.35);
+    border-radius: 50%;
+    font-family: var(--font-mono, monospace);
+    font-size: 10.5px;
+    color: #9ca095;
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease,
+      border-color 0.25s ease;
+  }
+  .math-intro .mi-steps li.is-current .ms-no {
+    border-color: #d7ef72;
+    color: #d7ef72;
+  }
+  .math-intro .mi-steps li.is-done .ms-no {
+    background: #d7ef72;
+    border-color: #d7ef72;
+    color: #111310;
+  }
+
+  /* 跳过按钮:右上角,唯一可聚焦元素 */
+  .math-intro .mi-skip {
+    position: absolute;
+    top: max(18px, env(safe-area-inset-top));
     right: max(20px, env(safe-area-inset-right));
-    bottom: max(20px, env(safe-area-inset-bottom));
     display: inline-flex;
     align-items: center;
     justify-content: center;
     min-width: 44px;
     min-height: 44px;
     padding: 0.5em 1.1em;
-    border: 1px solid var(--border, #dcd7c7);
+    border: 1px solid rgba(236, 236, 226, 0.24);
     border-radius: 999px;
     background: transparent;
-    color: var(--muted-foreground, #6e7191);
+    color: #9ca095;
     font-family: var(--font-sans, sans-serif);
     font-size: 13px;
     letter-spacing: 0.12em;
@@ -238,25 +449,26 @@ import { COLUMN } from '../../data/math/column.ts';
       color 0.18s ease,
       border-color 0.18s ease;
   }
-  .math-intro .mt-skip:hover {
-    color: var(--foreground, #232c4d);
-    border-color: var(--primary, #31469e);
+  .math-intro .mi-skip:hover {
+    color: #ecece2;
+    border-color: #d7ef72;
   }
 
   @media (max-width: 759px) {
-    .math-intro .mt-stage {
+    .math-intro .mi-stage {
       grid-template-columns: 1fr;
-      gap: 1.4rem;
-      width: min(440px, calc(100vw - 2.4rem));
+      gap: 1.2rem;
+      width: min(460px, calc(100vw - 2.4rem));
+      padding-bottom: 5rem;
+      margin-block: 2rem auto;
     }
-    .math-intro .mt-title .line {
+    .math-intro .mi-title .line {
       font-size: clamp(36px, 10vw, 52px);
     }
-    .math-intro .mt-meta {
-      display: none;
-    }
-    .math-intro .mt-stamp {
-      margin-top: 1rem;
+    .math-intro .mi-steps {
+      left: max(1.2rem, env(safe-area-inset-left));
+      right: max(1.2rem, env(safe-area-inset-right));
+      gap: 0.7rem 1.1rem;
     }
   }
 

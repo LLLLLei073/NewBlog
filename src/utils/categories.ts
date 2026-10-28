@@ -23,7 +23,7 @@ export const CATEGORIES: readonly CategoryDef[] = [
     id: 'math',
     label: '数学',
     path: '/math/',
-    description: '高等数学、线性代数、概率论',
+    description: '数学观象台:看见那些无法直接看见的结构',
   },
   {
     id: 'music',
@@ -35,7 +35,7 @@ export const CATEGORIES: readonly CategoryDef[] = [
     id: 'game',
     label: '游戏',
     path: '/game/',
-    description: '游戏开发、设计、攻略',
+    description: '存档之外:游戏手记、建造存档与游玩记录',
   },
   {
     id: 'others',

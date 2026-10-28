@@ -1,0 +1,325 @@
+---
+/**
+ * 游戏画面位:真实截图(src)或中性占位插画(art 变体)。
+ * 占位插画是栏目装饰图形,不冒充真实游戏截图;画面保持原始
+ * 比例不拉伸,可叠加时间码、标签签与胶带。
+ */
+import type { GameArt } from '../../data/game/games';
+
+interface Props {
+  /** 占位插画变体;提供 src 时忽略 */
+  art?: GameArt;
+  /** 真实截图地址(用户提供后填入) */
+  src?: string;
+  alt: string;
+  /** 画幅比例(仅占位插画) */
+  ratio?: string;
+  timecode?: string;
+  /** 画面左上角标签,如 WORLD LOG 01 / SLOT 01 */
+  label?: string;
+  /** 胶带位置 */
+  tape?: 'tl' | 'tr' | 'both';
+  caption?: string;
+  class?: string;
+}
+
+const {
+  art,
+  src,
+  alt,
+  ratio = '16 / 10',
+  timecode,
+  label,
+  tape,
+  caption,
+  class: className,
+} = Astro.props;
+
+/* 「不存在」系列占位窗里的像素问号 */
+const Q_GRID = ['.###.', '#...#', '....#', '...#.', '..#..', '..#..', '.....', '..#..', '..#..'];
+const qCells: { x: number; y: number }[] = [];
+Q_GRID.forEach((row, y) => {
+  for (let x = 0; x < row.length; x++) if (row[x] === '#') qCells.push({ x, y });
+});
+---
+
+<figure class:list={['gg-frame', 'gfig', className]}>
+  <div class="gfig-media">
+    {
+      src ? (
+        <img src={src} alt={alt} loading="lazy" decoding="async" />
+      ) : (
+        <svg
+          viewBox="0 0 640 400"
+          role="img"
+          aria-label={alt}
+          style={`aspect-ratio:${ratio}`}
+        >
+          {art === 'create' && (
+            <g>
+              <defs>
+                <pattern
+                  id="gfig-dots-c"
+                  width="12"
+                  height="12"
+                  patternUnits="userSpaceOnUse"
+                >
+                  <circle cx="2" cy="2" r="1.5" fill="rgba(21,21,21,0.22)" />
+                </pattern>
+              </defs>
+              <rect width="640" height="400" fill="var(--gg-cream, #f4efd8)" />
+              <rect x="452" y="36" width="150" height="104" fill="url(#gfig-dots-c)" />
+              {/* 地面 */}
+              <rect x="24" y="336" width="592" height="10" fill="var(--gg-ink, #151515)" />
+              {/* 大齿轮 */}
+              <g transform="translate(150,196)">
+                {[0, 45, 90, 135].map((a) => (
+                  <rect
+                    x="-11"
+                    y="-92"
+                    width="22"
+                    height="184"
+                    transform={`rotate(${a})`}
+                    fill="var(--gg-ink, #151515)"
+                  />
+                ))}
+                <circle r="74" fill="var(--gg-ink, #151515)" />
+                <circle r="26" fill="var(--gg-cream, #f4efd8)" />
+                {[0, 45, 90, 135].map((a) => (
+                  <rect
+                    x="-9"
+                    y="-62"
+                    width="18"
+                    height="124"
+                    transform={`rotate(${a})`}
+                    fill="var(--gg-cream, #f4efd8)"
+                  />
+                ))}
+                <circle r="26" fill="var(--gg-ink, #151515)" />
+                <circle r="10" fill="var(--gg-coral, #ff7058)" />
+              </g>
+              {/* 小齿轮(咬合) */}
+              <g transform="translate(292,258)">
+                {[0, 45, 90, 135].map((a) => (
+                  <rect
+                    x="-8"
+                    y="-56"
+                    width="16"
+                    height="112"
+                    transform={`rotate(${a})`}
+                    fill="var(--gg-ink, #151515)"
+                  />
+                ))}
+                <circle r="46" fill="var(--gg-ink, #151515)" />
+                <circle r="14" fill="var(--gg-cream, #f4efd8)" />
+                <circle r="6" fill="var(--gg-acid, #e7f05b)" />
+              </g>
+              {/* 活塞与传动杆 */}
+              <rect x="282" y="120" width="20" height="76" fill="var(--gg-ink, #151515)" />
+              <rect x="272" y="104" width="40" height="22" fill="var(--gg-acid, #e7f05b)" stroke="var(--gg-ink, #151515)" stroke-width="6" />
+              {/* 传送带与货箱 */}
+              <rect x="352" y="292" width="240" height="12" fill="var(--gg-ink, #151515)" />
+              <rect x="360" y="304" width="14" height="32" fill="var(--gg-ink, #151515)" />
+              <rect x="566" y="304" width="14" height="32" fill="var(--gg-ink, #151515)" />
+              {[
+                { x: 368, fill: 'var(--gg-acid, #e7f05b)' },
+                { x: 424, fill: 'var(--gg-cream, #f4efd8)' },
+                { x: 480, fill: 'var(--gg-coral, #ff7058)' },
+              ].map((c) => (
+                <rect
+                  x={c.x}
+                  y="244"
+                  width="44"
+                  height="44"
+                  fill={c.fill}
+                  stroke="var(--gg-ink, #151515)"
+                  stroke-width="6"
+                />
+              ))}
+              {/* 运动虚线 */}
+              {[0, 1, 2].map((i) => (
+                <rect
+                  x={376 + i * 34}
+                  y="222"
+                  width="18"
+                  height="8"
+                  fill="rgba(21,21,21,0.35)"
+                />
+              ))}
+              {/* 角落警示条纹 */}
+              <g transform="translate(24,60)">
+                <rect width="64" height="64" fill="var(--gg-acid, #e7f05b)" stroke="var(--gg-ink, #151515)" stroke-width="5" />
+                <rect x="10" y="10" width="44" height="12" fill="var(--gg-ink, #151515)" />
+                <rect x="10" y="30" width="30" height="12" fill="var(--gg-ink, #151515)" />
+                <rect x="10" y="50" width="38" height="4" fill="var(--gg-ink, #151515)" />
+              </g>
+            </g>
+          )}
+          {art === 'wilds' && (
+            <g>
+              <rect width="640" height="400" fill="#2e6b5c" />
+              {/* 光束 */}
+              <polygon points="300,0 380,0 250,400 130,400" fill="rgba(244,239,216,0.12)" />
+              <polygon points="430,0 470,0 400,400 330,400" fill="rgba(244,239,216,0.08)" />
+              {/* 背景冠层 */}
+              <ellipse cx="80" cy="60" rx="220" ry="120" fill="#1b443c" />
+              <ellipse cx="580" cy="40" rx="240" ry="130" fill="#1b443c" />
+              <ellipse cx="330" cy="-30" rx="200" ry="90" fill="#173a33" />
+              {/* 大叶片 */}
+              <path d="M-20,150 Q120,90 210,180 Q120,230 -20,210 Z" fill="#23574c" />
+              <path d="M660,170 Q520,110 430,200 Q520,250 660,230 Z" fill="#23574c" />
+              <path d="M-30,300 Q90,260 170,320 Q90,370 -30,350 Z" fill="#1b443c" />
+              <path d="M670,310 Q550,270 470,330 Q550,380 670,360 Z" fill="#1b443c" />
+              {/* 地面 */}
+              <rect y="352" width="640" height="48" fill="#173a33" />
+              {/* 营火 */}
+              <circle cx="320" cy="322" r="66" fill="var(--gg-acid, #e7f05b)" opacity="0.22" />
+              <rect x="272" y="330" width="96" height="12" rx="4" fill="var(--gg-ink, #151515)" transform="rotate(-8 320 336)" />
+              <rect x="272" y="330" width="96" height="12" rx="4" fill="var(--gg-ink, #151515)" transform="rotate(8 320 336)" />
+              <polygon points="320,244 354,306 286,306" fill="var(--gg-coral, #ff7058)" />
+              <polygon points="320,270 340,306 300,306" fill="var(--gg-acid, #e7f05b)" />
+              {/* 背包与水壶 */}
+              <rect x="470" y="296" width="52" height="56" fill="var(--gg-cream, #f4efd8)" stroke="var(--gg-ink, #151515)" stroke-width="6" />
+              <rect x="482" y="284" width="28" height="16" fill="none" stroke="var(--gg-ink, #151515)" stroke-width="6" />
+              <rect x="540" y="316" width="22" height="36" fill="var(--gg-acid, #e7f05b)" stroke="var(--gg-ink, #151515)" stroke-width="5" />
+              {/* 萤火虫 */}
+              {[
+                [180, 180],
+                [420, 150],
+                [520, 210],
+                [240, 250],
+              ].map(([x, y]) => (
+                <rect x={x} y={y} width="6" height="6" fill="var(--gg-acid, #e7f05b)" />
+              ))}
+            </g>
+          )}
+          {art === 'meta' && (
+            <g>
+              <defs>
+                <pattern
+                  id="gfig-dots-m"
+                  width="13"
+                  height="13"
+                  patternUnits="userSpaceOnUse"
+                >
+                  <circle cx="2" cy="2" r="1.6" fill="rgba(244,239,216,0.4)" />
+                </pattern>
+              </defs>
+              <rect width="640" height="400" fill="var(--gg-blue-deep, #2b37a8)" />
+              <rect x="30" y="30" width="130" height="90" fill="url(#gfig-dots-m)" />
+              <rect x="490" y="290" width="120" height="80" fill="url(#gfig-dots-m)" />
+              {/* 背景窗口 */}
+              <g transform="rotate(-4 300 170)">
+                <rect x="130" y="70" width="300" height="200" fill="none" stroke="rgba(244,239,216,0.55)" stroke-width="5" />
+                <rect x="130" y="70" width="300" height="30" fill="rgba(244,239,216,0.28)" />
+              </g>
+              {/* 前景对话框 */}
+              <g transform="rotate(3 380 230)">
+                <rect x="190" y="120" width="330" height="230" fill="var(--gg-cream, #f4efd8)" stroke="var(--gg-ink, #151515)" stroke-width="7" />
+                <rect x="190" y="120" width="330" height="38" fill="var(--gg-ink, #151515)" />
+                {[0, 1, 2].map((i) => (
+                  <circle cx={214 + i * 24} cy="139" r="6" fill="var(--gg-cream, #f4efd8)" />
+                ))}
+                <g transform="translate(322,190) scale(9)">
+                  {qCells.map((c) => (
+                    <rect x={c.x} y={c.y} width="1.06" height="1.06" fill="var(--gg-ink, #151515)" />
+                  ))}
+                </g>
+              </g>
+              {/* 像素光标 */}
+              <polygon
+                points="540,318 540,368 552,356 562,378 572,372 562,352 578,350"
+                fill="var(--gg-acid, #e7f05b)"
+                stroke="var(--gg-ink, #151515)"
+                stroke-width="5"
+              />
+              {/* 贴纸 */}
+              <g transform="rotate(-10 520 74)">
+                <rect x="452" y="46" width="140" height="52" fill="var(--gg-coral, #ff7058)" stroke="var(--gg-ink, #151515)" stroke-width="6" />
+                <rect x="466" y="60" width="82" height="9" fill="var(--gg-ink, #151515)" />
+                <rect x="466" y="76" width="112" height="9" fill="var(--gg-ink, #151515)" />
+              </g>
+            </g>
+          )}
+        </svg>
+      )
+    }
+    {
+      timecode && (
+        <span class="gfig-tc gg-timecode">
+          <span class="gfig-rec" aria-hidden="true" />
+          {timecode}
+        </span>
+      )
+    }
+    {label && <span class="gfig-label gg-chip gg-chip--acid">{label}</span>}
+    {
+      tape && (
+        <>
+          {(tape === 'tl' || tape === 'both') && (
+            <i class="gg-tape gfig-tape-tl" aria-hidden="true" />
+          )}
+          {(tape === 'tr' || tape === 'both') && (
+            <i class="gg-tape gfig-tape-tr" aria-hidden="true" />
+          )}
+        </>
+      )
+    }
+  </div>
+  {caption && <figcaption class="gfig-cap">{caption}</figcaption>}
+</figure>
+
+<style>
+  .gfig {
+    margin: 0;
+  }
+  .gfig-media {
+    position: relative;
+  }
+  .gfig-media > img,
+  .gfig-media > svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .gfig-tc {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    gap: 0.45em;
+  }
+  .gfig-rec {
+    width: 8px;
+    height: 8px;
+    flex: none;
+    background: var(--gg-coral);
+  }
+  .gfig-label {
+    position: absolute;
+    top: -13px;
+    left: 14px;
+    transform: rotate(-2deg);
+  }
+  .gfig-tape-tl {
+    top: -12px;
+    left: 34px;
+    transform: rotate(-7deg);
+  }
+  .gfig-tape-tr {
+    top: -12px;
+    right: 34px;
+    transform: rotate(6deg);
+  }
+  .gfig-cap {
+    margin-top: 0.55rem;
+    font-family: var(--g-mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--gg-gray, #4b4a43);
+    line-height: 1.6;
+  }
+  figure.gg-frame .gfig-cap,
+  :global(body[data-page='game']) .gfig-cap {
+    color: var(--gg-gray);
+  }
+</style>

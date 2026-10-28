@@ -1,0 +1,440 @@
+---
+/**
+ * 「年度回顾 · YEAR IN REVIEW」:可逐段展开的游戏杂志海报。
+ * 六个奖项位只有真实条目才填写,其余保持「留给年末的我」;
+ * 年度手记列表来自真实文章;不使用任何仪表盘式统计图形。
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import GameNav from '../../components/game/GameNav.astro';
+import GameFigure from '../../components/game/GameFigure.astro';
+import PixelIcon from '../../components/game/PixelIcon.astro';
+import { COLUMN } from '../../data/game/column.ts';
+import { REVIEW_SLOTS, REVIEW_YEAR } from '../../data/game/review.ts';
+import { getGameArticleMeta } from '../../data/game/articles.ts';
+import { postHref } from '../../utils/postRoute.ts';
+
+const posts = (await getCollection('blog'))
+  .filter((p) => !p.data.draft && p.data.category === 'game')
+  .filter((p) => p.data.pubDate.getFullYear() === REVIEW_YEAR)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const fmtDate = (d: Date) =>
+  `${d.getFullYear()}/${String(d.getMonth() + 1).padStart(2, '0')}/${String(
+    d.getDate(),
+  ).padStart(2, '0')}`;
+---
+
+<BaseLayout
+  title={`年度回顾 · ${COLUMN.name}`}
+  description={`${REVIEW_YEAR} 年度回顾:最喜欢的游戏、难忘的场景、满意的机械结构与年度手记。只有真实数据才会出现在这里。`}
+  pageName="game"
+>
+  <div class="gg-wrap review-page">
+    <GameNav />
+
+    {/* ===== 海报刊头 ===== */}
+    <header class="rhead">
+      <i class="rhead-dots gg-halftone-cream" aria-hidden="true"></i>
+      <p class="rhead-en">
+        <PixelIcon name="star" size={13} /> YEAR IN REVIEW
+      </p>
+      <div class="rhead-row">
+        <h1 class="rhead-title">年度回顾</h1>
+        <span class="rhead-year" aria-hidden="true">{REVIEW_YEAR}</span>
+      </div>
+      <p class="rhead-claim">
+        <span class="strip">一张慢慢填完的游戏杂志海报。</span>
+      </p>
+      <p class="rhead-note">
+        只有真实发生的才会被写进格子:没填的奖项留给年末的我,
+        不用编造的统计凑数。
+      </p>
+    </header>
+
+    {/* ===== 六个奖项位 ===== */}
+    <section class="slots" aria-label="年度奖项">
+      {
+        REVIEW_SLOTS.map((slot, i) => (
+          <details
+            class:list={['rslot gg-card', { 'rslot--tilt': i % 2 === 1 }]}
+            open={slot.entry !== null}
+          >
+            <summary>
+              <span class="rslot-no">{slot.no}</span>
+              <span class="rslot-icon">
+                <PixelIcon name={slot.icon} size={20} />
+              </span>
+              <span class="rslot-names">
+                <strong>{slot.title}</strong>
+                <small>{slot.en}</small>
+              </span>
+              <span
+                class:list={[
+                  'gg-chip',
+                  slot.entry ? 'gg-chip--acid' : '',
+                ]}
+              >
+                {slot.entry ? '已记录' : '留给年末'}
+              </span>
+              <span class="rslot-caret" aria-hidden="true">
+                <PixelIcon name="play" size={12} />
+              </span>
+            </summary>
+            <div class="rslot-body">
+              {slot.entry ? (
+                <div class="rslot-entry">
+                  <p>{slot.entry.text}</p>
+                  {slot.entry.href && (
+                    <a class="gg-btn gg-btn--sm" href={slot.entry.href}>
+                      {slot.entry.linkLabel ?? '查看'} →
+                    </a>
+                  )}
+                </div>
+              ) : (
+                <p class="gg-empty">
+                  <strong>这个位置留给年末的我</strong>
+                  等这一年真的玩过、记过,再回来盖章。
+                </p>
+              )}
+            </div>
+          </details>
+        ))
+      }
+    </section>
+
+    {/* ===== 年度手记列表(真实数据) ===== */}
+    <section class="notes-sec" aria-label={`${REVIEW_YEAR} 年度手记`}>
+      <header class="gg-sec">
+        <h2>
+          <PixelIcon name="flag" size={17} /> {REVIEW_YEAR} 年度手记
+        </h2>
+        <span class="gg-sec-en">NOTES OF THE YEAR · {posts.length} 篇</span>
+      </header>
+      {
+        posts.length > 0 ? (
+          <ul class="notes-list">
+            {posts.map((p) => {
+              const meta = getGameArticleMeta(p.id);
+              return (
+                <li>
+                  <a href={postHref(p.id, p.data.category)}>
+                    <time>{fmtDate(p.data.pubDate)}</time>
+                    <strong>{p.data.title}</strong>
+                    {meta?.chapterTag && (
+                      <span class="gg-chip">{meta.chapterTag}</span>
+                    )}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        ) : (
+          <p class="gg-empty">
+            <strong>{REVIEW_YEAR} 年还没有手记</strong>第一篇正在写。
+          </p>
+        )
+      }
+    </section>
+
+    {/* ===== 截图精选(等待真实素材) ===== */}
+    <section class="shots-sec" aria-label="个人截图精选">
+      <header class="gg-sec">
+        <h2>
+          <PixelIcon name="shots" size={17} /> 个人截图精选
+        </h2>
+        <span class="gg-sec-en">SCREENSHOT PICKS</span>
+      </header>
+      <div class="shots-grid">
+        <div class="gg-tilt-l">
+          <GameFigure
+            art="create"
+            alt="截图精选占位图形一(等待真实素材)"
+            timecode="PICK 01"
+          />
+        </div>
+        <div class="gg-tilt-r">
+          <GameFigure
+            art="wilds"
+            alt="截图精选占位图形二(等待真实素材)"
+            timecode="PICK 02"
+          />
+        </div>
+      </div>
+      <p class="shots-note">
+        截图精选只放真实游戏画面:素材整理好之前,这里保持栏目占位图形,
+        不用网图冒充。
+      </p>
+    </section>
+
+    <footer class="page-end">
+      <span class="mono-label">{COLUMN.en} · {COLUMN.claim}</span>
+      <nav class="end-links" aria-label="栏目入口">
+        <a href="/game/">专栏首页</a>
+        <a href="/game/playing/">正在游玩</a>
+        <a href="/game/collection/">收藏架</a>
+      </nav>
+    </footer>
+  </div>
+</BaseLayout>
+
+<style>
+  .review-page {
+    padding-top: clamp(1.4rem, 3.5vw, 2.4rem);
+    padding-bottom: clamp(2.4rem, 6vw, 4rem);
+  }
+
+  /* ===== 海报刊头 ===== */
+  .rhead {
+    position: relative;
+    padding: clamp(1.2rem, 3.5vw, 2.6rem) 0 clamp(1.2rem, 3vw, 2rem);
+  }
+  .rhead-dots {
+    position: absolute;
+    top: 1rem;
+    right: 3%;
+    width: 130px;
+    height: 90px;
+    pointer-events: none;
+  }
+  .rhead-en {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+    margin: 0;
+    font-family: var(--g-mono);
+    font-size: 13px;
+    letter-spacing: 0.32em;
+    color: var(--gg-acid);
+  }
+  .rhead-row {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.2em 0.35em;
+  }
+  .rhead-title {
+    margin: 0.4rem 0 0;
+    font-family: var(--g-disp);
+    font-weight: 900;
+    font-size: clamp(52px, 10vw, 118px);
+    line-height: 1.05;
+    color: var(--gg-cream);
+    text-shadow: 0.05em 0.05em 0 var(--gg-ink);
+  }
+  .rhead-year {
+    font-family: var(--g-cond);
+    font-weight: 800;
+    font-size: clamp(44px, 9vw, 104px);
+    color: var(--gg-acid);
+    text-shadow: 0.05em 0.05em 0 var(--gg-ink);
+    transform: rotate(-2deg);
+  }
+  .rhead-claim {
+    margin: 1rem 0 0;
+  }
+  .rhead-claim .strip {
+    display: inline-block;
+    padding: 0.32em 0.9em;
+    background: var(--gg-ink);
+    color: var(--gg-cream);
+    font-family: var(--g-disp);
+    font-weight: 700;
+    font-size: clamp(14px, 1.9vw, 19px);
+    letter-spacing: 0.12em;
+    transform: rotate(-0.6deg);
+  }
+  .rhead-note {
+    max-width: 46ch;
+    margin: 1rem 0 0;
+    font-size: 14px;
+    line-height: 1.85;
+    color: var(--gg-cream-dim);
+  }
+
+  /* ===== 奖项手风琴 ===== */
+  .slots {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.4rem;
+    max-width: 880px;
+  }
+  .rslot {
+    padding: 0;
+  }
+  .rslot--tilt {
+    transform: rotate(0.4deg);
+  }
+  .rslot summary {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    min-height: 44px;
+    padding: 0.8rem 1rem;
+    cursor: pointer;
+    list-style: none;
+    color: var(--gg-ink);
+  }
+  .rslot summary::-webkit-details-marker {
+    display: none;
+  }
+  .rslot summary:hover {
+    background: rgba(231, 240, 91, 0.35);
+  }
+  .rslot-no {
+    flex: none;
+    font-family: var(--g-cond);
+    font-weight: 800;
+    font-size: 22px;
+    color: var(--gg-coral);
+  }
+  .rslot-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    width: 42px;
+    height: 42px;
+    border: var(--gg-bw-thin) solid var(--gg-ink);
+    background: var(--gg-cream);
+  }
+  .rslot-names {
+    display: grid;
+    gap: 0.05rem;
+    min-width: 0;
+  }
+  .rslot-names strong {
+    font-family: var(--g-disp);
+    font-weight: 900;
+    font-size: 17.5px;
+    line-height: 1.4;
+  }
+  .rslot-names small {
+    font-family: var(--g-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.22em;
+    color: var(--gg-gray);
+  }
+  .rslot summary .gg-chip {
+    margin-left: auto;
+  }
+  .rslot-caret {
+    display: inline-flex;
+    flex: none;
+    transition: transform 0.2s ease;
+  }
+  .rslot[open] .rslot-caret {
+    transform: rotate(90deg);
+  }
+  .rslot-body {
+    padding: 0.2rem 1rem 1.1rem;
+    border-top: 2px dashed rgba(21, 21, 21, 0.25);
+  }
+  .rslot-entry p {
+    margin: 0.9rem 0;
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--gg-ink);
+    max-width: 56ch;
+  }
+
+  /* ===== 年度手记 ===== */
+  .notes-sec {
+    margin-top: clamp(2rem, 5vw, 3rem);
+    padding-top: clamp(1.2rem, 3vw, 1.8rem);
+    border-top: 3px solid var(--gg-ink);
+  }
+  .notes-sec :global(h2 .px-icon) {
+    color: var(--gg-acid);
+    margin-right: 0.3em;
+  }
+  .notes-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 2px solid rgba(244, 239, 216, 0.3);
+  }
+  .notes-list a {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.4rem 1rem;
+    padding: 0.8rem 0.4rem;
+    border-bottom: 2px solid rgba(244, 239, 216, 0.22);
+    color: var(--gg-cream);
+    text-decoration: none;
+  }
+  .notes-list a:hover {
+    background: rgba(244, 239, 216, 0.08);
+  }
+  .notes-list time {
+    font-family: var(--g-mono);
+    font-size: 12px;
+    color: var(--gg-cream-dim);
+    font-variant-numeric: tabular-nums;
+  }
+  .notes-list strong {
+    font-family: var(--g-disp);
+    font-weight: 800;
+    font-size: 15.5px;
+  }
+
+  /* ===== 截图精选 ===== */
+  .shots-sec {
+    margin-top: clamp(2rem, 5vw, 3rem);
+    padding-top: clamp(1.2rem, 3vw, 1.8rem);
+    border-top: 3px solid var(--gg-ink);
+  }
+  .shots-sec :global(h2 .px-icon) {
+    color: var(--gg-acid);
+    margin-right: 0.3em;
+  }
+  .shots-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.4rem;
+    max-width: 860px;
+  }
+  .shots-note {
+    max-width: 52ch;
+    margin: 1rem 0 0;
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--gg-cream-dim);
+  }
+
+  .page-end {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: clamp(2rem, 5vw, 3rem);
+    padding-top: 1.1rem;
+    border-top: 3px solid var(--gg-ink);
+  }
+  .page-end .mono-label {
+    color: var(--gg-cream-dim);
+  }
+  .end-links {
+    display: flex;
+    gap: 1.3rem;
+  }
+  .end-links a {
+    color: var(--gg-cream);
+    text-decoration: none;
+    font-family: var(--g-disp);
+    font-weight: 700;
+    font-size: 14px;
+    padding: 0.3rem 0;
+  }
+  .end-links a:hover {
+    color: var(--gg-acid);
+  }
+
+  @media (max-width: 640px) {
+    .shots-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

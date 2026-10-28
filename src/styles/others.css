@@ -237,3 +237,10 @@ body[data-page='others'] .o-rise.d4 {
     transform: none;
   }
 }
+
+/* ============ 右侧符号栏(ColumnRail)内容让位 ============ */
+@media (min-width: 960px) {
+  body[data-page='others'] main {
+    margin-right: var(--rail-w, 78px);
+  }
+}

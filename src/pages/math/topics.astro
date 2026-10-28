@@ -1,0 +1,381 @@
+---
+/**
+ * 「数学观象台」观测主题页:连续展览章节,不做分类卡片墙。
+ * 桌面端右侧粘性展台随滚动切换当前章节数学对象(IntersectionObserver,
+ * 失败/减少动态时退化为每章内嵌图形);移动端单栏,图形随章节内嵌。
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import MathSymbolRail from '../../components/math/MathSymbolRail.astro';
+import MathFigure from '../../components/math/MathFigure.astro';
+import { COLUMN, TOPICS } from '../../data/math/column.ts';
+
+const STATUS_SYMBOL: Record<string, string> = {
+  未开始: '○',
+  观测中: '◐',
+  整理中: '◑',
+  已完成: '●',
+};
+---
+
+<BaseLayout
+  title="观测主题 · 数学观象台"
+  description={`数学观象台观测主题:极限、微积分、线性代数、复数、拓扑学——${COLUMN.claim}。`}
+  pageName="math"
+>
+  <div class="math topics-page" data-topics>
+    <MathSymbolRail />
+
+    <header class="page-head m-rise">
+      <p class="mono-label kick">∑ OBSERVATION TOPICS</p>
+      <h1>观测主题</h1>
+      <p class="head-note">{COLUMN.hint}</p>
+    </header>
+
+    <div class="exhibit m-rise d1">
+      <div class="chapters">
+        {
+          TOPICS.map((t, i) => (
+            <section
+              class="topic"
+              id={t.id}
+              data-topic={t.id}
+              aria-labelledby={`${t.id}-title`}
+            >
+              <span class="t-no" aria-hidden="true">
+                {t.no}
+              </span>
+              <div class="t-body">
+                <p class="t-en mono-label">{t.en}</p>
+                <h2 id={`${t.id}-title`}>{t.name}</h2>
+                <p class="t-q">
+                  <span class="mono-label">核心问题</span>
+                  <span class="tq-text">{t.question}?</span>
+                </p>
+
+                <div class="t-figure">
+                  <MathFigure kind={t.figure} alt={t.figureAlt} />
+                </div>
+
+                <ul class="t-concepts" aria-label="关键概念">
+                  {t.concepts.map((c) => (
+                    <li>{c}</li>
+                  ))}
+                </ul>
+
+                <div class="t-cols">
+                  <div class="t-order">
+                    <p class="mono-label">阅读顺序</p>
+                    <ol>
+                      {t.order.map((o) => (
+                        <li>{o}</li>
+                      ))}
+                    </ol>
+                  </div>
+                  <div class="t-side">
+                    <p class="t-status">
+                      <span
+                        class:list={['s-symbol', `s-${t.status}`]}
+                        aria-hidden="true"
+                      >
+                        {STATUS_SYMBOL[t.status]}
+                      </span>
+                      {t.status}
+                    </p>
+                    {t.href && (
+                      <a class="t-link" href={t.href}>
+                        进入展品 →
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </div>
+              {i < TOPICS.length - 1 && (
+                <span class="t-sep" aria-hidden="true" />
+              )}
+            </section>
+          ))
+        }
+      </div>
+
+      {/* 桌面粘性展台:随滚动切换(装饰性,重复图形对读屏隐藏) */}
+      <aside class="t-panel" aria-hidden="true" data-topic-panel>
+        {
+          TOPICS.map((t, i) => (
+            <div
+              class:list={['tp-item', { 'is-on': i === 0 }]}
+              data-tp={t.id}
+            >
+              <MathFigure kind={t.figure} />
+            </div>
+          ))
+        }
+      </aside>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  import { onPageLoad } from '../../utils/lifecycle';
+
+  onPageLoad(() => {
+    const root = document.querySelector<HTMLElement>('[data-topics]');
+    if (!root) return;
+    /* 无 dataset 守卫:onPageLoad 两轮触发之间会先执行上一轮清理。 */
+
+    const panel = root.querySelector<HTMLElement>('[data-topic-panel]');
+    if (!panel || typeof IntersectionObserver === 'undefined') return;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!matchMedia('(min-width: 1024px)').matches) return;
+
+    /* 激活切换模式:隐藏章内图形,只留粘性展台 */
+    root.classList.add('has-swap');
+
+    const items = new Map<string, HTMLElement>();
+    panel.querySelectorAll<HTMLElement>('[data-tp]').forEach((el) => {
+      const id = el.dataset.tp;
+      if (id) items.set(id, el);
+    });
+    let current = '';
+    const activate = (id: string) => {
+      if (id === current) return;
+      current = id;
+      items.forEach((el, key) => el.classList.toggle('is-on', key === id));
+    };
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            const id = (entry.target as HTMLElement).dataset.topic;
+            if (id) activate(id);
+          }
+        }
+      },
+      { rootMargin: '-40% 0px -40% 0px' },
+    );
+    root.querySelectorAll('[data-topic]').forEach((el) => io.observe(el));
+
+    return () => io.disconnect();
+  });
+</script>
+
+<style>
+  .topics-page {
+    padding-top: clamp(1.6rem, 4vw, 2.8rem);
+    padding-bottom: clamp(3rem, 7vw, 5rem);
+  }
+  .kick {
+    color: var(--primary);
+  }
+  .page-head h1 {
+    margin: 0.8rem 0 0;
+    font-family: var(--font-hei);
+    font-weight: 300;
+    font-size: clamp(34px, 4.4vw, 52px);
+    letter-spacing: 0.1em;
+    color: var(--foreground);
+  }
+  .head-note {
+    margin: 1rem 0 0;
+    max-width: 52ch;
+    font-size: 14.5px;
+    line-height: 1.85;
+    color: var(--muted-foreground);
+  }
+
+  .exhibit {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    margin-top: clamp(1.6rem, 4vw, 3rem);
+  }
+  @media (min-width: 1024px) {
+    .exhibit {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      gap: clamp(2rem, 5vw, 4rem);
+      align-items: start;
+    }
+  }
+
+  /* ===== 章节 ===== */
+  .topic {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.6rem;
+    padding-block: clamp(2.2rem, 5vw, 3.4rem);
+  }
+  .topic + .topic {
+    border-top: 1px solid var(--math-divider);
+  }
+  @media (min-width: 760px) {
+    .topic {
+      grid-template-columns: 120px minmax(0, 1fr);
+      column-gap: 1.6rem;
+    }
+  }
+  .t-no {
+    font-family: var(--font-mono);
+    font-weight: 300;
+    font-size: clamp(56px, 8vw, 88px);
+    line-height: 0.9;
+    letter-spacing: 0.04em;
+    color: var(--muted-foreground);
+    opacity: 0.42;
+  }
+  .t-en {
+    margin: 0;
+  }
+  .t-body h2 {
+    margin: 0.4rem 0 0;
+    font-family: var(--font-hei);
+    font-weight: 300;
+    font-size: clamp(27px, 3.2vw, 38px);
+    letter-spacing: 0.1em;
+    color: var(--foreground);
+  }
+  .t-q {
+    display: flex;
+    align-items: baseline;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    margin: 1rem 0 0;
+  }
+  .tq-text {
+    font-size: 15.5px;
+    color: var(--math-coral);
+    letter-spacing: 0.04em;
+  }
+  .tq-text::after {
+    content: '?';
+    margin-left: 0.15em;
+  }
+
+  /* 章内图形:移动端/无脚本时可见;桌面切换模式下隐藏 */
+  .t-figure {
+    margin-top: 1.3rem;
+    max-width: 380px;
+  }
+  .t-figure :global(svg) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  @media (min-width: 1024px) {
+    .has-swap .t-figure {
+      display: none;
+    }
+  }
+
+  .t-concepts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 1.3rem 0 0;
+    padding: 0;
+  }
+  .t-concepts li {
+    padding: 0.3em 0.85em;
+    border: 1px solid var(--border-400);
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    color: var(--secondary-foreground);
+  }
+
+  .t-cols {
+    display: flex;
+    gap: 2.4rem;
+    flex-wrap: wrap;
+    margin-top: 1.4rem;
+  }
+  .t-order {
+    min-width: 200px;
+  }
+  .t-order ol {
+    list-style: none;
+    counter-reset: order;
+    margin: 0.6rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.3rem;
+  }
+  .t-order li {
+    counter-increment: order;
+    font-size: 14px;
+    color: var(--secondary-foreground);
+  }
+  .t-order li::before {
+    content: counter(order, decimal-leading-zero);
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--muted-foreground);
+    margin-right: 0.8em;
+  }
+  .t-side {
+    display: grid;
+    gap: 0.7rem;
+    align-content: start;
+  }
+  .t-status {
+    display: flex;
+    align-items: center;
+    gap: 0.55em;
+    margin: 0;
+    font-size: 13.5px;
+    letter-spacing: 0.1em;
+    color: var(--secondary-foreground);
+  }
+  .s-symbol {
+    font-size: 15px;
+  }
+  .s-观测中 {
+    color: var(--primary);
+  }
+  .s-未开始 {
+    color: var(--muted-foreground);
+  }
+  .s-已完成 {
+    color: var(--foreground);
+  }
+  .t-link {
+    color: var(--primary);
+    text-decoration: none;
+    font-size: 13.5px;
+    letter-spacing: 0.08em;
+  }
+  .t-link:hover {
+    text-decoration: underline;
+  }
+
+  /* ===== 桌面粘性展台 ===== */
+  .t-panel {
+    display: none;
+  }
+  @media (min-width: 1024px) {
+    .has-swap .t-panel {
+      position: sticky;
+      top: calc(var(--header-height, 56px) + 2.5rem);
+      display: block;
+      height: min(66vh, 560px);
+    }
+    .tp-item {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.45s ease;
+    }
+    .tp-item.is-on {
+      opacity: 1;
+    }
+    .tp-item :global(svg) {
+      width: 100%;
+      height: auto;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tp-item {
+      transition: none;
+    }
+  }
+</style>

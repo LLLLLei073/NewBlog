@@ -1,0 +1,45 @@
+---
+/**
+ * 「数学观象台」右侧符号栏:桌面端固定右侧竖栏(∑/π/∞/?/搜索),
+ * 悬浮显示具体名称;中部显示当前章节编号;移动端收为顶部一条
+ * (专栏名 + 菜单)。主题切换走全站 Header 的太阳/月亮开关
+ * (日间展厅 = 亮色主题,暗色为默认高对比外观)。
+ */
+import ColumnRail from '../ColumnRail.astro';
+import { COLUMN } from '../../data/math/column.ts';
+
+const path = Astro.url.pathname;
+const is = {
+  home: path === '/math/' || path === '/math',
+  topics: path.startsWith('/math/topics'),
+  notes: path.startsWith('/math/notes'),
+  proofs: path.startsWith('/math/proofs'),
+  questions: path.startsWith('/math/questions'),
+};
+const items = [
+  { href: '/math/topics/', glyph: '∑', label: '观测主题', active: is.topics },
+  { href: '/math/notes/', glyph: 'π', label: '数学文章', active: is.notes },
+  { href: '/math/proofs/', glyph: '∞', label: '证明画廊', active: is.proofs },
+  { href: '/math/questions/', glyph: '?', label: '问题本', active: is.questions },
+];
+const CHAPTER: Record<string, string> = {
+  home: '01',
+  topics: '02',
+  notes: '03',
+  proofs: '04',
+  questions: '05',
+};
+const chapter =
+  CHAPTER[Object.keys(is).find((k) => is[k as keyof typeof is]) ?? 'home'];
+---
+
+<ColumnRail
+  theme="math"
+  railLabel="数学观象台导航"
+  brand={{ cn: COLUMN.name, en: COLUMN.en }}
+  items={items}
+  search={{ href: '/math/notes/#search', label: '搜索数学文章' }}
+  rootAttrs={{ 'data-math-rail': '' }}
+>
+  <span slot="center">{chapter}</span>
+</ColumnRail>

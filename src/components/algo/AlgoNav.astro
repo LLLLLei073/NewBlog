@@ -1,8 +1,11 @@
 ---
 /**
- * 「演算手稿」专栏内部导航:纤细克制,当前栏目信号蓝短线标记;
- * 右侧搜索入口(→ /algorithm/notes/)与个人标记「F.」(→ /about)。
+ * 「演算手稿」专栏内部导航:右侧符号栏(λ/✎/⌖/Θ/搜索),
+ * 悬浮显示具体名称;底部个人标记「F.」(→ /about);移动端收为
+ * 顶部一条。符号用等宽字族的算法记号。
  */
+import ColumnRail from '../ColumnRail.astro';
+
 const path = Astro.url.pathname;
 const is = {
   home: path === '/algorithm/' || path === '/algorithm',
@@ -11,127 +14,34 @@ const is = {
   complexity: path.startsWith('/algorithm/complexity'),
 };
 const items = [
-  { href: '/algorithm/', label: '首页', active: is.home },
-  { href: '/algorithm/notes/', label: '题解手记', active: is.notes },
-  { href: '/algorithm/map/', label: '知识地图', active: is.map },
+  { href: '/algorithm/', glyph: 'λ', label: '首页', active: is.home },
+  { href: '/algorithm/notes/', glyph: '✎', label: '题解手记', active: is.notes },
+  { href: '/algorithm/map/', glyph: '⌖', label: '知识地图', active: is.map },
   {
     href: '/algorithm/complexity/',
+    glyph: 'Θ',
     label: '复杂度手册',
     active: is.complexity,
   },
 ];
 ---
 
-<nav class="algo-nav" aria-label="专栏导航">
-  <div class="algo">
-    <div class="links">
-      {
-        items.map((item) => (
-          <a
-            href={item.href}
-            class:list={['nav-item', { active: item.active }]}
-            aria-current={item.active ? 'page' : undefined}
-          >
-            {item.label}
-          </a>
-        ))
-      }
-    </div>
-    <div class="right">
-      <a
-        href="/algorithm/notes/"
-        class="icon-link"
-        aria-label="搜索手记"
-        title="搜索手记"
-      >
-        <svg
-          viewBox="0 0 24 24"
-          width="15"
-          height="15"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          aria-hidden="true"
-        >
-          <circle cx="11" cy="11" r="7"></circle>
-          <line x1="21" y1="21" x2="16.2" y2="16.2"></line>
-        </svg>
-      </a>
-      <a href="/about/" class="mark" title="关于我">F.</a>
-    </div>
-  </div>
-</nav>
-
-<style>
-  .algo-nav {
-    border-bottom: 1px solid var(--border);
-    margin-top: clamp(0.75rem, 2vw, 1.25rem);
-  }
-  .algo-nav .algo {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-  }
-  .links {
-    display: flex;
-    gap: clamp(1.1rem, 3vw, 2rem);
-    overflow-x: auto;
-  }
-  .nav-item {
-    position: relative;
-    display: inline-block;
-    padding: 0.55rem 0 0.7rem;
-    color: var(--muted-foreground);
-    text-decoration: none;
-    font-size: 0.85rem;
-    letter-spacing: 0.08em;
-    white-space: nowrap;
-    transition: color 0.18s ease;
-  }
-  .nav-item::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -1px;
-    width: 0;
-    height: 2px;
-    background: var(--primary);
-    transition: width 0.22s ease;
-  }
-  .nav-item:hover {
-    color: var(--foreground);
-  }
-  .nav-item.active {
-    color: var(--primary);
-  }
-  .nav-item.active::after {
-    width: 1.6em;
-  }
-  .right {
-    display: flex;
-    align-items: center;
-    gap: 0.9rem;
-    flex: none;
-  }
-  .icon-link {
-    display: inline-flex;
-    padding: 0.35rem;
-    color: var(--muted-foreground);
-    transition: color 0.18s ease;
-  }
-  .icon-link:hover {
-    color: var(--primary);
-  }
-  .mark {
-    font-family: var(--font-serif);
-    font-weight: 700;
-    font-size: 1.02rem;
-    color: var(--foreground);
-    text-decoration: none;
-  }
-  .mark:hover {
-    color: var(--primary);
-  }
-</style>
+<ColumnRail
+  theme="algo"
+  railLabel="演算手稿导航"
+  brand={{ cn: '演算手稿', en: 'ALGORITHM NOTES' }}
+  items={items}
+  search={{ href: '/algorithm/notes/', label: '搜索手记' }}
+>
+  <a
+    slot="utils"
+    class="crail-item crail-mark"
+    href="/about/"
+    aria-label="关于我"
+    data-label="关于我">F.</a
+  >
+  <a slot="panel-extra" class="crail-panel-link" href="/about/">
+    <span class="crail-panel-glyph" aria-hidden="true">F.</span>
+    关于我
+  </a>
+</ColumnRail>

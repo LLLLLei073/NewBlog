@@ -1,0 +1,831 @@
+---
+/**
+ * 「正在游玩 · NOW PLAYING」:存档管理器 × 游戏杂志目录。
+ * 状态筛选(六种状态 + 全部,客户端过滤)→ 三款游戏的存档卡
+ * (封面/状态/最近记录/当前阶段/最新手记/平台/相关文章)→
+ * 《我的世界》长期世界档案、《绿色地狱》生存记录、
+ * “不存在”系列记录入口。空缺数据如实显示,不编造历程。
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import GameNav from '../../components/game/GameNav.astro';
+import GameFigure from '../../components/game/GameFigure.astro';
+import PixelIcon from '../../components/game/PixelIcon.astro';
+import { COLUMN } from '../../data/game/column.ts';
+import {
+  GAMES,
+  PLAY_FILTERS,
+  PLAY_STATUS_LABEL,
+  PLAY_STATUS_TONE,
+  SERIES_WORKS,
+} from '../../data/game/games.ts';
+import { getGameArticleMeta } from '../../data/game/articles.ts';
+import { postHref } from '../../utils/postRoute.ts';
+
+const posts = (await getCollection('blog'))
+  .filter((p) => !p.data.draft && p.data.category === 'game')
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const fmtDate = (d: Date) =>
+  `${d.getFullYear()}/${String(d.getMonth() + 1).padStart(2, '0')}/${String(
+    d.getDate(),
+  ).padStart(2, '0')}`;
+
+const postsOf = (slug: string) =>
+  posts.filter((p) => getGameArticleMeta(p.id)?.game === slug);
+
+const latestOf = (slug: string) => postsOf(slug)[0] ?? null;
+
+const meta2 = (game: string) => {
+  const l = latestOf(game);
+  return {
+    latest: l,
+    latestHref: l ? postHref(l.id, l.data.category) : null,
+    date: l ? fmtDate(l.data.pubDate) : null,
+    list: postsOf(game).map((p) => ({
+      title: p.data.title,
+      href: postHref(p.id, p.data.category),
+      date: fmtDate(p.data.pubDate),
+    })),
+  };
+};
+const [mc, gh, ng] = GAMES.map((g) => ({ game: g, ...meta2(g.slug) }));
+---
+
+<BaseLayout
+  title={`正在游玩 · ${COLUMN.name}`}
+  description="存档管理器式布局:当前在玩的游戏、持续建造的世界、生存记录与系列入口。"
+  pageName="game"
+>
+  <div class="gg-wrap playing-page">
+    <GameNav />
+
+    <header class="page-head">
+      <p class="head-en mono-label">NOW PLAYING</p>
+      <h1>正在游玩</h1>
+      <p class="head-note">
+        存档管理器与游戏杂志目录的混合体:每款游戏一个槽位,只记录真实进展;
+        还没确认的信息保持空缺。
+      </p>
+    </header>
+
+    <!-- ===== 状态筛选 ===== -->
+    <div class="filters" role="group" aria-label="按游玩状态筛选">
+      {
+        PLAY_FILTERS.map((f, i) => (
+          <button
+            type="button"
+            class:list={['filter-chip', { active: i === 0 }]}
+            data-filter={f.key}
+            aria-pressed={i === 0 ? 'true' : 'false'}
+          >
+            {f.label}
+          </button>
+        ))
+      }
+    </div>
+
+    <!-- ===== 存档卡 ===== -->
+    <p class="filter-empty" data-filter-empty hidden>
+      这个状态下还没有记录——空槽位也是存档的一部分。
+    </p>
+
+    <div class="manager">
+      {
+        [mc, gh, ng].map(({ game, latest, latestHref, date, list }) => (
+          <article
+            class="mcard gg-card gg-rise d1"
+            id={game.slug}
+            data-status={game.status}
+          >
+            <div class="mcard-cover">
+              <GameFigure
+                art={game.art}
+                alt={`${game.title}的占位插画(等待真实画面)`}
+                label={`SLOT ${game.slot}`}
+              />
+              <span class="mcard-anchor gg-anchor" id={`${game.slug}-top`} />
+            </div>
+
+            <div class="mcard-info">
+              <header class="mcard-head">
+                <h2>{game.title}</h2>
+                <span
+                  class:list={[
+                    'gg-chip',
+                    `gg-chip--${PLAY_STATUS_TONE[game.status] === 'coral' ? 'coral' : PLAY_STATUS_TONE[game.status]}`,
+                  ]}
+                >
+                  {game.statusLabel || PLAY_STATUS_LABEL[game.status]}
+                </span>
+              </header>
+
+              <p class="mcard-en">{game.titleEn}</p>
+
+              <dl class="mcard-facts">
+                <div>
+                  <dt>最近记录</dt>
+                  <dd>{date ?? '待记录'}</dd>
+                </div>
+                <div>
+                  <dt>当前阶段</dt>
+                  <dd>{game.stage ?? '—'}</dd>
+                </div>
+                <div>
+                  <dt>最新手记</dt>
+                  <dd>
+                    {latest ? (
+                      <a href={latestHref}>{latest.data.title}</a>
+                    ) : (
+                      '整理中'
+                    )}
+                  </dd>
+                </div>
+                <div>
+                  <dt>平台</dt>
+                  <dd>{game.platform ?? '平台待记录'}</dd>
+                </div>
+              </dl>
+
+              <p class="mcard-quote">「{game.quote}」</p>
+
+              {
+                list.length > 0 ? (
+                  <ul class="mcard-posts">
+                    {list.map((p) => (
+                      <li>
+                        <a href={p.href}>
+                          <span>{p.title}</span>
+                          <time>{p.date}</time>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p class="mcard-none">这个游戏的手记还在整理,先看档案区。</p>
+                )
+              }
+
+              {
+                game.pendingNote && (
+                  <p class="mcard-pending">{game.pendingNote}</p>
+                )
+              }
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    <!-- ===== 《我的世界》长期世界档案 ===== -->
+    <section class="archive" aria-labelledby="world-archive-title">
+      <header class="gg-sec">
+        <h2 id="world-archive-title">
+          <PixelIcon name="gear" size={18} /> 长期世界档案
+        </h2>
+        <span class="gg-sec-en">MINECRAFT · WORLD ARCHIVE</span>
+        <a class="gg-sec-more" href="#minecraft-create">回到存档卡 ↑</a>
+      </header>
+
+      <div class="archive-grid">
+        <div class="archive-cover gg-tilt-l">
+          <GameFigure
+            art="create"
+            alt="基地全景占位插画(等待真实截图)"
+            timecode={mc.date ? `WORLD ${mc.date}` : undefined}
+            tape="both"
+            caption="基地全景:截图整理后替换上架,当前为栏目占位插画。"
+          />
+        </div>
+
+        <div class="archive-side">
+          <h3>
+            <PixelIcon name="flag" size={14} /> 建造时间线
+          </h3>
+          {
+            mc.list.length > 0 ? (
+              <ol class="timeline">
+                {mc.list.map((p, i) => (
+                  <li>
+                    <span class="tl-no">{String(i + 1).padStart(2, '0')}</span>
+                    <span class="tl-body">
+                      <a href={p.href}>{p.title}</a>
+                      <time>{p.date}</time>
+                    </span>
+                  </li>
+                ))}
+              </ol>
+            ) : (
+              <p class="gg-empty">
+                <strong>时间线待补充</strong>第一篇建造手记完成后会出现在这里。
+              </p>
+            )
+          }
+
+          <h3>
+            <PixelIcon name="shots" size={14} /> 机械结构图集 · 截图相册
+          </h3>
+          <div class="album">
+            <div class="album-cell gg-tilt-l">
+              <GameFigure art="create" alt="机械结构占位图形一" timecode="SLOT A" />
+            </div>
+            <div class="album-cell gg-tilt-r">
+              <GameFigure art="create" alt="机械结构占位图形二" timecode="SLOT B" />
+            </div>
+          </div>
+          <p class="album-note">
+            产线改造记录与机械结构图集:等第一批真实截图整理好就上架,不提前占位编内容。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== 《绿色地狱》生存记录 ===== -->
+    <section class="archive" aria-labelledby="survival-log-title">
+      <header class="gg-sec">
+        <h2 id="survival-log-title">
+          <PixelIcon name="leaf" size={18} /> 生存记录
+        </h2>
+        <span class="gg-sec-en">GREEN HELL · SURVIVAL LOG</span>
+        <a class="gg-sec-more" href="#green-hell">回到存档卡 ↑</a>
+      </header>
+
+      <div class="survival-grid">
+        <dl class="survival-facts gg-card--sm gg-card">
+          <div>
+            <dt>
+              <PixelIcon name="flag" size={13} /> 营地位置
+            </dt>
+            <dd>—</dd>
+          </div>
+          <div>
+            <dt>
+              <PixelIcon name="replay" size={13} /> 探索记录
+            </dt>
+            <dd>—</dd>
+          </div>
+          <div>
+            <dt>
+              <PixelIcon name="pulse" size={13} /> 生存事件
+            </dt>
+            <dd>—</dd>
+          </div>
+          <div>
+            <dt>
+              <PixelIcon name="shots" size={13} /> 装备与资源变化
+            </dt>
+            <dd>—</dd>
+          </div>
+        </dl>
+        <p class="gg-empty survival-empty">
+          <strong>生存记录待整理</strong>
+          营地、探索与生存事件只写真实经历:整理好一次,上架一次。不虚构天数、
+          不编造剧情。
+        </p>
+        <div class="survival-cover gg-tilt-r">
+          <GameFigure
+            art="wilds"
+            alt="雨林营地占位插画(等待真实截图)"
+            timecode={gh.date ? `CAMP ${gh.date}` : 'CAMP --/--/--'}
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== “不存在”系列记录入口 ===== -->
+    <section class="archive" aria-labelledby="series-title">
+      <header class="gg-sec">
+        <h2 id="series-title">
+          <PixelIcon name="chat" size={18} /> 系列记录入口
+        </h2>
+        <span class="gg-sec-en">THE “NO GAME” SERIES · INDEX</span>
+        <a class="gg-sec-more" href="#no-game-series">回到存档卡 ↑</a>
+      </header>
+
+      <p class="gg-empty series-note">
+        <strong>系列作品已确认</strong>
+        {ng.game.pendingNote}
+      </p>
+      <ul class="series-works">
+        {
+          SERIES_WORKS.map((work, i) => (
+            <li class="swork gg-card gg-card--sm" data-work={work.slug}>
+              <span class="swork-no">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <div class="swork-main">
+                <h3>{work.title}</h3>
+                <p class="swork-en">{work.titleEn}</p>
+                <p class="swork-facts">
+                  <span>{work.kind}</span>
+                  <span>平台 {work.platform}</span>
+                  <span>发售 {work.released ?? '日期待补'}</span>
+                </p>
+                <p class="swork-note">{work.note}</p>
+              </div>
+              <span class="swork-status">
+                <PixelIcon name="empty" size={14} />
+                个人状态：{work.status ?? '待记录'}
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="series-hint">
+        个人游玩状态、评分与官方封面等逐部玩到、确认到，就逐部补上;
+        涉及剧情的手记会默认启用更严格的剧透保护。
+      </p>
+    </section>
+
+    <footer class="page-end">
+      <span class="mono-label">{COLUMN.en}</span>
+      <nav class="end-links" aria-label="栏目入口">
+        <a href="/game/">专栏首页</a>
+        <a href="/game/notes/">游戏手记</a>
+        <a href="/game/collection/">收藏架</a>
+      </nav>
+    </footer>
+  </div>
+</BaseLayout>
+
+<style>
+  .playing-page {
+    padding-top: clamp(1.4rem, 3.5vw, 2.4rem);
+    padding-bottom: clamp(2.4rem, 6vw, 4rem);
+  }
+
+  .page-head h1 {
+    margin: 0.5rem 0 0;
+    font-family: var(--g-disp);
+    font-weight: 900;
+    font-size: clamp(34px, 5.5vw, 58px);
+    color: var(--gg-cream);
+    text-shadow: 4px 4px 0 var(--gg-ink);
+  }
+  .head-en {
+    color: var(--gg-acid);
+    letter-spacing: 0.32em;
+  }
+  .head-note {
+    max-width: 52ch;
+    margin: 0.9rem 0 0;
+    font-size: 14.5px;
+    line-height: 1.85;
+    color: var(--gg-cream-dim);
+  }
+
+  /* ===== 筛选 ===== */
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    margin: 1.5rem 0 0.4rem;
+  }
+  .filter-chip {
+    min-height: 44px;
+    padding: 0.3em 1em;
+    border: var(--gg-bw-thin) solid var(--gg-ink);
+    background: var(--gg-cream);
+    color: var(--gg-ink);
+    font-family: var(--g-disp);
+    font-weight: 700;
+    font-size: 13.5px;
+    cursor: pointer;
+    box-shadow: 2px 2px 0 0 var(--gg-ink);
+    transition:
+      transform 0.14s ease,
+      box-shadow 0.14s ease,
+      background-color 0.14s ease;
+  }
+  .filter-chip:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 0 var(--gg-ink);
+  }
+  .filter-chip.active {
+    background: var(--gg-acid);
+    box-shadow: inset 0 -3px 0 rgba(21, 21, 21, 0.5);
+  }
+  .filter-empty {
+    margin: 0.8rem 0 0;
+    padding: 0.8rem 1rem;
+    border: 2px dashed var(--gg-cream-faint);
+    color: var(--gg-cream-dim);
+    font-size: 14px;
+  }
+  .filter-empty[hidden] {
+    display: none;
+  }
+
+  /* ===== 存档卡 ===== */
+  .manager {
+    display: grid;
+    gap: clamp(1.2rem, 3vw, 1.8rem);
+    margin-top: 1rem;
+  }
+  .mcard {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 1.4rem;
+    padding: 1.1rem;
+    scroll-margin-top: calc(var(--header-height, 56px) + 110px);
+  }
+  .mcard-cover {
+    align-self: start;
+  }
+  .mcard-info {
+    min-width: 0;
+  }
+  .mcard-head {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+  }
+  .mcard-head h2 {
+    margin: 0;
+    font-family: var(--g-disp);
+    font-weight: 900;
+    font-size: clamp(21px, 2.6vw, 28px);
+    color: var(--gg-ink);
+  }
+  .mcard-en {
+    margin: 0.15rem 0 0;
+    font-family: var(--g-mono);
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    color: var(--gg-gray);
+  }
+  .mcard-facts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.7rem 1.4rem;
+    margin: 1rem 0 0;
+    padding: 0.9rem 1rem;
+    border: 2px dashed rgba(21, 21, 21, 0.35);
+    background: rgba(255, 253, 242, 0.6);
+  }
+  .mcard-facts > div {
+    min-width: 0;
+  }
+  .mcard-facts dt {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    font-family: var(--g-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    color: var(--gg-gray);
+  }
+  .mcard-facts dd {
+    margin: 0.2rem 0 0;
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--gg-ink);
+    overflow-wrap: anywhere;
+  }
+  .mcard-facts a {
+    color: var(--gg-ink);
+    text-decoration: underline;
+    text-decoration-color: var(--gg-coral);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
+  .mcard-facts a:hover {
+    background: var(--gg-acid);
+    text-decoration-color: transparent;
+  }
+  .mcard-quote {
+    margin: 0.9rem 0 0;
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--gg-ink);
+  }
+  .mcard-posts {
+    list-style: none;
+    margin: 0.9rem 0 0;
+    padding: 0;
+    border-top: 2px solid rgba(21, 21, 21, 0.25);
+  }
+  .mcard-posts a {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.55rem 0.2rem;
+    border-bottom: 2px solid rgba(21, 21, 21, 0.14);
+    color: var(--gg-ink);
+    text-decoration: none;
+    font-size: 14.5px;
+  }
+  .mcard-posts a:hover {
+    background: rgba(231, 240, 91, 0.5);
+  }
+  .mcard-posts time {
+    flex: none;
+    font-family: var(--g-mono);
+    font-size: 12px;
+    color: var(--gg-gray);
+  }
+  .mcard-none {
+    margin: 0.9rem 0 0;
+    font-size: 13.5px;
+    color: var(--gg-gray);
+  }
+  .mcard-pending {
+    margin: 0.9rem 0 0;
+    padding: 0.7em 0.9em;
+    border: 2px solid var(--gg-coral);
+    background: rgba(255, 112, 88, 0.12);
+    font-size: 13.5px;
+    line-height: 1.75;
+    color: var(--gg-ink);
+  }
+
+  /* ===== 档案区块 ===== */
+  .archive {
+    margin-top: clamp(2.2rem, 5vw, 3.4rem);
+    padding-top: clamp(1.4rem, 3vw, 2rem);
+    border-top: 3px solid var(--gg-ink);
+  }
+  .archive :global(h2 .px-icon) {
+    color: var(--gg-acid);
+    margin-right: 0.35em;
+  }
+  .archive-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    gap: clamp(1.4rem, 3.5vw, 2.4rem);
+    align-items: start;
+  }
+  .archive h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    margin: 1.4rem 0 0.7rem;
+    font-family: var(--g-disp);
+    font-weight: 900;
+    font-size: 18px;
+    color: var(--gg-cream);
+  }
+  .archive h3 :global(.px-icon) {
+    color: var(--gg-acid);
+  }
+
+  .timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .timeline li {
+    display: flex;
+    gap: 0.9rem;
+    align-items: baseline;
+    padding: 0.55rem 0;
+    border-bottom: 2px dashed rgba(244, 239, 216, 0.25);
+  }
+  .tl-no {
+    flex: none;
+    font-family: var(--g-cond);
+    font-weight: 800;
+    font-size: 15px;
+    color: var(--gg-acid);
+  }
+  .tl-body {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.2rem 1rem;
+    align-items: baseline;
+    min-width: 0;
+  }
+  .tl-body a {
+    color: var(--gg-cream);
+    font-weight: 700;
+    font-size: 14.5px;
+    text-decoration: underline;
+    text-decoration-color: var(--gg-coral);
+    text-underline-offset: 3px;
+  }
+  .tl-body a:hover {
+    color: var(--gg-acid);
+  }
+  .tl-body time {
+    font-family: var(--g-mono);
+    font-size: 11.5px;
+    color: var(--gg-cream-dim);
+  }
+
+  .album {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+  .album-note {
+    margin: 0.9rem 0 0;
+    font-size: 13px;
+    line-height: 1.75;
+    color: var(--gg-cream-dim);
+  }
+
+  .survival-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: clamp(1.4rem, 3.5vw, 2.4rem);
+    align-items: start;
+  }
+  .survival-facts {
+    display: grid;
+    gap: 0.9rem;
+    padding: 1.1rem 1.2rem;
+  }
+  .survival-facts dt {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    font-family: var(--g-disp);
+    font-weight: 800;
+    font-size: 14.5px;
+    color: var(--gg-ink);
+  }
+  .survival-facts dt :global(.px-icon) {
+    color: var(--gg-lake-ink);
+  }
+  .survival-facts dd {
+    margin: 0.25rem 0 0;
+    padding-left: 1.6em;
+    font-family: var(--g-mono);
+    font-size: 13px;
+    color: var(--gg-gray);
+  }
+  .survival-empty {
+    grid-column: 1;
+  }
+  .survival-cover {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+  .series-note {
+    max-width: 60ch;
+  }
+  .series-works {
+    list-style: none;
+    margin: 1.1rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.9rem;
+  }
+  .swork {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 1rem;
+    align-items: center;
+    padding: 0.9rem 1.1rem;
+  }
+  .swork-no {
+    font-family: var(--g-cond);
+    font-weight: 800;
+    font-size: 20px;
+    color: var(--gg-coral);
+  }
+  .swork-main {
+    min-width: 0;
+  }
+  .swork h3 {
+    margin: 0;
+    font-family: var(--g-disp);
+    font-weight: 900;
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--gg-ink);
+  }
+  .swork-en {
+    margin: 0.1rem 0 0;
+    font-family: var(--g-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    color: var(--gg-gray);
+  }
+  .swork-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 1.1rem;
+    margin: 0.45rem 0 0;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--gg-ink);
+  }
+  .swork-facts span {
+    white-space: nowrap;
+  }
+  .swork-note {
+    margin: 0.3rem 0 0;
+    font-size: 12.5px;
+    line-height: 1.7;
+    color: var(--gg-gray);
+  }
+  .swork-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    padding: 0.3em 0.7em;
+    border: 2px dashed rgba(21, 21, 21, 0.35);
+    font-family: var(--g-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--gg-gray);
+    white-space: nowrap;
+  }
+  .series-hint {
+    max-width: 60ch;
+    margin: 0.9rem 0 0;
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--gg-cream-dim);
+  }
+
+  .page-end {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: clamp(2rem, 5vw, 3rem);
+    padding-top: 1.1rem;
+    border-top: 3px solid var(--gg-ink);
+  }
+  .page-end .mono-label {
+    color: var(--gg-cream-dim);
+  }
+  .end-links {
+    display: flex;
+    gap: 1.3rem;
+  }
+  .end-links a {
+    color: var(--gg-cream);
+    text-decoration: none;
+    font-family: var(--g-disp);
+    font-weight: 700;
+    font-size: 14px;
+    padding: 0.3rem 0;
+  }
+  .end-links a:hover {
+    color: var(--gg-acid);
+  }
+
+  @media (max-width: 860px) {
+    .mcard {
+      grid-template-columns: 1fr;
+    }
+    .archive-grid,
+    .survival-grid {
+      grid-template-columns: 1fr;
+    }
+    .survival-cover {
+      grid-column: 1;
+      grid-row: auto;
+    }
+    .series-slots {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>
+
+<script>
+  import { onPageLoad } from '../../utils/lifecycle';
+
+  onPageLoad(() => {
+    const page = document.querySelector<HTMLElement>('.playing-page');
+    if (!page) return;
+    const chips = Array.from(
+      page.querySelectorAll<HTMLButtonElement>('[data-filter]'),
+    );
+    const cards = Array.from(
+      page.querySelectorAll<HTMLElement>('[data-status]'),
+    );
+    const emptyTip = page.querySelector<HTMLElement>('[data-filter-empty]');
+    if (!chips.length || !cards.length) return;
+    const apply = (key: string) => {
+      let visible = 0;
+      cards.forEach((card) => {
+        const show = key === 'all' || card.dataset.status === key;
+        card.hidden = !show;
+        if (show) visible++;
+      });
+      if (emptyTip) emptyTip.hidden = visible > 0;
+      chips.forEach((chip) => {
+        const on = chip.dataset.filter === key;
+        chip.classList.toggle('active', on);
+        chip.setAttribute('aria-pressed', String(on));
+      });
+    };
+    const onClick = (e: MouseEvent) => {
+      const chip = (e.target as HTMLElement).closest<HTMLButtonElement>(
+        '[data-filter]',
+      );
+      if (chip) apply(chip.dataset.filter ?? 'all');
+    };
+    page.querySelector('.filters')?.addEventListener('click', onClick);
+    return () => {
+      page.querySelector('.filters')?.removeEventListener('click', onClick);
+    };
+  });
+</script>

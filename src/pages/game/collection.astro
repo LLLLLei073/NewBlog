@@ -1,0 +1,589 @@
+---
+/**
+ * 「收藏架 · COLLECTION」:实体游戏架与存档盒的混合视觉。
+ * 封面视图 / 紧凑列表切换;类型与游玩状态筛选可用,平台与个人
+ * 评分在真实数据确认前保持「—」并关闭对应筛选。
+ */
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import GameNav from '../../components/game/GameNav.astro';
+import GameFigure from '../../components/game/GameFigure.astro';
+import PixelIcon from '../../components/game/PixelIcon.astro';
+import { COLUMN } from '../../data/game/column.ts';
+import {
+  GAMES,
+  PLAY_STATUS_LABEL,
+  PLAY_STATUS_TONE,
+} from '../../data/game/games.ts';
+import { SHELF } from '../../data/game/collection.ts';
+import { getGameArticleMeta } from '../../data/game/articles.ts';
+import { postHref } from '../../utils/postRoute.ts';
+
+const posts = (await getCollection('blog')).filter(
+  (p) => !p.data.draft && p.data.category === 'game',
+);
+
+const noteCount = (slug: string) =>
+  posts.filter((p) => getGameArticleMeta(p.id)?.game === slug).length;
+
+const entries = SHELF.map((entry) => {
+  const game = GAMES.find((g) => g.slug === entry.game)!;
+  return { ...entry, game, notes: noteCount(entry.game) };
+});
+
+const genres = [...new Set(GAMES.flatMap((g) => g.genres))];
+const statuses = [...new Set(GAMES.map((g) => g.status))];
+const hasPlatformData = GAMES.some((g) => g.platform);
+const hasRatingData = GAMES.some((g) => g.rating);
+---
+
+<BaseLayout
+  title={`收藏架 · ${COLUMN.name}`}
+  description="存档之外的收藏架:在记录的游戏、私人批注与手记数量。平台与评分待确认后补全。"
+  pageName="game"
+>
+  <div class="gg-wrap shelf-page">
+    <GameNav />
+
+    <header class="page-head">
+      <p class="head-en mono-label">COLLECTION · {entries.length} 款</p>
+      <h1>收藏架</h1>
+      <p class="head-note">
+        实体游戏架与存档盒的混合体:每一格都是真实在记录的游戏。
+        评分与平台信息在没有确认前保持空缺——空着,比编造体面。
+      </p>
+    </header>
+
+    <!-- ===== 工具条:视图 + 筛选 ===== -->
+    <div class="toolbar">
+      <div class="views" role="group" aria-label="切换视图">
+        <button
+          type="button"
+          class="view-btn active"
+          data-view="cover"
+          aria-pressed="true"
+        >
+          封面视图
+        </button>
+        <button
+          type="button"
+          class="view-btn"
+          data-view="list"
+          aria-pressed="false"
+        >
+          紧凑列表
+        </button>
+      </div>
+
+      <div class="fgroup" role="group" aria-label="按类型筛选">
+        <span class="fgroup-label">类型</span>
+        <button
+          type="button"
+          class="filter-chip active"
+          data-filter-group="genre"
+          data-value="all"
+          aria-pressed="true"
+        >
+          全部
+        </button>
+        {
+          genres.map((g) => (
+            <button
+              type="button"
+              class="filter-chip"
+              data-filter-group="genre"
+              data-value={g}
+              aria-pressed="false"
+            >
+              {g}
+            </button>
+          ))
+        }
+      </div>
+
+      <div class="fgroup" role="group" aria-label="按游玩状态筛选">
+        <span class="fgroup-label">状态</span>
+        <button
+          type="button"
+          class="filter-chip active"
+          data-filter-group="status"
+          data-value="all"
+          aria-pressed="true"
+        >
+          全部
+        </button>
+        {
+          statuses.map((s) => (
+            <button
+              type="button"
+              class="filter-chip"
+              data-filter-group="status"
+              data-value={s}
+              aria-pressed="false"
+            >
+              {PLAY_STATUS_LABEL[s]}
+            </button>
+          ))
+        }
+      </div>
+
+      <p class="toolbar-note">
+        平台筛选与评分筛选将在真实数据确认后开放
+        {hasPlatformData || hasRatingData ? '' : '(当前全部空缺)'}。
+      </p>
+    </div>
+
+    <p class="filter-empty" data-filter-empty hidden>
+      这个组合下没有游戏——换个筛选试试。
+    </p>
+
+    <!-- ===== 封面视图 ===== -->
+    <ul class="cover-view" data-view-panel="cover">
+      {
+        entries.map(({ game, note, notes }, i) => (
+          <li
+            class:list={['case gg-card', i % 2 ? 'case--r' : 'case--l']}
+            data-genres={game.genres.join(',')}
+            data-status={game.status}
+          >
+            <div class="case-cover">
+              <GameFigure
+                art={game.art}
+                alt={`${game.title}的占位封面(等待真实画面)`}
+                ratio="3 / 4"
+                label={`SLOT ${game.slot}`}
+              />
+            </div>
+            <h2 class="case-title">{game.title}</h2>
+            <p class="case-facts">
+              <span
+                class:list={[
+                  'gg-chip',
+                  `gg-chip--${PLAY_STATUS_TONE[game.status] === 'coral' ? 'coral' : PLAY_STATUS_TONE[game.status]}`,
+                ]}
+              >
+                {game.statusLabel || PLAY_STATUS_LABEL[game.status]}
+              </span>
+              <span class="case-fact">类型 {game.genres.join(' / ')}</span>
+              <span class="case-fact">平台 {game.platform ?? '—'}</span>
+              <span class="case-fact">评分 {game.rating ?? '—'}</span>
+            </p>
+            <p class="case-note">
+              <PixelIcon name="chat" size={12} /> {note}
+            </p>
+            <p class="case-links">
+              <a href={`/game/playing/#${game.slug}`}>档案</a>
+              <span>
+                {notes > 0 ? (
+                  <a href="/game/notes/">手记 × {notes}</a>
+                ) : (
+                  <span class="case-zero">手记 × 0</span>
+                )}
+              </span>
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+
+    <!-- ===== 紧凑列表 ===== -->
+    <ul class="list-view" data-view-panel="list" hidden>
+      {
+        entries.map(({ game, note, notes }) => (
+          <li
+            class="lrow"
+            data-genres={game.genres.join(',')}
+            data-status={game.status}
+          >
+            <a class="lrow-main" href={`/game/playing/#${game.slug}`}>
+              <strong>{game.title}</strong>
+              <span class="lrow-sub">
+                {game.genres.join(' / ')} · 平台 {game.platform ?? '—'} · 评分{' '}
+                {game.rating ?? '—'}
+              </span>
+            </a>
+            <span class="lrow-note">{note}</span>
+            <span class="lrow-count">
+              {notes > 0 ? (
+                <a href="/game/notes/">手记 × {notes}</a>
+              ) : (
+                <span class="case-zero">手记 × 0</span>
+              )}
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+
+    <footer class="page-end">
+      <span class="mono-label">{COLUMN.en}</span>
+      <nav class="end-links" aria-label="栏目入口">
+        <a href="/game/">专栏首页</a>
+        <a href="/game/playing/">正在游玩</a>
+        <a href="/game/review/">年度回顾</a>
+      </nav>
+    </footer>
+  </div>
+</BaseLayout>
+
+<style>
+  .shelf-page {
+    padding-top: clamp(1.4rem, 3.5vw, 2.4rem);
+    padding-bottom: clamp(2.4rem, 6vw, 4rem);
+  }
+
+  .page-head h1 {
+    margin: 0.5rem 0 0;
+    font-family: var(--g-disp);
+    font-weight: 900;
+    font-size: clamp(34px, 5.5vw, 58px);
+    color: var(--gg-cream);
+    text-shadow: 4px 4px 0 var(--gg-ink);
+  }
+  .head-en {
+    color: var(--gg-acid);
+    letter-spacing: 0.32em;
+  }
+  .head-note {
+    max-width: 50ch;
+    margin: 0.9rem 0 0;
+    font-size: 14.5px;
+    line-height: 1.85;
+    color: var(--gg-cream-dim);
+  }
+
+  .toolbar {
+    display: grid;
+    gap: 0.7rem;
+    margin: 1.5rem 0 0.6rem;
+    padding: 0.9rem 1rem;
+    border: 3px solid var(--gg-ink);
+    background: var(--gg-cream);
+    box-shadow: var(--gg-shadow-sm);
+    color: var(--gg-ink);
+  }
+  .views {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .view-btn {
+    min-height: 44px;
+    padding: 0.3em 1em;
+    border: var(--gg-bw-thin) solid var(--gg-ink);
+    background: var(--gg-cream);
+    color: var(--gg-ink);
+    font-family: var(--g-disp);
+    font-weight: 800;
+    font-size: 13.5px;
+    cursor: pointer;
+  }
+  .view-btn.active {
+    background: var(--gg-ink);
+    color: var(--gg-cream);
+  }
+  .fgroup {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+  .fgroup-label {
+    flex: none;
+    font-family: var(--g-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--gg-gray);
+    margin-right: 0.2rem;
+  }
+  .filter-chip {
+    min-height: 44px;
+    padding: 0.25em 0.9em;
+    border: var(--gg-bw-thin) solid var(--gg-ink);
+    background: var(--gg-cream);
+    color: var(--gg-ink);
+    font-family: var(--g-disp);
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  .filter-chip.active {
+    background: var(--gg-acid);
+    box-shadow: inset 0 -3px 0 rgba(21, 21, 21, 0.5);
+  }
+  .filter-chip:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+  .toolbar-note {
+    margin: 0;
+    font-family: var(--g-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    color: var(--gg-gray);
+  }
+  .filter-empty {
+    margin: 0.8rem 0 0;
+    padding: 0.8rem 1rem;
+    border: 2px dashed var(--gg-cream-faint);
+    color: var(--gg-cream-dim);
+    font-size: 14px;
+  }
+  .filter-empty[hidden] {
+    display: none;
+  }
+
+  /* ===== 封面视图 ===== */
+  .cover-view {
+    list-style: none;
+    margin: 1.3rem 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: clamp(1.1rem, 2.6vw, 1.7rem);
+  }
+  .case {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    padding: 0.95rem 1rem 1.1rem;
+  }
+  .case--l {
+    transform: rotate(-0.7deg);
+  }
+  .case--r {
+    transform: rotate(0.6deg);
+  }
+  .case-cover :global(.gg-frame) {
+    box-shadow: 3px 3px 0 0 var(--gg-ink);
+    padding: 7px;
+  }
+  .case-title {
+    margin: 0.2rem 0 0;
+    font-family: var(--g-disp);
+    font-weight: 900;
+    font-size: 20px;
+    line-height: 1.4;
+    color: var(--gg-ink);
+  }
+  .case-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.9rem;
+    margin: 0;
+  }
+  .case-fact {
+    font-family: var(--g-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    color: var(--gg-gray);
+  }
+  .case-note {
+    display: flex;
+    gap: 0.5em;
+    margin: 0.3rem 0 0;
+    padding: 0.5em 0.7em;
+    border: 2px dashed rgba(21, 21, 21, 0.35);
+    background: rgba(231, 240, 91, 0.4);
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--gg-ink);
+  }
+  .case-note :global(.px-icon) {
+    color: var(--gg-coral);
+    flex: none;
+    margin-top: 0.25em;
+  }
+  .case-links {
+    display: flex;
+    gap: 1.2rem;
+    margin: 0.35rem 0 0;
+  }
+  .case-links a {
+    font-family: var(--g-disp);
+    font-weight: 800;
+    font-size: 13.5px;
+    color: var(--gg-ink);
+    text-decoration: underline;
+    text-decoration-color: var(--gg-coral);
+    text-decoration-thickness: 2.5px;
+    text-underline-offset: 3px;
+  }
+  .case-links a:hover {
+    background: var(--gg-acid);
+    text-decoration-color: transparent;
+  }
+  .case-zero {
+    font-size: 13.5px;
+    color: var(--gg-gray);
+  }
+
+  /* ===== 紧凑列表 ===== */
+  .list-view {
+    list-style: none;
+    margin: 1.3rem 0 0;
+    padding: 0;
+    border-top: 3px solid var(--gg-ink);
+    max-width: 920px;
+  }
+  .list-view[hidden] {
+    display: none;
+  }
+  .lrow {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) auto;
+    gap: 1rem;
+    align-items: baseline;
+    padding: 0.9rem 0.4rem;
+    border-bottom: 2px solid rgba(244, 239, 216, 0.3);
+    color: var(--gg-cream);
+  }
+  .lrow-main {
+    display: grid;
+    gap: 0.2rem;
+    color: var(--gg-cream);
+    text-decoration: none;
+    min-width: 0;
+  }
+  .lrow-main strong {
+    font-family: var(--g-disp);
+    font-weight: 800;
+    font-size: 16px;
+  }
+  .lrow-main:hover strong {
+    color: var(--gg-acid);
+  }
+  .lrow-sub {
+    font-family: var(--g-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    color: var(--gg-cream-dim);
+  }
+  .lrow-note {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--gg-cream-dim);
+  }
+  .lrow-count a {
+    color: var(--gg-acid);
+    font-weight: 700;
+    font-size: 13.5px;
+  }
+  .lrow-count .case-zero {
+    color: var(--gg-cream-dim);
+  }
+
+  .page-end {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: clamp(2rem, 5vw, 3rem);
+    padding-top: 1.1rem;
+    border-top: 3px solid var(--gg-ink);
+  }
+  .page-end .mono-label {
+    color: var(--gg-cream-dim);
+  }
+  .end-links {
+    display: flex;
+    gap: 1.3rem;
+  }
+  .end-links a {
+    color: var(--gg-cream);
+    text-decoration: none;
+    font-family: var(--g-disp);
+    font-weight: 700;
+    font-size: 14px;
+    padding: 0.3rem 0;
+  }
+  .end-links a:hover {
+    color: var(--gg-acid);
+  }
+
+  @media (max-width: 720px) {
+    .lrow {
+      grid-template-columns: 1fr;
+      gap: 0.4rem;
+    }
+  }
+</style>
+
+<script>
+  import { onPageLoad } from '../../utils/lifecycle';
+
+  onPageLoad(() => {
+    const page = document.querySelector<HTMLElement>('.shelf-page');
+    if (!page) return;
+
+    /* 视图切换 */
+    const viewBtns = Array.from(
+      page.querySelectorAll<HTMLButtonElement>('[data-view]'),
+    );
+    const setView = (view: string) => {
+      page.querySelectorAll('[data-view-panel]').forEach((panel) => {
+        (panel as HTMLElement).hidden =
+          (panel as HTMLElement).dataset.viewPanel !== view;
+      });
+      viewBtns.forEach((b) => {
+        const on = b.dataset.view === view;
+        b.classList.toggle('active', on);
+        b.setAttribute('aria-pressed', String(on));
+      });
+    };
+    const onView = (e: MouseEvent) => {
+      const btn = (e.target as HTMLElement).closest<HTMLButtonElement>(
+        '[data-view]',
+      );
+      if (btn) setView(btn.dataset.view ?? 'cover');
+    };
+    page.querySelector('.views')?.addEventListener('click', onView);
+
+    /* 组合筛选:类型 × 状态(同一组内单选) */
+    const groups = new Map<string, string>([
+      ['genre', 'all'],
+      ['status', 'all'],
+    ]);
+    const items = Array.from(
+      page.querySelectorAll<HTMLElement>('[data-genres][data-status]'),
+    );
+    const emptyTip = page.querySelector<HTMLElement>('[data-filter-empty]');
+    const apply = () => {
+      let visible = 0;
+      items.forEach((item) => {
+        const genreOk =
+          groups.get('genre') === 'all' ||
+          (item.dataset.genres ?? '').split(',').includes(groups.get('genre')!);
+        const statusOk =
+          groups.get('status') === 'all' ||
+          item.dataset.status === groups.get('status');
+        const show = genreOk && statusOk;
+        item.hidden = !show;
+        if (show) visible++;
+      });
+      if (emptyTip) emptyTip.hidden = visible > 0;
+      page.querySelectorAll<HTMLButtonElement>('[data-filter-group]').forEach(
+        (chip) => {
+          const group = chip.dataset.filterGroup!;
+          const on = groups.get(group) === chip.dataset.value;
+          chip.classList.toggle('active', on);
+          chip.setAttribute('aria-pressed', String(on));
+        },
+      );
+    };
+    const onFilter = (e: MouseEvent) => {
+      const chip = (e.target as HTMLElement).closest<HTMLButtonElement>(
+        '[data-filter-group]',
+      );
+      if (!chip) return;
+      groups.set(chip.dataset.filterGroup!, chip.dataset.value ?? 'all');
+      apply();
+    };
+    page.querySelector('.toolbar')?.addEventListener('click', onFilter);
+
+    return () => {
+      page.querySelector('.views')?.removeEventListener('click', onView);
+      page.querySelector('.toolbar')?.removeEventListener('click', onFilter);
+    };
+  });
+</script>

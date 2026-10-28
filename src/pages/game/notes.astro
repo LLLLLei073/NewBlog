@@ -1,10 +1,19 @@
 ---
 /**
- * 「玩法解剖室」手记存档列表:HUD 存档行索引。
+ * 「游戏手记 · NOTES」:杂志目录式手记索引。
+ * 每篇手记一张奶油白剪报卡:所属游戏、章节类型、剧透标识、
+ * 摘要与记录日期。剧透标识始终以文字出现,不只靠颜色。
  */
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import GameNav from '../../components/game/GameNav.astro';
+import PixelIcon from '../../components/game/PixelIcon.astro';
+import { COLUMN } from '../../data/game/column.ts';
+import { GAME_BY_SLUG } from '../../data/game/games.ts';
+import {
+  SPOILER_LABEL,
+  getGameArticleMeta,
+} from '../../data/game/articles.ts';
 import { postHref } from '../../utils/postRoute.ts';
 
 const posts = (await getCollection('blog'))
@@ -12,154 +21,230 @@ const posts = (await getCollection('blog'))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 const fmtDate = (d: Date) =>
-  `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
+  `${d.getFullYear()}/${String(d.getMonth() + 1).padStart(2, '0')}/${String(
+    d.getDate(),
+  ).padStart(2, '0')}`;
 ---
 
 <BaseLayout
-  title="游戏手记 · 玩法解剖室"
-  description="游戏专栏手记存档:开发、设计拆解、算法与攻略。"
+  title={`游戏手记 · ${COLUMN.name}`}
+  description="存档之外的游戏手记:建造记录、生存经历与仍然记得的桥段。"
   pageName="game"
 >
-  <div class="game notes-page">
+  <div class="gg-wrap notes-page">
     <GameNav />
 
-    <header class="page-head g-rise">
-      <p class="mono-label">SAVE INDEX · {posts.length} 篇</p>
-      <h1>手记存档</h1>
+    <header class="page-head">
+      <p class="head-en mono-label">NOTES · {posts.length} 篇</p>
+      <h1>游戏手记</h1>
       <p class="head-note">
-        每一篇手记都是一个存档位:读了就续上,没读的等你 LOAD。
+        每一篇都是一段回放:通关以后仍留在心里的场景、机制与建造过程。
       </p>
     </header>
 
     {
       posts.length > 0 ? (
-        <ol class="save-list g-rise d1">
-          {posts.map((p, i) => (
-            <li>
-              <a href={postHref(p.id, p.data.category)} class="save-row">
-                <span class="mono-num s-no">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <span class="s-main">
-                  <strong>{p.data.title}</strong>
-                  <span class="s-desc">{p.data.description}</span>
-                </span>
-                <span class="s-side">
-                  <span class="mono-num">{fmtDate(p.data.pubDate)}</span>
-                  <span class="s-load" aria-hidden="true">
-                    LOAD →
-                  </span>
-                </span>
-              </a>
-            </li>
-          ))}
-        </ol>
+        <ul class="clip-list">
+          {posts.map((p, i) => {
+            const meta = getGameArticleMeta(p.id);
+            const game = meta?.game ? GAME_BY_SLUG[meta.game] : null;
+            const icon =
+              meta?.game === 'green-hell'
+                ? 'leaf'
+                : meta?.game === 'no-game-series'
+                  ? 'chat'
+                  : 'gear';
+            return (
+              <li
+                class:list={['gg-card', 'clip', { 'clip--tilt': i % 2 === 1 }]}
+              >
+                <a href={postHref(p.id, p.data.category)} class="clip-row">
+                  <div class="clip-main">
+                    <p class="clip-tags">
+                      <span class="gg-chip gg-chip--ink">
+                        <PixelIcon name={icon} size={12} />
+                        {game?.title ?? '专栏手记'}
+                      </span>
+                      {meta?.chapterTag && (
+                        <span class="gg-chip">{meta.chapterTag}</span>
+                      )}
+                      {meta && (
+                        <span
+                          class:list={[
+                            'gg-chip',
+                            meta.spoiler === 'none' ? 'gg-chip--lake' : 'gg-chip--coral',
+                          ]}
+                        >
+                          {SPOILER_LABEL[meta.spoiler]}
+                        </span>
+                      )}
+                    </p>
+                    <h2>{p.data.title}</h2>
+                    <p class="clip-desc">{p.data.description}</p>
+                  </div>
+                  <div class="clip-side">
+                    <time>{fmtDate(p.data.pubDate)}</time>
+                    <span class="clip-read">
+                      <PixelIcon name="play" size={11} /> 回放
+                    </span>
+                  </div>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
       ) : (
-        <p class="empty g-rise d1">存档为空,NEW GAME 从第一篇开始。</p>
+        <p class="gg-empty">
+          <strong>手记存档为空</strong>第一段回放正在整理。
+        </p>
       )
     }
+
+    <footer class="page-end">
+      <span class="mono-label">{COLUMN.en}</span>
+      <nav class="end-links" aria-label="栏目入口">
+        <a href="/game/">专栏首页</a>
+        <a href="/game/playing/">正在游玩</a>
+        <a href="/game/collection/">收藏架</a>
+      </nav>
+    </footer>
   </div>
 </BaseLayout>
 
 <style>
   .notes-page {
-    padding-top: clamp(2rem, 5vw, 3.2rem);
-    padding-bottom: clamp(3.5rem, 8vw, 5.5rem);
-    max-width: 960px;
+    padding-top: clamp(1.4rem, 3.5vw, 2.4rem);
+    padding-bottom: clamp(2.4rem, 6vw, 4rem);
   }
 
   .page-head h1 {
-    margin: 0.7rem 0 0;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: clamp(30px, 4vw, 48px);
-    color: var(--foreground);
+    margin: 0.5rem 0 0;
+    font-family: var(--g-disp);
+    font-weight: 900;
+    font-size: clamp(34px, 5.5vw, 58px);
+    color: var(--gg-cream);
+    text-shadow: 4px 4px 0 var(--gg-ink);
+  }
+  .head-en {
+    color: var(--gg-acid);
+    letter-spacing: 0.32em;
   }
   .head-note {
-    margin: 1rem 0 0;
     max-width: 50ch;
+    margin: 0.9rem 0 0;
     font-size: 14.5px;
-    line-height: 1.9;
-    color: var(--muted-foreground);
+    line-height: 1.85;
+    color: var(--gg-cream-dim);
   }
 
-  .save-list {
+  .clip-list {
     list-style: none;
-    margin: 2.4rem 0 0;
+    margin: 1.6rem 0 0;
     padding: 0;
-    border-top: 1px solid var(--border);
-  }
-  .save-row {
     display: grid;
-    grid-template-columns: 3rem 1fr auto;
-    gap: 1.1rem;
-    align-items: baseline;
-    padding: 1.15rem 0.4rem;
-    border-bottom: 1px solid var(--border);
+    gap: 1.2rem;
+  }
+  .clip {
+    max-width: 880px;
+  }
+  .clip--tilt {
+    transform: rotate(0.5deg);
+  }
+  .clip-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 1.2rem;
+    padding: 1.05rem 1.2rem 1.15rem;
+    color: var(--gg-ink);
     text-decoration: none;
-    color: inherit;
-    transition: background-color 0.18s ease;
   }
-  .save-row:hover {
-    background: var(--accent);
+  .clip-row:hover {
+    background: rgba(231, 240, 91, 0.28);
   }
-  .s-no {
-    font-size: 12px;
-    color: var(--game-coral);
+  .clip-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin: 0 0 0.65rem;
   }
-  .s-main {
+  .clip h2 {
+    margin: 0;
+    font-family: var(--g-disp);
+    font-weight: 900;
+    font-size: clamp(19px, 2.6vw, 26px);
+    line-height: 1.4;
+  }
+  .clip-desc {
+    margin: 0.5rem 0 0;
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--gg-gray);
+  }
+  .clip-side {
     display: flex;
     flex-direction: column;
-    gap: 0.28rem;
-    min-width: 0;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 0.8rem;
+    white-space: nowrap;
   }
-  .s-main strong {
-    font-family: var(--font-serif);
-    font-size: 16.5px;
-    color: var(--foreground);
-  }
-  .s-desc {
-    font-size: 13.5px;
-    line-height: 1.75;
-    color: var(--muted-foreground);
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  .s-side {
-    display: flex;
-    align-items: baseline;
-    gap: 0.9rem;
+  .clip-side time {
+    font-family: var(--g-mono);
     font-size: 12px;
-    color: var(--muted-foreground);
+    letter-spacing: 0.08em;
+    color: var(--gg-gray);
+    font-variant-numeric: tabular-nums;
   }
-  .s-load {
-    font-family: var(--font-mono);
-    color: var(--primary);
-    opacity: 0;
-    transform: translateX(-6px);
-    transition:
-      opacity 0.2s ease,
-      transform 0.2s ease;
+  .clip-read {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    font-family: var(--g-disp);
+    font-weight: 800;
+    font-size: 13.5px;
+    color: var(--gg-ink);
   }
-  .save-row:hover .s-load {
-    opacity: 1;
-    transform: none;
+  .clip-row:hover .clip-read {
+    color: var(--gg-lake-ink);
   }
-  .empty {
-    margin-top: 2rem;
-    padding: 1.4rem 0;
-    color: var(--muted-foreground);
-    font-size: 14.5px;
+
+  .page-end {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: clamp(2rem, 5vw, 3rem);
+    padding-top: 1.1rem;
+    border-top: 3px solid var(--gg-ink);
+  }
+  .page-end .mono-label {
+    color: var(--gg-cream-dim);
+  }
+  .end-links {
+    display: flex;
+    gap: 1.3rem;
+  }
+  .end-links a {
+    color: var(--gg-cream);
+    text-decoration: none;
+    font-family: var(--g-disp);
+    font-weight: 700;
+    font-size: 14px;
+    padding: 0.3rem 0;
+  }
+  .end-links a:hover {
+    color: var(--gg-acid);
   }
 
   @media (max-width: 640px) {
-    .save-row {
-      grid-template-columns: 2.4rem 1fr;
+    .clip-row {
+      grid-template-columns: 1fr;
     }
-    .s-side {
-      display: none;
+    .clip-side {
+      flex-direction: row;
+      align-items: center;
+      white-space: normal;
     }
   }
 </style>

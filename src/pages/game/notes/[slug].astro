@@ -1,44 +1,25 @@
 ---
 /**
- * 游戏专栏文章详情:专属命名空间 /game/notes/<slug>/,
- * 数据仍来自 blog 内容集合(category: game),布局沿用 BlogPost。
+ * 「存档之外」手记文章详情:专属命名空间 /game/notes/<slug>/。
+ * 正文来自 blog 内容集合(category: game),专属元数据(所属
+ * 游戏、WORLD LOG、剧透策略、章节时间轴)来自 data/game/articles,
+ * 布局为录像回放 + 杂志剪报(GamePost)。
  */
 import { render } from 'astro:content';
-import BlogPost from '../../../layouts/BlogPost.astro';
+import GamePost from '../../../layouts/GamePost.astro';
 import {
-  buildPostJsonLd,
   getNotePaths,
   type NoteProps,
 } from '../../../utils/notes-paths.ts';
-import { getPostCategory } from '../../../utils/categories.ts';
+import { getGameArticleMeta } from '../../../data/game/articles.ts';
 
 export const getStaticPaths = () => getNotePaths('game');
 
-const { post, newer, older, related, seriesPosts, seriesName } =
-  Astro.props as NoteProps;
-const { Content, headings } = await render(post);
-const rawBody = typeof post.body === 'string' ? post.body : '';
-const jsonLd = buildPostJsonLd(post);
+const { post, newer, older, related } = Astro.props as NoteProps;
+const { Content } = await render(post);
+const meta = getGameArticleMeta(post.id);
 ---
 
-<BlogPost
-  {...post.data}
-  category={getPostCategory(post.data).label}
-  pageName="game"
-  backHref="/game/notes/"
-  backLabel="手记存档"
-  headings={headings}
-  newer={newer}
-  older={older}
-  related={related}
-  rawBody={rawBody}
-  seriesPosts={seriesPosts}
-  seriesName={seriesName}
->
-  <script
-    is:inline
-    type="application/ld+json"
-    set:html={JSON.stringify(jsonLd)}
-  />
+<GamePost post={post} meta={meta} newer={newer} older={older} related={related}>
   <Content />
-</BlogPost>
+</GamePost>

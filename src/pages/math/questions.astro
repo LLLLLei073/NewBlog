@@ -1,0 +1,203 @@
+---
+/**
+ * 「数学观象台」问题本:尚未解决或仍需复习的问题。
+ * 状态以文字与符号共同表达;卡住的位置用珊瑚标记;
+ * 保持简洁,不做任务管理仪表盘。
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import MathSymbolRail from '../../components/math/MathSymbolRail.astro';
+import {
+  COLUMN,
+  QUESTIONS,
+  QUESTION_STATUS,
+} from '../../data/math/column.ts';
+
+const openStatus = (s: string) => s === 'deriving' || s === 'verifying';
+---
+
+<BaseLayout
+  title="问题本 · 数学观象台"
+  description={`数学观象台问题本:记录尚未解决或仍需复习的问题——${COLUMN.claim}。`}
+  pageName="math"
+>
+  <div class="math questions-page">
+    <MathSymbolRail />
+
+    <header class="page-head m-rise">
+      <p class="mono-label kick">? QUESTION BOOK</p>
+      <h1>问题本</h1>
+      <p class="head-note">
+        观测记录里诚实的一部分:还没想清楚的问题,和卡住的位置。
+        {COLUMN.hint}
+      </p>
+    </header>
+
+    <div class="q-list m-rise d1">
+      {
+        QUESTIONS.map((q) => {
+          const st = QUESTION_STATUS[q.status];
+          return (
+            <article class="q-row">
+              <p
+                class:list={[
+                  'q-status',
+                  { 'is-open': openStatus(q.status), 'is-done': q.status === 'done' },
+                ]}
+              >
+                <span class="q-symbol" aria-hidden="true">
+                  {st.symbol}
+                </span>
+                {st.label}
+              </p>
+              <div class="q-main">
+                <h2 class="q-body">{q.body}</h2>
+                <dl class="q-fields">
+                  <div>
+                    <dt>当前理解</dt>
+                    <dd>{q.understanding}</dd>
+                  </div>
+                  <div>
+                    <dt class="is-stuck">卡住的位置</dt>
+                    <dd>{q.stuck}</dd>
+                  </div>
+                  <div>
+                    <dt>相关概念</dt>
+                    <dd>
+                      <span class="q-concepts">
+                        {q.concepts.map((c) => (
+                          <span class="q-chip">{c}</span>
+                        ))}
+                      </span>
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>最近尝试</dt>
+                    <dd class="q-try">{q.lastTry}</dd>
+                  </div>
+                </dl>
+              </div>
+            </article>
+          );
+        })
+      }
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .questions-page {
+    padding-top: clamp(1.6rem, 4vw, 2.8rem);
+    padding-bottom: clamp(3rem, 7vw, 5rem);
+  }
+  .kick {
+    color: var(--primary);
+  }
+  .page-head h1 {
+    margin: 0.8rem 0 0;
+    font-family: var(--font-hei);
+    font-weight: 300;
+    font-size: clamp(34px, 4.4vw, 52px);
+    letter-spacing: 0.1em;
+    color: var(--foreground);
+  }
+  .head-note {
+    margin: 1rem 0 0;
+    max-width: 56ch;
+    font-size: 14.5px;
+    line-height: 1.85;
+    color: var(--muted-foreground);
+  }
+
+  .q-list {
+    margin-top: 1.6rem;
+  }
+  .q-row {
+    display: grid;
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+    gap: 1.4rem;
+    padding: 1.7rem 0.3rem;
+    border-bottom: 1px solid var(--math-divider);
+  }
+  .q-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    margin: 0.2rem 0 0;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    color: var(--muted-foreground);
+    white-space: nowrap;
+  }
+  .q-symbol {
+    font-size: 15px;
+  }
+  .q-status.is-open {
+    color: var(--math-coral);
+  }
+  .q-status.is-done {
+    color: var(--primary);
+  }
+
+  .q-body {
+    margin: 0;
+    font-family: var(--font-hei);
+    font-weight: 300;
+    font-size: 19px;
+    line-height: 1.7;
+    letter-spacing: 0.03em;
+    color: var(--foreground);
+    max-width: 40em;
+  }
+  .q-fields {
+    display: grid;
+    gap: 0.9rem;
+    margin: 1.1rem 0 0;
+  }
+  .q-fields > div {
+    display: grid;
+    grid-template-columns: 6.2rem minmax(0, 1fr);
+    gap: 0.9rem;
+    align-items: baseline;
+  }
+  .q-fields dt {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    color: var(--muted-foreground);
+  }
+  .q-fields dt.is-stuck {
+    color: var(--math-coral);
+  }
+  .q-fields dd {
+    margin: 0;
+    font-size: 14.5px;
+    line-height: 1.8;
+    color: var(--secondary-foreground);
+    max-width: 60ch;
+  }
+  .q-concepts {
+    display: inline-flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .q-chip {
+    padding: 0.12em 0.7em;
+    border: 1px solid var(--border-400);
+    font-size: 12.5px;
+    color: var(--muted-foreground);
+  }
+  .q-try {
+    font-size: 13px !important;
+    color: var(--muted-foreground) !important;
+  }
+
+  @media (max-width: 640px) {
+    .q-row {
+      grid-template-columns: 1fr;
+      gap: 0.8rem;
+    }
+    .q-fields > div {
+      grid-template-columns: 1fr;
+      gap: 0.2rem;
+    }
+  }
+</style>

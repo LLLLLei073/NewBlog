@@ -363,3 +363,10 @@ body[data-page='algorithm'] select:focus-visible {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ============ 右侧符号栏(ColumnRail)内容让位 ============ */
+@media (min-width: 960px) {
+  body[data-page='algorithm'] main {
+    margin-right: var(--rail-w, 78px);
+  }
+}

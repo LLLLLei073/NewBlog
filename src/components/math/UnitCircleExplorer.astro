@@ -1,0 +1,268 @@
+---
+/**
+ * 单位圆交互展台:中央 SVG 展品 + θ 控制。
+ * 服务端渲染几何骨架(data-uc-* 钩子),unitCircle.ts 负责状态与
+ * 更新;θ 滑块/播放/重置/快捷角;θ=π 时揭示 e^{iπ}+1=0。
+ */
+import katex from 'katex';
+import 'katex/dist/katex.min.css';
+
+const TAU = '6.283185307179586';
+const tex = (s: string) =>
+  katex.renderToString(s, { throwOnError: false, displayMode: false });
+const identity = tex('e^{i\\pi}+1=0');
+---
+
+<figure class="uc" data-uc>
+  <div class="uc-stage formula-scroll">
+    <svg
+      viewBox="0 0 460 400"
+      role="img"
+      aria-label="单位圆交互图:角 θ 的旋转半径、圆上的点 P,以及 cos θ 与 sin θ 在坐标轴上的投影"
+    >
+      {/* 坐标轴与箭头 */}
+      <line x1="30" y1="200" x2="444" y2="200" class="ax" />
+      <polyline points="436,195 444,200 436,205" class="ax" />
+      <line x1="200" y1="380" x2="200" y2="30" class="ax" />
+      <polyline points="195,38 200,30 205,38" class="ax" />
+      <text x="438" y="186" class="lbl" text-anchor="end">Re</text>
+      <text x="212" y="40" class="lbl">Im</text>
+
+      {/* 刻度与原点 */}
+      <line x1="330" y1="196" x2="330" y2="204" class="ax" />
+      <line x1="70" y1="196" x2="70" y2="204" class="ax" />
+      <text x="330" y="222" class="lbl" text-anchor="middle">1</text>
+      <text x="70" y="222" class="lbl" text-anchor="middle">−1</text>
+      <text x="190" y="218" class="lbl" text-anchor="end">O</text>
+
+      {/* 单位圆 */}
+      <circle cx="200" cy="200" r="130" class="circ" />
+
+      {/* 投影(虚线,先画在半径下) */}
+      <line data-uc-cosline x1="265" y1="87.3" x2="265" y2="200" class="proj" />
+      <line data-uc-sinline x1="200" y1="87.3" x2="265" y2="87.3" class="proj" />
+      <text data-uc-coslabel x="265" y="217" class="lbl acc" text-anchor="middle">cos θ</text>
+      <text data-uc-sinlabel x="232" y="80" class="lbl acc" text-anchor="middle">sin θ</text>
+
+      {/* 角度弧与 θ */}
+      <path data-uc-arc d="" class="arcp" opacity="0" />
+      <text data-uc-arc-label x="238" y="182" class="lbl theta">θ</text>
+
+      {/* 旋转半径与 P 点 */}
+      <line data-uc-radius x1="200" y1="200" x2="265" y2="87.3" class="rad" />
+      <circle data-uc-peak cx="200" cy="70" r="9" class="peak" opacity="0" />
+      <circle data-uc-point cx="265" cy="87.3" r="5.5" class="pt" />
+    </svg>
+  </div>
+
+  <figcaption class="uc-panel">
+    <div class="uc-row">
+      <button type="button" class="ghost-btn" data-uc-play aria-pressed="false">
+        <span data-uc-play-text>播放</span>
+      </button>
+      <button type="button" class="ghost-btn" data-uc-reset>重置</button>
+      <div class="uc-quick" role="group" aria-label="常用角度">
+        <button type="button" class="ghost-btn" data-uc-quick="0">0</button>
+        <button type="button" class="ghost-btn" data-uc-quick="1.5707963267948966">π/2</button>
+        <button type="button" class="ghost-btn" data-uc-quick="3.141592653589793">π</button>
+        <button type="button" class="ghost-btn" data-uc-quick={TAU}>2π</button>
+      </div>
+    </div>
+
+    <div class="uc-slider-row">
+      <input
+        type="range"
+        data-uc-slider
+        min="0"
+        max={TAU}
+        step="0.001"
+        value="1.0471975511965976"
+        aria-label="角度 θ(弧度)"
+        aria-describedby="uc-readout"
+      />
+      <span class="mono-num uc-deg" data-uc-deg-val>≈ 60°</span>
+    </div>
+
+    <p class="uc-readout" id="uc-readout" aria-live="off">
+      <span class="mono-num" data-uc-th-val>θ = π/3 ≈ 1.047</span>
+      <span class="mono-num" data-uc-cos-val>cos θ = 0.50</span>
+      <span class="mono-num" data-uc-sin-val>sin θ = 0.87</span>
+      <span class="mono-num uc-z" data-uc-z-val>z = 0.50 + 0.87i</span>
+    </p>
+
+    <div class="uc-identity" data-uc-identity aria-live="polite">
+      <p class="uc-hint" data-uc-hint>
+        把 θ 转到 π —— 旋转半圈后,P 抵达 (−1, 0)。
+      </p>
+      <span class="uc-id formula-scroll" aria-hidden="true" set:html={identity} />
+      <span class="uc-id-line" aria-hidden="true"></span>
+    </div>
+  </figcaption>
+</figure>
+
+<script>
+  import { onPageLoad } from '../../utils/lifecycle';
+  import { mountUnitCircle } from './unitCircle';
+  onPageLoad(() => mountUnitCircle());
+</script>
+
+<style>
+  .uc {
+    margin: 0;
+    display: grid;
+    gap: 0.9rem;
+  }
+  .uc-stage svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    min-width: 300px;
+  }
+  .ax {
+    stroke: var(--math-line);
+    stroke-width: 1;
+    fill: none;
+  }
+  .circ {
+    fill: none;
+    stroke: var(--math-line);
+    stroke-width: 1.3;
+  }
+  .lbl {
+    font-family: var(--font-math);
+    font-style: italic;
+    font-size: 15px;
+    fill: var(--muted-foreground);
+  }
+  .lbl.acc {
+    fill: var(--secondary-foreground);
+  }
+  .lbl.theta {
+    fill: var(--primary);
+    font-size: 16px;
+  }
+  .proj {
+    stroke: var(--muted-foreground);
+    stroke-width: 1;
+    stroke-dasharray: 4 3;
+    opacity: 0.75;
+  }
+  .arcp {
+    fill: none;
+    stroke: var(--primary);
+    stroke-width: 1.2;
+  }
+  .rad {
+    stroke: var(--primary);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+  }
+  .pt {
+    fill: var(--primary);
+  }
+  .peak {
+    fill: none;
+    stroke: var(--primary);
+    stroke-width: 1.4;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  .uc-panel {
+    display: grid;
+    gap: 0.8rem;
+  }
+  .uc-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+  .uc-quick {
+    display: flex;
+    gap: 0.45rem;
+    margin-left: auto;
+  }
+  .uc-quick .ghost-btn {
+    font-family: var(--font-math);
+    font-style: italic;
+    min-width: 52px;
+    padding-inline: 0.6em;
+  }
+
+  .uc-slider-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .uc-slider-row input[type='range'] {
+    flex: 1;
+    min-height: 44px;
+    accent-color: var(--primary);
+    cursor: pointer;
+  }
+  .uc-deg {
+    min-width: 5.5em;
+    text-align: right;
+    color: var(--secondary-foreground);
+  }
+
+  .uc-readout {
+    display: flex;
+    gap: 0.6rem 1.4rem;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid var(--math-divider);
+  }
+  .uc-z {
+    color: var(--primary);
+  }
+
+  /* θ=π 的关键结果:默认半隐,命中时点亮 */
+  .uc-identity {
+    display: grid;
+    gap: 0.45rem;
+    padding: 0.4rem 0.2rem 0.9rem;
+    opacity: 0.4;
+    transition: opacity 0.3s ease;
+  }
+  .uc-hint {
+    margin: 0;
+    font-size: 13.5px;
+    color: var(--muted-foreground);
+  }
+  .is-identity .uc-identity {
+    opacity: 1;
+  }
+  .is-identity .uc-hint {
+    color: var(--secondary-foreground);
+  }
+  .uc-id {
+    font-size: clamp(30px, 4vw, 44px);
+    color: var(--foreground);
+  }
+  .uc-id :global(.katex) {
+    font-size: 1em;
+  }
+  .is-identity .uc-id {
+    color: var(--primary);
+  }
+  .uc-id-line {
+    height: 1px;
+    background: var(--primary);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.45s ease;
+  }
+  .is-identity .uc-id-line {
+    transform: scaleX(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .uc-identity,
+    .uc-id-line {
+      transition: none;
+    }
+  }
+</style>

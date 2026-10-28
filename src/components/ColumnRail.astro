@@ -1,0 +1,524 @@
+---
+/**
+ * 专栏右侧符号栏(数学/音乐/算法/游戏/其他五个专栏共用)。
+ *
+ * 桌面端(≥960px):固定右侧竖栏,各栏目用符号表示,悬浮或键盘
+ * 聚焦时在左侧弹出具体名称(data-label);活动项用主题色 + 右缘
+ * 圆点标记。移动端(<960px):收为顶部一条(专栏名 + 当前状态 +
+ * 菜单按钮),菜单展开全部入口,行为与数学专栏原有顶栏一致。
+ *
+ * 皮肤完全走各专栏 body[data-page] 重定义的语义令牌
+ * (background/border/foreground/muted-foreground/primary/card),
+ * 本组件不携带专栏专属颜色。中部(center)与底部(utils)、
+ * 移动面板尾部(panel-extra)、搜索浮层(overlay)均为插槽,
+ * 供各专栏放章节号、玩家标记、搜索按钮等个性化内容。
+ */
+import PixelIcon from './game/PixelIcon.astro';
+
+export interface RailItem {
+  href: string;
+  /** 具体名称:悬浮 tooltip、aria-label、移动端菜单文字 */
+  label: string;
+  /** 文本符号(数学/音乐/算法/其他) */
+  glyph?: string;
+  /** 像素图标名(游戏),与 glyph 二选一 */
+  icon?: string;
+  active?: boolean;
+}
+
+interface Props {
+  /** 主题标记:仅用于符号字体的微调 */
+  theme: 'math' | 'music' | 'algo' | 'game' | 'others';
+  /** 桌面竖栏的 aria-label */
+  railLabel: string;
+  /** 专栏名(移动端顶栏) */
+  brand: { cn: string; en: string };
+  /** 移动端顶栏的当前状态文字(可空) */
+  status?: string;
+  items: RailItem[];
+  /** 链接型搜索入口;游戏专栏的浮层搜索走 utils 插槽 */
+  search?: { href: string; label: string };
+  /** 附加到根元素的 data-* 属性(如 data-game-nav) */
+  rootAttrs?: Record<string, string | undefined>;
+}
+
+const { theme, railLabel, brand, status = '', items, search, rootAttrs } =
+  Astro.props;
+const attrs = Object.entries(rootAttrs ?? {});
+---
+
+<div class="crail-root" data-crail data-crail-theme={theme} {...attrs}>
+  {/* ===== 桌面:右侧符号栏 ===== */}
+  <nav class="crail" aria-label={railLabel}>
+    <div class="crail-group">
+      {
+        items.map((item) => (
+          <a
+            href={item.href}
+            class:list={['crail-item', { active: item.active }]}
+            aria-current={item.active ? 'page' : undefined}
+            aria-label={item.label}
+            data-label={item.label}
+          >
+            {item.glyph !== undefined && (
+              <span class="crail-glyph" aria-hidden="true">
+                {item.glyph}
+              </span>
+            )}
+            {item.icon && (
+              <span class="crail-px" aria-hidden="true">
+                <PixelIcon name={item.icon} size={20} />
+              </span>
+            )}
+            <i class="crail-dot" aria-hidden="true" />
+          </a>
+        ))
+      }
+    </div>
+
+    <span class="crail-center"><slot name="center" /></span>
+
+    <div class="crail-utils">
+      {
+        search && (
+          <a
+            class="crail-item crail-search"
+            href={search.href}
+            aria-label={search.label}
+            data-label={search.label}
+          >
+            <svg
+              width="17"
+              height="17"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              aria-hidden="true"
+            >
+              <circle cx="11" cy="11" r="7" />
+              <line x1="20" y1="20" x2="16.2" y2="16.2" />
+            </svg>
+            <i class="crail-dot" aria-hidden="true" />
+          </a>
+        )
+      }
+      <slot name="utils" />
+    </div>
+  </nav>
+
+  {/* ===== 移动:顶部一条 ===== */}
+  <div class="crail-topbar">
+    <a class="crail-tb-name" href={items[0]?.href ?? '#'}>
+      <span class="crail-tb-cn">{brand.cn}</span>
+      <span class="crail-tb-en">{brand.en}</span>
+    </a>
+    {
+      status && (
+        <span class="crail-tb-status">
+          <i aria-hidden="true" />
+          {status}
+        </span>
+      )
+    }
+    <button
+      type="button"
+      class="crail-menu-btn"
+      data-crail-menu-btn
+      aria-expanded="false"
+      aria-controls="crail-menu-panel"
+      aria-label="打开专栏菜单"
+    >
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        aria-hidden="true"
+      >
+        <line x1="4" y1="7" x2="20" y2="7" />
+        <line x1="4" y1="12" x2="20" y2="12" />
+        <line x1="4" y1="17" x2="20" y2="17" />
+      </svg>
+    </button>
+    <div class="crail-panel" id="crail-menu-panel" data-crail-menu hidden>
+      {
+        status && (
+          <p class="crail-panel-status">
+            <i aria-hidden="true" />
+            {status}
+          </p>
+        )
+      }
+      {
+        items.map((item) => (
+          <a
+            href={item.href}
+            class:list={['crail-panel-link', { active: item.active }]}
+            aria-current={item.active ? 'page' : undefined}
+          >
+            <span class="crail-panel-glyph" aria-hidden="true">
+              {item.icon ? <PixelIcon name={item.icon} size={14} /> : item.glyph}
+            </span>
+            {item.label}
+          </a>
+        ))
+      }
+      {
+        search && (
+          <a class="crail-panel-link" href={search.href}>
+            <span class="crail-panel-glyph" aria-hidden="true">
+              ⌕
+            </span>
+            {search.label}
+          </a>
+        )
+      }
+      <slot name="panel-extra" />
+    </div>
+  </div>
+
+  {/* 搜索浮层等固定弹层(各专栏经插槽注入) */}
+  <slot name="overlay" />
+</div>
+
+<script>
+  import { onPageLoad } from '../utils/lifecycle';
+
+  onPageLoad(() => {
+    const root = document.querySelector<HTMLElement>('[data-crail]');
+    if (!root) return;
+    const menuBtn = root.querySelector<HTMLButtonElement>(
+      '[data-crail-menu-btn]',
+    );
+    const panel = root.querySelector<HTMLElement>('[data-crail-menu]');
+    const setMenu = (open: boolean) => {
+      if (!panel || !menuBtn) return;
+      panel.hidden = !open;
+      menuBtn.setAttribute('aria-expanded', String(open));
+      menuBtn.setAttribute('aria-label', open ? '关闭专栏菜单' : '打开专栏菜单');
+    };
+    const onMenuBtn = () => setMenu(panel?.hidden ?? false);
+    const onPanelClick = (e: MouseEvent) => {
+      if ((e.target as HTMLElement).closest('a')) setMenu(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && panel && !panel.hidden) {
+        setMenu(false);
+        menuBtn?.focus();
+      }
+    };
+    menuBtn?.addEventListener('click', onMenuBtn);
+    panel?.addEventListener('click', onPanelClick);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      menuBtn?.removeEventListener('click', onMenuBtn);
+      panel?.removeEventListener('click', onPanelClick);
+      document.removeEventListener('keydown', onKey);
+    };
+  });
+</script>
+
+<style is:global>
+  :root {
+    --rail-w: 78px;
+  }
+
+  /* 移动端:整条吸顶(桌面端高度为 0,无视觉存在) */
+  .crail-root {
+    --crail-ease: 0.18s ease;
+    position: sticky;
+    top: var(--header-height, 56px);
+    z-index: 25;
+  }
+
+  /* ===== 桌面右侧竖栏 ===== */
+  .crail-root .crail {
+    position: fixed;
+    top: var(--header-height, 56px);
+    bottom: 0;
+    right: 0;
+    z-index: 30;
+    display: none;
+    width: var(--rail-w);
+    flex-direction: column;
+    align-items: center;
+    padding: calc(0.9rem + env(safe-area-inset-top)) 0 1.1rem;
+    border-left: 1px solid var(--border);
+    background: var(--background);
+  }
+  @media (min-width: 960px) {
+    .crail-root .crail {
+      display: flex;
+    }
+  }
+
+  .crail-root .crail-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .crail-root .crail-item {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    min-height: 48px;
+    color: var(--muted-foreground);
+    text-decoration: none;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    transition: color var(--crail-ease);
+  }
+  .crail-root .crail-item:hover,
+  .crail-root .crail-item:focus-visible {
+    color: var(--foreground);
+  }
+  .crail-root .crail-item.active {
+    color: var(--primary);
+  }
+  /* 活动指示:右缘圆点(不只靠颜色) */
+  .crail-root .crail-dot {
+    position: absolute;
+    right: 7px;
+    top: 50%;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--primary);
+    opacity: 0;
+    transform: translateY(-50%);
+  }
+  .crail-root .crail-item.active .crail-dot {
+    opacity: 1;
+  }
+
+  /* ===== 悬浮显示具体名称:左侧弹出气泡 ===== */
+  .crail-root .crail-item::after {
+    content: attr(data-label);
+    position: absolute;
+    right: calc(100% + 10px);
+    top: 50%;
+    padding: 0.32em 0.75em;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--card);
+    color: var(--card-foreground);
+    font-family: var(--font-sans, sans-serif);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+    box-shadow: var(--shadow-sm);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-50%) translateX(5px);
+    transition:
+      opacity 0.18s ease,
+      transform 0.18s ease;
+    z-index: 6;
+  }
+  .crail-root .crail-item:hover::after,
+  .crail-root .crail-item:focus-visible::after {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+  }
+
+  /* 符号:各主题微调字体 */
+  .crail-root .crail-glyph {
+    font-size: 20px;
+    line-height: 1;
+  }
+  .crail-root[data-crail-theme='math'] .crail-glyph {
+    font-family: var(--font-math, Georgia, serif);
+    font-size: 21px;
+  }
+  .crail-root[data-crail-theme='algo'] .crail-glyph {
+    font-family: var(--font-mono, monospace);
+    font-size: 17px;
+  }
+  .crail-root[data-crail-theme='music'] .crail-glyph,
+  .crail-root[data-crail-theme='others'] .crail-glyph {
+    font-size: 19px;
+  }
+  .crail-root .crail-px {
+    display: inline-flex;
+  }
+
+  /* 中部竖排文字(章节号 / 玩家标记等) */
+  .crail-root .crail-center {
+    margin-block: auto;
+    min-height: 1rem;
+    writing-mode: vertical-rl;
+    font-family: var(--font-mono, monospace);
+    font-size: 11.5px;
+    letter-spacing: 0.3em;
+    color: var(--muted-foreground);
+    opacity: 0.75;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55em;
+  }
+  .crail-root .crail-center:empty {
+    display: none;
+  }
+
+  .crail-root .crail-utils {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .crail-root .crail-mark {
+    font-family: var(--font-serif, serif);
+    font-weight: 700;
+    font-size: 15px;
+  }
+
+  /* ===== 移动端顶栏 ===== */
+  .crail-root .crail-topbar {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.35rem clamp(1rem, 4vw, 1.6rem);
+    border-bottom: 1px solid var(--border);
+    background: color-mix(in srgb, var(--background) 92%, transparent);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  @media (min-width: 960px) {
+    .crail-root .crail-topbar {
+      display: none;
+    }
+  }
+  .crail-root .crail-tb-name {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.1rem;
+    margin-right: auto;
+    text-decoration: none;
+    color: var(--foreground);
+  }
+  .crail-root .crail-tb-cn {
+    font-family: var(--font-sans, sans-serif);
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: 0.18em;
+    text-indent: 0.18em;
+    white-space: nowrap;
+  }
+  .crail-root .crail-tb-en {
+    font-family: var(--font-mono, monospace);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    color: var(--muted-foreground);
+    white-space: nowrap;
+  }
+  .crail-root .crail-tb-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    min-width: 0;
+    overflow: hidden;
+    font-family: var(--font-mono, monospace);
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    color: var(--muted-foreground);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .crail-root .crail-tb-status i,
+  .crail-root .crail-panel-status i {
+    width: 7px;
+    height: 7px;
+    flex: none;
+    background: var(--primary);
+  }
+  .crail-root .crail-menu-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    border: 0;
+    background: transparent;
+    color: var(--muted-foreground);
+    cursor: pointer;
+  }
+  .crail-root .crail-menu-btn:hover {
+    color: var(--foreground);
+  }
+
+  .crail-root .crail-panel {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    display: grid;
+    padding: 0.4rem clamp(1rem, 4vw, 1.6rem) 0.8rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--background);
+  }
+  .crail-root .crail-panel[data-crail-menu][hidden] {
+    display: none;
+  }
+  .crail-root .crail-panel-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    margin: 0.25rem 0 0.45rem;
+    font-family: var(--font-mono, monospace);
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    color: var(--muted-foreground);
+  }
+  .crail-root .crail-panel-link {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    min-height: 44px;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    border-bottom: 1px solid var(--border);
+    background: transparent;
+    color: var(--secondary-foreground, var(--foreground));
+    font-family: var(--font-sans, sans-serif);
+    font-size: 14.5px;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    text-align: left;
+    cursor: pointer;
+  }
+  .crail-root .crail-panel-link:last-child {
+    border-bottom: 0;
+  }
+  .crail-root .crail-panel-glyph {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5em;
+    color: var(--muted-foreground);
+  }
+  .crail-root .crail-panel-link.active {
+    color: var(--primary);
+  }
+  .crail-root .crail-panel-link.active .crail-panel-glyph {
+    color: var(--primary);
+  }
+  .crail-root .crail-panel-link:hover {
+    color: var(--foreground);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .crail-root .crail-item::after {
+      transition: none;
+    }
+  }
+</style>

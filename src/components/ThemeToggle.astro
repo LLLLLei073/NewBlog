@@ -44,25 +44,6 @@
       <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
     </svg>
   </button>
-  <button
-    id="dark-variant-toggle"
-    type="button"
-    class="dark-variant"
-    aria-label="切换暗色变体"
-    title="切换暗色变体（星空 / 极简）"
-  >
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      stroke="none"
-    >
-      <path
-        d="M12 2l1.9 5.9L20 9.7l-4.6 3.8L17 19.5 12 16.3 7 19.5l1.6-6L4 9.7l6.1-1.8z"
-      ></path>
-    </svg>
-  </button>
 </div>
 
 <style>
@@ -72,8 +53,7 @@
     align-items: center;
   }
 
-  #theme-toggle,
-  .dark-variant {
+  #theme-toggle {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -93,27 +73,16 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  .dark-variant {
-    display: none;
-  }
-
-  :global(html[data-theme='dark']) .dark-variant {
-    display: inline-flex;
-  }
-
-  #theme-toggle:hover,
-  .dark-variant:hover {
+  #theme-toggle:hover {
     background: var(--muted);
     color: var(--foreground);
   }
 
-  #theme-toggle:active,
-  .dark-variant:active {
+  #theme-toggle:active {
     transform: scale(0.9);
   }
 
-  #theme-toggle:focus-visible,
-  .dark-variant:focus-visible {
+  #theme-toggle:focus-visible {
     outline: 2px solid var(--ring);
     outline-offset: 2px;
   }
@@ -133,12 +102,6 @@
   :global(html[data-theme='dark']) .icon-sun {
     display: block;
   }
-
-  /* 极简暗色变体：星星按钮半透明，提示当前非默认 */
-  :global(html[data-theme='dark'][data-dark-variant='minimal']) .dark-variant {
-    color: var(--muted-foreground);
-    opacity: 0.5;
-  }
 </style>
 
 <script>
@@ -147,20 +110,9 @@
 
   function initThemeToggle() {
     const btn = document.getElementById('theme-toggle');
-    const variantBtn = document.getElementById('dark-variant-toggle');
-    if (!btn || !variantBtn) return;
+    if (!btn) return;
 
     const root = document.documentElement;
-
-    const syncVariantLabel = () => {
-      const minimal = root.getAttribute('data-dark-variant') === 'minimal';
-      variantBtn.setAttribute(
-        'aria-label',
-        minimal
-          ? '当前为极简暗色，点击切换星空暗色'
-          : '当前为星空暗色，点击切换极简暗色',
-      );
-    };
 
     function apply(theme: 'light' | 'dark', x?: number, y?: number) {
       const update = () => setSiteTheme(theme);
@@ -190,18 +142,6 @@
       const y = rect.top + rect.height / 2;
       apply(next, x, y);
     });
-
-    variantBtn.addEventListener('click', () => {
-      if (root.getAttribute('data-theme') !== 'dark') return;
-      const cur = root.getAttribute('data-dark-variant') || 'starfield';
-      const next = cur === 'starfield' ? 'minimal' : 'starfield';
-      root.setAttribute('data-dark-variant', next);
-      syncVariantLabel();
-      try {
-        localStorage.setItem('dark-variant', next);
-      } catch {}
-    });
-    syncVariantLabel();
   }
 
   onPageLoad(initThemeToggle);

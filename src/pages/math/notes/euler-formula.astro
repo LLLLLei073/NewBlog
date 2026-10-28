@@ -1,0 +1,528 @@
+---
+/**
+ * 展品页:从单位圆理解欧拉公式(CHAPTER 02 / COMPLEX NUMBERS)。
+ * 中央单位圆展台 + 两侧窄行宽推导注释 + 底部横向推导步骤。
+ * 手工构建的 .astro 页(非内容集合),路由 /math/notes/euler-formula/。
+ */
+import katex from 'katex';
+import 'katex/dist/katex.min.css';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import MathSymbolRail from '../../../components/math/MathSymbolRail.astro';
+import UnitCircleExplorer from '../../../components/math/UnitCircleExplorer.astro';
+import { EULER_STEPS } from '../../../data/math/column.ts';
+
+const texInline = (s: string) =>
+  katex.renderToString(s, { throwOnError: false, displayMode: false });
+const texDisplay = (s: string) =>
+  katex.renderToString(s, { throwOnError: false, displayMode: true });
+
+const F = {
+  circle: texInline('x^{2}+y^{2}=1'),
+  pCoord: texInline('P=(\\cos\\theta,\\ \\sin\\theta)'),
+  zXY: texInline('z=x+iy'),
+  zTheta: texInline('z=\\cos\\theta+i\\sin\\theta'),
+  zMod: texInline('|z|=\\sqrt{\\cos^{2}\\theta+\\sin^{2}\\theta}=1'),
+  euler: texInline('e^{i\\theta}=\\cos\\theta+i\\sin\\theta'),
+  hero: texDisplay('e^{i\\theta}=\\cos\\theta+i\\sin\\theta'),
+};
+
+const stepFormulas = EULER_STEPS.map((s) => texDisplay(s.formula));
+---
+
+<BaseLayout
+  title="从单位圆理解欧拉公式 · 数学观象台"
+  description="当旋转成为语言,指数便写下了最优雅的诗。从单位圆、三角函数的投影到复平面,一步步抵达 e^(iπ) + 1 = 0。"
+  pageName="math"
+>
+  <div class="math eu-page">
+    <MathSymbolRail />
+
+    <article>
+      <header class="eu-head m-rise">
+        <p class="eu-chapter mono-label">
+          CHAPTER <span class="ch-no">02</span> / COMPLEX NUMBERS
+        </p>
+        <h1>从单位圆理解欧拉公式</h1>
+        <p class="eu-lead">当旋转成为语言,指数便写下了最优雅的诗。</p>
+        <p class="eu-meta">
+          <span class="mono-num">约 9 分钟</span>
+          <span class="mono-num">前置概念 三角函数 · 复数</span>
+          <span class="mono-num">最后更新 2026.10.26</span>
+        </p>
+        <a class="eu-back" href="/math/notes/">← 返回数学文章</a>
+      </header>
+
+      <div class="eu-hero m-rise d1 formula-scroll" aria-label="欧拉公式">
+        <span set:html={F.hero} />
+      </div>
+
+      <div class="eu-grid m-rise d2">
+        <div class="eu-notes">
+          <section class="eu-note" aria-label="单位圆">
+            <p class="note-head">
+              <span class="n-no">1.</span>
+              <span class="n-title">单位圆</span>
+              <span class="n-line"></span>
+            </p>
+            <p>
+              在复平面中,取模长为 1 的点集构成单位圆:
+              <span class="math-i" set:html={F.circle} />。
+              任意角 θ(弧度制)确定圆上一点 P,它与原点的距离恒为 1。
+            </p>
+          </section>
+          <section class="eu-note" aria-label="三角函数的几何意义">
+            <p class="note-head">
+              <span class="n-no">2.</span>
+              <span class="n-title">三角函数的几何意义</span>
+              <span class="n-line"></span>
+            </p>
+            <p>
+              点 P 的坐标为 <span class="math-i" set:html={F.pCoord} />。
+              cos θ 是 P 在实轴上的投影(横坐标),
+              sin θ 是 P 在虚轴上的投影(纵坐标)。
+            </p>
+            <ul class="legend">
+              <li><span class="lg lg-cos" aria-hidden="true"></span>cos θ:实轴投影</li>
+              <li><span class="lg lg-sin" aria-hidden="true"></span>sin θ:虚轴投影</li>
+              <li><span class="lg lg-op" aria-hidden="true"></span>OP = 1:模长</li>
+            </ul>
+          </section>
+        </div>
+
+        <div class="eu-stage">
+          <UnitCircleExplorer />
+        </div>
+
+        <div class="eu-notes">
+          <section class="eu-note" aria-label="复平面中的点与复数">
+            <p class="note-head">
+              <span class="n-no">3.</span>
+              <span class="n-title">复平面中的点与复数</span>
+              <span class="n-line"></span>
+            </p>
+            <p>
+              复平面中,点 P(x, y) 对应复数
+              <span class="math-i" set:html={F.zXY} />。
+              因此单位圆上的点 P 对应
+              <span class="math-i" set:html={F.zTheta} />,其模长为
+              <span class="math-i" set:html={F.zMod} />。
+            </p>
+          </section>
+          <section class="eu-note" aria-label="欧拉公式">
+            <p class="note-head">
+              <span class="n-no">4.</span>
+              <span class="n-title">欧拉公式</span>
+              <span class="n-line"></span>
+            </p>
+            <p>
+              定义复指数函数 <span class="math-i" set:html={F.euler} />——
+              它的几何意义是:从点 1 出发,逆时针旋转 θ 弧度,
+              到达单位圆上的点 P。指数的语言与三角的语言在同一张圆上重合。
+            </p>
+          </section>
+        </div>
+      </div>
+
+      <section class="eu-steps" data-eu-steps aria-label="推导步骤">
+        <h2>推导步骤<span class="mono-label">DERIVATION</span></h2>
+        <div class="step-strip">
+          {
+            EULER_STEPS.map((s, i) => (
+              <button
+                type="button"
+                class:list={['step-btn', { 'is-active': i === 0 }]}
+                data-eu-step-btn
+                aria-current={i === 0 ? 'step' : undefined}
+              >
+                <span class="s-no">{s.no}</span>
+                <span class="s-title">{s.title}</span>
+                <span class="s-desc">{s.desc}</span>
+              </button>
+            ))
+          }
+        </div>
+        <div class="step-panels" aria-live="polite">
+          {
+            EULER_STEPS.map((s, i) => (
+              <article class="step-panel" data-eu-step-panel hidden={i !== 0}>
+                <h3>
+                  <span class="mono-label">{s.no}</span>
+                  {s.title}
+                </h3>
+                <p>{s.text}</p>
+                <div class="step-formula formula-scroll">
+                  <span set:html={stepFormulas[i]} />
+                </div>
+              </article>
+            ))
+          }
+        </div>
+        <div class="step-nav">
+          <button type="button" class="ghost-btn" data-eu-prev disabled>
+            ← 上一步
+          </button>
+          <button type="button" class="ghost-btn" data-eu-restart>
+            回到开头
+          </button>
+          <button type="button" class="ghost-btn" data-eu-next>下一步 →</button>
+        </div>
+      </section>
+    </article>
+  </div>
+  </BaseLayout>
+
+<script>
+  import { onPageLoad } from '../../../utils/lifecycle';
+
+  onPageLoad(() => {
+    const root = document.querySelector<HTMLElement>('[data-eu-steps]');
+    if (!root) return;
+    /* 无 dataset 守卫:onPageLoad 两轮触发之间会先执行上一轮清理。 */
+
+    const btns = Array.from(
+      root.querySelectorAll<HTMLButtonElement>('[data-eu-step-btn]'),
+    );
+    const panels = Array.from(
+      root.querySelectorAll<HTMLElement>('[data-eu-step-panel]'),
+    );
+    const prev = root.querySelector<HTMLButtonElement>('[data-eu-prev]');
+    const next = root.querySelector<HTMLButtonElement>('[data-eu-next]');
+    const restart = root.querySelector<HTMLButtonElement>('[data-eu-restart]');
+    let idx = 0;
+
+    const apply = () => {
+      btns.forEach((b, i) => {
+        b.classList.toggle('is-active', i === idx);
+        if (i === idx) b.setAttribute('aria-current', 'step');
+        else b.removeAttribute('aria-current');
+      });
+      panels.forEach((p, i) => {
+        p.hidden = i !== idx;
+      });
+      if (prev) prev.disabled = idx === 0;
+      if (next) next.disabled = idx === panels.length - 1;
+    };
+    const go = (i: number) => {
+      idx = Math.max(0, Math.min(panels.length - 1, i));
+      apply();
+    };
+    const onPrev = () => go(idx - 1);
+    const onNext = () => go(idx + 1);
+    const onRestart = () => go(0);
+    const onBtn = (i: number) => () => go(i);
+
+    btns.forEach((b, i) => b.addEventListener('click', onBtn(i)));
+    prev?.addEventListener('click', onPrev);
+    next?.addEventListener('click', onNext);
+    restart?.addEventListener('click', onRestart);
+    apply();
+
+    return () => {
+      btns.forEach((b, i) => b.removeEventListener('click', onBtn(i)));
+      prev?.removeEventListener('click', onPrev);
+      next?.removeEventListener('click', onNext);
+      restart?.removeEventListener('click', onRestart);
+    };
+  });
+</script>
+
+<style>
+  .eu-page {
+    padding-top: clamp(1.6rem, 4vw, 2.8rem);
+    padding-bottom: clamp(3rem, 7vw, 5rem);
+  }
+
+  /* ===== 头部 ===== */
+  .eu-chapter {
+    margin: 0;
+    color: var(--muted-foreground);
+  }
+  .eu-chapter .ch-no {
+    color: var(--primary);
+  }
+  .eu-head h1 {
+    margin: 0.9rem 0 0;
+    font-family: var(--font-hei);
+    font-weight: 300;
+    font-size: clamp(34px, 4.6vw, 48px);
+    letter-spacing: 0.06em;
+    color: var(--foreground);
+    max-width: 22em;
+  }
+  .eu-lead {
+    margin: 1rem 0 0;
+    font-size: 16px;
+    color: var(--muted-foreground);
+  }
+  .eu-meta {
+    display: flex;
+    gap: 0.6rem 1.6rem;
+    flex-wrap: wrap;
+    margin: 1.1rem 0 0;
+  }
+  .eu-meta .mono-num {
+    color: var(--muted-foreground);
+    font-size: 12px;
+  }
+  .eu-back {
+    display: inline-block;
+    margin-top: 1.2rem;
+    color: var(--muted-foreground);
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    padding: 0.5rem 0;
+  }
+  .eu-back:hover {
+    color: var(--primary);
+  }
+
+  /* ===== 头部大公式:页面中最大的视觉元素 ===== */
+  .eu-hero {
+    margin: 1.6rem 0 0.6rem;
+    padding: 1.2rem 0 1.6rem;
+    border-bottom: 1px solid var(--math-divider);
+    color: var(--foreground);
+  }
+  .eu-hero :global(.katex-display) {
+    margin: 0;
+  }
+  .eu-hero :global(.katex) {
+    font-size: clamp(34px, 5.2vw, 60px);
+  }
+
+  /* ===== 三栏:注释 | 展台 | 注释 ===== */
+  .eu-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  @media (min-width: 760px) {
+    .eu-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .eu-stage {
+      grid-column: 1 / -1;
+      order: -1;
+      max-width: 660px;
+      margin-inline: auto;
+      width: 100%;
+    }
+  }
+  @media (min-width: 1180px) {
+    .eu-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.9fr) minmax(0, 1fr);
+      align-items: center;
+    }
+    .eu-stage {
+      grid-column: auto;
+      order: 0;
+      max-width: none;
+    }
+  }
+
+  .eu-notes {
+    display: grid;
+    gap: 2.2rem;
+    align-content: start;
+  }
+  .eu-note p {
+    margin: 0;
+    max-width: 42ch;
+    font-size: 15.5px;
+    line-height: 1.9;
+    color: var(--secondary-foreground);
+  }
+  .note-head .n-title {
+    font-family: var(--font-hei);
+    font-weight: 300;
+    font-size: 17px;
+    letter-spacing: 0.12em;
+    color: var(--foreground);
+  }
+  .math-i :global(.katex) {
+    font-size: 1.05em;
+    color: var(--foreground);
+  }
+  .legend {
+    list-style: none;
+    margin: 0.9rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.4rem;
+    font-size: 13px;
+    color: var(--muted-foreground);
+  }
+  .legend li {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .lg {
+    display: inline-block;
+    width: 26px;
+    height: 0;
+  }
+  .lg-cos {
+    border-top: 1.5px dashed var(--muted-foreground);
+  }
+  .lg-sin {
+    border-top: 1.5px dotted var(--muted-foreground);
+  }
+  .lg-op {
+    border-top: 2px solid var(--primary);
+  }
+
+  /* ===== 推导步骤 ===== */
+  .eu-steps {
+    margin-top: clamp(2.6rem, 6vw, 4rem);
+    border-top: 1px solid var(--math-divider);
+    padding-top: 2rem;
+  }
+  .eu-steps h2 {
+    margin: 0;
+    font-family: var(--font-hei);
+    font-weight: 300;
+    font-size: clamp(22px, 2.6vw, 28px);
+    letter-spacing: 0.1em;
+    color: var(--foreground);
+  }
+  .eu-steps h2 .mono-label {
+    margin-left: 0.8rem;
+  }
+  .step-strip {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin-top: 1.4rem;
+  }
+  .step-btn {
+    position: relative;
+    display: grid;
+    gap: 0.15rem;
+    justify-items: start;
+    padding: 0.9rem 1rem 1rem;
+    border: 0;
+    border-left: 1px solid var(--math-divider);
+    background: transparent;
+    color: var(--muted-foreground);
+    text-align: left;
+    cursor: pointer;
+    min-height: 44px;
+    transition: color 0.2s ease;
+  }
+  .step-btn:first-child {
+    border-left: 0;
+    padding-left: 0;
+  }
+  .s-no {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    color: var(--muted-foreground);
+  }
+  .s-title {
+    font-family: var(--font-hei);
+    font-weight: 300;
+    font-size: 16.5px;
+    letter-spacing: 0.08em;
+    color: var(--secondary-foreground);
+  }
+  .s-desc {
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  .step-btn::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 1rem;
+    bottom: 0;
+    height: 1px;
+    background: var(--primary);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+  }
+  .step-btn:first-child::after {
+    left: 0;
+  }
+  .step-btn:hover .s-title {
+    color: var(--foreground);
+  }
+  .step-btn.is-active {
+    color: var(--foreground);
+  }
+  .step-btn.is-active .s-no,
+  .step-btn.is-active .s-title {
+    color: var(--primary);
+  }
+  .step-btn.is-active::after {
+    transform: scaleX(1);
+  }
+
+  .step-panels {
+    margin-top: 1.6rem;
+    min-height: 9.5rem;
+  }
+  .step-panel {
+    max-width: 62ch;
+  }
+  .step-panel[hidden] {
+    display: none;
+  }
+  .step-panel h3 {
+    margin: 0;
+    display: flex;
+    align-items: baseline;
+    gap: 0.7rem;
+    font-family: var(--font-hei);
+    font-weight: 300;
+    font-size: 19px;
+    letter-spacing: 0.08em;
+    color: var(--foreground);
+  }
+  .step-panel p {
+    margin: 0.8rem 0 0;
+    font-size: 15.5px;
+    line-height: 1.9;
+    color: var(--secondary-foreground);
+  }
+  .step-formula {
+    margin-top: 0.9rem;
+    color: var(--foreground);
+  }
+  .step-formula :global(.katex) {
+    font-size: 1.35em;
+  }
+  .step-nav {
+    display: flex;
+    gap: 0.7rem;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+  }
+
+  @media (max-width: 759px) {
+    .step-strip {
+      grid-template-columns: 1fr;
+    }
+    .step-btn {
+      border-left: 0;
+      border-top: 1px solid var(--math-divider);
+      padding-left: 0;
+      grid-template-columns: auto 1fr;
+      column-gap: 0.8rem;
+    }
+    .step-btn .s-desc {
+      grid-column: 2;
+    }
+    .step-btn::after {
+      display: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .step-btn::after {
+      transition: none;
+    }
+  }
+</style>

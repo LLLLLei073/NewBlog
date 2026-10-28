@@ -1,0 +1,660 @@
+---
+/**
+ * 「存档之外」手记文章页:录像回放 + 杂志剪报布局。
+ *
+ * 头部:游戏签(链到世界档案)/章节类型/平台与记录日期/剧透
+ * 标识(文字)→ 大标题 → 摘要与私人评价 → 首屏画面(WORLD LOG
+ * 标签 + 时间码 + 胶带)与倾斜评论纸 → 章节回放时间轴(桌面横
+ * 向、移动端纵向,点击滚到正文锚点,滚动时高亮当前位置)→
+ * 正文(舒适行宽的拼贴排版,支持黄色便签与剧透折叠)→ 相关
+ * 阅读/上一篇下一篇。
+ *
+ * 剧透保护:<details class="gg-spoiler"> 原生键盘可达,展开状态
+ * 记入 sessionStorage(本会话内有效),收起/展开不整页跳动。
+ */
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from './BaseLayout.astro';
+import GameNav from '../components/game/GameNav.astro';
+import GameFigure from '../components/game/GameFigure.astro';
+import PixelIcon from '../components/game/PixelIcon.astro';
+import { COLUMN } from '../data/game/column.ts';
+import { GAME_BY_SLUG } from '../data/game/games.ts';
+import {
+  SPOILER_LABEL,
+  type GameArticleMeta,
+} from '../data/game/articles.ts';
+import {
+  buildPostJsonLd,
+  type Nav,
+  type Related,
+} from '../utils/notes-paths.ts';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  meta: GameArticleMeta | null;
+  newer: Nav | null;
+  older: Nav | null;
+  related: Related[];
+}
+
+const { post, meta, newer, older, related } = Astro.props;
+const { data } = post;
+const game = meta?.game ? GAME_BY_SLUG[meta.game] : null;
+const jsonLd = buildPostJsonLd(post);
+
+const fmtDate = (d: Date) =>
+  `${d.getFullYear()}/${String(d.getMonth() + 1).padStart(2, '0')}/${String(
+    d.getDate(),
+  ).padStart(2, '0')}`;
+const dateText = fmtDate(data.pubDate);
+---
+
+<BaseLayout
+  title={data.title}
+  description={data.description}
+  type="article"
+  publishedTime={data.pubDate}
+  modifiedTime={data.updatedDate}
+  noindex={data.noindex}
+  pageName="game"
+>
+  <div class="gg-wrap gpost-page">
+    <GameNav />
+
+    <article class="gpost">
+      {/* ===== 文章头部 ===== */}
+      <header class="gp-head">
+        <p class="gp-crumb">
+          <a class="gp-back" href="/game/notes/">← 返回手记存档</a>
+          {
+            game && (
+              <a
+                class="gg-chip gg-chip--ink gp-game-chip"
+                href={`/game/playing/#${game.slug}`}
+              >
+                <PixelIcon
+                  name={game.slug === 'green-hell' ? 'leaf' : 'gear'}
+                  size={12}
+                />
+                {game.title}
+              </a>
+            )
+          }
+          {
+            meta?.chapterTag && (
+              <span class="gg-chip">{meta.chapterTag}</span>
+            )
+          }
+        </p>
+
+        <h1 class="gp-title">{data.title}</h1>
+
+        <p class="gp-meta">
+          <span class="gg-timecode">
+            <PixelIcon name="play" size={11} />
+            {dateText}
+          </span>
+          {
+            game && (
+              <span class="gg-chip">
+                平台:{game.platform ?? '待记录'}
+              </span>
+            )
+          }
+          {
+            meta && (
+              <span
+                class:list={[
+                  'gg-chip',
+                  meta.spoiler === 'none' ? 'gg-chip--lake' : 'gg-chip--coral',
+                ]}
+              >
+                {SPOILER_LABEL[meta.spoiler]}
+              </span>
+            )
+          }
+          {
+            meta?.spoilerNote && (
+              <span class="gp-spoiler-note">{meta.spoilerNote}</span>
+            )
+          }
+        </p>
+
+        {
+          data.description && <p class="gp-desc">{data.description}</p>
+        }
+        {
+          meta?.verdict && (
+            <p class="gp-verdict">
+              <span class="gp-verdict-label">私人评价</span>
+              {meta.verdict}
+            </p>
+          )
+        }
+      </header>
+
+      {
+        meta && (
+          <div class="gp-hero">
+            <div class="gp-hero-fig gg-tilt-l">
+              <GameFigure
+                art={meta.figure.art}
+                src={meta.figure.src}
+                alt={meta.figure.alt}
+                timecode={`REC ${dateText}`}
+                label={meta.log ?? undefined}
+                tape="both"
+              />
+            </div>
+            <aside class="gp-paper gg-tilt-r" aria-label="评论纸">
+              <PixelIcon name="heart" size={16} class="gp-paper-heart" />
+              <p class="gp-paper-quote">「{meta.coreNote}」</p>
+              <p class="gp-paper-meta">
+                {meta.theme && <span>{meta.theme}</span>}
+                <span>记录日期 {dateText}</span>
+              </p>
+            </aside>
+          </div>
+        )
+      }
+
+      {
+        meta && meta.chapters.length > 0 && (
+          <nav class="gp-chapters" aria-label="章节回放时间轴">
+            <span class="gp-ch-label">
+              <PixelIcon name="replay" size={14} />
+              REPLAY
+            </span>
+            <ol class="gp-ch-list">
+              {meta.chapters.map((c, i) => (
+                <li>
+                  <a
+                    href={`#${c.id}`}
+                    class="gp-ch-link"
+                    data-chapter={c.id}
+                    class:list={[{ 'is-current': i === 0 }]}
+                  >
+                    {c.time && <span class="gp-ch-tc">{c.time}</span>}
+                    <span class="gp-ch-name">{c.label}</span>
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        )
+      }
+
+      {/* ===== 正文 ===== */}
+      <div class="gg-prose gp-body" data-game-prose>
+        <slot />
+      </div>
+
+      {/* ===== 底部 ===== */}
+      <footer class="gp-foot">
+        {
+          (newer || older) && (
+            <nav class="gp-prevnext" aria-label="上一篇下一篇">
+              {older ? (
+                <a class="gp-pn gg-card gg-card--sm" href={older.href}>
+                  <span class="gp-pn-label">← 上一篇</span>
+                  <strong>{older.title}</strong>
+                </a>
+              ) : (
+                <span />
+              )}
+              {newer ? (
+                <a class="gp-pn gg-card gg-card--sm gp-pn--r" href={newer.href}>
+                  <span class="gp-pn-label">下一篇 →</span>
+                  <strong>{newer.title}</strong>
+                </a>
+              ) : (
+                <span />
+              )}
+            </nav>
+          )
+        }
+
+        {
+          related.length > 0 && (
+            <section class="gp-related" aria-label="相关阅读">
+              <h2>
+                <PixelIcon name="star" size={15} /> 相关阅读
+              </h2>
+              <ul>
+                {related.map((r) => (
+                  <li>
+                    <a href={r.href}>
+                      <strong>{r.title}</strong>
+                      <span>{r.description}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+      </footer>
+    </article>
+  </div>
+
+  <script
+    is:inline
+    type="application/ld+json"
+    set:html={JSON.stringify(jsonLd)}
+  />
+</BaseLayout>
+
+<script>
+  import { onPageLoad } from '../utils/lifecycle';
+
+  onPageLoad(() => {
+    const prose = document.querySelector<HTMLElement>('[data-game-prose]');
+    if (!prose) return;
+
+    /* ---- 剧透折叠:本会话内记住展开状态 ---- */
+    const spoilers = Array.from(
+      prose.querySelectorAll<HTMLDetailsElement>('details.gg-spoiler'),
+    );
+    const storeKey = (el: HTMLDetailsElement) =>
+      `gg-spoiler:${location.pathname}:${el.dataset.spoilerId}`;
+    const onToggle = (e: Event) => {
+      const el = e.currentTarget as HTMLDetailsElement;
+      try {
+        if (el.open) {
+          sessionStorage.setItem(storeKey(el), 'open');
+        } else {
+          sessionStorage.removeItem(storeKey(el));
+        }
+      } catch {
+        /* 存储不可用时静默 */
+      }
+    };
+    spoilers.forEach((el, i) => {
+      el.dataset.spoilerId = String(i);
+      try {
+        if (sessionStorage.getItem(storeKey(el)) === 'open') el.open = true;
+      } catch {
+        /* 忽略 */
+      }
+      el.addEventListener('toggle', onToggle);
+    });
+
+    /* ---- 章节时间轴:点击平滑滚动 + 滚动高亮当前位置 ---- */
+    const links = Array.from(
+      prose
+        .closest('.gpost')
+        ?.querySelectorAll<HTMLAnchorElement>('[data-chapter]') ?? [],
+    );
+    const targets = links
+      .map((a) => document.getElementById(a.dataset.chapter ?? ''))
+      .filter((el): el is HTMLElement => el !== null);
+    if (!links.length || !targets.length) {
+      return () => spoilers.forEach((el) => el.removeEventListener('toggle', onToggle));
+    }
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+    const onClick = (e: MouseEvent) => {
+      const a = e.currentTarget as HTMLAnchorElement;
+      const target = document.getElementById(a.dataset.chapter ?? '');
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({
+        behavior: reduced.matches ? 'auto' : 'smooth',
+        block: 'start',
+      });
+      history.replaceState(null, '', a.href);
+    };
+    links.forEach((a) => a.addEventListener('click', onClick));
+
+    const setCurrent = (id: string) => {
+      links.forEach((a) =>
+        a.classList.toggle('is-current', a.dataset.chapter === id),
+      );
+    };
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setCurrent(entry.target.id);
+        }
+      },
+      { rootMargin: '-30% 0px -60% 0px', threshold: 0 },
+    );
+    targets.forEach((t) => io.observe(t));
+
+    return () => {
+      spoilers.forEach((el) => el.removeEventListener('toggle', onToggle));
+      links.forEach((a) => a.removeEventListener('click', onClick));
+      io.disconnect();
+    };
+  });
+</script>
+
+<style>
+  .gpost-page {
+    padding-top: clamp(1.4rem, 3.5vw, 2.4rem);
+    padding-bottom: clamp(2.4rem, 6vw, 4rem);
+  }
+  .gpost {
+    max-width: 980px;
+    margin-inline: auto;
+  }
+
+  /* ===== 头部 ===== */
+  .gp-head {
+    padding-bottom: 1.2rem;
+  }
+  .gp-crumb {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.6rem 0.8rem;
+    margin: 0;
+  }
+  .gp-back {
+    color: var(--gg-cream);
+    font-family: var(--g-disp);
+    font-weight: 700;
+    font-size: 14px;
+    text-decoration: none;
+    padding: 0.35rem 0;
+    margin-right: 0.4rem;
+  }
+  .gp-back:hover {
+    color: var(--gg-acid);
+  }
+  .gp-game-chip {
+    text-decoration: none;
+    cursor: pointer;
+  }
+  a.gp-game-chip:hover {
+    background: var(--gg-acid);
+    color: var(--gg-ink);
+  }
+  .gp-title {
+    margin: 1rem 0 0;
+    font-family: var(--g-disp);
+    font-weight: 900;
+    font-size: clamp(30px, 5.4vw, 56px);
+    line-height: 1.22;
+    color: var(--gg-cream);
+    text-shadow: 5px 5px 0 var(--gg-ink);
+    text-wrap: balance;
+  }
+  .gp-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.55rem 0.8rem;
+    margin: 1.1rem 0 0;
+  }
+  .gp-spoiler-note {
+    flex-basis: 100%;
+    font-size: 13px;
+    color: var(--gg-cream-dim);
+  }
+  .gp-desc {
+    max-width: 62ch;
+    margin: 1rem 0 0;
+    font-size: 15.5px;
+    line-height: 1.85;
+    color: var(--gg-cream);
+  }
+  .gp-verdict {
+    display: flex;
+    align-items: baseline;
+    gap: 0.8em;
+    max-width: 46ch;
+    margin: 1.1rem 0 0;
+    padding: 0.7em 1em;
+    background: var(--gg-acid);
+    color: var(--gg-ink);
+    border: var(--gg-bw-thin) solid var(--gg-ink);
+    box-shadow: var(--gg-shadow-sm);
+    transform: rotate(-0.8deg);
+    font-size: 14.5px;
+    line-height: 1.75;
+  }
+  .gp-verdict-label {
+    flex: none;
+    font-family: var(--g-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    opacity: 0.75;
+  }
+
+  /* ===== 首屏画面 + 评论纸 ===== */
+  .gp-hero {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    align-items: end;
+    gap: clamp(1.2rem, 3vw, 2rem);
+    padding: clamp(1.2rem, 3vw, 2rem) 0 0.6rem;
+  }
+  .gp-paper {
+    position: relative;
+    margin-bottom: clamp(0.4rem, 2vw, 1.6rem);
+    padding: 1.15rem 1.25rem 1rem;
+    background: var(--gg-cream);
+    border: var(--gg-bw) solid var(--gg-ink);
+    box-shadow: var(--gg-shadow);
+  }
+  .gp-paper-heart {
+    color: var(--gg-coral);
+  }
+  .gp-paper-quote {
+    margin: 0.5rem 0 0;
+    font-family: var(--g-disp);
+    font-weight: 800;
+    font-size: clamp(16px, 2vw, 19px);
+    line-height: 1.75;
+    color: var(--gg-ink);
+  }
+  .gp-paper-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 1.2rem;
+    margin: 0.7rem 0 0;
+    padding-top: 0.6rem;
+    border-top: 2px dashed rgba(21, 21, 21, 0.3);
+    font-family: var(--g-mono);
+    font-size: 11.5px;
+    letter-spacing: 0.1em;
+    color: var(--gg-gray);
+  }
+
+  /* ===== 章节时间轴 ===== */
+  .gp-chapters {
+    margin: 1.2rem 0 0;
+    padding: 0.9rem 1rem;
+    border: 3px solid var(--gg-ink);
+    background: var(--gg-cream);
+    box-shadow: var(--gg-shadow-sm);
+  }
+  .gp-ch-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    font-family: var(--g-mono);
+    font-size: 11px;
+    letter-spacing: 0.26em;
+    color: var(--gg-gray);
+  }
+  .gp-ch-list {
+    display: flex;
+    gap: 0.4rem;
+    list-style: none;
+    margin: 0.55rem 0 0;
+    padding: 0;
+    overflow-x: auto;
+  }
+  .gp-ch-list li {
+    flex: 1;
+  }
+  .gp-ch-link {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: 0.15rem;
+    min-height: 44px;
+    padding: 0.45rem 0.7rem 0.5rem;
+    border: 2px solid transparent;
+    color: var(--gg-ink);
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.15s ease;
+  }
+  .gp-ch-link::before {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 0;
+    right: 0;
+    height: 0;
+    border-top: 3px dotted rgba(21, 21, 21, 0.35);
+    transition: border-color 0.15s ease;
+  }
+  .gp-ch-tc {
+    font-family: var(--g-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    color: var(--gg-gray);
+    font-variant-numeric: tabular-nums;
+  }
+  .gp-ch-name {
+    font-family: var(--g-disp);
+    font-weight: 800;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+  .gp-ch-link:hover {
+    background: rgba(231, 240, 91, 0.45);
+  }
+  .gp-ch-link.is-current {
+    border-color: var(--gg-ink);
+    background: var(--gg-acid);
+    box-shadow: 3px 3px 0 0 var(--gg-ink);
+  }
+  .gp-ch-link.is-current::before {
+    border-top-color: var(--gg-coral);
+  }
+  @media (max-width: 720px) {
+    .gp-ch-list {
+      flex-direction: column;
+      gap: 0;
+    }
+    .gp-ch-link {
+      grid-template-columns: auto 1fr;
+      justify-items: start;
+      align-items: baseline;
+      column-gap: 0.8rem;
+      border-bottom: 2px dashed rgba(21, 21, 21, 0.25);
+    }
+    .gp-ch-link::before {
+      display: none;
+    }
+  }
+
+  /* ===== 正文与底部 ===== */
+  .gp-body {
+    margin-top: clamp(1.6rem, 4vw, 2.6rem);
+    padding: clamp(1.4rem, 3.5vw, 2.6rem) clamp(1rem, 3vw, 2.4rem) clamp(1.8rem, 4vw, 3rem);
+    background: var(--gg-cream);
+    border: var(--gg-bw) solid var(--gg-ink);
+    box-shadow: var(--gg-shadow);
+  }
+  .gp-foot {
+    margin-top: clamp(1.8rem, 4vw, 2.8rem);
+  }
+  .gp-prevnext {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+  .gp-pn {
+    display: grid;
+    gap: 0.3rem;
+    padding: 0.85rem 1rem;
+    color: var(--gg-ink);
+    text-decoration: none;
+    min-height: 44px;
+  }
+  .gp-pn--r {
+    text-align: right;
+  }
+  .gp-pn:hover {
+    background: var(--gg-acid);
+  }
+  .gp-pn-label {
+    font-family: var(--g-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--gg-gray);
+  }
+  .gp-pn strong {
+    font-family: var(--g-disp);
+    font-weight: 800;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .gp-related h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    margin: 1.6rem 0 0.8rem;
+    font-family: var(--g-disp);
+    font-weight: 900;
+    font-size: 20px;
+    color: var(--gg-cream);
+  }
+  .gp-related h2 :global(.px-icon) {
+    color: var(--gg-acid);
+  }
+  .gp-related ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.8rem;
+  }
+  .gp-related a {
+    display: grid;
+    gap: 0.25rem;
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--gg-cream-faint);
+    color: var(--gg-cream);
+    text-decoration: none;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+  }
+  .gp-related a:hover {
+    border-color: var(--gg-acid);
+    background: rgba(244, 239, 216, 0.08);
+  }
+  .gp-related strong {
+    font-family: var(--g-disp);
+    font-weight: 800;
+    font-size: 15px;
+  }
+  .gp-related span {
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--gg-cream-dim);
+  }
+
+  @media (max-width: 820px) {
+    .gp-hero {
+      grid-template-columns: 1fr;
+      align-items: stretch;
+    }
+    .gp-paper {
+      margin: -1.2rem 1rem 0;
+      z-index: 2;
+    }
+    .gp-prevnext {
+      grid-template-columns: 1fr;
+    }
+    .gp-pn--r {
+      text-align: left;
+    }
+  }
+</style>

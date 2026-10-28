@@ -371,3 +371,10 @@ body.music-active {
     padding-bottom: 112px;
   }
 }
+
+/* ============ 右侧符号栏(ColumnRail)内容让位 ============ */
+@media (min-width: 960px) {
+  body[data-page='music'] main {
+    margin-right: var(--rail-w, 78px);
+  }
+}

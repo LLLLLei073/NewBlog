@@ -1,380 +1,68 @@
 ---
 /**
- * 「形与数 · 直觉图鉴」数学专栏首页:美术馆式展墙布局。
- * hero(左图版 + 右文案) → 四大板块展位 → 最近手记 → 装裱中说明。
+ * 「数学观象台 · MATH OBSERVATORY」专栏首页:
+ * 近全视口首屏(细字重标题 + 环面线框)→ 底部横向展览索引。
+ * 左侧符号栏 + 开屏动画由组件自带;仅在首页挂载开屏。
  */
-import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import MathNav from '../../components/math/MathNav.astro';
-import GeometryPlate from '../../components/math/GeometryPlate.astro';
+import MathSymbolRail from '../../components/math/MathSymbolRail.astro';
+import MathHero from '../../components/math/MathHero.astro';
+import ExhibitionIndex from '../../components/math/ExhibitionIndex.astro';
 import MathIntro from '../../components/intro/MathIntro.astro';
-import { COLUMN, SECTIONS } from '../../data/math/column.ts';
-import { postHref } from '../../utils/postRoute.ts';
-
-const posts = (await getCollection('blog'))
-  .filter((p) => !p.data.draft && p.data.category === 'math')
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
-const recent = posts.slice(0, 3);
-
-const fmtDate = (d: Date) =>
-  `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
+import { COLUMN } from '../../data/math/column.ts';
 ---
 
 <BaseLayout
-  title="形与数 · 直觉图鉴"
+  title="数学观象台 · MATH OBSERVATORY"
   description={COLUMN.intro}
   pageName="math"
 >
   <div class="math math-page">
-    <MathNav />
+    <MathSymbolRail />
     <MathIntro />
-
-    <!-- ======== 首屏:展墙 ======== -->
-    <section class="hero m-rise" aria-label="专栏介绍">
-      <div class="hero-grid">
-        <div class="hero-plate m-plate m-rise d1">
-          <p class="plate-cap">
-            <span class="plate-no">PLATE Ⅰ</span>
-            <span class="mono-label">单位圆与正弦</span>
-          </p>
-          <div class="plate-art">
-            <GeometryPlate />
-          </div>
-          <p class="plate-note">
-            圆上的匀速旋转,投影成起伏的波——三角学的第一张图版。
-          </p>
-        </div>
-
-        <div class="hero-copy m-rise d2">
-          <p class="hero-kicker">
-            <span class="plate-no">MATHEMATICS</span>
-            <span class="kicker-sep" aria-hidden="true">/</span>
-            <span class="mono-label">INTUITION FIRST</span>
-          </p>
-          <h1>{COLUMN.headline}</h1>
-          <p class="hero-sub">「{COLUMN.sub}」</p>
-          <p class="hero-intro">{COLUMN.intro}</p>
-          <div class="hero-cta">
-            <a class="cta-primary" href="/math/notes/"> 进入手记图版 → </a>
-          </div>
-          <p class="hero-latest mono-label">
-            图鉴更新 <span class="mono-num">{COLUMN.updated}</span>
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ======== 四大板块展位 ======== -->
-    <section class="gallery" aria-label="板块展位">
-      <header class="sec-head m-rise">
-        <h2>展位目录<span class="mono-label">GALLERY PLAN</span></h2>
-        <p class="sec-note">{COLUMN.sectionsHint}</p>
-      </header>
-      <ol class="gallery-grid">
-        {
-          SECTIONS.map((s, i) => (
-            <li class:list={['m-plate exhibit', 'm-rise', `d${(i % 4) + 1}`]}>
-              <p class="ex-head">
-                <span class="plate-no">PLATE {s.no}</span>
-                <span class="mono-label">{s.en}</span>
-              </p>
-              <h3>{s.title}</h3>
-              <p class="ex-intuition">{s.intuition}</p>
-              <ul class="ex-items">
-                {s.items.map((it) => (
-                  <li>{it}</li>
-                ))}
-              </ul>
-            </li>
-          ))
-        }
-      </ol>
-    </section>
-
-    <!-- ======== 最近手记 ======== -->
-    <section class="recent" aria-label="最近手记">
-      <header class="sec-head m-rise">
-        <h2>
-          最近手记<span class="mono-label">RECENT · {posts.length} 篇</span>
-        </h2>
-        {
-          posts.length > 0 && (
-            <a href="/math/notes/" class="sec-more">
-              查看全部 →
-            </a>
-          )
-        }
-      </header>
-      {
-        recent.length > 0 ? (
-          <ul class="recent-list m-rise d1">
-            {recent.map((p) => (
-              <li>
-                <a href={postHref(p.id, p.data.category)} class="recent-row">
-                  <span class="mono-num r-date">{fmtDate(p.data.pubDate)}</span>
-                  <span class="r-main">
-                    <strong>{p.data.title}</strong>
-                    <span class="r-desc">{p.data.description}</span>
-                  </span>
-                  <span class="r-arrow" aria-hidden="true">
-                    →
-                  </span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p class="empty m-rise d1">第一批图版正在装裱,先看看展位目录。</p>
-        )
-      }
-    </section>
+    <MathHero />
+    <ExhibitionIndex />
+    <footer class="page-end">
+      <span class="mono-label">
+        {COLUMN.en} · {COLUMN.hint}
+      </span>
+      <nav class="end-links" aria-label="更多展览入口">
+        <a href="/math/proofs/">证明画廊 ∞</a>
+        <a href="/math/questions/">问题本 ?</a>
+      </nav>
+    </footer>
   </div>
 </BaseLayout>
 
 <style>
   .math-page {
-    padding-bottom: clamp(3rem, 7vw, 5rem);
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100svh - var(--header-height, 56px));
+    padding-bottom: 1.2rem;
   }
-
-  /* ===== 首屏 ===== */
-  .hero {
-    padding: clamp(1.8rem, 4vw, 3.2rem) 0 clamp(2rem, 4vw, 3rem);
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 2.6rem;
-  }
-  .hero-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 2.2rem;
+  .page-end {
+    display: flex;
     align-items: center;
-  }
-  @media (min-width: 960px) {
-    .hero-grid {
-      grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
-      gap: 3rem;
-    }
-  }
-
-  .plate-cap {
-    display: flex;
-    align-items: baseline;
     justify-content: space-between;
     gap: 1rem;
-    margin: 0 0 0.6rem;
-  }
-  .plate-note {
-    margin: 0.8rem 0 0;
-    font-size: 12.5px;
-    line-height: 1.7;
-    color: var(--muted-foreground);
-  }
-
-  .hero-kicker {
-    display: flex;
-    align-items: baseline;
-    gap: 0.6rem;
-    margin: 0;
-  }
-  .kicker-sep {
-    color: var(--math-vermilion);
-  }
-  .hero-copy h1 {
-    margin: 1rem 0 0;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: clamp(30px, 4.6vw, 52px);
-    line-height: 1.22;
-    color: var(--foreground);
-    text-wrap: balance;
-  }
-  .hero-sub {
-    margin: 0.9rem 0 0;
-    font-family: var(--font-serif);
-    color: var(--primary);
-    letter-spacing: 0.12em;
-  }
-  .hero-intro {
-    margin: 1.2rem 0 0;
-    max-width: 46ch;
-    font-size: 14.5px;
-    line-height: 1.9;
-    color: var(--muted-foreground);
-  }
-  .hero-cta {
-    margin-top: 1.6rem;
-  }
-  .cta-primary {
-    display: inline-block;
-    padding: 0.62em 1.35em;
-    border: 1px solid var(--primary);
-    color: var(--primary);
-    text-decoration: none;
-    font-size: 14px;
-    letter-spacing: 0.1em;
-    transition:
-      background-color 0.18s ease,
-      color 0.18s ease;
-  }
-  .cta-primary:hover {
-    background: var(--primary);
-    color: var(--primary-foreground);
-  }
-  .hero-latest {
-    margin: 1.3rem 0 0;
-  }
-
-  /* ===== 展位 ===== */
-  .sec-head {
-    display: flex;
-    align-items: baseline;
-    gap: 0.9rem;
     flex-wrap: wrap;
-    margin-bottom: 1.4rem;
+    margin-top: auto;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--math-divider);
   }
-  .sec-head h2 {
-    margin: 0;
-    font-family: var(--font-display);
-    font-size: clamp(22px, 3vw, 30px);
+  .end-links {
+    display: flex;
+    gap: 1.4rem;
   }
-  .sec-head h2 .mono-label {
-    margin-left: 0.65rem;
-  }
-  .sec-note {
-    margin: 0;
-    font-size: 13.5px;
+  .end-links a {
     color: var(--muted-foreground);
-    flex-basis: 100%;
-  }
-  .sec-more {
-    margin-left: auto;
-    color: var(--primary);
     text-decoration: none;
-    font-size: 14px;
-  }
-  .sec-more:hover {
-    text-decoration: underline;
-  }
-
-  .gallery {
-    margin-bottom: 2.8rem;
-  }
-  .gallery-grid {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1rem;
-  }
-  .exhibit {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    transition:
-      transform 0.2s ease,
-      box-shadow 0.2s ease;
-  }
-  .exhibit:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-md);
-  }
-  .ex-head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 0.6rem;
-    margin: 0;
-  }
-  .exhibit h3 {
-    margin: 0.2rem 0 0;
-    font-family: var(--font-display);
-    font-size: 19px;
-  }
-  .ex-intuition {
-    margin: 0;
     font-size: 13.5px;
-    line-height: 1.8;
-    color: var(--muted-foreground);
+    letter-spacing: 0.08em;
+    padding: 0.4rem 0;
   }
-  .ex-items {
-    margin: 0.5rem 0 0;
-    padding: 0 0 0 1.1em;
-    display: grid;
-    gap: 0.28rem;
-    font-size: 13px;
-    line-height: 1.7;
-    color: var(--muted-foreground);
-  }
-
-  /* ===== 最近手记 ===== */
-  .recent-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    border-top: 1px solid var(--border);
-  }
-  .recent-row {
-    display: grid;
-    grid-template-columns: 6.4rem 1fr auto;
-    gap: 1.1rem;
-    align-items: baseline;
-    padding: 1.05rem 0.4rem;
-    border-bottom: 1px solid var(--border);
-    text-decoration: none;
-    color: inherit;
-    transition: background-color 0.18s ease;
-  }
-  .recent-row:hover {
-    background: var(--accent);
-  }
-  .r-date {
-    font-size: 12px;
-    color: var(--muted-foreground);
-  }
-  .r-main {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    min-width: 0;
-  }
-  .r-main strong {
-    font-family: var(--font-serif);
-    font-size: 16px;
-    color: var(--foreground);
-  }
-  .r-desc {
-    font-size: 13.5px;
-    line-height: 1.75;
-    color: var(--muted-foreground);
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  .r-arrow {
+  .end-links a:hover {
     color: var(--primary);
-    opacity: 0;
-    transform: translateX(-6px);
-    transition:
-      opacity 0.2s ease,
-      transform 0.2s ease;
-  }
-  .recent-row:hover .r-arrow {
-    opacity: 1;
-    transform: none;
-  }
-  .empty {
-    padding: 1.4rem 0;
-    color: var(--muted-foreground);
-    font-size: 14.5px;
-  }
-
-  @media (max-width: 640px) {
-    .recent-row {
-      grid-template-columns: 1fr auto;
-    }
-    .r-date {
-      display: none;
-    }
   }
 </style>

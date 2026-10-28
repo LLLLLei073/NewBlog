@@ -1,103 +1,446 @@
 ---
 /**
- * 「玩法解剖室」专栏内部导航:HUD 菜单条,当前项信号绿高亮;
- * 右侧玩家标记「F.」(→ /about)。
+ * 「存档之外」专栏内部导航:右侧像素符号栏(记忆卡/播放/回放/
+ * 收藏星/终年旗/搜索),悬浮显示具体名称;中部 PLAYER 01 玩家
+ * 标记;移动端收为顶部一条(专栏名 + 当前状态 + 菜单)。
+ * 搜索为轻量浮层,数据由构建期注入(手记 + 游戏)。
  */
+import { getCollection } from 'astro:content';
+import ColumnRail from '../ColumnRail.astro';
+import PixelIcon from './PixelIcon.astro';
+import { COLUMN } from '../../data/game/column.ts';
+import { GAMES } from '../../data/game/games.ts';
+import { getGameArticleMeta } from '../../data/game/articles.ts';
+import { postHref } from '../../utils/postRoute.ts';
+
+const posts = (await getCollection('blog'))
+  .filter((p) => !p.data.draft && p.data.category === 'game')
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const fmtDate = (d: Date) =>
+  `${d.getFullYear()}/${String(d.getMonth() + 1).padStart(2, '0')}/${String(
+    d.getDate(),
+  ).padStart(2, '0')}`;
+
+type SearchItem = {
+  type: 'note' | 'game';
+  title: string;
+  desc: string;
+  href: string;
+  game: string | null;
+  date: string | null;
+  tags: string[];
+};
+
+const searchItems: SearchItem[] = [
+  ...posts.map((p) => {
+    const meta = getGameArticleMeta(p.id);
+    return {
+      type: 'note' as const,
+      title: p.data.title,
+      desc: p.data.description,
+      href: postHref(p.id, p.data.category),
+      game: meta?.game ?? null,
+      date: fmtDate(p.data.pubDate),
+      tags: meta
+        ? [
+            meta.chapterTag ?? '',
+            ...(meta.spoiler !== 'none' ? ['剧透'] : []),
+          ].filter(Boolean)
+        : [],
+    };
+  }),
+  ...GAMES.map((g) => ({
+    type: 'game' as const,
+    title: g.title,
+    desc: g.quote,
+    href: `/game/playing/#${g.slug}`,
+    game: null,
+    date: null,
+    tags: g.tags,
+  })),
+];
+
 const path = Astro.url.pathname;
 const is = {
   home: path === '/game/' || path === '/game',
+  playing: path.startsWith('/game/playing'),
   notes: path.startsWith('/game/notes'),
+  collection: path.startsWith('/game/collection'),
+  review: path.startsWith('/game/review'),
 };
 const items = [
-  { href: '/game/', no: '01', label: '首页', active: is.home },
-  { href: '/game/notes/', no: '02', label: '手记存档', active: is.notes },
+  { href: '/game/', icon: 'card', label: '专栏首页', active: is.home },
+  { href: '/game/playing/', icon: 'play', label: '正在游玩', active: is.playing },
+  { href: '/game/notes/', icon: 'replay', label: '游戏手记', active: is.notes },
+  {
+    href: '/game/collection/',
+    icon: 'star',
+    label: '收藏架',
+    active: is.collection,
+  },
+  { href: '/game/review/', icon: 'flag', label: '年度回顾', active: is.review },
 ];
+const currentStatus = is.home
+  ? COLUMN.sticker
+  : (items.find((i) => i.active)?.label ?? 'SAVE FILE');
 ---
 
-<nav class="game-nav" aria-label="专栏导航">
-  <div class="game">
-    <div class="links">
-      {
-        items.map((item) => (
-          <a
-            href={item.href}
-            class:list={['nav-item', { active: item.active }]}
-            aria-current={item.active ? 'page' : undefined}
-          >
-            <span class="no" aria-hidden="true">
-              [{item.no}]
-            </span>
-            {item.label}
-          </a>
-        ))
-      }
+<ColumnRail
+  theme="game"
+  railLabel="存档之外专栏导航"
+  brand={{ cn: COLUMN.name, en: COLUMN.en }}
+  status={currentStatus}
+  items={items}
+  rootAttrs={{ 'data-game-nav': '' }}
+>
+  <span slot="center" class="gplayer">
+    <PixelIcon name="heart" size={12} />
+    PLAYER 01
+  </span>
+
+  <button
+    slot="utils"
+    type="button"
+    class="crail-item"
+    data-gnav-search-open
+    aria-haspopup="dialog"
+    aria-controls="game-search-dialog"
+    aria-expanded="false"
+    aria-label="搜索"
+    data-label="搜索"
+  >
+    <svg
+      width="17"
+      height="17"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.8"
+      stroke-linecap="round"
+      aria-hidden="true"
+    >
+      <circle cx="11" cy="11" r="7"></circle>
+      <line x1="20" y1="20" x2="16.2" y2="16.2"></line>
+    </svg>
+  </button>
+
+  <button
+    slot="panel-extra"
+    type="button"
+    class="crail-panel-link"
+    data-gnav-search-open
+    aria-haspopup="dialog"
+    aria-controls="game-search-dialog"
+  >
+    <span class="crail-panel-glyph" aria-hidden="true">
+      <PixelIcon name="play" size={12} />
+    </span>
+    搜索
+  </button>
+
+  {/* 搜索浮层 */}
+  <div
+    slot="overlay"
+    class="gsearch"
+    id="game-search-dialog"
+    data-gsearch
+    hidden
+    role="dialog"
+    aria-modal="true"
+    aria-label="搜索游戏专栏"
+  >
+    <div class="gsearch-backdrop" data-gsearch-close></div>
+    <div class="gsearch-box gg-card">
+      <div class="gsearch-head">
+        <p class="gsearch-title">
+          <PixelIcon name="play" size={12} /> 搜索存档之外
+        </p>
+        <button
+          type="button"
+          class="gsearch-close"
+          data-gsearch-close
+          aria-label="关闭搜索"
+        >
+          ×
+        </button>
+      </div>
+      <input
+        class="gsearch-input"
+        data-gsearch-input
+        type="search"
+        placeholder="搜索手记、游戏、标签…"
+        aria-label="搜索手记、游戏、标签"
+      />
+      <ol class="gsearch-results" data-gsearch-results></ol>
+      <p class="gsearch-hint">输入关键词筛选;Esc 关闭</p>
+      <script
+        type="application/json"
+        data-gsearch-data
+        set:html={JSON.stringify(searchItems)}
+      />
     </div>
-    <a href="/about/" class="mark" title="关于我">F.</a>
   </div>
-</nav>
+</ColumnRail>
 
 <style>
-  .game-nav {
-    border-bottom: 1px solid var(--border);
-    margin-top: clamp(0.75rem, 2vw, 1.25rem);
+  .gplayer {
+    gap: 0.55em;
+    color: var(--muted-foreground);
   }
-  .game-nav .game {
+  .gplayer :global(.px-icon) {
+    color: var(--gg-coral, #ff7058);
+  }
+</style>
+
+<style is:global>
+  /* 搜索浮层(仅游戏专栏使用) */
+  .gsearch {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: grid;
+    place-items: start center;
+    padding: clamp(3.5rem, 12vh, 7rem) 1rem 1rem;
+  }
+  .gsearch[hidden] {
+    display: none;
+  }
+  .gsearch-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(21, 21, 21, 0.55);
+  }
+  .gsearch-box {
+    position: relative;
+    width: min(620px, 100%);
+    padding: 0.9rem 1rem 0.8rem;
+  }
+  .gsearch-head {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
+    margin-bottom: 0.6rem;
   }
-  .links {
-    display: flex;
-    gap: clamp(1.1rem, 3vw, 2rem);
-    overflow-x: auto;
-  }
-  .nav-item {
-    position: relative;
+  .gsearch-title {
     display: inline-flex;
-    align-items: baseline;
-    gap: 0.4em;
-    padding: 0.55rem 0 0.7rem;
-    color: var(--muted-foreground);
+    align-items: center;
+    gap: 0.5em;
+    margin: 0;
+    font-family: var(--g-disp, sans-serif);
+    font-weight: 900;
+    font-size: 16px;
+    color: var(--gg-ink, #151515);
+  }
+  .gsearch-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    border: var(--gg-bw-thin, 2px) solid var(--gg-ink, #151515);
+    background: var(--gg-cream, #f4efd8);
+    color: var(--gg-ink, #151515);
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .gsearch-close:hover {
+    background: var(--gg-coral, #ff7058);
+  }
+  .gsearch-input {
+    width: 100%;
+    min-height: 46px;
+    padding: 0.5em 0.9em;
+    border: var(--gg-bw, 3px) solid var(--gg-ink, #151515);
+    background: #fffdf2;
+    color: var(--gg-ink, #151515);
+    font-size: 16px;
+    font-family: var(--font-sans, sans-serif);
+  }
+  .gsearch-input:focus-visible {
+    outline: 3px solid var(--gg-coral, #ff7058);
+    outline-offset: 1px;
+  }
+  .gsearch-results {
+    list-style: none;
+    margin: 0.6rem 0 0;
+    padding: 0;
+    max-height: 46vh;
+    overflow-y: auto;
+  }
+  .gsearch-results a {
+    display: grid;
+    gap: 0.15rem;
+    padding: 0.55rem 0.5rem;
+    border-bottom: 2px solid rgba(21, 21, 21, 0.14);
+    color: var(--gg-ink, #151515);
     text-decoration: none;
-    font-size: 0.85rem;
-    letter-spacing: 0.08em;
-    white-space: nowrap;
-    transition: color 0.18s ease;
   }
-  .nav-item .no {
-    font-family: var(--font-mono);
-    font-size: 10.5px;
-    color: var(--game-violet);
-    opacity: 0.8;
+  .gsearch-results a:hover {
+    background: rgba(231, 240, 91, 0.55);
   }
-  .nav-item::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -1px;
-    width: 0;
-    height: 2px;
-    background: var(--primary);
-    transition: width 0.22s ease;
+  .gsearch-results .gs-t {
+    font-family: var(--g-disp, sans-serif);
+    font-weight: 800;
+    font-size: 15px;
   }
-  .nav-item:hover {
-    color: var(--foreground);
+  .gsearch-results .gs-m {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 0.9rem;
+    font-family: var(--g-mono, monospace);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--gg-gray, #4b4a43);
   }
-  .nav-item.active {
-    color: var(--primary);
+  .gsearch-results li.gs-empty {
+    padding: 0.8rem 0.4rem;
+    font-size: 14px;
+    color: var(--gg-gray, #4b4a43);
   }
-  .nav-item.active::after {
-    width: 1.6em;
-  }
-  .mark {
-    font-family: var(--font-serif);
-    font-weight: 700;
-    font-size: 1.02rem;
-    color: var(--foreground);
-    text-decoration: none;
-  }
-  .mark:hover {
-    color: var(--primary);
+  .gsearch-hint {
+    margin: 0.55rem 0 0;
+    font-family: var(--g-mono, monospace);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--gg-gray, #4b4a43);
   }
 </style>
+
+<script>
+  import { onPageLoad } from '../../utils/lifecycle';
+
+  onPageLoad(() => {
+    const root = document.querySelector<HTMLElement>('[data-game-nav]');
+    if (!root) return;
+
+    /* ---- 搜索浮层 ---- */
+    const overlay = root.querySelector<HTMLElement>('[data-gsearch]');
+    const input = root.querySelector<HTMLInputElement>('[data-gsearch-input]');
+    const results = root.querySelector<HTMLElement>('[data-gsearch-results]');
+    const dataEl = root.querySelector<HTMLScriptElement>(
+      '[data-gsearch-data]',
+    );
+    const openers = Array.from(
+      root.querySelectorAll<HTMLButtonElement>('[data-gnav-search-open]'),
+    );
+    let items: {
+      type: string;
+      title: string;
+      desc: string;
+      href: string;
+      game: string | null;
+      date: string | null;
+      tags: string[];
+    }[] = [];
+    try {
+      items = dataEl ? JSON.parse(dataEl.textContent || '[]') : [];
+    } catch {
+      items = [];
+    }
+    const esc = (s: string) =>
+      s.replace(/[&<>"']/g, (c) =>
+        ({
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#39;',
+        })[c] as string,
+      );
+
+    let lastFocus: HTMLElement | null = null;
+    const setOpen = (open: boolean) => {
+      if (!overlay) return;
+      overlay.hidden = !open;
+      if (open) {
+        lastFocus = document.activeElement as HTMLElement | null;
+        if (input) {
+          input.value = '';
+          render('');
+        }
+        requestAnimationFrame(() => input?.focus());
+        root.querySelector<HTMLElement>('[data-crail-menu]')?.setAttribute(
+          'hidden',
+          '',
+        );
+      } else {
+        lastFocus?.focus({ preventScroll: true });
+      }
+      openers.forEach((o) => o.setAttribute('aria-expanded', String(open)));
+    };
+    const render = (q: string) => {
+      if (!results) return;
+      const query = q.trim().toLowerCase();
+      const hits = query
+        ? items.filter((it) =>
+            [it.title, it.desc, it.game ?? '', ...(it.tags ?? [])]
+              .join(' ')
+              .toLowerCase()
+              .includes(query),
+          )
+        : items;
+      const top = hits.slice(0, 8);
+      results.innerHTML = top.length
+        ? top
+            .map(
+              (it) => `<li><a href="${esc(it.href)}">
+                <span class="gs-t">${esc(it.title)}</span>
+                <span class="gs-m">
+                  <span>${it.type === 'game' ? '游戏档案' : '手记'}</span>
+                  ${it.game ? `<span>${esc(it.game)}</span>` : ''}
+                  ${it.date ? `<span>${esc(it.date)}</span>` : ''}
+                  ${(it.tags ?? [])
+                    .slice(0, 3)
+                    .map((t) => `<span>#${esc(t)}</span>`)
+                    .join('')}
+                </span>
+              </a></li>`,
+            )
+            .join('')
+        : '<li class="gs-empty">这个关键词还没有存档,换个词试试。</li>';
+    };
+    const onOpener = () => setOpen(true);
+    const onCloseClick = (e: MouseEvent) => {
+      if ((e.target as HTMLElement).closest('[data-gsearch-close]'))
+        setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (overlay?.hidden) return;
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        setOpen(false);
+      } else if (e.key === 'Tab' && overlay) {
+        const focusable = Array.from(
+          overlay.querySelectorAll<HTMLElement>(
+            'input, a[href], button:not([disabled])',
+          ),
+        );
+        if (!focusable.length) return;
+        const first = focusable[0]!;
+        const last = focusable[focusable.length - 1]!;
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+    const onInput = () => render(input?.value ?? '');
+    openers.forEach((o) => o.addEventListener('click', onOpener));
+    overlay?.addEventListener('click', onCloseClick);
+    input?.addEventListener('input', onInput);
+    document.addEventListener('keydown', onKey);
+
+    return () => {
+      openers.forEach((o) => o.removeEventListener('click', onOpener));
+      overlay?.removeEventListener('click', onCloseClick);
+      input?.removeEventListener('input', onInput);
+      document.removeEventListener('keydown', onKey);
+    };
+  });
+</script>

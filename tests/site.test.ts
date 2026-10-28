@@ -120,7 +120,7 @@ test('five column homepages keep their own theme, intro and one main landmark', 
 test('column article pages inherit their own theme and back link', () => {
   const cases: [string, string[], string][] = [
     ['music', ['music', 'notes', 'music-column-intro'], '返回音乐手记'],
-    ['math', ['math', 'notes', 'math-column-intro'], '返回手记图鉴'],
+    ['math', ['math', 'notes', 'math-column-intro'], '返回数学文章'],
     ['game', ['game', 'notes', 'game-column-intro'], '返回手记存档'],
     ['others', ['others', 'notes', 'cf-friend-tracker'], '返回全部便签'],
   ];
@@ -206,6 +206,29 @@ test('retirement build unregisters old workers and does not register a new one',
   const worker = readFileSync(join(dist, 'sw.js'), 'utf8');
   assert.ok(worker.includes('self.registration.unregister()'));
   assert.ok(!worker.includes("addEventListener('fetch'"));
+});
+
+test('math observatory column keeps exhibition pages and the euler explorer', () => {
+  const home = readFileSync(join(dist, 'math', 'index.html'), 'utf8');
+  assert.ok(home.includes('MATH OBSERVATORY'), 'math 缺少观象台英文标识');
+  assert.ok(home.includes('data-torus-canvas'), 'math 缺少环面数学对象');
+  for (const page of ['topics', 'proofs', 'questions']) {
+    const html = readFileSync(
+      join(dist, 'math', page, 'index.html'),
+      'utf8',
+    );
+    assert.ok(html.includes('data-page="math"'), `math/${page} 缺少主题标识`);
+  }
+  const euler = readFileSync(
+    join(dist, 'math', 'notes', 'euler-formula', 'index.html'),
+    'utf8',
+  );
+  assert.ok(euler.includes('data-uc-slider'), '欧拉展品缺少 θ 滑块');
+  assert.match(
+    euler,
+    /<annotation encoding="application\/x-tex">e\^\{i\\pi\}\+1=0<\/annotation>/,
+    '缺少欧拉恒等式公式',
+  );
 });
 
 test('KaTeX styles stay on articles instead of the homepage', () => {

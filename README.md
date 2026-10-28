@@ -47,7 +47,7 @@ category: 'algorithm' # 可选：algorithm | math | music | game，不填归入�
 | category | 专栏 | 专栏首页 | 文章路径 |
 | --- | --- | --- | --- |
 | `algorithm` | 算法 · 演算手稿 | `/algorithm/` | `/algorithm/notes/<slug>/` |
-| `math` | 数学 | `/math/` | `/math/notes/<slug>/` |
+| `math` | 数学 · 数学观象台 | `/math/` | `/math/notes/<slug>/` |
 | `music` | 音乐 · 耳朵的私人档案 | `/music/` | `/music/notes/<slug>/` |
 | `game` | 游戏 | `/game/` | `/game/notes/<slug>/` |
 | （不填） | 其他 | `/others/` | `/others/notes/<slug>/` |
