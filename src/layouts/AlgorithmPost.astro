@@ -10,6 +10,7 @@ import AlgoNav from '../components/algo/AlgoNav.astro';
 import TableOfContents from '../components/TableOfContents.astro';
 import Comments from '../components/Comments.astro';
 import FormattedDate from '../components/FormattedDate.astro';
+import 'katex/dist/katex.min.css';
 import { readingTime } from '../utils/reading';
 import {
   DIFFICULTY_LABEL,
@@ -452,9 +453,9 @@ const updatedISO = (updatedDate ?? pubDate).toISOString().slice(0, 10);
             )
           )
             return;
-          if (e.key === 'ArrowLeft' && newerLink)
-            navigate(newerLink.href);
-          else if (e.key === 'ArrowRight' && olderLink) navigate(olderLink.href);
+          if (e.key === 'ArrowLeft' && newerLink) navigate(newerLink.href);
+          else if (e.key === 'ArrowRight' && olderLink)
+            navigate(olderLink.href);
         };
         document.addEventListener('keydown', onKey);
         cleanups.push(() => document.removeEventListener('keydown', onKey));

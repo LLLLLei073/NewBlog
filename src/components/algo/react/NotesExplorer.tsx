@@ -155,19 +155,19 @@ export default function NotesExplorer({
       <div className="mb-5 space-y-3">
         <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
           <div className="flex items-center gap-2">
-            <span className="mono-label">主题</span>
+            <span className="mono-label shrink-0 whitespace-nowrap">主题</span>
             {chip([{ id: 'all', label: '全部' }, ...topics], topic, (v) =>
               setParam('topic', v),
             )}
           </div>
           <div className="flex items-center gap-2">
-            <span className="mono-label">难度</span>
+            <span className="mono-label shrink-0 whitespace-nowrap">难度</span>
             {chip([{ id: 'all', label: '全部' }, ...difficulties], level, (v) =>
               setParam('level', v),
             )}
           </div>
           <div className="flex items-center gap-2">
-            <span className="mono-label">状态</span>
+            <span className="mono-label shrink-0 whitespace-nowrap">状态</span>
             {chip([{ id: 'all', label: '全部' }, ...statuses], status, (v) =>
               setParam('status', v),
             )}

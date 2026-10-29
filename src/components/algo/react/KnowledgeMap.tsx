@@ -35,9 +35,9 @@ export type KmEdge = {
   type: 'prereq' | 'mastered' | 'explore';
 };
 
-const NW = 158;
-const NH = 48;
-const CANVAS = { w: 1480, h: 1120 };
+const NW = 210;
+const NH = 64;
+const CANVAS = { w: 1380, h: 1040 };
 
 const STATUS_LABEL = {
   done: '已整理',
@@ -254,8 +254,8 @@ export default function KnowledgeMap({
         />
         <text
           x={14}
-          y={20}
-          fontSize="13.5"
+          y={26}
+          fontSize="22"
           fontWeight={500}
           fill={isActive ? '#fff' : 'var(--foreground)'}
           style={{ transition: 'fill 180ms ease' }}
@@ -265,8 +265,8 @@ export default function KnowledgeMap({
         {/* 文章数 + 状态:文字而非仅颜色 */}
         <text
           x={14}
-          y={36}
-          fontSize="10"
+          y={49}
+          fontSize="16"
           fontFamily="var(--font-mono)"
           fill={isActive ? 'rgba(255,255,255,0.75)' : 'var(--muted-foreground)'}
         >
@@ -381,8 +381,8 @@ export default function KnowledgeMap({
                     />
                     <text
                       x={g.x + 16}
-                      y={g.y + 26}
-                      fontSize="13"
+                      y={g.y + 30}
+                      fontSize="20"
                       fill="var(--foreground)"
                       fontWeight="600"
                       opacity="0.85"
@@ -391,8 +391,8 @@ export default function KnowledgeMap({
                     </text>
                     <text
                       x={g.x + 16}
-                      y={g.y + 42}
-                      fontSize="9"
+                      y={g.y + 50}
+                      fontSize="13"
                       fontFamily="var(--font-condensed)"
                       letterSpacing="2"
                       fill="var(--muted-foreground)"
