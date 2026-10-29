@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import {
   buildBinarySearchSteps,
   parseBinarySearchInput,
@@ -60,4 +61,16 @@ test('builds a miss ending for custom input', () => {
   assert.equal(steps.at(-1)?.phase, 'miss');
   assert.equal(steps.at(-1)?.mid, null);
   assert.ok((steps.at(-1)?.left ?? 0) > (steps.at(-1)?.right ?? 0));
+});
+
+test('visualizer wires custom input, accessible errors and example reset', () => {
+  const source = readFileSync(
+    'src/components/algo/react/StepVisualizer.tsx',
+    'utf8',
+  );
+  assert.ok(source.includes('parseBinarySearchInput(rawNums, rawTarget)'));
+  assert.ok(source.includes('buildBinarySearchSteps(next.nums, next.target)'));
+  assert.ok(source.includes('role="alert"'));
+  assert.ok(source.includes('恢复示例'));
+  assert.ok(source.includes('setI(0)'));
 });
