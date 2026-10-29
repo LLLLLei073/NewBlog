@@ -28,6 +28,45 @@ export type BiSearchDemo = {
   steps: BiSearchStep[];
 };
 
+export type BinarySearchInput = {
+  nums: number[];
+  target: number;
+};
+
+function parseDemoInteger(raw: string, label: string): number {
+  if (!/^-?\d+$/.test(raw)) {
+    throw new Error(`${label}必须是十进制整数`);
+  }
+  const value = Number(raw);
+  if (!Number.isSafeInteger(value) || Math.abs(value) > 999) {
+    throw new Error(`${label}必须在 -999 到 999 之间`);
+  }
+  return value;
+}
+
+/** 解析二分查找演示输入；不合法时抛出可直接展示给读者的错误。 */
+export function parseBinarySearchInput(
+  rawNums: string,
+  rawTarget: string,
+): BinarySearchInput {
+  if (!rawNums.trim()) {
+    throw new Error('请输入数组，包含 1–12 个整数');
+  }
+  const tokens = rawNums.trim().split(/[，,\s]+/u);
+  if (tokens.length > 12) {
+    throw new Error('数组最多包含 12 个整数');
+  }
+  const nums = tokens.map((token) => parseDemoInteger(token, '数组元素'));
+  if (nums.some((value, index) => index > 0 && value <= nums[index - 1])) {
+    throw new Error('数组必须严格递增，且不能包含重复值');
+  }
+  if (!rawTarget.trim()) {
+    throw new Error('请输入目标值');
+  }
+  const target = parseDemoInteger(rawTarget.trim(), '目标值');
+  return { nums, target };
+}
+
 /** 闭区间 [left, right] 二分查找:每步落一份完整快照。 */
 export function buildBinarySearchSteps(
   nums: number[],
